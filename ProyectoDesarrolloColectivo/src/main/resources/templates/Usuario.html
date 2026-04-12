@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Usuarios</title>
+    <link rel='stylesheet' type='text/css' media='screen' href='BaseLancerio.css'>
+</head>
+<body>
+
+<header>
+    <h2>Usuarios</h2>
+    <nav>
+        <a th:href="@{/Usuario}">Usuarios</a>
+        <a th:href="@{/RegistroSueno}">Registro Sueño</a>
+        <a th:href="@{/ObjetivoMeditacion}">Objetivo Meditación</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <div class="card">
+        <div class="form-layout">
+
+            <div class="form-left">
+                <div class="section-title">Agregar Usuario</div>
+                <form>
+                    <input type="text" placeholder="Nombre Completo 👤">
+                    <input type="email" placeholder="Correo Electrónico 📧">
+                    <input type="password" placeholder="Contraseña 🔒">
+                    <button>Guardar Usuario</button>
+                </form>
+            </div>
+
+            <div class="form-right">
+                <div class="search-box">
+                    <div class="section-title">Buscar Usuario</div>
+                    <form>
+                        <input type="text" placeholder="Buscar por nombre o correo 🔍">
+                        <button>Buscar</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="section-title">Lista de Usuarios</div>
+        <table>
+            <!-- El thead es un elemento que se usa para agrupar el contenido de la cabecera dentro de una tabla-->
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Contraseña</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>Sebastián Díaz</td>
+                <td>sebas@gmail.com</td>
+                <td>****</td>
+                <td>
+                    <button class="action-btn">Editar 📝</button>
+                    <button class="action-btn">Eliminar ❌</button>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Ana López</td>
+                <td>ana@gmail.com</td>
+                <td>****</td>
+                <td>
+                    <button class="action-btn">Editar 📝</button>
+                    <button class="action-btn">Eliminar ❌</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

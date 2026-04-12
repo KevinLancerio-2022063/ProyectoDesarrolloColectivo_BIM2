@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro Sueño</title>
+    <link rel='stylesheet' type='text/css' media='screen' href='BaseLancerio.css'>
+</head>
+<body>
+
+<header>
+    <h2>Registro de Sueño</h2>
+    <nav>
+        <a th:href="@{/Usuario}">Usuarios</a>
+        <a th:href="@{/RegistroSueno}">Registro Sueño</a>
+        <a th:href="@{/ObjetivoMeditacion}">Objetivo Meditación</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <div class="card">
+        <div class="form-layout">
+
+            <div class="form-left">
+                <div class="section-title">Agregar Registro</div>
+                <form>
+                    <input type="date">
+                    <input type="number" placeholder="Horas Dormidas 💤">
+                    <input type="text" placeholder="Calidad del Sueño 👍👎">
+                    <select>
+                        <option>Seleccionar Usuario</option>
+                        <option>Sebastián Díaz</option>
+                        <option>Ana López</option>
+                    </select>
+                    <button>Guardar Registro</button>
+                </form>
+            </div>
+
+            <div class="form-right">
+                <div class="search-box">
+                    <div class="section-title">Buscar Registro</div>
+                    <form>
+                        <input type="text" placeholder="Buscar por usuario 🔍">
+                        <input type="date">
+                        <button>Buscar</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="section-title">Registros Guardados</div>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Fecha</th>
+                <th>Horas</th>
+                <th>Calidad</th>
+                <th>Usuario</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>2026-03-01</td>
+                <td>7.5</td>
+                <td>Buena</td>
+                <td>Sebastián Díaz</td>
+                <td>
+                    <button class="action-btn">Editar 📝</button>
+                    <button class="action-btn">Eliminar ❌</button>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>2026-02-05</td>
+                <td>9</td>
+                <td>Buena</td>
+                <td>Ana López</td>
+                <td>
+                    <button class="action-btn">Editar 📝</button>
+                    <button class="action-btn">Eliminar ❌</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

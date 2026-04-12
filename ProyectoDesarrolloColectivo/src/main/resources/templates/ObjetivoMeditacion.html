@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Objetivo Meditación</title>
+    <link rel='stylesheet' type='text/css' media='screen' href='BaseLancerio.css'>
+</head>
+<body>
+
+<header>
+    <h2>Objetivos de Meditación</h2>
+    <nav>
+        <a th:href="@{/Usuario}">Usuarios</a>
+        <a th:href="@{/RegistroSueno}">Registro Sueño</a>
+        <a th:href="@{/ObjetivoMeditacion}">Objetivo Meditación</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <div class="card">
+        <div class="form-layout">
+
+            <div class="form-left">
+                <div class="section-title">Agregar Objetivo</div>
+                <form>
+                    <input type="text" placeholder="Tiempo Objetivo 🕕 (Ej: 30 minutos diarios)">
+                    <input type="number" placeholder="Días Objetivos 🗓️">
+                    <select>
+                        <option>Seleccionar Usuario</option>
+                        <option>Sebastián Díaz</option>
+                        <option>Ana López</option>
+                    </select>
+                    <button>Guardar Objetivo</button>
+                </form>
+            </div>
+
+            <div class="form-right">
+                <div class="search-box">
+                    <div class="section-title">Buscar Objetivo Meditación</div>
+                    <form>
+                        <input type="text" placeholder="Buscar por usuario 🔍">
+                        <input type="number" placeholder="Buscar por días objetivo 🔍">
+                        <button>Buscar</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="section-title">Objetivos Registrados</div>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tiempo Objetivo</th>
+                <th>Días Objetivo</th>
+                <th>Usuario</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>20 minutos diarios</td>
+                <td>30</td>
+                <td>Sebastián Díaz</td>
+                <td>
+                    <button class="action-btn">Editar 📝</button>
+                    <button class="action-btn">Eliminar ❌</button>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>15 minutos diarios</td>
+                <td>21</td>
+                <td>Ana López</td>
+                <td>
+                    <button class="action-btn">Editar 📝</button>
+                    <button class="action-btn">Eliminar ❌</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>
