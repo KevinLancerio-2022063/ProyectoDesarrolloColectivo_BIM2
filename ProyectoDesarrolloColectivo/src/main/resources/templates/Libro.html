@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Libro</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="../Styles/Base.css">
+    <link rel="stylesheet" href="../Styles/Libro.css">
+    <script src='main.js'></script>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Evoluciona</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-left">
+    <div class="page-tag">Tu biblioteca personal</div>
+    <h1 class="page-title">Mis <em>Lecturas</em></h1>
+  </div>
+  <button class="btn-primary">＋ Agregar libro</button>
+</div>
+
+<div class="libros-container">
+
+  <div class="libros-stats">
+    <div class="lstat">
+      <div class="lstat-num color-cafe">0</div>
+      <div class="lstat-label">Pendientes</div>
+    </div>
+    <div class="lstat">
+      <div class="lstat-num color-menta">1</div>
+      <div class="lstat-label">Leyendo ahora</div>
+    </div>
+    <div class="lstat">
+      <div class="lstat-num color-oscuro">1</div>
+      <div class="lstat-label">Terminados</div>
+    </div>
+  </div>
+
+  <div class="estado-tabs">
+    <button class="estado-tab active">Todos <span class="tab-count">2</span></button>
+    <button class="estado-tab">Pendiente <span class="tab-count">0</span></button>
+    <button class="estado-tab">Leyendo <span class="tab-count">1</span></button>
+    <button class="estado-tab">Terminado <span class="tab-count">1</span></button>
+  </div>
+
+  <div class="toolbar">
+    <div class="search-wrap">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input type="text" class="search-input" placeholder="Buscar libro o autor..."/>
+    </div>
+  </div>
+
+  <div class="libros-grid">
+
+    <div class="libro-card">
+      <div class="libro-spine leyendo"></div>
+      <div class="libro-cover">
+        <div class="libro-icon">📗</div>
+        <div class="libro-meta">
+          <div class="libro-titulo">Hábitos Atómicos</div>
+          <div class="libro-autor">James Clear</div>
+          <span class="libro-estado-badge badge-leyendo">leyendo</span>
+        </div>
+      </div>
+      <div class="libro-footer">
+        <span class="libro-footer-stat">Usuario <strong>#1</strong></span>
+        <div class="libro-actions">
+          <button class="btn-icon btn-edit">✏️</button>
+          <button class="btn-icon btn-delete">🗑️</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="libro-card">
+      <div class="libro-spine terminado"></div>
+      <div class="libro-cover">
+        <div class="libro-icon">📘</div>
+        <div class="libro-meta">
+          <div class="libro-titulo">El Poder del Ahora</div>
+          <div class="libro-autor">Eckhart Tolle</div>
+          <span class="libro-estado-badge badge-terminado">terminado</span>
+        </div>
+      </div>
+      <div class="libro-footer">
+        <span class="libro-footer-stat">Usuario <strong>#2</strong></span>
+        <div class="libro-actions">
+          <button class="btn-icon btn-edit">✏️</button>
+          <button class="btn-icon btn-delete">🗑️</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="form-section-wrap">
+  <div class="form-section">
+    <div class="form-section-header">
+      <h2 class="form-section-title">Agregar <em>Libro</em></h2>
+      <p class="form-section-sub">Registra un nuevo libro en tu biblioteca personal.</p>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Título del libro</label>
+      <input type="text" class="form-input" placeholder="Ej. Hábitos Atómicos" maxlength="100"/>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Autor</label>
+      <input type="text" class="form-input" placeholder="Ej. James Clear" maxlength="100"/>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Estado</label>
+      <select class="form-select">
+        <option value="">Seleccionar...</option>
+        <option value="pendiente">Pendiente</option>
+        <option value="leyendo">Leyendo</option>
+        <option value="terminado">Terminado</option>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Total de páginas</label>
+        <input type="number" class="form-input" placeholder="320" min="1" max="10000"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Páginas leídas</label>
+        <input type="number" class="form-input" placeholder="0" min="0"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Usuario (ID)</label>
+      <input type="number" class="form-input" placeholder="ID del usuario" min="1"/>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-secondary">Cancelar</button>
+      <button class="btn-primary">Guardar libro</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
