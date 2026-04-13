@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Rutina</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="../Styles/Base.css">
+    <link rel="stylesheet" href="../Styles/Rutina.css">
+    <script src='main.js'></script>
+</head>
+<body>
+    <nav>
+  <a href="index.html" class="nav-logo">Evoluciona</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-left">
+    <div class="page-tag">Tu entrenamiento</div>
+    <h1 class="page-title">Mis <em>Rutinas</em></h1>
+  </div>
+  <button class="btn-primary">＋ Nueva rutina</button>
+</div>
+
+<div class="rutinas-container">
+
+  <div class="toolbar">
+    <div class="search-wrap">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input type="text" class="search-input" placeholder="Buscar rutina..."/>
+    </div>
+    <span style="font-size:0.82rem;opacity:0.5;margin-left:auto;">1 rutina</span>
+  </div>
+
+  <div class="rutinas-grid">
+
+    <div class="rutina-card">
+      <div class="rutina-card-header">
+        <div class="rutina-avatar">R</div>
+        <div class="rutina-actions">
+          <button class="btn-icon btn-edit">✏️</button>
+          <button class="btn-icon btn-delete">🗑️</button>
+        </div>
+      </div>
+      <div class="rutina-name">Rutina de Fuerza</div>
+      <div class="rutina-days">
+        <span class="day-chip">Lunes</span>
+        <span class="day-chip">Miércoles</span>
+        <span class="day-chip">Viernes</span>
+      </div>
+      <div class="rutina-footer">
+        <span>Usuario <strong>#1</strong></span>
+        <span><strong>3</strong> días</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="form-section-wrap">
+  <div class="form-section">
+    <div class="form-section-header">
+      <h2 class="form-section-title">Nueva <em>Rutina</em></h2>
+      <p class="form-section-sub">Completa los campos para registrar una nueva rutina.</p>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Nombre de la rutina</label>
+      <input type="text" class="form-input" placeholder="Ej. Rutina de fuerza" maxlength="50"/>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Usuario (ID)</label>
+      <input type="number" class="form-input" placeholder="ID del usuario" min="1"/>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Días de la semana</label>
+      <div class="days-picker">
+        <div class="day-toggle"><input type="checkbox" id="dLunes"/>   <label for="dLunes">Lunes</label></div>
+        <div class="day-toggle"><input type="checkbox" id="dMartes"/>  <label for="dMartes">Martes</label></div>
+        <div class="day-toggle"><input type="checkbox" id="dMierc"/>   <label for="dMierc">Miércoles</label></div>
+        <div class="day-toggle"><input type="checkbox" id="dJueves"/>  <label for="dJueves">Jueves</label></div>
+        <div class="day-toggle"><input type="checkbox" id="dViernes"/> <label for="dViernes">Viernes</label></div>
+        <div class="day-toggle"><input type="checkbox" id="dSabado"/>  <label for="dSabado">Sábado</label></div>
+        <div class="day-toggle"><input type="checkbox" id="dDomingo"/> <label for="dDomingo">Domingo</label></div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-secondary">Cancelar</button>
+      <button class="btn-primary">Guardar rutina</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>
