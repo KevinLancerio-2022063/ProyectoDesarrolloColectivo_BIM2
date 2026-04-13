@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Perfil Nutricional</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="../Styles/Base.css">
+    <link rel="stylesheet" href="../Styles/PerfilNutricional.css">
+    <script src='main.js'></script>
+</head>
+<body>
+    <nav>
+  <a href="index.html" class="nav-logo">Evoluciona</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-left">
+    <div class="page-tag">Salud y bienestar</div>
+    <h1 class="page-title">Perfil <em>Nutricional</em></h1>
+  </div>
+  <button class="btn-primary">＋ Nuevo perfil</button>
+</div>
+
+<div class="perfiles-container">
+
+  <div class="perfil-hero">
+    <div class="perfil-hero-info">
+      <h2>1 perfil registrado</h2>
+      <p>Gestiona los perfiles nutricionales de tus usuarios</p>
+    </div>
+    <div class="perfil-hero-stats">
+      <div class="phs-item">
+        <div class="phs-num">1</div>
+        <div class="phs-label">Perfiles</div>
+      </div>
+      <div class="phs-item">
+        <div class="phs-num">70</div>
+        <div class="phs-label">Peso prom. kg</div>
+      </div>
+      <div class="phs-item">
+        <div class="phs-num">25</div>
+        <div class="phs-label">Edad prom.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <div class="search-wrap">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input type="text" class="search-input" placeholder="Buscar por usuario..."/>
+    </div>
+    <select style="padding:0.65rem 1.2rem;border-radius:100px;border:1.5px solid rgba(45,74,62,0.14);background:var(--blanco);font-family:system-ui,sans-serif;font-size:0.85rem;color:var(--verde-oscuro);cursor:pointer;outline:none;">
+      <option>Todos los géneros</option>
+      <option>Masculino</option>
+      <option>Femenino</option>
+    </select>
+  </div>
+
+  <div class="perfiles-grid">
+
+    <div class="perfil-card">
+      <div class="perfil-card-top">
+        <div class="perfil-card-avatar">U</div>
+        <div>
+          <div class="perfil-card-user">Usuario #1</div>
+          <div class="perfil-card-id">Perfil #1</div>
+        </div>
+      </div>
+      <div class="perfil-card-body">
+        <div class="perfil-metrics">
+          <div class="metric-item">
+            <div class="metric-val">70<span class="metric-unit"> kg</span></div>
+            <div class="metric-label">Peso</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-val">1.75<span class="metric-unit"> m</span></div>
+            <div class="metric-label">Altura</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-val">25<span class="metric-unit"> años</span></div>
+            <div class="metric-label">Edad</div>
+          </div>
+        </div>
+        <div class="imc-bar-wrap">
+          <div class="imc-label-row">
+            <span>IMC: <strong>22.9</strong></span>
+            <span style="color:var(--cafe);font-weight:500">Normal</span>
+          </div>
+          <div class="imc-bar">
+            <div class="imc-marker" style="left:49%"></div>
+          </div>
+        </div>
+        <div class="perfil-divider"></div>
+        <div class="perfil-tags">
+          <span class="perfil-tag tag-genero">Masculino</span>
+          <span class="perfil-tag tag-nivel">Nivel: medio</span>
+          <span class="perfil-tag tag-objetivo">Mantener peso</span>
+        </div>
+      </div>
+      <div class="perfil-card-footer">
+        <button class="btn-icon btn-edit">✏️</button>
+        <button class="btn-icon btn-delete">🗑️</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="form-section-wrap">
+  <div class="form-section">
+    <div class="form-section-header">
+      <h2 class="form-section-title">Nuevo <em>Perfil Nutricional</em></h2>
+      <p class="form-section-sub">Registra los datos físicos y objetivo nutricional del usuario.</p>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Peso (kg)</label>
+        <input type="number" class="form-input" placeholder="70" min="1" max="500"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Altura (m)</label>
+        <input type="number" class="form-input" placeholder="1.75" step="0.01" min="0.50" max="2.50"/>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Edad</label>
+        <input type="number" class="form-input" placeholder="25" min="12" max="120"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Género</label>
+        <select class="form-select">
+          <option value="">Seleccionar...</option>
+          <option value="Masculino">Masculino</option>
+          <option value="Femenino">Femenino</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Nivel de actividad</label>
+      <select class="form-select">
+        <option value="">Seleccionar...</option>
+        <option value="bajo">Bajo — Sedentario</option>
+        <option value="medio">Medio — Activo moderado</option>
+        <option value="alto">Alto — Muy activo</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Objetivo</label>
+      <input type="text" class="form-input" placeholder="Ej. Bajar de peso" maxlength="75"/>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Usuario (ID)</label>
+      <input type="number" class="form-input" placeholder="ID del usuario" min="1"/>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-secondary">Cancelar</button>
+      <button class="btn-primary">Guardar perfil</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
