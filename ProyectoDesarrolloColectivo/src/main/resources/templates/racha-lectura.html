@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Racha de Lectura</title>
+    <link rel="stylesheet" th:href="@{/css/rachas.css}" href="../static/css/rachas.css">
+</head>
+<body>
+
+<header class="barra">Racha de Lectura</header>
+
+<main class="wrap">
+
+    <section class="card">
+        <h2 class="h2">Agregar racha</h2>
+        <form th:action="@{/rachaLectura}" method="post">
+            <div class="grid">
+                <div>
+                    <label for="usuario">ID de usuario</label>
+                    <input id="usuario" name="usuarioId" type="number" placeholder="Ej. 1" required>
+                </div>
+                <div>
+                    <label for="fecha">Fecha</label>
+                    <input id="fecha" name="fechaRacha" type="date" required>
+                </div>
+            </div>
+            <div class="acciones">
+                <button type="submit" class="btn">Guardar</button>
+                <button type="reset" class="btn sec">Limpiar</button>
+            </div>
+        </form>
+    </section>
+
+    <section class="card">
+        <h2 class="h2">Historial (ejemplo)</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Usuario</th>
+                <th>Fecha</th>
+                <th>Días consecutivos</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr><td>21</td><td>1</td><td>2025-03-02</td><td>1</td></tr>
+            <tr><td>22</td><td>1</td><td>2025-03-03</td><td>2</td></tr>
+            <tr><td>23</td><td>1</td><td>2025-03-04</td><td>3</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <p class="foot">Proyecto Desarrollo Personal</p>
+</main>
+
+</body>
+</html>
