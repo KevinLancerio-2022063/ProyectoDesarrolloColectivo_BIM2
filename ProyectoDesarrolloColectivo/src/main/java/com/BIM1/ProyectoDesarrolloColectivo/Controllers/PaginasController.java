@@ -16,7 +16,7 @@ public class PaginasController {
         return "redirect:/login";
     }
 
-    // --- LOGIN ---
+    // login
     @GetMapping("/login")
     public String mostrarLogin() {
         return "login";
@@ -31,7 +31,7 @@ public class PaginasController {
 
         if ("admin@gmail.com".equals(usuario) && "1234".equals(password)) {
             session.setAttribute("usuarioLogueado", usuario);
-            // Redirección al home futuro del otro compañero
+            // Redirección al home futuro
             return "redirect:/home";
         } else {
             model.addAttribute("error", "Usuario o contraseña incorrectos");
@@ -42,7 +42,7 @@ public class PaginasController {
 
     @GetMapping("/register")
     public String mostrarRegistro() {
-        return "register"; // templates/register.html
+        return "register";
     }
 
     @PostMapping("/register")
