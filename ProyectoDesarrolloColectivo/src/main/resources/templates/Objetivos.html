@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>Objetivos</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' href='../Style/Base.css'>
+    <link rel='stylesheet' href='../Style/Objetivos.css'>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Evoluciona</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-left">
+    <div class="page-tag">Metas personales</div>
+    <h1 class="page-title">Mis <em>Objetivos</em></h1>
+  </div>
+  <button class="btn-primary">＋ Nuevo objetivo</button>
+</div>
+
+<div class="objetivos-container">
+
+  <div class="toolbar">
+    <input type="text" class="search-input" placeholder="Buscar objetivo...">
+    <span class="contador">1 objetivo</span>
+  </div>
+
+  <div class="objetivos-grid">
+
+    <div class="objetivo-card">
+      <div class="objetivo-header">
+        <div class="objetivo-estado completado">Completado</div>
+        <div class="objetivo-actions">
+          <button class="btn-icon">✏️</button>
+          <button class="btn-icon">🗑️</button>
+        </div>
+      </div>
+
+      <div class="objetivo-descripcion">
+        Terminar proyecto final de informática
+      </div>
+
+      <div class="objetivo-info">
+        <span>Fecha: <strong>20/03/2026</strong></span>
+        <span>Usuario <strong>#1</strong></span>
+      </div>
+
+      <div class="objetivo-footer">
+        Frase motivadora <strong>#2</strong>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+<div class="form-section-wrap">
+  <div class="form-section">
+
+    <div class="form-section-header">
+      <h2 class="form-section-title">Nuevo <em>Objetivo</em></h2>
+      <p class="form-section-sub">Registra una nueva meta personal.</p>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Descripción</label>
+      <input type="text" class="form-input" maxlength="150">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Estado</label>
+      <select class="form-input">
+        <option>Pendiente</option>
+        <option>En progreso</option>
+        <option>Completado</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Fecha objetivo</label>
+      <input type="date" class="form-input">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">ID Usuario</label>
+      <input type="number" class="form-input" min="1">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">ID Frase Motivadora</label>
+      <input type="number" class="form-input" min="1">
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-secondary">Cancelar</button>
+      <button class="btn-primary">Guardar objetivo</button>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
