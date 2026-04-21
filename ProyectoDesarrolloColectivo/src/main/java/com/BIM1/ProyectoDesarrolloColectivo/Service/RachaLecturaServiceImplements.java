@@ -80,11 +80,27 @@ public class RachaLecturaServiceImplements implements RachaLecturaService {
     // Crea una racha con idUsuario + fecha (POST corto) y recarga por ID
     @Override
     public RachaLectura addRacha(Integer idUsuario, LocalDate fecha) throws RuntimeException {
-        RachaLectura r = new RachaLectura();
-        r.setFkIdUsuario(idUsuario);
-        r.setFecha(fecha);
 
-        RachaLectura saved = repository.save(r);
-        return repository.findById(saved.getIdRachaLectura()).orElse(saved);
+        // Obtener rachas del usuario (ya vienen ordenadas por fecha DESC)
+        List<RachaLectura> rachasUsuario = getRachasByUsuario(idUsuario);
+
+        int dias = 1; // por defecto empieza en 1
+
+        if (!rachasUsuario.isEmpty()) {
+            RachaLectura ultima = rachasUsuario.get(0);
+
+            if (ultima.getFecha() != null &&
+                    ultima.getFecha().plusDays(1).equals(fecha)) {
+                dias = ultima.getDiasConsecutivos() + 1;
+            }
+        }
+
+        RachaLectura racha = new RachaLectura();
+        racha.setFkIdUsuario(idUsuario);
+        racha.setFecha(fecha);
+        racha.setDiasConsecutivos(dias);
+
+        return repository.save(racha);
     }
+
 }
