@@ -31,4 +31,13 @@ public class PerfilNutricionalController {
         model.addAttribute("perfilNutricional", perfilNutricionalService.getPerfilNutricionalById(id));
         return "perfilNutricional";
     }
+
+    @GetMapping("/buscarPerfilNutricional")
+    public String buscarPerfil(@RequestParam Integer id, Model model){
+        PerfilNutricional perfilNutricional = perfilNutricionalService.getPerfilNutricionalById(id);
+        model.addAttribute("perfilNutricional", perfilNutricionalService.getAListPerfilNuticional());
+        model.addAttribute("perfilNutricionalFormu", perfilNutricional);
+        return "perfilNutricional";
+    }
+
 }
