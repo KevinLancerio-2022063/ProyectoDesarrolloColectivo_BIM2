@@ -20,32 +20,10 @@ public class RutinaController {
     }
 
     @GetMapping
-    public List<Rutina> getAListRutina(){
-        return rutinaService.getAListRutina();
-    }
-
-    @PostMapping
-    public ResponseEntity<Object> saveRutina(@Valid @RequestBody Rutina rutina){
-            Rutina rutina1 = rutinaService.saveRutina(rutina);
-            return new ResponseEntity<>(rutina1, HttpStatus.CREATED);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> updateRutina(@PathVariable Integer id, @Valid @RequestBody Rutina rutina){
-            Rutina rutina1 = rutinaService.updateRutina(id, rutina);
-            return new ResponseEntity<>(rutina1, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteRutina(@PathVariable Integer id){
-            rutinaService.deleteRutina(id);
-            return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> getRutinaById(@PathVariable Integer id){
-            Rutina rutina = rutinaService.getRutinaById(id);
-            return ResponseEntity.ok(rutina);
+    public String listar(Model model){
+        model.addAttribute("rutina", rutinaService.getAListRutina());
+        model.addAttribute("rutinaFormu", new Rutina());
+        return "rutina";
     }
 
 }
