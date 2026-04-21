@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Ejercicio</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel="stylesheet" href="../Styles/Base.css">
-    <link rel="stylesheet" href="../Styles/Ejercicio.css">
+    <link rel="stylesheet" th:href="@{/base.css}">
+    <link rel="stylesheet" th:href="@{/Ejercicio.cssa}">
     
     <script src='main.js'></script>
 </head>
 <body>
  
 <nav>
-  <a href="index.html" class="nav-logo">Evoluciona</a>
+  <a th:href="@{/index}" class="nav-logo">Evoluciona</a>
   <ul class="nav-links">
-    <li><a href="index.html">Inicio</a></li>
+    <li><a th:href="@{/index}">Inicio</a></li>
   </ul>
 </nav>
 
