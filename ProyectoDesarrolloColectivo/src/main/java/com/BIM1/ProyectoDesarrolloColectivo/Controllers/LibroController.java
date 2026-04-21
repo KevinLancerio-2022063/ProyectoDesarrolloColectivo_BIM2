@@ -45,4 +45,32 @@ public class LibroController {
         return "redirect:/libro";
     }
 
+    @GetMapping("/buscarLibro")
+    public String buscarLibro(@RequestParam Integer id, Model model){
+        Libro libro = libroService.getLibroById(id);
+        model.addAttribute("libros", libroService.getAListLibro());
+        model.addAttribute("librosFormu", libro);
+        return "libro";
+    }
+
+    @PostMapping("/actualizarLibro/{id}")
+    public String actualizarLibro(@PathVariable Integer id, @Valid @ModelAttribute("librosFormu") Libro libro, Model model, RedirectAttributes redirectAttributes, BindingResult result ){
+        if(result.hasErrors()){
+            model.addAttribute("libros", libroService.getAListLibro());
+            return "libro";
+        }
+        libroService.updateLibro(id, libro);
+        redirectAttributes.addFlashAttribute("exito", "el libro se ha actualizado");
+        return "redirect:/libro";
+    }
+
+    @PostMapping("/eliminarLibro/{id}")
+    public String eliminarLibro(@PathVariable Integer id, RedirectAttributes redirectAttributes){
+        libroService.deleteLibro(id);
+        redirectAttributes.addFlashAttribute("exito", "el libro se a eliminado");
+        return "redirect:/libro";
+
+    }
+
+
 }
