@@ -40,4 +40,15 @@ public class PerfilNutricionalController {
         return "perfilNutricional";
     }
 
+    @PostMapping("/guardarPerfilNutricional")
+    public String guardarPerfil(@Valid @ModelAttribute("perfilNutricionalFormu") PerfilNutricional perfilNutricional, BindingResult result, RedirectAttributes redirectAttributes, Model model){
+        if(result.hasErrors()){
+            model.addAttribute("perfilNutricional", perfilNutricionalService.getAListPerfilNuticional());
+            return "perfilNutricional";
+        }
+        perfilNutricionalService.savePerfilNutrcional(perfilNutricional);
+        redirectAttributes.addFlashAttribute("exito", "el perfil nutricional ha sido guardado");
+        return "redirect:/perfilNutricional";
+    }
+
 }
