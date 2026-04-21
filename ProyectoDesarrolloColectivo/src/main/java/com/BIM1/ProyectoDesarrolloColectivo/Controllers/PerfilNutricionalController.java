@@ -25,9 +25,10 @@ public class PerfilNutricionalController {
         return "perfilNutricional";
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> getPerfilNutricionalById(@PathVariable Integer id){
-            PerfilNutricional perfilNutricional = perfilNutricionalService.getPerfilNutricionalById(id);
-            return ResponseEntity.ok(perfilNutricional);
+    @GetMapping("/editarPerfilNutricional/{id}")
+    public String editarPerfil(@PathVariable Integer id, Model model){
+        model.addAttribute("perfilNutricional", perfilNutricionalService.getAListPerfilNuticional());
+        model.addAttribute("perfilNutricional", perfilNutricionalService.getPerfilNutricionalById(id));
+        return "perfilNutricional";
     }
 }
