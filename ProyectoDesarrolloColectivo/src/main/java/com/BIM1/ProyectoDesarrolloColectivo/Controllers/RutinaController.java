@@ -2,9 +2,12 @@ package com.BIM1.ProyectoDesarrolloColectivo.Controllers;
 
 import com.BIM1.ProyectoDesarrolloColectivo.Entity.Rutina;
 import com.BIM1.ProyectoDesarrolloColectivo.Service.RutinaService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
@@ -59,6 +62,13 @@ public class RutinaController {
         redirectAttributes.addFlashAttribute("exito", "la rutina se ha guardado");
         return "redirect:/rutina";
      }
-     
+
+     @PostMapping("/eliminarRutina")
+    public String eliminarRutina(@PathVariable Integer id, RedirectAttributes redirectAttributes){
+        rutinaService.deleteRutina(id);
+        redirectAttributes.addFlashAttribute("exito", "la rutina se ha eliminado");
+        return "rutina";
+     }
+
 
 }
