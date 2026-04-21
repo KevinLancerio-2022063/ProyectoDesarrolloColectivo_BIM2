@@ -26,4 +26,11 @@ public class RutinaController {
         return "rutina";
     }
 
+    @GetMapping("/editarRutina/{id}")
+    public String editarRutina(@PathVariable Integer id, Model model){
+        model.addAttribute("rutina", rutinaService.getAListRutina());
+        model.addAttribute("rutinaFormu", rutinaService.getRutinaById(id));
+        return "rutina";
+    }
+
 }
