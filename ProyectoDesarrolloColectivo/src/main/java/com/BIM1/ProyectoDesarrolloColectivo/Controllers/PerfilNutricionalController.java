@@ -19,26 +19,10 @@ public class PerfilNutricionalController {
     }
 
     @GetMapping
-    public List<PerfilNutricional> getAlistPerfilNutricional(){
-        return perfilNutricionalService.getAListPerfilNuticional();
-    }
-
-    @PostMapping
-    public ResponseEntity<Object> savePerfilNutricional(@Valid @RequestBody PerfilNutricional perfilNutricional){
-            PerfilNutricional perfilNutricional1 = perfilNutricionalService.savePerfilNutrcional(perfilNutricional);
-            return new ResponseEntity<>(perfilNutricional1, HttpStatus.CREATED);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> updatePerfilNutricional(@PathVariable Integer id, @Valid @RequestBody PerfilNutricional perfilNutricional){
-            PerfilNutricional perfilNutricional1 = perfilNutricionalService.updatePerfilNutricional(id, perfilNutricional);
-            return new ResponseEntity<>(perfilNutricional1, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deletePerfilNutricional(@PathVariable Integer id){
-            perfilNutricionalService.deletePerfilNutricional(id);
-            return ResponseEntity.noContent().build();
+    public String listarPerfil(Model model){
+        model.addAttribute("perfilNutricional", perfilNutricionalService.getAListPerfilNuticional());
+        model.addAttribute("perfilNutricionalFormu", new PerfilNutricional());
+        return "perfilNutricional";
     }
 
     @GetMapping("/{id}")
