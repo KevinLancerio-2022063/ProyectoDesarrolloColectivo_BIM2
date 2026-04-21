@@ -19,7 +19,7 @@ public class ApoyoEmocionalServiceImplements implements ApoyoEmocionalService{
     }
 
     @Override
-    public List<ApoyoEmocional> getAllFraseMotivadora() {
+    public List<ApoyoEmocional> getAllApoyoEmovional() {
         return apoyoEmocionalRepository.findAll();
     }
 
