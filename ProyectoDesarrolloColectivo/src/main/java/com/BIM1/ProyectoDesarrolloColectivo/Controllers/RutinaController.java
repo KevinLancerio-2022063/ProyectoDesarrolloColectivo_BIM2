@@ -49,4 +49,16 @@ public class RutinaController {
         return "redirect:/rutina";
      }
 
+     @PostMapping("/guardarRutina")
+    public String guardarRutina(@Valid @ModelAttribute("rutinaFormu")Rutina rutina, Model model, BindingResult result, RedirectAttributes redirectAttributes){
+        if (result.hasErrors()){
+            model.addAttribute("rutina", rutinaService.getAListRutina());
+            return "rutina";
+        }
+        rutinaService.saveRutina(rutina);
+        redirectAttributes.addFlashAttribute("exito", "la rutina se ha guardado");
+        return "redirect:/rutina";
+     }
+     
+
 }
