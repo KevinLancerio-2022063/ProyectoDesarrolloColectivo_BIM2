@@ -19,7 +19,7 @@ public class ApoyoEmocionalController {
     }
 
     @GetMapping
-    public List<ApoyoEmocional> getAllApoyoEmocional(){return apoyoEmocionalService.getAllFraseMotivadora();}
+    public List<ApoyoEmocional> getAllApoyoEmocional(){return apoyoEmocionalService.getAllApoyoEmovional();}
 
     @PostMapping
     public ResponseEntity<Object> createApoyoEmocional(@Valid @RequestBody ApoyoEmocional apoyoEmocional){
