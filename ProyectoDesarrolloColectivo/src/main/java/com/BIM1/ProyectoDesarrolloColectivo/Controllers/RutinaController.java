@@ -33,4 +33,12 @@ public class RutinaController {
         return "rutina";
     }
 
+    @GetMapping("/buscarRutina")
+    public String buscarRutina(@RequestParam Integer id, Model model){
+        Rutina rutina = rutinaService.getRutinaById(id);
+        model.addAttribute("rutina", rutinaService.getAListRutina());
+        model.addAttribute("rutinaFormu", rutina);
+        return "rutina";
+    }
+
 }
