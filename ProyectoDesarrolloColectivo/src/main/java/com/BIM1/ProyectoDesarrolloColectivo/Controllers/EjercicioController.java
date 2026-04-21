@@ -4,14 +4,15 @@ package com.BIM1.ProyectoDesarrolloColectivo.Controllers;
 import com.BIM1.ProyectoDesarrolloColectivo.Entity.Ejercicio;
 import com.BIM1.ProyectoDesarrolloColectivo.Service.EjercicioService;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
 
-@RestController
-@RequestMapping("/api/ejercicios")
+@Controller
+@RequestMapping("/ejercicios")
 public class EjercicioController {
     private final EjercicioService ejercicioService;
 
@@ -20,31 +21,56 @@ public class EjercicioController {
     }
 
     @GetMapping
-    public List<Ejercicio> getAlistEjercicio(){
-        return ejercicioService.getAListEjercicio();
+    public String Listar(Model model){
+        model.addAttribute("ejercicios", ejercicioService.getAListEjercicio());
+        model.addAttribute("ejerciciosFormu", new Ejercicio());
+        return "clientes";
     }
 
-    @PostMapping
-    public ResponseEntity<Object> createEjercicio(@Valid @RequestBody Ejercicio ejercicio){
-            Ejercicio ejercicio1 = ejercicioService.saveEjercicio(ejercicio);
-            return new ResponseEntity<>(ejercicio1, HttpStatus.CREATED);
+    @PostMapping("/guardarEjercicio")
+    public String guardarEjercicio(@Valid @ModelAttribute("ejerciciosFormu") Ejercicio ejercicio, BindingResult result, RedirectAttributes redirectAttributes, Model model){
+        if(result.hasErrors()){
+            model.addAttribute("ejercicios", ejercicioService.getAListEjercicio());
+            return "ejercicio";
+        }
+        ejercicioService.saveEjercicio(ejercicio);
+        redirectAttributes.addFlashAttribute("exito", "el ejercicio fue añadido");
+        return "ejercicio";
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> updateEjercicio(@PathVariable Integer id, @Valid @RequestBody Ejercicio ejercicio) {
-            Ejercicio ejercicio1 = ejercicioService.updateEjercicio(id, ejercicio);
-            return new ResponseEntity<>(ejercicio1, HttpStatus.OK);
+    @GetMapping("/editarEjercicio{id}")
+    public String editarEjercicio(@PathVariable Integer id, Model model){
+        model.addAttribute("ejercicios", ejercicioService.getAListEjercicio());
+        model.addAttribute("ejerciciosFormu", ejercicioService.getEjercicioById(id));
+        return "ejercicio";
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteEjercicio(@PathVariable Integer id){
-            ejercicioService.deleteEjercicio(id);
-            return ResponseEntity.noContent().build();
+    @PostMapping("/eliminarEjercicio/{id}")
+    public String eliminarEjercicio(@PathVariable Integer id, RedirectAttributes redirectAttributes){
+        ejercicioService.deleteEjercicio(id);
+        redirectAttributes.addFlashAttribute("exito", "el ejercicio fue eliminado");
+        return "redirect:/ejercicio";
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> getEjercicioById(@PathVariable Integer id){
-            Ejercicio ejercicio = ejercicioService.getEjercicioById(id);
-             return ResponseEntity.ok(ejercicio);
+    @GetMapping("/buscarEjercicio")
+    public String buscarEjercicio(@RequestParam Integer id, Model model){
+        Ejercicio ejercicio = ejercicioService.getEjercicioById(id);
+        model.addAttribute("ejercicios", ejercicioService.getEjercicioById(id));
+        model.addAttribute("ejerciciosFormu", ejercicio);
+        return "ejercicio";
+
     }
+
+    @PostMapping("/actualizarEjercicio/{id}")
+    public String actualizarEjercicio(@PathVariable Integer id, @Valid @ModelAttribute ("ejerciciosFormu") Ejercicio ejercicio, Model model, BindingResult result, RedirectAttributes redirectAttributes){
+
+        if(result.hasErrors()){
+            model.addAttribute("ejercicios", ejercicioService.getAListEjercicio());
+            return "ejercicio";
+        }
+        ejercicioService.updateEjercicio(id, ejercicio);
+        redirectAttributes.addFlashAttribute("exito", "el ejercicio se ha actualizado");
+        return "redirect:/ejercicio";
+    }
+
 }
