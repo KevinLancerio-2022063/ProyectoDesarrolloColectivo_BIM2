@@ -7,7 +7,7 @@ import java.util.List;
 public interface ApoyoEmocionalService {
     List<ApoyoEmocional> getAllApoyoEmovional();
     ApoyoEmocional getById(Integer id);
-    ApoyoEmocional saveFraseMotivadora(ApoyoEmocional apoyoEmocional) throws RuntimeException;
-    ApoyoEmocional updateFraseMotivadora(Integer id,ApoyoEmocional apoyoEmocional);
-    void deleteFraseMotivadora(Integer id);
+    ApoyoEmocional saveApoyoEmocional(ApoyoEmocional apoyoEmocional) throws RuntimeException;
+    ApoyoEmocional updateApoyoEmocional(Integer id, ApoyoEmocional apoyoEmocional);
+    void deleteApoyoEmocional(Integer id);
 }
