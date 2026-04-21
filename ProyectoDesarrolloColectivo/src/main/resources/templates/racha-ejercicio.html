@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Racha de Ejercicio</title>
-    <link rel="stylesheet" th:href="@{/css/rachas.css}">
+    <link rel="stylesheet"
+          th:href="@{/css/rachas.css}"
+          href="../static/css/rachas.css">
 </head>
 <body>
 
@@ -14,17 +16,28 @@
 
     <section class="card">
         <h2 class="h2">Agregar racha</h2>
+
+        <p th:if="${error}" style="color:red;" th:text="${error}"></p>
+
         <form th:action="@{/rachaEjercicio}" method="post">
-            <div class="grid">
+            <div class="grid-form">
                 <div>
                     <label for="usuario">ID de usuario</label>
-                    <input id="usuario" name="usuarioId" type="number" placeholder="Ej. 1" required>
+                    <input id="usuario"
+                           name="usuarioId"
+                           type="number"
+                           placeholder="Ej. 1"
+                           required>
                 </div>
                 <div>
                     <label for="fecha">Fecha</label>
-                    <input id="fecha" name="fechaRacha" type="date" required>
+                    <input id="fecha"
+                           name="fechaRacha"
+                           type="date"
+                           required>
                 </div>
             </div>
+
             <div class="acciones">
                 <button type="submit" class="btn">Guardar</button>
                 <button type="reset" class="btn sec">Limpiar</button>
@@ -33,7 +46,8 @@
     </section>
 
     <section class="card">
-        <h2 class="h2">Historial (ejemplo)</h2>
+        <h2 class="h2">Historial</h2>
+
         <table>
             <thead>
             <tr>
@@ -43,10 +57,20 @@
                 <th>Días consecutivos</th>
             </tr>
             </thead>
+
             <tbody>
-            <tr><td>11</td><td>1</td><td>2025-03-02</td><td>1</td></tr>
-            <tr><td>12</td><td>1</td><td>2025-03-03</td><td>2</td></tr>
-            <tr><td>13</td><td>1</td><td>2025-03-04</td><td>3</td></tr>
+            <tr th:if="${rachas == null or #lists.isEmpty(rachas)}">
+                <td colspan="4" style="text-align:center;">
+                    No hay rachas registradas
+                </td>
+            </tr>
+
+            <tr th:each="r : ${rachas}">
+                <td th:text="${r.idRachaEjercicio}"></td>
+                <td th:text="${r.fkIdUsuario}"></td>
+                <td th:text="${r.fecha}"></td>
+                <td th:text="${r.diasConsecutivos}"></td>
+            </tr>
             </tbody>
         </table>
     </section>
