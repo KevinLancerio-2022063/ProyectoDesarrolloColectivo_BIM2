@@ -24,7 +24,7 @@ public class EjercicioController {
     public String Listar(Model model){
         model.addAttribute("ejercicios", ejercicioService.getAListEjercicio());
         model.addAttribute("ejerciciosFormu", new Ejercicio());
-        return "clientes";
+        return "ejercicio";
     }
 
     @PostMapping("/guardarEjercicio")
