@@ -2,16 +2,13 @@ package com.BIM1.ProyectoDesarrolloColectivo.Controllers;
 
 import com.BIM1.ProyectoDesarrolloColectivo.Entity.Rutina;
 import com.BIM1.ProyectoDesarrolloColectivo.Service.RutinaService;
-import jakarta.validation.Valid;
-import org.hibernate.ObjectNotFoundException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
-@RestController
-@RequestMapping("/api/rutina")
+@Controller
+@RequestMapping("/rutina")
 public class RutinaController {
     private final RutinaService rutinaService;
 
