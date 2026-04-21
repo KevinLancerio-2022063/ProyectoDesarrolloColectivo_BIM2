@@ -38,4 +38,15 @@ public class RutinaController {
         return "rutina";
     }
 
+     @PostMapping("/actualizarRutina/{id}")
+    public String actualizarRutina(@PathVariable Integer id, @Valid @ModelAttribute("rutinaFormu")Rutina rutina, Model model, BindingResult result, RedirectAttributes redirectAttributes){
+        if(result.hasErrors()){
+            model.addAttribute("rutina", rutinaService.getAListRutina());
+            return "rutina";
+        }
+        rutinaService.updateRutina(id, rutina);
+        redirectAttributes.addFlashAttribute("exito", "la rutina se ha actualizado");
+        return "redirect:/rutina";
+     }
+
 }
