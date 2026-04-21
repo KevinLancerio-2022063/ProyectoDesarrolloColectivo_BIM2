@@ -58,4 +58,15 @@ public class PerfilNutricionalController {
         return "perfilNutricional";
     }
 
+    @PostMapping("/actualizarPerfilNutricional")
+    public String actualizarPerfil(@PathVariable Integer id, @Valid @ModelAttribute("perfilNutricionalFormu") PerfilNutricional perfilNutricional, Model model, RedirectAttributes redirectAttributes, BindingResult result){
+        if(result.hasErrors()){
+            model.addAttribute("perfilNutricional", perfilNutricionalService.getAListPerfilNuticional());
+            return "perfilNutricional";
+        }
+        perfilNutricionalService.updatePerfilNutricional(id, perfilNutricional);
+        redirectAttributes.addFlashAttribute("exito", "se ha actualizado el perfilNutricional");
+        return "redirect:/perfilNutricional";
+    }
+
 }
