@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle Apoyo Emocional</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-regular-straight/css/uicons-regular-straight.css">
+    <link rel="stylesheet" th:href="@{/Base.css}">
+    <link rel="stylesheet" th:href="@{/ApoyoEmocional.css}">
+</head>
+
+<body>
+
+<nav>
+    <a th:href="@{/}" class="nav-logo">Evoluciona</a>
+    <ul class="nav-links">
+        <li><a th:href="@{/}">Inicio</a></li>
+    </ul>
+</nav>
+
+<div class="detalle-container">
+
+    <div class="detalle-card">
+
+        <div class="detalle-header">
+            <h1 class="detalle-titulo" th:text="${apoyo.titulo}"></h1>
+        </div>
+
+        <div class="detalle-info">
+            <p>
+                <strong>Categoría:</strong>
+                <span th:text="${apoyo.categoria}"></span>
+            </p>
+
+            <p>
+                <strong>Nivel animo:</strong>
+                <div class="apoyo-nivel"
+                     th:text="${apoyo.nivelAnimo}"
+                     th:classappend="${apoyo.nivelAnimo == 'Mal'} ? ' mal' :
+                                     (${apoyo.nivelAnimo == 'Bien'} ? ' bien' :
+                                     (${apoyo.nivelAnimo == 'Mas o menos'} ? ' mas' : ' medio'))">
+                </div>
+            </p>
+
+            <p>
+                <strong>Usuario ID:</strong>
+                <span th:text="${apoyo.usuario.id_usuario}"></span>
+            </p>
+        </div>
+
+        <div class="detalle-contenido">
+            <p th:text="${apoyo.contenido}"></p>
+        </div>
+
+        <div class="detalle-footer">
+            <a th:href="@{/apoyoEmocional}" class="btn-secondary">← Volver</a>
+            <a th:href="@{'/editarApoyo/' + ${apoyo.idApoyoEmocional} }" class="btn-editar"><i class="fi fi-rs-pencil"></i></a>
+            <a th:href="@{'/eliminar-apoyo/' + ${apoyo.idApoyoEmocional}}" class="btn-eliminar"><i class="fi fi-rs-trash"></i></a>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
