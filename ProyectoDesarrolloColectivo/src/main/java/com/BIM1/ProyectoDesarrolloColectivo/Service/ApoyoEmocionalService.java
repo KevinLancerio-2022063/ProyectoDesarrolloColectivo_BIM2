@@ -5,7 +5,7 @@ import com.BIM1.ProyectoDesarrolloColectivo.Entity.ApoyoEmocional;
 import java.util.List;
 
 public interface ApoyoEmocionalService {
-    List<ApoyoEmocional> getAllFraseMotivadora();
+    List<ApoyoEmocional> getAllApoyoEmovional();
     ApoyoEmocional getById(Integer id);
     ApoyoEmocional saveFraseMotivadora(ApoyoEmocional apoyoEmocional) throws RuntimeException;
     ApoyoEmocional updateFraseMotivadora(Integer id,ApoyoEmocional apoyoEmocional);
