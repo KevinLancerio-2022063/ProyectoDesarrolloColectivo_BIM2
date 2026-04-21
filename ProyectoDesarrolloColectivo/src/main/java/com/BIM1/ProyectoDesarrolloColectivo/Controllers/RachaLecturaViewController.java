@@ -35,12 +35,22 @@ public class RachaLecturaViewController {
     @PostMapping
     public String guardarRacha(
             @RequestParam Integer usuarioId,
-            @RequestParam String fechaRacha) {
+            @RequestParam String fechaRacha,
+            Model model) {
 
         LocalDate fecha = LocalDate.parse(fechaRacha);
+        LocalDate hoy = LocalDate.now();
+
+        if (fecha.isBefore(hoy)) {
+            model.addAttribute("error", "La fecha no puede ser pasada");
+            model.addAttribute("rachas",
+                    rachaLecturaService.getRachasByUsuario(usuarioId));
+            return "racha-lectura";
+        }
 
         rachaLecturaService.addRacha(usuarioId, fecha);
 
         return "redirect:/rachaLectura?usuarioId=" + usuarioId;
     }
+
 }
