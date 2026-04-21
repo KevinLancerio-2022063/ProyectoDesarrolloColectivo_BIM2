@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang='en' xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset='utf-8'>
+    <meta charset="UTF-8">
     <title>Apoyo Emocional</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    
-    <link rel='stylesheet' href='../Style/Base.css'>
-    <link rel='stylesheet' href='../Style/ApoyoEmocional.css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" th:href="@{/Base.css}">
+    <link rel="stylesheet" th:href="@{/ApoyoEmocional.css}">
 </head>
 <body>
 
 <nav>
-  <a href="index.html" class="nav-logo">Evoluciona</a>
+  <a th:href="@{/}" class="nav-logo">Evoluciona</a>
   <ul class="nav-links">
-    <li><a href="index.html">Inicio</a></li>
+    <li><a th:href="@{/}">Inicio</a></li>
   </ul>
 </nav>
 
@@ -22,94 +22,41 @@
     <div class="page-tag">Bienestar personal</div>
     <h1 class="page-title">Apoyo <em>Emocional</em></h1>
   </div>
-  <button class="btn-primary">＋ Nuevo registro</button>
+  <a th:href="@{/agregarApoyo}" class="btn-primary">＋ Nuevo apoyo</a>
 </div>
 
 <div class="apoyo-container">
 
   <div class="toolbar">
     <input type="text" class="search-input" placeholder="Buscar apoyo...">
-    <span class="contador">1 registro</span>
+    <span class="contador" th:text="${#lists.size(listaApoyos)} + ' registros'"></span>
   </div>
 
-  <div class="apoyo-grid">
+    <div class="apoyo-grid">
 
-    <!-- CARD -->
-    <div class="apoyo-card">
+        <a th:each="apoyo : ${listaApoyos}"
+           th:href="@{'/detalleApoyo/' + ${apoyo.idApoyoEmocional}}"
+           class="apoyo-card">
 
-      <div class="apoyo-header">
-        <div class="apoyo-nivel mal">Mal</div>
-      </div>
+            <div class="apoyo-header">
+                <div class="apoyo-nivel"
+                     th:text="${apoyo.nivelAnimo}"
+                     th:classappend="${apoyo.nivelAnimo == 'Mal'} ? ' mal' :
+                           (${apoyo.nivelAnimo == 'Bien'} ? ' bien' : (${apoyo.nivelAnimo == 'Mas o menos'} ? ' mas' : 'medio'))">
+                </div>
+            </div>
 
-      <div class="apoyo-titulo">
-        Día complicado
-      </div>
+            <div class="apoyo-titulo" th:text="${apoyo.titulo}"></div>
 
-      <div class="apoyo-categoria">
-        Categoría: <strong>Estrés académico</strong>
-      </div>
+            <div class="apoyo-categoria">
+                Categoría: <strong th:text="${apoyo.categoria}"></strong>
+            </div>
 
-      <div class="apoyo-contenido">
-        Hoy fue un día pesado con demasiadas tareas y presión. 
-        Me sentí saturado pero logré avanzar poco a poco.
-      </div>
+            <div class="apoyo-contenido" th:text="${apoyo.contenido}"></div>
 
-      <div class="apoyo-footer">
-        Usuario <strong>#1</strong>
-      </div>
+        </a>
 
     </div>
-    <!-- FIN CARD -->
-
-  </div>
 </div>
-
-
-<!-- FORMULARIO -->
-<div class="form-section-wrap">
-  <div class="form-section">
-
-    <div class="form-section-header">
-      <h2 class="form-section-title">Nuevo <em>Registro</em></h2>
-      <p class="form-section-sub">Expresa cómo te sientes hoy.</p>
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">Título</label>
-      <input type="text" class="form-input" maxlength="50">
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">Categoría</label>
-      <input type="text" class="form-input" maxlength="50">
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">Contenido</label>
-      <textarea class="form-input" rows="4"></textarea>
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">Nivel de ánimo</label>
-      <select class="form-input">
-        <option value="Mal">Mal</option>
-        <option value="Mas o menos">Más o menos</option>
-        <option value="Bien">Bien</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">Usuario (ID)</label>
-      <input type="number" class="form-input" min="1">
-    </div>
-
-    <div class="form-actions">
-      <button class="btn-secondary">Cancelar</button>
-      <button class="btn-primary">Guardar registro</button>
-    </div>
-
-  </div>
-</div>
-
 </body>
 </html>
