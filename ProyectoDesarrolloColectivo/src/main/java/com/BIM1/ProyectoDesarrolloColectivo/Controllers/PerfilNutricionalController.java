@@ -29,7 +29,7 @@ public class PerfilNutricionalController {
     @GetMapping("/editarPerfilNutricional/{id}")
     public String editarPerfil(@PathVariable Integer id, Model model){
         model.addAttribute("perfilNutricional", perfilNutricionalService.getAListPerfilNuticional());
-        model.addAttribute("perfilNutricional", perfilNutricionalService.getPerfilNutricionalById(id));
+        model.addAttribute("perfilNutricionalFormu", perfilNutricionalService.getPerfilNutricionalById(id));
         return "perfilNutricional";
     }
 
