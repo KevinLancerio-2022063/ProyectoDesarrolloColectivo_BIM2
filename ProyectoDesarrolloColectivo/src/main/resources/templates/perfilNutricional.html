@@ -51,17 +51,15 @@
   </div>
 
   <div class="toolbar">
-    <div class="search-wrap">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-      </svg>
-      <input type="text" class="search-input" placeholder="Buscar por usuario..."/>
-    </div>
-    <select style="padding:0.65rem 1.2rem;border-radius:100px;border:1.5px solid rgba(45,74,62,0.14);background:var(--blanco);font-family:system-ui,sans-serif;font-size:0.85rem;color:var(--verde-oscuro);cursor:pointer;outline:none;">
-      <option>Todos los géneros</option>
-      <option>Masculino</option>
-      <option>Femenino</option>
-    </select>
+    <form th:action="@{/perfilNutricional/buscarPerfilNutricional}" method="get" style="display:contents;">
+      <div class="search-wrap">
+        <input type="number" name="id" class="search-input" placeholder="Buscar por ID"/>
+      </div>
+    </form>
+
+    <span style="font-size:0.82rem;opacity:0.5;margin-left:auto;"
+          th:text="${#lists.size(perfilNutricional)} + ' perfil(es)'">
+    </span>
   </div>
 
   <div class="perfiles-grid">
