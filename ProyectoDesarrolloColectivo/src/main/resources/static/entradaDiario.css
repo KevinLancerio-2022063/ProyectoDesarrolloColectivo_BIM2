@@ -1,0 +1,198 @@
+:root {
+    --verde-oscuro: #2D4A3E;
+    --verde-menta: #7EB09B;
+    --crema: #F5F0E8;
+    --cafe: #8B6F47;
+    --cafe-claro: #c4a882;
+    --sombra: rgba(45, 74, 62, 0.12);
+}
+
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: var(--crema);
+    color: var(--verde-oscuro);
+}
+
+/* NAV */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 2rem;
+    background: white;
+    box-shadow: 0 2px 10px var(--sombra);
+}
+
+.nav-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--verde-oscuro);
+    text-decoration: none;
+}
+
+.nav-logo span {
+    color: var(--verde-menta);
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--verde-oscuro);
+    font-weight: 500;
+}
+
+.nav-links a.active {
+    color: var(--verde-menta);
+}
+
+/* HEADER */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+}
+
+.page-title {
+    font-size: 2rem;
+}
+
+.page-tag {
+    font-size: 0.9rem;
+    color: var(--cafe);
+}
+
+/* BOTONES */
+.btn-primary {
+    background: var(--verde-menta);
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+.btn-secondary {
+    background: var(--cafe-claro);
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+/* GRID */
+.meditaciones-container {
+    padding: 2rem;
+}
+
+.meditaciones-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+/* CARD */
+.meditacion-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px var(--sombra);
+    transition: transform 0.2s;
+}
+
+.meditacion-card:hover {
+    transform: translateY(-5px);
+}
+
+.meditacion-card h3 {
+    margin-bottom: 0.5rem;
+    color: var(--verde-oscuro);
+}
+
+.meditacion-card p {
+    margin-bottom: 0.4rem;
+    font-size: 0.9rem;
+}
+
+/* FORM */
+.form-section-wrap {
+    padding: 2rem;
+}
+
+.form-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px var(--sombra);
+    max-width: 600px;
+    margin: auto;
+}
+
+.form-section h2 {
+    margin-bottom: 1rem;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 0.6rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--verde-menta);
+}
+
+/* BOTÓN FORM */
+button {
+    width: 100%;
+    background: var(--verde-menta);
+    color: white;
+    padding: 0.7rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+/* MENSAJES */
+.toast {
+    background: var(--verde-menta);
+    color: white;
+    padding: 0.8rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.toast.error {
+    background: var(--cafe);
+}
+
+/* EMPTY */
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: var(--cafe);
+}
