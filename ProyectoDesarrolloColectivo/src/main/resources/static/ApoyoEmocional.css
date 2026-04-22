@@ -2,10 +2,17 @@
   padding: 0 4rem 5rem;
 }
 
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
 .apoyo-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 1.5rem;
+  margin-top: 45px;
 }
 
 .apoyo-card {
@@ -89,7 +96,6 @@
   justify-content: center;
   align-items: center;
   padding: 40px 15px;
-  margin-top: 45px;
 }
 
 .detalle-card {
@@ -99,7 +105,6 @@
   border-radius: 12px;
   padding: 25px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-  margin-top: 45px;
 }
 
 .detalle-header {
