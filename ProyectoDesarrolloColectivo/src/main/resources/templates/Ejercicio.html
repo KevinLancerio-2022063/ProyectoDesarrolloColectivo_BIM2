@@ -5,19 +5,20 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Ejercicio</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel="stylesheet" th:href="@{/base.css}">
-    <link rel="stylesheet" th:href="@{/Ejercicio.cssa}">
-    
-    <script src='main.js'></script>
+    <link rel="stylesheet" th:href="@{/Base.css}">
+    <link rel="stylesheet" th:href="@{/Ejercicio.css}">
+
 </head>
 <body>
- 
+
 <nav>
   <a th:href="@{/index}" class="nav-logo">Evoluciona</a>
   <ul class="nav-links">
     <li><a th:href="@{/index}">Inicio</a></li>
   </ul>
 </nav>
+
+<div th:if="${exito}" class="alerta" th:text="${exito}" ></div>
 
 <div class="page-header">
   <div class="page-header-left">
@@ -28,25 +29,6 @@
 </div>
 
 <div class="ejercicios-container">
-
-  <div class="stats-pills">
-    <div class="stat-pill">
-      <div class="stat-pill-num">5</div>
-      <div class="stat-pill-label">Ejercicios</div>
-    </div>
-    <div class="stat-pill">
-      <div class="stat-pill-num">19</div>
-      <div class="stat-pill-label">Series totales</div>
-    </div>
-    <div class="stat-pill">
-      <div class="stat-pill-num">10</div>
-      <div class="stat-pill-label">Reps promedio</div>
-    </div>
-    <div class="stat-pill">
-      <div class="stat-pill-num">12s</div>
-      <div class="stat-pill-label">Tiempo prom.</div>
-    </div>
-  </div>
 
   <div class="toolbar">
     <div class="search-wrap">
@@ -160,7 +142,6 @@
   </div>
 </div>
 
-<!-- FORMULARIO AGREGAR / EDITAR -->
 <div class="form-section-wrap">
   <div class="form-section">
     <div class="form-section-header">
