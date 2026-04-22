@@ -184,3 +184,51 @@
     text-decoration: none;
     font-size: 16px;
 }
+
+/* FORMULARIO */
+.apoyo-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+/* GRUPOS */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+/* LABELS */
+.form-group label {
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+  color: var(--verde-oscuro);
+  font-weight: 500;
+}
+
+/* INPUTS, SELECT Y TEXTAREA */
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 0.6rem 0.7rem;
+  border-radius: 6px;
+  border: 1px solid rgba(0,0,0,0.15);
+  font-size: 0.9rem;
+  font-family: inherit;
+  outline: none;
+  transition: border var(--trans), box-shadow var(--trans);
+}
+
+/* TEXTAREA */
+.form-group textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* FOCUS */
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--verde-oscuro);
+  box-shadow: 0 0 0 2px rgba(45,74,62,0.15);
+}
