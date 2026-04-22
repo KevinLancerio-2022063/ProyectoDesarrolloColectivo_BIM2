@@ -10,45 +10,45 @@
 </head>
 <body>
 
-<nav>
-  <a th:href="@{/}" class="nav-logo">Evoluciona</a>
-  <ul class="nav-links">
-    <li><a th:href="@{/}">Inicio</a></li>
-  </ul>
-</nav>
+  <nav>
+    <a th:href="@{/}" class="nav-logo">Evoluciona</a>
+    <ul class="nav-links">
+      <li><a th:href="@{/}">Inicio</a></li>
+    </ul>
+  </nav>
 
-<div class="page-header">
-  <div class="page-header-left">
-    <div class="page-tag">Bienestar personal</div>
-    <h1 class="page-title">Apoyo <em>Emocional</em></h1>
-  </div>
-  <a th:href="@{/agregarApoyo}" class="btn-primary">＋ Nuevo apoyo</a>
-</div>
-
-<div class="apoyo-container">
-
-  <div class="toolbar">
-    <input type="text" class="search-input" placeholder="Buscar apoyo...">
-    <span class="contador" th:text="${#lists.size(listaApoyos)} + ' registros'"></span>
-  </div>
-
-    <div class="apoyo-grid">
-
-        <a th:each="apoyo : ${listaApoyos}"
-           th:href="@{'/detalleApoyo/' + ${apoyo.idApoyoEmocional}}"
-           class="apoyo-card">
-
-            <div class="apoyo-titulo" th:text="${apoyo.titulo}"></div>
-
-            <div class="apoyo-categoria">
-                Categoría: <strong th:text="${apoyo.categoria}"></strong>
-            </div>
-
-            <div class="apoyo-contenido" th:text="${apoyo.contenido}"></div>
-
-        </a>
-
+  <div class="page-header">
+    <div class="page-header-left">
+      <div class="page-tag">Bienestar personal</div>
+      <h1 class="page-title">Apoyo <em>Emocional</em></h1>
     </div>
-</div>
+    <a th:href="@{/agregarApoyo}" class="btn-primary">＋ Nuevo apoyo</a>
+  </div>
+
+  <div class="apoyo-container">
+
+    <div class="toolbar">
+      <input type="text" class="search-input" placeholder="Buscar apoyo...">
+      <span class="contador" th:text="${#lists.size(listaApoyos)} + ' registros'"></span>
+    </div>
+
+      <div class="apoyo-grid">
+
+          <a th:each="apoyo : ${listaApoyos}"
+            th:href="@{'/detalleApoyo/' + ${apoyo.idApoyoEmocional}}"
+            class="apoyo-card">
+
+              <div class="apoyo-titulo" th:text="${apoyo.titulo}"></div>
+
+              <div class="apoyo-categoria">
+                  Categoría: <strong th:text="${apoyo.categoria}"></strong>
+              </div>
+
+              <div class="apoyo-contenido" th:text="${apoyo.contenido}"></div>
+
+          </a>
+
+      </div>
+  </div>
 </body>
 </html>

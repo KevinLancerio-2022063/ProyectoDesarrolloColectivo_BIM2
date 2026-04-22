@@ -11,63 +11,63 @@
 
 <body>
 
-<nav>
-    <a th:href="@{/}" class="nav-logo">Evoluciona</a>
-    <ul class="nav-links">
-        <li><a th:href="@{/}">Inicio</a></li>
-    </ul>
-</nav>
+    <nav>
+        <a th:href="@{/}" class="nav-logo">Evoluciona</a>
+        <ul class="nav-links">
+            <li><a th:href="@{/}">Inicio</a></li>
+        </ul>
+    </nav>
 
-<div class="page-header">
-  <div class="page-header-left">
-    <div class="page-tag">Bienestar personal</div>
-    <h1 class="page-title">Apoyo <em>Emocional</em></h1>
-  </div>
-</div>
-
-<div class="detalle-container">
-
-    <div class="detalle-card">
-
-        <div class="detalle-header">
-            <h1 class="detalle-titulo" th:text="${apoyo.titulo}"></h1>
+    <div class="page-header">
+        <div class="page-header-left">
+            <div class="page-tag">Bienestar personal</div>
+            <h1 class="page-title">Apoyo <em>Emocional</em></h1>
         </div>
+    </div>
 
-        <div class="detalle-info">
-            <p>
-                <strong>Categoría:</strong>
-                <span th:text="${apoyo.categoria}"></span>
-            </p>
+    <div class="detalle-container">
 
-            <p>
-                <strong>Nivel animo:</strong>
-                <div class="apoyo-nivel"
-                     th:text="${apoyo.nivelAnimo}"
-                     th:classappend="${apoyo.nivelAnimo == 'Mal'} ? ' mal' :
-                                     (${apoyo.nivelAnimo == 'Bien'} ? ' bien' :
-                                     (${apoyo.nivelAnimo == 'Mas o menos'} ? ' mas' : ' medio'))">
-                </div>
-            </p>
+        <div class="detalle-card">
 
-            <p>
-                <strong>Usuario ID:</strong>
-                <span th:text="${apoyo.usuario.id_usuario}"></span>
-            </p>
-        </div>
+            <div class="detalle-header">
+                <h1 class="detalle-titulo" th:text="${apoyo.titulo}"></h1>
+            </div>
 
-        <div class="detalle-contenido">
-            <p th:text="${apoyo.contenido}"></p>
-        </div>
+            <div class="detalle-info">
+                <p>
+                    <strong>Categoría:</strong>
+                    <span th:text="${apoyo.categoria}"></span>
+                </p>
 
-        <div class="detalle-footer">
-            <a th:href="@{/apoyoEmocional}" class="btn-secondary">← Volver</a>
-            <a th:href="@{'/editarApoyo/' + ${apoyo.idApoyoEmocional} }" class="btn-editar"><i class="fi fi-rs-pencil"></i></a>
-            <a th:href="@{'/eliminar-apoyo/' + ${apoyo.idApoyoEmocional}}" class="btn-eliminar"><i class="fi fi-rs-trash"></i></a>
+                <p>
+                    <strong>Nivel animo:</strong>
+                    <div class="apoyo-nivel"
+                        th:text="${apoyo.nivelAnimo}"
+                        th:classappend="${apoyo.nivelAnimo == 'Mal'} ? ' mal' :
+                                        (${apoyo.nivelAnimo == 'Bien'} ? ' bien' :
+                                        (${apoyo.nivelAnimo == 'Mas o menos'} ? ' mas' : ' medio'))">
+                    </div>
+                </p>
+
+                <p>
+                    <strong>Usuario ID:</strong>
+                    <span th:text="${apoyo.usuario.id_usuario}"></span>
+                </p>
+            </div>
+
+            <div class="detalle-contenido">
+                <p th:text="${apoyo.contenido}"></p>
+            </div>
+
+            <div class="detalle-footer">
+                <a th:href="@{/apoyoEmocional}" class="btn-secondary">← Volver</a>
+                <a th:href="@{'/editarApoyo/' + ${apoyo.idApoyoEmocional} }" class="btn-editar"><i class="fi fi-rs-pencil"></i></a>
+                <a th:href="@{'/eliminar-apoyo/' + ${apoyo.idApoyoEmocional}}" class="btn-eliminar"><i class="fi fi-rs-trash"></i></a>
+            </div>
+
         </div>
 
     </div>
-
-</div>
 
 </body>
 </html>
