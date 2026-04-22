@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrada Diario</title>
+    <link rel="stylesheet" th:href="@{/entradaDiario.css}">
+</head>
+<body>
+
+<nav>
+    <a href="#" class="nav-logo">Evolu<span>ciona</span></a>
+    <ul class="nav-links">
+        <li><a th:href="@{/}">Inicio</a></li>
+        <li><a th:href="@{/entradaDiario}" class="active">Entrada Diario</a></li>
+        <li><a th:href="@{/registroMeditacion}">Meditación</a></li>
+        <li><a th:href="@{/registrosSuenos}">Sueño</a></li>
+    </ul>
+</nav>
+
+<header class="page-header">
+    <div>
+        <div class="page-tag">Bienestar · Diario</div>
+        <h1 class="page-title">Gestión de <em>Entrada Diario</em></h1>
+    </div>
+    <a href="#formulario" class="btn-primary">+ Nueva entrada</a>
+</header>
+
+<section class="meditaciones-container">
+
+    <div th:if="${exito}" class="toast show">
+        <span th:text="${exito}"></span>
+    </div>
+
+    <div th:if="${error}" class="toast show" style="background:#8B6F47;">
+        <span th:text="${error}"></span>
+    </div>
+
+    <div th:if="${#lists.isEmpty(entradaDiario)}" class="empty-state">
+        <div class="empty-icon">📝</div>
+        <div class="empty-text">No hay entradas de diario registradas</div>
+    </div>
+
+    <div th:if="${not #lists.isEmpty(entradaDiario)}" class="meditaciones-grid">
+
+        <div class="meditacion-card" th:each="entrada : ${entradaDiario}">
+
+            <div class="meditacion-card-header">
+                <div class="meditacion-avatar">ED</div>
+
+                <div class="meditacion-actions">
+                    <a th:href="@{/entradaDiario/editar/{id}(id=${entrada.id_entrada_diario})}"
+                       class="btn-icon btn-edit" title="Editar">✏</a>
+
+                    <a th:href="@{/entradaDiario/eliminar/{id}(id=${entrada.id_entrada_diario})}"
+                       class="btn-icon btn-delete"
+                       title="Eliminar"
+                       onclick="return confirm('¿Deseas eliminar esta entrada de diario?');">🗑</a>
+                </div>
+            </div>
+
+            <h3 class="meditacion-tipo" th:text="${entrada.que_paso}">Qué pasó</h3>
+
+            <div class="meditacion-chips">
+                <span class="nivel-chip">
+                    Fecha: <span th:text="${entrada.fecha}"></span>
+                </span>
+            </div>
+
+            <p style="margin-bottom: 1rem; color: var(--verde-oscuro); opacity: 0.75; line-height: 1.6;">
+                <strong>Plan mañana:</strong>
+                <span th:text="${entrada.plan_mañana}"></span>
+            </p>
+
+            <p style="margin-bottom: 1rem; color: var(--verde-oscuro); opacity: 0.75; line-height: 1.6;">
+                <strong>Reflexión:</strong>
+                <span th:text="${entrada.reflexion}"></span>
+            </p>
+
+            <div class="meditacion-footer">
+                <span>ID</span>
+                <strong th:text="${entrada.id_entrada_diario}"></strong>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="form-section-wrap" id="formulario">
+    <div class="form-section">
+
+        <div class="form-section-header">
+            <h2 class="form-section-title">
+                <span th:if="${entradaDiarioFormu.id_entrada_diario == null}">
+                    Nueva <em>Entrada</em>
+                </span>
+                <span th:if="${entradaDiarioFormu.id_entrada_diario != null}">
+                    Editar <em>Entrada</em>
+                </span>
+            </h2>
+
+            <p class="form-section-sub">
+                Completa la información de tu entrada diaria.
+            </p>
+        </div>
+
+        <form th:object="${entradaDiarioFormu}"
+              th:action="${entradaDiarioFormu.id_entrada_diario == null}
+              ? @{/entradaDiario/guardar}
+              : @{/entradaDiario/actualizar/{id}(id=${entradaDiarioFormu.id_entrada_diario})}"
+              method="post">
+
+            <input type="hidden" th:field="*{id_entrada_diario}">
+
+            <div class="form-group">
+                <label class="form-label">Fecha</label>
+                <input type="date" class="form-input" th:field="*{fecha}" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">¿Qué pasó?</label>
+                <textarea class="form-input" th:field="*{que_paso}" rows="4" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Plan para mañana</label>
+                <input type="text" class="form-input" th:field="*{plan_mañana}">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Reflexión</label>
+                <textarea class="form-input" th:field="*{reflexion}" rows="4"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">ID Usuario</label>
+                <input type="number" class="form-input" th:field="*{fk_id_usuario}" required>
+            </div>
+
+            <div class="form-actions">
+                <a th:href="@{/entradaDiario}" class="btn-secondary">Cancelar</a>
+
+                <button type="submit" class="btn-primary"
+                        th:text="${entradaDiarioFormu.id_entrada_diario == null} ? 'Guardar' : 'Actualizar'">
+                </button>
+            </div>
+
+        </form>
+    </div>
+</section>
+
+<script>
+    setTimeout(() => {
+        document.querySelectorAll('.toast').forEach(t => t.classList.remove('show'));
+    }, 3000);
+</script>
+
+</body>
+</html>
