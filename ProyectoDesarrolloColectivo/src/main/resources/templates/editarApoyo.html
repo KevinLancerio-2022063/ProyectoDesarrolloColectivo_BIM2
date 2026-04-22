@@ -1,10 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Editar Apoyo Emocional</title>
+    <link rel="stylesheet" th:href="@{/Base.css}">
+    <link rel="stylesheet" th:href="@{/ApoyoEmocional.css}">
 </head>
 <body>
+    <nav>
+        <a th:href="@{/}" class="nav-logo">Evoluciona</a>
+        <ul class="nav-links">
+        <li><a th:href="@{/}">Inicio</a></li>
+        </ul>
+    </nav>
+    
+    <div class="page-header">
+        <div class="page-header-left">
+            <div class="page-tag">Bienestar personal</div>
+            <h1 class="page-title">Apoyo <em>Emocional</em></h1>
+        </div>
+    </div>
+
+    <div class="detalle-container">
+        <div class="detalle-card">
+
+            <div class="detalle-header">
+                <h1 class="detalle-titulo">Editar Apoyo Emocional</h1>
+            </div>
+
+            <form th:action="@{/guardarApoyo}" th:object="${apoyo}" method="post" class="apoyo-form">
+                <input type="hidden" th:field="*{idApoyoEmocional}">
+                <div class="form-group">
+                    <label for="titulo">Título:</label>
+                    <input type="text" id="titulo" th:field="*{titulo}" required>
+                </div>
+                <div class="form-group">
+                    <label for="categoria">Categoría:</label>
+                    <input type="text" id="categoria" th:field="*{categoria}" required>
+                </div>
+                <div class="form-group">
+                    <label for="contenido">Contenido:</label>
+                    <textarea id="contenido" th:field="*{contenido}" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="nivelAnimo">Nivel de ánimo:</label>
+                    <select id="nivelAnimo" th:field="*{nivelAnimo}" required>
+                        <option value="">Seleccionar...</option>
+                        <option value="Mal">Mal</option>
+                        <option value="Bien">Bien</option>
+                        <option value="Mas o menos">Mas o menos</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="usuario">Usuario ID:</label>
+                    <select th:field="*{usuario.id_usuario}" required>
+                        <option value="">Seleccionar...</option>
+                        <option th:each="user : ${usuario}" th:value="${user.id_usuario}" th:text="${user.nombre_completo}"></option>
+                    </select>
+                </div>
+                <div class="detalle-footer">
+                    <button type="submit" class="btn-primary">Guardar Cambios</button>
+                    <a th:href="@{/apoyoEmocional}" class="btn-secondary">Cancelar</a>
+                </div>
+            </form>
+    </div>
 
 </body>
 </html>
