@@ -63,11 +63,11 @@ public class RutinaController {
         return "redirect:/rutina";
      }
 
-     @PostMapping("/eliminarRutina")
+     @PostMapping("/eliminarRutina/{id}")
     public String eliminarRutina(@PathVariable Integer id, RedirectAttributes redirectAttributes){
         rutinaService.deleteRutina(id);
         redirectAttributes.addFlashAttribute("exito", "la rutina se ha eliminado");
-        return "rutina";
+        return "redirect:/rutina";
      }
 
 
