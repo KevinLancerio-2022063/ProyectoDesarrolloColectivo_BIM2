@@ -38,14 +38,6 @@
            th:href="@{'/detalleApoyo/' + ${apoyo.idApoyoEmocional}}"
            class="apoyo-card">
 
-            <div class="apoyo-header">
-                <div class="apoyo-nivel"
-                     th:text="${apoyo.nivelAnimo}"
-                     th:classappend="${apoyo.nivelAnimo == 'Mal'} ? ' mal' :
-                           (${apoyo.nivelAnimo == 'Bien'} ? ' bien' : (${apoyo.nivelAnimo == 'Mas o menos'} ? ' mas' : 'medio'))">
-                </div>
-            </div>
-
             <div class="apoyo-titulo" th:text="${apoyo.titulo}"></div>
 
             <div class="apoyo-categoria">
