@@ -1,21 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Rutina</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel="stylesheet" href="../Styles/Base.css">
-    <link rel="stylesheet" href="../Styles/Rutina.css">
-    <script src='main.js'></script>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Rutina</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel="stylesheet" th:href="@{/Base.css}">
+  <link rel="stylesheet" th:href="@{/rutina.css}">
 </head>
 <body>
-    <nav>
-  <a href="index.html" class="nav-logo">Evoluciona</a>
+<nav>
+  <a th:href="@{/index}" class="nav-logo">Evoluciona</a>
   <ul class="nav-links">
-    <li><a href="index.html">Inicio</a></li>
+    <li><a th:href="@{/index}">Inicio</a></li>
   </ul>
 </nav>
+
+<div th:if="${exito}" class="alerta" th:text="${exito}"></div>
 
 <div class="page-header">
   <div class="page-header-left">
@@ -28,34 +29,39 @@
 <div class="rutinas-container">
 
   <div class="toolbar">
-    <div class="search-wrap">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-      </svg>
-      <input type="text" class="search-input" placeholder="Buscar rutina..."/>
-    </div>
-    <span style="font-size:0.82rem;opacity:0.5;margin-left:auto;">1 rutina</span>
+    <form th:action="@{/rutina/buscarRutina}" method="get" style="display:contents;">
+      <div class="search-wrap">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input type="number" name="id" class="search-input" placeholder="Buscar por ID..."/>
+      </div>
+    </form>
+    <span style="font-size:0.82rem;opacity:0.5;margin-left:auto;"
+          th:text="${#lists.size(rutina)} + ' rutina(s)'">1 rutina</span>
   </div>
 
   <div class="rutinas-grid">
 
-    <div class="rutina-card">
+    <div class="rutina-card" th:each="r : ${rutina}">
       <div class="rutina-card-header">
-        <div class="rutina-avatar">R</div>
+        <div class="rutina-avatar"
+             th:text="${#strings.substring(r.nombre_rutina, 0, 1)}">R</div>
         <div class="rutina-actions">
-          <button class="btn-icon btn-edit">✏️</button>
-          <button class="btn-icon btn-delete">🗑️</button>
+          <a th:href="@{/rutina/editarRutina/{id}(id=${r.id_rutina})}"
+             class="btn-icon btn-edit">✏️</a>
+          <form th:action="@{/rutina/eliminarRutina/{id}(id=${r.id_rutina})}"
+                method="post" style="display:inline;">
+            <button type="submit" class="btn-icon btn-delete">🗑️</button>
+          </form>
         </div>
       </div>
-      <div class="rutina-name">Rutina de Fuerza</div>
+      <div class="rutina-name" th:text="${r.nombre_rutina}">Rutina de Fuerza</div>
       <div class="rutina-days">
-        <span class="day-chip">Lunes</span>
-        <span class="day-chip">Miércoles</span>
-        <span class="day-chip">Viernes</span>
+        <span class="day-chip" th:text="${r.dias_semana}">Lunes, Miércoles</span>
       </div>
       <div class="rutina-footer">
-        <span>Usuario <strong>#1</strong></span>
-        <span><strong>3</strong> días</span>
+        <span>Usuario <strong th:text="'#' + ${r.fk_id_usuario}">#1</strong></span>
       </div>
     </div>
 
@@ -64,38 +70,59 @@
 
 <div class="form-section-wrap">
   <div class="form-section">
-    <div class="form-section-header">
-      <h2 class="form-section-title">Nueva <em>Rutina</em></h2>
-      <p class="form-section-sub">Completa los campos para registrar una nueva rutina.</p>
-    </div>
 
-    <div class="form-group">
-      <label class="form-label">Nombre de la rutina</label>
-      <input type="text" class="form-input" placeholder="Ej. Rutina de fuerza" maxlength="50"/>
-    </div>
+    <form th:action="${rutinaFormu.id_rutina != null}
+                          ? @{/rutina/actualizarRutina/{id}(id=${rutinaFormu.id_rutina})}
+                          : @{/rutina/guardarRutina}"
+          method="post"
+          th:object="${rutinaFormu}">
 
-    <div class="form-group">
-      <label class="form-label">Usuario (ID)</label>
-      <input type="number" class="form-input" placeholder="ID del usuario" min="1"/>
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">Días de la semana</label>
-      <div class="days-picker">
-        <div class="day-toggle"><input type="checkbox" id="dLunes"/>   <label for="dLunes">Lunes</label></div>
-        <div class="day-toggle"><input type="checkbox" id="dMartes"/>  <label for="dMartes">Martes</label></div>
-        <div class="day-toggle"><input type="checkbox" id="dMierc"/>   <label for="dMierc">Miércoles</label></div>
-        <div class="day-toggle"><input type="checkbox" id="dJueves"/>  <label for="dJueves">Jueves</label></div>
-        <div class="day-toggle"><input type="checkbox" id="dViernes"/> <label for="dViernes">Viernes</label></div>
-        <div class="day-toggle"><input type="checkbox" id="dSabado"/>  <label for="dSabado">Sábado</label></div>
-        <div class="day-toggle"><input type="checkbox" id="dDomingo"/> <label for="dDomingo">Domingo</label></div>
+      <div class="form-section-header">
+        <h2 class="form-section-title">
+          <span th:if="${rutinaFormu.id_rutina != null}">Editar <em>Rutina</em></span>
+          <span th:unless="${rutinaFormu.id_rutina != null}">Nueva <em>Rutina</em></span>
+        </h2>
+        <p class="form-section-sub">Completa los campos para registrar una nueva rutina.</p>
       </div>
-    </div>
 
-    <div class="form-actions">
-      <button class="btn-secondary">Cancelar</button>
-      <button class="btn-primary">Guardar rutina</button>
-    </div>
+      <div class="form-group">
+        <label class="form-label">Nombre de la rutina</label>
+        <input type="text" th:field="*{nombre_rutina}" class="form-input"
+               placeholder="Ej. Rutina de fuerza" maxlength="50"/>
+        <span th:if="${#fields.hasErrors('nombre_rutina')}"
+              th:errors="*{nombre_rutina}" class="error"></span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Usuario (ID)</label>
+        <input type="number" th:field="*{fk_id_usuario}" class="form-input"
+               placeholder="ID del usuario" min="1"/>
+        <span th:if="${#fields.hasErrors('fk_id_usuario')}"
+              th:errors="*{fk_id_usuario}" class="error"></span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Días de la semana</label>
+        <p class="form-section-sub" style="margin: 0 0 0.6rem;">
+        </p>
+        <input type="text"
+               th:field="*{dias_semana}"
+               class="form-input"
+               placeholder="Lunes, Miércoles, Viernes"
+               maxlength="100"/>
+        <span th:if="${#fields.hasErrors('dias_semana')}"
+              th:errors="*{dias_semana}" class="error"></span>
+      </div>
+
+      <div class="form-actions">
+        <a th:href="@{/rutina}" class="btn-secondary">Cancelar</a>
+        <button type="submit" class="btn-primary"
+                th:text="${rutinaFormu.id_rutina != null} ? 'Actualizar rutina' : 'Guardar rutina'">
+          Guardar rutina
+        </button>
+      </div>
+
+    </form>
   </div>
 </div>
 </body>
