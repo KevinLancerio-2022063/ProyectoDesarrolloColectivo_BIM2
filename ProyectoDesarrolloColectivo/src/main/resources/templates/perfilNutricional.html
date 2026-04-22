@@ -64,43 +64,48 @@
 
   <div class="perfiles-grid">
 
-    <div class="perfil-card">
+    <div class="perfil-card" th:each="perfilNutri : ${perfilNutricional}">
+
       <div class="perfil-card-top">
         <div class="perfil-card-avatar">U</div>
+        <div class="perfil-card-avatar"
+             th:text="${#strings.substring(perfilNutri.genero,0,1)}">U</div>
+
         <div>
-          <div class="perfil-card-user">Usuario #1</div>
-          <div class="perfil-card-id">Perfil #1</div>
+          <div class="perfil-card-user"
+               th:text="'Usuario #' + ${perfilNutri.fk_id_usuario}"></div>
+
+          <div class="perfil-card-id"
+               th:text="'Perfil #' + ${perfilNutri.id_perfil_nutricional}"></div>
         </div>
       </div>
+
       <div class="perfil-card-body">
+
         <div class="perfil-metrics">
           <div class="metric-item">
-            <div class="metric-val">70<span class="metric-unit"> kg</span></div>
+            <div class="metric-val"
+                 th:text="${perfilNutri.peso_kg} + ' kg'"></div>
             <div class="metric-label">Peso</div>
           </div>
+
           <div class="metric-item">
-            <div class="metric-val">1.75<span class="metric-unit"> m</span></div>
+            <div class="metric-val"
+                 th:text="${perfilNutri.altura} + ' m'"></div>
             <div class="metric-label">Altura</div>
           </div>
+
           <div class="metric-item">
-            <div class="metric-val">25<span class="metric-unit"> años</span></div>
+            <div class="metric-val"
+                 th:text="${perfilNutri.edad} + ' años'"></div>
             <div class="metric-label">Edad</div>
           </div>
         </div>
-        <div class="imc-bar-wrap">
-          <div class="imc-label-row">
-            <span>IMC: <strong>22.9</strong></span>
-            <span style="color:var(--cafe);font-weight:500">Normal</span>
-          </div>
-          <div class="imc-bar">
-            <div class="imc-marker" style="left:49%"></div>
-          </div>
-        </div>
-        <div class="perfil-divider"></div>
+
         <div class="perfil-tags">
-          <span class="perfil-tag tag-genero">Masculino</span>
-          <span class="perfil-tag tag-nivel">Nivel: medio</span>
-          <span class="perfil-tag tag-objetivo">Mantener peso</span>
+          <span class="perfil-tag" th:text="${perfilNutri.genero}"></span>
+          <span class="perfil-tag" th:text="'Nivel: ' + ${perfilNutri.nivel_actividad}"></span>
+          <span class="perfil-tag" th:text="${perfilNutri.objetivo}"></span>
         </div>
       </div>
       <div class="perfil-card-footer">
