@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Libro</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel="stylesheet" href="../Styles/Base.css">
-    <link rel="stylesheet" href="../Styles/Libro.css">
-    <script src='main.js'></script>
+    <link rel="stylesheet" th:href="@{/Libro.css}">
+    <link rel="stylesheet" th:href="@{/Base.css}">
 </head>
 <body>
 
 <nav>
-  <a href="index.html" class="nav-logo">Evoluciona</a>
+  <a th:href="@{/index}" class="nav-logo">Evoluciona</a>
   <ul class="nav-links">
-    <li><a href="index.html">Inicio</a></li>
+    <li><a th:href="@{/index}">Inicio</a></li>
   </ul>
 </nav>
 
