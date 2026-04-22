@@ -64,7 +64,7 @@ public class ApoyoEmocionalViewController {
 
         System.out.println("ENTRO A ACTUALIZAR");
         System.out.println(apoyoEmocional.getIdApoyoEmocional());
-
+        
         service.updateApoyoEmocional(apoyoEmocional.getIdApoyoEmocional(),apoyoEmocional);
 
         return "redirect:/apoyoEmocional";
