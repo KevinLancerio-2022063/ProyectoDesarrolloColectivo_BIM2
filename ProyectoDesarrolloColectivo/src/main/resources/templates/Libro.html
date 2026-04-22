@@ -28,27 +28,14 @@
 
 <div class="libros-container">
 
-  <div class="libros-stats">
-    <div class="lstat">
-      <div class="lstat-num color-cafe">0</div>
-      <div class="lstat-label">Pendientes</div>
+  <form th:action="@{/libro/buscarLibro}" method="get" style="display:contents;">
+    <div class="estado-tabs">
+      <button class="estado-tab active">Todos <span class="tab-count">2</span></button>
+      <button class="estado-tab">Pendiente <span class="tab-count">0</span></button>
+      <button class="estado-tab">Leyendo <span class="tab-count">1</span></button>
+      <button class="estado-tab">Terminado <span class="tab-count">1</span></button>
     </div>
-    <div class="lstat">
-      <div class="lstat-num color-menta">1</div>
-      <div class="lstat-label">Leyendo ahora</div>
-    </div>
-    <div class="lstat">
-      <div class="lstat-num color-oscuro">1</div>
-      <div class="lstat-label">Terminados</div>
-    </div>
-  </div>
-
-  <div class="estado-tabs">
-    <button class="estado-tab active">Todos <span class="tab-count">2</span></button>
-    <button class="estado-tab">Pendiente <span class="tab-count">0</span></button>
-    <button class="estado-tab">Leyendo <span class="tab-count">1</span></button>
-    <button class="estado-tab">Terminado <span class="tab-count">1</span></button>
-  </div>
+  </form>
 
   <div class="toolbar">
     <div class="search-wrap">
