@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Florece — Desarrollo Personal</title>
+    <link th:href="@{/Index.css}" rel="stylesheet"/>
+    <style>
+        a.module-card {
+          text-decoration: none;
+          color: inherit;
+          display: block;
+        }
+        a.module-card:hover {
+          cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-logo">Flore<span>ce</span></div>
+    <ul class="nav-links">
+        <li><a href="#">Inicio</a></li>
+        <li><a href="#">Rutinas</a></li>
+        <li><a href="#">Nutrición</a></li>
+        <li><a href="#">Bienestar</a></li>
+        <li><a href="#" class="nav-cta">Comenzar</a></li>
+    </ul>
+</nav>
+
+<section class="hero">
+    <div class="hero-left">
+        <span class="hero-tag">Tu espacio de crecimiento</span>
+        <h1 class="hero-title">
+            Construye tu<br/>
+            mejor <em>versión</em><br/>
+            cada día
+        </h1>
+        <p class="hero-desc">
+            Registra tus hábitos, monitorea tu sueño, sigue tus lecturas y mantén el enfoque en lo que realmente importa.
+        </p>
+        <div class="hero-actions">
+            <a href="#" class="btn-primary">Empezar ahora</a>
+            <a href="#" class="btn-ghost">Ver módulos →</a>
+        </div>
+    </div>
+
+    <div class="hero-right">
+        <div class="hero-blob"></div>
+        <div class="hero-cards-stack">
+            <div class="mini-card">
+                <div class="card-icon">😴</div>
+                <div>
+                    <div class="card-label">Sueño de hoy</div>
+                    <div class="card-value">7.5 horas</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width:85%"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="mini-card">
+                <div class="card-icon">🏋️</div>
+                <div>
+                    <div class="card-label">Racha ejercicio</div>
+                    <div class="card-value">12 días seguidos</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width:60%"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="mini-card">
+                <div class="card-icon">📚</div>
+                <div>
+                    <div class="card-label">Lectura activa</div>
+                    <div class="card-value">Hábitos Atómicos</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width:47%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="stats">
+    <div class="stat-item">
+        <div class="stat-num">13</div>
+        <div class="stat-label">Módulos activos</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-num">360°</div>
+        <div class="stat-label">Visión de tu vida</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Frases motivadoras</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Personalizable</div>
+    </div>
+</div>
+
+<section class="modules">
+    <div class="section-header">
+        <div>
+            <div class="section-tag">Lo que puedes hacer</div>
+            <h2 class="section-title">Tus <em>herramientas</em><br/>de crecimiento</h2>
+        </div>
+        <a href="#" class="see-all">Ver todos →</a>
+    </div>
+
+    <div class="modules-grid">
+
+
+        <a href="Registromeditacion.html" class="module-card featured">
+            <div class="module-icon">🧘</div>
+            <div class="module-name">Meditación & Bienestar</div>
+            <div class="module-desc">Registra tus sesiones de meditación, establece objetivos y lleva un seguimiento de tu progreso mental. Guiada, respiración, mindfulness o body scan.</div>
+            <div class="module-stat"><div class="module-dot"></div> 4 tipos de meditación disponibles</div>
+            <img src="../static/salud.jpg" alt="imagen meditación y bienestar">
+        </a>
+
+        <a href="Rutina.html" class="module-card">
+            <div class="module-icon">🏋️</div>
+            <div class="module-name">Rutinas de Ejercicio</div>
+            <div class="module-desc">Crea rutinas personalizadas y lleva el control de cada ejercicio.</div>
+            <div class="module-stat"><div class="module-dot"></div> Series, repeticiones y descanso</div>
+            <img src="../static/ejercicio.jpg" alt="imagen registro de gym">
+        </a>
+
+
+        <a href="PerfilNutricional.html" class="module-card">
+            <div class="module-icon">🥗</div>
+            <div class="module-name">Perfil Nutricional</div>
+            <div class="module-desc">Registra tu peso, altura y objetivos de nutrición según tu nivel de actividad.</div>
+            <div class="module-stat"><div class="module-dot"></div> IMC y seguimiento de metas</div>
+            <img src="../static/nutrici0n.jpg" alt="imagen perfil nutricional">
+        </a>
+
+        <a href="Libro.html" class="module-card">
+            <div class="module-icon">📚</div>
+            <div class="module-name">Mis Lecturas</div>
+            <div class="module-desc">Lleva un registro de tus libros: pendientes, en progreso o terminados.</div>
+            <div class="module-stat"><div class="module-dot"></div> Progreso por páginas</div>
+            <img src="../static/lectura.jpg" alt="imagen mis lecturas">
+        </a>
+
+        <a href="RegistroSueno.html" class="module-card">
+            <div class="module-icon">😴</div>
+            <div class="module-name">Registro de Sueño</div>
+            <div class="module-desc">Monitorea tus horas de sueño y calidad de descanso cada noche.</div>
+            <div class="module-stat"><div class="module-dot"></div> Promedio semanal y calidad</div>
+            <img src="../static/registro_sueño.jpg" alt="imagen registro de sueño">
+        </a>
+
+
+        <a href="entradaDiario.html" class="module-card">
+            <div class="module-icon">📓</div>
+            <div class="module-name">Diario Personal</div>
+            <div class="module-desc">Escribe tus reflexiones diarias, qué pasó y tus planes para mañana.</div>
+            <div class="module-stat"><div class="module-dot"></div> Reflexión y planificación</div>
+            <img src="../static/relax.png" alt="imagen diario personal">
+        </a>
+
+        <a href="Objetivos.html" class="module-card">
+            <div class="module-icon">🎯</div>
+            <div class="module-name">Mis Objetivos</div>
+            <div class="module-desc">Define y sigue tus metas personales con fecha límite. El sistema actualiza el estado automáticamente según tu progreso y hábitos.</div>
+            <div class="module-stat"><div class="module-dot"></div> Estado: pendiente, cumplido o vencido</div>
+            <img src="../static/obejetivos.jpg" alt="imagen mis objetivos">
+        </a>
+
+        <a href="ApoyoEmocional.html" class="module-card">
+            <div class="module-icon">💚</div>
+            <div class="module-name">Apoyo Emocional</div>
+            <div class="module-desc">Accede a recursos de bienestar emocional según tu estado de ánimo: técnicas de respiración, gratitud, manejo del estrés y más.</div>
+            <div class="module-stat"><div class="module-dot"></div> Recursos según tu nivel de ánimo</div>
+            <img src="../static/apoyoemocional.jpg" alt="imagen apoyo emocional">
+        </a>
+
+        <a href="FraseMotivadora.html" class="module-card">
+            <div class="module-icon">✨</div>
+            <div class="module-name">Frases Motivadoras</div>
+            <div class="module-desc">Descubre frases inspiradoras que se vinculan a tus objetivos y rachas para mantenerte enfocado en tu crecimiento diario.</div>
+            <div class="module-stat"><div class="module-dot"></div> Asociadas a objetivos y rachas</div>
+            <img src="../static/animo.jpg" alt="imagen frases motivadoras">
+        </a>
+
+        <a href="racha-ejercicio.html" class="module-card">
+            <div class="module-icon">🔥</div>
+            <div class="module-name">Racha de Ejercicio</div>
+            <div class="module-desc">Registra cada día que entrenas y el sistema calcula automáticamente cuántos días consecutivos llevas. ¡No rompas la racha!</div>
+            <div class="module-stat"><div class="module-dot"></div> Días consecutivos calculados automáticamente</div>
+            <img src="../static/ejercicioracha.jpg" alt="imagen racha de ejercicio">
+        </a>
+
+        <a href="racha-lectura.html" class="module-card">
+            <div class="module-icon">📖</div>
+            <div class="module-name">Racha de Lectura</div>
+            <div class="module-desc">Mantén el hábito de leer cada día y sigue tu racha de lectura consecutiva. Cada día cuenta para construir el hábito.</div>
+            <div class="module-stat"><div class="module-dot"></div> Hábito de lectura diaria</div>
+            <img src="../static/racha.jpg" alt="imagen racha de lectura">
+        </a>
+
+        <a href="Usuario.html" class="module-card">
+            <div class="module-icon">👤</div>
+            <div class="module-name">Mi Perfil</div>
+            <div class="module-desc">Gestiona tu cuenta personal: nombre, correo y contraseña. Tu perfil es el punto de partida para personalizar toda la experiencia.</div>
+            <div class="module-stat"><div class="module-dot"></div> Acceso seguro con correo único</div>
+            <img src="../static/icon.jpg" alt="imagen perfil de usuario">
+        </a>
+
+        <a href="ObjetivoMeditacion.html" class="module-card">
+            <div class="module-icon">🧠</div>
+            <div class="module-name">Objetivo de Meditación</div>
+            <div class="module-desc">Establece cuántos días a la semana quieres meditar y por cuánto tiempo. Define tu meta y el sistema lleva el seguimiento por ti.</div>
+            <div class="module-stat"><div class="module-dot"></div> Días y duración personalizables</div>
+            <img src="../static/obejetivos.jpg" alt="imagen objetivo de meditación">
+        </a>
+
+    </div>
+</section>
+
+<section class="quote-section">
+    <p class="quote-text">El primer gran paso es comenzar.</p>
+    <span class="quote-author">— LoboAlfa</span>
+</section>
+
+<footer>
+    <div class="footer-logo">Crece</div>
+    <div class="footer-note">Proyecto BIM1 — Desarrollo Personal · 2026</div>
+</footer>
+
+</body>
+</html>
