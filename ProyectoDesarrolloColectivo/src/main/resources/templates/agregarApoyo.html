@@ -58,7 +58,10 @@
                         <option th:each="user : ${usuario}" th:value="${user.id_usuario}" th:text="${user.nombre_completo}"></option>
                     </select>
                 </div>
-                <button type="submit" class="btn-primary">Agregar Apoyo</button>
+                <div class="detalle-footer">
+                    <button type="submit" class="btn-primary">Agregar Apoyo</button>
+                    <a th:href="@{/apoyoEmocional}" class="btn-secondary">Cancelar</a>
+                </div>
             </form>
 
         </div>
