@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Meditación</title>
+    <link rel="stylesheet" th:href="@{/registroMeditacion.css}">
+</head>
+<body>
+
+<nav>
+    <a href="#" class="nav-logo">Evolu<span>ciona</span></a>
+    <ul class="nav-links">
+        <li><a th:href="@{/}">Inicio</a></li>
+        <li><a th:href="@{/entradaDiario}">Entrada Diario</a></li>
+        <li><a th:href="@{/registroMeditacion}" class="active">Meditación</a></li>
+        <li><a th:href="@{/registrosSuenos}">Sueño</a></li>
+    </ul>
+</nav>
+
+<header class="page-header">
+    <div>
+        <div class="page-tag">Bienestar · Meditación</div>
+        <h1 class="page-title">Gestión de <em>Registro Meditación</em></h1>
+    </div>
+    <a href="#formulario" class="btn-primary">+ Nuevo registro</a>
+</header>
+
+<section class="meditaciones-container">
+    <div th:if="${exito}" class="toast show">
+        <span th:text="${exito}"></span>
+    </div>
+
+    <div th:if="${error}" class="toast show toast-error">
+        <span th:text="${error}"></span>
+    </div>
+
+    <div th:if="${#lists.isEmpty(registroMeditacion)}" class="empty-state">
+        <div class="empty-icon">🧘</div>
+        <div class="empty-text">No hay registros de meditación</div>
+    </div>
+
+    <div th:if="${not #lists.isEmpty(registroMeditacion)}" class="meditaciones-grid">
+        <div class="meditacion-card" th:each="meditacion : ${registroMeditacion}">
+            <div class="meditacion-card-header">
+                <div class="meditacion-avatar">RM</div>
+                <div class="meditacion-actions">
+                    <a th:href="@{/registroMeditacion/editar/{id}(id=${meditacion.id_registro_meditacion})}"
+                       class="btn-icon btn-edit"
+                       title="Editar">✏</a>
+
+                    <a th:href="@{/registroMeditacion/eliminar/{id}(id=${meditacion.id_registro_meditacion})}"
+                       class="btn-icon btn-delete"
+                       title="Eliminar"
+                       onclick="return confirm('¿Deseas eliminar este registro de meditación?');">🗑️</a>
+                </div>
+            </div>
+
+            <h3 class="meditacion-tipo" th:text="${meditacion.tipo_meditacion}">Tipo meditación</h3>
+
+            <div class="meditacion-chips">
+                <span class="nivel-chip" th:text="${meditacion.nivel_dificultad}">Principiante</span>
+                <span class="nivel-chip">
+                    Duración: <span th:text="${meditacion.duracion_minutos}">15</span> min
+                </span>
+            </div>
+
+            <p class="meditacion-fecha">
+                <strong>Fecha:</strong>
+                <span th:text="${#temporals.format(meditacion.fecha_registro, 'yyyy-MM-dd HH:mm')}">2026-04-21 10:30</span>
+            </p>
+
+            <div class="meditacion-footer">
+                <span>ID</span>
+                <strong th:text="${meditacion.id_registro_meditacion}">1</strong>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="form-section-wrap" id="formulario">
+    <div class="form-section">
+        <div class="form-section-header">
+            <h2 class="form-section-title">
+                <span th:if="${registroMeditacionFormu.id_registro_meditacion == null}">Nuevo <em>Registro</em></span>
+                <span th:if="${registroMeditacionFormu.id_registro_meditacion != null}">Editar <em>Registro</em></span>
+            </h2>
+            <p class="form-section-sub">
+                Completa la información para registrar tu sesión de meditación y dar seguimiento a tu bienestar.
+            </p>
+        </div>
+
+        <form th:object="${registroMeditacionFormu}"
+              th:action="${registroMeditacionFormu.id_registro_meditacion == null}
+              ? @{/registroMeditacion/guardar}
+              : @{/registroMeditacion/actualizar/{id}(id=${registroMeditacionFormu.id_registro_meditacion})}"
+              method="post">
+
+            <input type="hidden" th:field="*{id_registro_meditacion}">
+
+            <div class="form-group">
+                <label class="form-label">Tipo de meditación</label>
+                <div class="tipos-picker">
+                    <div class="tipo-toggle">
+                        <input type="radio" id="guiada" th:field="*{tipo_meditacion}" value="Guiada">
+                        <label for="guiada">Guiada</label>
+                    </div>
+
+                    <div class="tipo-toggle">
+                        <input type="radio" id="respiracion" th:field="*{tipo_meditacion}" value="Respiracion">
+                        <label for="respiracion">Respiración</label>
+                    </div>
+
+                    <div class="tipo-toggle">
+                        <input type="radio" id="mindfulness" th:field="*{tipo_meditacion}" value="Mindfulness">
+                        <label for="mindfulness">Mindfulness</label>
+                    </div>
+
+                    <div class="tipo-toggle">
+                        <input type="radio" id="bodyScan" th:field="*{tipo_meditacion}" value="BodyScan">
+                        <label for="bodyScan">Body Scan</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Duración (minutos)</label>
+                    <input type="number" class="form-input" th:field="*{duracion_minutos}" min="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Nivel de dificultad</label>
+                    <select class="form-select" th:field="*{nivel_dificultad}" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="Principiante">Principiante</option>
+                        <option value="Intermedio">Intermedio</option>
+                        <option value="Avanzado">Avanzado</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Fecha de registro</label>
+                <input type="datetime-local" class="form-input" th:field="*{fecha_registro}" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">ID Usuario</label>
+                <input type="number" class="form-input" th:field="*{fk_id_usuario}" required>
+            </div>
+
+            <div class="form-actions">
+                <a th:href="@{/registroMeditacion}" class="btn-secondary">Cancelar</a>
+                <button type="submit"
+                        class="btn-primary"
+                        th:text="${registroMeditacionFormu.id_registro_meditacion == null} ? 'Guardar' : 'Actualizar'">
+                    Guardar
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<script>
+    setTimeout(() => {
+        const toasts = document.querySelectorAll('.toast');
+        toasts.forEach(toast => toast.classList.remove('show'));
+    }, 3000);
+</script>
+
+</body>
+</html>
