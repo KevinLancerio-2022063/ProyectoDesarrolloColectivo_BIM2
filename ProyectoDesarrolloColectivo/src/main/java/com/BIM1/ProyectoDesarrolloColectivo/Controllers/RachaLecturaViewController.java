@@ -2,6 +2,7 @@ package com.BIM1.ProyectoDesarrolloColectivo.Controllers;
 
 import com.BIM1.ProyectoDesarrolloColectivo.Entity.RachaLectura;
 import com.BIM1.ProyectoDesarrolloColectivo.Service.RachaLecturaService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,27 +21,39 @@ public class RachaLecturaViewController {
     }
 
     @GetMapping
-    public String mostrarVista(@RequestParam(required = false) Integer usuarioId, Model model) {
+    public String mostrarVista(HttpSession session, Model model) {
 
-        if (usuarioId != null) {
-            List<RachaLectura> rachas = rachaLecturaService.getRachasByUsuario(usuarioId);
-            model.addAttribute("rachas", rachas);
-            model.addAttribute("usuarioId", usuarioId);
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+
+        // Protección: si no hay sesión
+        if (usuarioId == null) {
+            return "redirect:/login";
         }
+
+        model.addAttribute(
+                "rachas",
+                rachaLecturaService.getRachasByUsuario(usuarioId)
+        );
 
         return "racha-lectura";
     }
 
     @PostMapping
     public String guardarRacha(
-            @RequestParam Integer usuarioId,
             @RequestParam String fechaRacha,
+            HttpSession session,
             Model model) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+
+        if (usuarioId == null) {
+            return "redirect:/login";
+        }
 
         LocalDate fecha = LocalDate.parse(fechaRacha);
         LocalDate hoy = LocalDate.now();
 
-        // Validación para fecha pasada
+        // Validación fecha pasada
         if (fecha.isBefore(hoy)) {
             model.addAttribute("error", "La fecha no puede ser pasada");
             model.addAttribute(
@@ -50,25 +63,23 @@ public class RachaLecturaViewController {
             return "racha-lectura";
         }
 
-        // Validación para racha duplicada en la misma fecha
-        List<RachaLectura> historial = rachaLecturaService.getRachasByUsuario(usuarioId);
-        if (historial != null) {
-            for (RachaLectura r : historial) {
-                if (r.getFecha() != null && r.getFecha().equals(fecha)) {
-                    model.addAttribute(
-                            "error",
-                            "Ya registraste una racha de lectura para el día " + fecha
-                    );
-                    model.addAttribute("rachas", historial);
-                    return "racha-lectura";
-                }
+        // Validación duplicado
+        List<RachaLectura> historial =
+                rachaLecturaService.getRachasByUsuario(usuarioId);
+
+        for (RachaLectura r : historial) {
+            if (r.getFecha() != null && r.getFecha().equals(fecha)) {
+                model.addAttribute(
+                        "error",
+                        "Ya registraste una racha de lectura para el día " + fecha
+                );
+                model.addAttribute("rachas", historial);
+                return "racha-lectura";
             }
         }
 
-
         rachaLecturaService.addRacha(usuarioId, fecha);
 
-
-        return "redirect:/rachaLectura?usuarioId=" + usuarioId;
+        return "redirect:/rachaLectura";
     }
 }
