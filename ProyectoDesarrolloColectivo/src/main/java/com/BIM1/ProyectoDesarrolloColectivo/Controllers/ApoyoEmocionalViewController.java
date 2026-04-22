@@ -67,6 +67,6 @@ public class ApoyoEmocionalViewController {
 
         service.updateApoyoEmocional(apoyoEmocional.getIdApoyoEmocional(),apoyoEmocional);
 
-        return "redirect:/cliente";
+        return "redirect:/apoyoEmocional";
     }
 }
