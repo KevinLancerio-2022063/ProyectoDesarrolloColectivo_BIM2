@@ -2,11 +2,14 @@ package com.BIM1.ProyectoDesarrolloColectivo.Controllers;
 
 import com.BIM1.ProyectoDesarrolloColectivo.Entity.ApoyoEmocional;
 import com.BIM1.ProyectoDesarrolloColectivo.Service.ApoyoEmocionalService;
+import com.BIM1.ProyectoDesarrolloColectivo.Service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -16,16 +19,14 @@ public class ApoyoEmocionalViewController {
     @Autowired
     private ApoyoEmocionalService service;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
     @GetMapping("/apoyoEmocional")
     public String mostrarApoyo(Model model){
         List<ApoyoEmocional> list = service.getAllApoyoEmovional();
         model.addAttribute("listaApoyos",list);
         return "ApoyoEmocional";
-    }
-
-    @GetMapping("/agregarApoyo")
-    public String mostrarAgregar(){
-        return "agregraApoyo";
     }
 
     @GetMapping("/detalleApoyo/{id}")
@@ -41,4 +42,16 @@ public class ApoyoEmocionalViewController {
         return "redirect:/apoyoEmocional";
     }
 
+    @GetMapping("/agregarApoyo")
+    public String agregarApoyoEmocional(Model model){
+        model.addAttribute("apoyo",new ApoyoEmocional());
+        model.addAttribute("usuario",usuarioService.getAllUsuarios());
+        return "agregarApoyo";
+    }
+
+    @PostMapping("/guardarApoyoCreado")
+    public String guardarApoyoCreado(@ModelAttribute ApoyoEmocional apoyoEmocional){
+        service.saveApoyoEmocional(apoyoEmocional);
+        return "redirect:/apoyoEmocional";
+    }
 }
