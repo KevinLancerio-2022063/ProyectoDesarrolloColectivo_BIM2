@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/objetivosMeditacion")
+@RequestMapping("/objetivoMeditacion")
 public class ObjetivoMeditacionViewController {
 
     @Autowired
@@ -21,26 +21,26 @@ public class ObjetivoMeditacionViewController {
     public String listar(Model model) {
         model.addAttribute("objetivo", new ObjetivoMeditacion());
         model.addAttribute("objetivos", objService.getAllObjetivosMeditacion());
-        return "objetivosMeditacion";
+        return "objetivoMeditacion";
     }
 
-    @PostMapping("/guardarObj")
+    @PostMapping("/guardar")
     public String guardar(ObjetivoMeditacion objetivo) {
         objService.saveObjetivoMeditacion(objetivo);
-        return "redirect:/objetivosMeditacion";
+        return "redirect:/objetivoMeditacion";
     }
 
-    @GetMapping("/editarObj/{id}")
+    @GetMapping("/editar/{id}")
         public String editar(@PathVariable Integer id, Model model) {
         model.addAttribute("objetivo", objService.getObjetivosMeditacionById(id));
         model.addAttribute("objetivos", objService.getAllObjetivosMeditacion());
-        return "objetivosMeditacion";
+        return "objetivoMeditacion";
     }
 
     @GetMapping("/eliminar/{id}")
-    public String eliminar (@PathVariable Integer id) {
+    public String eliminar(@PathVariable Integer id) {
         objService.deleteObjetivoMeditacion(id);
-        return "redirect:/objetivosMeditacion";
+        return "redirect:/objetivoMeditacion";
     }
 
 

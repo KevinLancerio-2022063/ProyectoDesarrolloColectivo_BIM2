@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Objetivo Meditación</title>
+    <link rel="stylesheet" th:href="@{/baseLancerio.css}">
+</head>
+
+<body>
+
+<div class="usuario-container">
+
+    <!-- HEADER -->
+    <h1 style="margin-bottom:2rem;">
+        Objetivos de <span style="color: var(--verde-menta);">Meditación</span>
+    </h1>
+
+    <!-- STATS (igual que usuarios) -->
+    <div class="stats-pills">
+
+        <div class="stat-pill">
+            <div class="stat-pill-num" th:text="${#lists.size(objetivos)}">0</div>
+            <div class="stat-pill-label">Objetivos</div>
+        </div>
+
+        <div class="stat-pill">
+            <div class="stat-pill-num"
+                 th:text="${#lists.size(objetivos) * 2}">0</div>
+            <div class="stat-pill-label">Acciones</div>
+        </div>
+
+        <div class="stat-pill">
+            <div class="stat-pill-num">100%</div>
+            <div class="stat-pill-label">Activos</div>
+        </div>
+
+    </div>
+
+    <!-- FORM Y TOOLBAR STYLE USUARIOS -->
+    <div class="toolbar">
+        <div class="search-wrap">
+            <input type="text"
+                   class="search-input"
+                   placeholder="Buscar objetivo..."
+                   onkeyup="filtrarTabla()">
+        </div>
+
+        <button class="btn"
+                onclick="document.getElementById('formulario').scrollIntoView()">
+            + Nuevo objetivo
+        </button>
+    </div>
+
+    <!-- FORMULARIO -->
+    <div class="card" id="formulario" style="margin-bottom:2rem;">
+
+        <div class="section-title"
+             th:text="${objetivo.id_objetivo_meditacion != null} ? 'Editar Objetivo' : 'Nuevo Objetivo'">
+        </div>
+
+        <form th:action="@{/objetivoMeditacion/guardar}"
+              th:object="${objetivo}"
+              method="post"
+              style="display:grid; gap:1rem;">
+
+            <input type="hidden" th:field="*{id_objetivo_meditacion}">
+
+            <input type="text"
+                   th:field="*{tiempo_objetivo}"
+                   placeholder="Tiempo objetivo (Ej: 30 minutos diarios)">
+
+            <input type="number"
+                   th:field="*{dias_objetivo}"
+                   placeholder="Días objetivo">
+
+            <input type="number"
+                   th:field="*{fk_id_usuario}"
+                   placeholder="ID Usuario">
+
+            <button type="submit" class="btn">Guardar Objetivo</button>
+
+        </form>
+
+    </div>
+
+    <!-- TABLA -->
+    <div class="table-wrap">
+
+        <table class="usuario-table" id="tablaObjetivos">
+
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tiempo Objetivo</th>
+                <th>Días Objetivo</th>
+                <th>Usuario</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr th:each="o : ${objetivos}">
+
+                <td th:text="${o.id_objetivo_meditacion}"></td>
+
+                <td th:text="${o.tiempo_objetivo}"></td>
+
+                <td th:text="${o.dias_objetivo}"></td>
+
+                <td th:text="${o.fk_id_usuario}"></td>
+
+                <td class="td-actions">
+                    <div class="td-actions-inner">
+
+                        <a th:href="@{/objetivoMeditacion/editar/{id}(id=${o.id_objetivo_meditacion})}">
+                            <button class="action-btn">✏️</button>
+                        </a>
+
+                        <a th:href="@{/objetivoMeditacion/eliminar/{id}(id=${o.id_objetivo_meditacion})}"
+                           onclick="return confirm('¿Eliminar objetivo?')">
+                            <button class="action-btn">🗑️</button>
+                        </a>
+
+                    </div>
+                </td>
+
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(objetivos)}">
+                <td colspan="5">No hay objetivos registrados</td>
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>
