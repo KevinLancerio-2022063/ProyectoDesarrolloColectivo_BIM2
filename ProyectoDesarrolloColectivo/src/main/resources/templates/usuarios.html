@@ -9,7 +9,7 @@
 
 <body>
 
-<div class="ejercicios-container">
+<div class="usuario-container">
 
     <!-- HEADER -->
     <h1 style="margin-bottom:2rem;">
@@ -57,7 +57,7 @@
     <!-- TABLA -->
     <div class="table-wrap">
 
-        <table class="ejercicios-table" id="tablaUsuarios">
+        <table class="usuario-table" id="tablaUsuarios">
 
             <thead>
             <tr>
@@ -74,7 +74,7 @@
 
                 <!-- NOMBRE -->
                 <td class="td-nombre">
-                    <div class="ejercicio-dot">👤</div>
+                    <div class="usuario-dot">👤</div>
                     <div>
                         <strong th:text="${u.nombre_completo}"></strong>
                         <small th:text="'ID #' + ${u.id_usuario}"></small>
@@ -133,19 +133,22 @@
 
             <input type="text" th:field="*{nombre_completo}" placeholder="Nombre completo" required>
 
-            <input type="email" th:field="*{correoUsuario}" placeholder="Correo electrónico" required>
+            <input type="email"
+                   th:field="*{correoUsuario}"
+                   placeholder="Correo electrónico"
+                   th:readonly="${usuario.id_usuario != null}">
 
             <input type="password" th:field="*{contraseña}" placeholder="Contraseña" required>
 
-            <!-- ERRORES -->
-            <p th:if="${#fields.hasErrors('nombre_completo')}"
-               th:errors="*{nombre_completo}" style="color:red;"></p>
+<!--            &lt;!&ndash; ERRORES &ndash;&gt;-->
+<!--            <p th:if="${#fields.hasErrors('nombre_completo')}"-->
+<!--               th:errors="*{nombre_completo}" style="color:red;"></p>-->
 
-            <p th:if="${#fields.hasErrors('correoUsuario')}"
-               th:errors="*{correoUsuario}" style="color:red;"></p>
+<!--            <p th:if="${#fields.hasErrors('correoUsuario')}"-->
+<!--               th:errors="*{correoUsuario}" style="color:red;"></p>-->
 
-            <p th:if="${#fields.hasErrors('contraseña')}"
-               th:errors="*{contraseña}" style="color:red;"></p>
+<!--            <p th:if="${#fields.hasErrors('contraseña')}"-->
+<!--               th:errors="*{contraseña}" style="color:red;"></p>-->
 
             <button type="submit" class="btn">Guardar</button>
 
