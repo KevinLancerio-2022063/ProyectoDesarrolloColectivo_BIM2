@@ -56,7 +56,7 @@ public class PerfilNutricionalController {
     public String eliminarPerfil(@PathVariable Integer id, RedirectAttributes redirectAttributes){
         perfilNutricionalService.deletePerfilNutricional(id);
         redirectAttributes.addFlashAttribute("exito", "el perfil se ha eliminado");
-        return "perfilNutricional";
+        return "redirect:/perfilNutricional";
     }
 
     @PostMapping("/actualizarPerfilNutricional/{id}")
