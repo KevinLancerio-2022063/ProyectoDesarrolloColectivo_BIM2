@@ -9,12 +9,15 @@
     <link rel="stylesheet" th:href="@{/PerfilNutricional.css}">
 </head>
 <body>
-    <nav>
-  <a href="index.html" class="nav-logo">Evoluciona</a>
+
+<nav>
+  <a th:href="@{/index}" class="nav-logo">Evoluciona</a>
   <ul class="nav-links">
-    <li><a href="index.html">Inicio</a></li>
+    <li><a th:href="@{/index}">Inicio</a></li>
   </ul>
 </nav>
+
+<div th:if="${exito}" class="alerta" th:text="${exito}"></div>
 
 <div class="page-header">
   <div class="page-header-left">
