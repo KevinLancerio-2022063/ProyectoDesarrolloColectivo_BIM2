@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Usuarios</title>
+    <link rel="stylesheet" th:href="@{/baseLancerio.css}">
+</head>
+
+<body>
+
+<div class="ejercicios-container">
+
+    <!-- HEADER -->
+    <h1 style="margin-bottom:2rem;">
+        Mis <span style="color: var(--verde-menta);">Usuarios</span>
+    </h1>
+
+    <!-- STATS -->
+    <div class="stats-pills">
+
+        <div class="stat-pill">
+            <div class="stat-pill-num" th:text="${#lists.size(usuarios)}">0</div>
+            <div class="stat-pill-label">Usuarios</div>
+        </div>
+
+        <div class="stat-pill">
+            <div class="stat-pill-num"
+                 th:text="${#lists.size(usuarios) * 2}">0</div>
+            <div class="stat-pill-label">Acciones</div>
+        </div>
+
+        <div class="stat-pill">
+            <div class="stat-pill-num">100%</div>
+            <div class="stat-pill-label">Activos</div>
+        </div>
+
+    </div>
+
+    <!-- TOOLBAR -->
+    <div class="toolbar">
+
+        <div class="search-wrap">
+            <input type="text" id="buscar"
+                   class="search-input"
+                   placeholder="Buscar usuario..."
+                   onkeyup="filtrarTabla()">
+        </div>
+
+        <button class="btn"
+                onclick="document.getElementById('formulario').scrollIntoView()">
+            + Nuevo usuario
+        </button>
+
+    </div>
+
+    <!-- TABLA -->
+    <div class="table-wrap">
+
+        <table class="ejercicios-table" id="tablaUsuarios">
+
+            <thead>
+            <tr>
+                <th>Usuario</th>
+                <th>Correo</th>
+                <th>Contraseña</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr th:each="u : ${usuarios}">
+
+                <!-- NOMBRE -->
+                <td class="td-nombre">
+                    <div class="ejercicio-dot">👤</div>
+                    <div>
+                        <strong th:text="${u.nombre_completo}"></strong>
+                        <small th:text="'ID #' + ${u.id_usuario}"></small>
+                    </div>
+                </td>
+
+                <!-- CORREO -->
+                <td th:text="${u.correoUsuario}"></td>
+
+                <!-- PASSWORD -->
+                <td>
+                    <span class="stat-badge">****</span>
+                </td>
+
+                <!-- ACCIONES -->
+                <td class="td-actions">
+                    <div class="td-actions-inner">
+
+                        <a th:href="@{/usuarios/editar/{id}(id=${u.id_usuario})}">
+                            <button class="action-btn">✏️</button>
+                        </a>
+
+                        <a th:href="@{/usuarios/eliminar/{id}(id=${u.id_usuario})}"
+                           onclick="return confirm('¿Eliminar usuario?')">
+                            <button class="action-btn">🗑️</button>
+                        </a>
+
+                    </div>
+                </td>
+
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(usuarios)}">
+                <td colspan="4">No hay usuarios registrados</td>
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <!-- FORMULARIO -->
+    <div id="formulario" style="margin-top:3rem; max-width:500px;">
+
+        <h2 style="margin-bottom:1rem;"
+            th:text="${usuario.id_usuario != null} ? 'Editar Usuario' : 'Nuevo Usuario'">
+        </h2>
+
+        <form th:action="@{/usuarios/guardar}"
+              th:object="${usuario}"
+              method="post"
+              style="display:grid; gap:1rem;">
+
+            <input type="hidden" th:field="*{id_usuario}">
+
+            <input type="text" th:field="*{nombre_completo}" placeholder="Nombre completo" required>
+
+            <input type="email" th:field="*{correoUsuario}" placeholder="Correo electrónico" required>
+
+            <input type="password" th:field="*{contraseña}" placeholder="Contraseña" required>
+
+            <!-- ERRORES -->
+            <p th:if="${#fields.hasErrors('nombre_completo')}"
+               th:errors="*{nombre_completo}" style="color:red;"></p>
+
+            <p th:if="${#fields.hasErrors('correoUsuario')}"
+               th:errors="*{correoUsuario}" style="color:red;"></p>
+
+            <p th:if="${#fields.hasErrors('contraseña')}"
+               th:errors="*{contraseña}" style="color:red;"></p>
+
+            <button type="submit" class="btn">Guardar</button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- BUSCADOR -->
+<script>
+    function filtrarTabla() {
+        let input = document.getElementById("buscar").value.toLowerCase();
+        let filas = document.querySelectorAll("#tablaUsuarios tbody tr");
+
+        filas.forEach(fila => {
+            let texto = fila.innerText.toLowerCase();
+            fila.style.display = texto.includes(input) ? "" : "none";
+        });
+    }
+</script>
+
+</body>
+</html>
