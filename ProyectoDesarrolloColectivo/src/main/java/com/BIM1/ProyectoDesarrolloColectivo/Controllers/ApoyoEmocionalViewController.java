@@ -56,16 +56,19 @@ public class ApoyoEmocionalViewController {
     public String formularioEditar(@PathVariable Integer id, Model model) {
         ApoyoEmocional apoyo = service.getById(id);
         model.addAttribute("apoyo", apoyo);
+        model.addAttribute("usuario",usuarioService.getAllUsuarios());
         return "editarApoyo";
     }
 
-    @PutMapping("/guardarApoyo")
+    @PostMapping("/guardarApoyo")
     public String guardarApoyo(@ModelAttribute ApoyoEmocional apoyoEmocional) {
-
-        System.out.println("ENTRO A ACTUALIZAR");
-        System.out.println(apoyoEmocional.getIdApoyoEmocional());
-        
-        service.updateApoyoEmocional(apoyoEmocional.getIdApoyoEmocional(),apoyoEmocional);
+        ApoyoEmocional original = service.getById(apoyoEmocional.getIdApoyoEmocional());
+        original.setTitulo(apoyoEmocional.getTitulo());
+        original.setContenido(apoyoEmocional.getContenido());
+        original.setCategoria(apoyoEmocional.getCategoria());
+        original.setNivelAnimo(apoyoEmocional.getNivelAnimo());
+        original.setUsuario(apoyoEmocional.getUsuario());
+        service.updateApoyoEmocional(original.getIdApoyoEmocional(),apoyoEmocional);
 
         return "redirect:/apoyoEmocional";
     }
