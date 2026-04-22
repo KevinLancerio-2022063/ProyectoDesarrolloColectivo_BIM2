@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Libro</title>
-    <link rel="stylesheet" th:href="@{/Libro.css}">
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Ejercicio</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel="stylesheet" th:href="@{/Base.css}">
+    <link rel="stylesheet" th:href="@{/Libro.css}">
 </head>
 <body>
 
@@ -19,21 +21,27 @@
 </div>
 
 <div class="libros-container">
-
-    <form th:action="@{/libro/buscarLibro}" method="get">
-        <input type="number" name="id" placeholder="Buscar por id"/>
-        <button type="submit">Buscar</button>
+  
+  <div class="toolbar">
+    <form th:action="@{/libro/buscarLibro}" method="get" style="display:contents;">
+      <div class="search-wrap">
+        <input type="text" name="id" class="search-input" placeholder="Buscar por Id"/>
+      </div>
     </form>
 
     <span th:text="${#lists.size(libros)} + ' libro(s)'"></span>
+  </div>
 
     <div class="libros-grid">
 
-        <div class="libro-card" th:each="l : ${libros}">
+        <div class="libro-card" th:each="libro : ${libros}">
 
+            <div class="libro-"libro-card">
+              <div class="libro-avatar" th:text="${#strings.substring(libro.titulo_libro,0,1)}">L</div>
+            
+            </div>
             <div class="libro-spine"
-                 th:classappend="${l.estado == 'leyendo'} ? ' leyendo' :
-                                 (${l.estado == 'terminado'} ? ' terminado' : '')">
+                 
             </div>
 
             <div class="libro-cover">
@@ -61,7 +69,6 @@
 
     </div>
 </div>
-
 <form th:object="${librosFormu}"
       th:action="${librosFormu.id_libro != null} ?
       @{/libro/actualizarLibro/{id}(id=${librosFormu.id_libro})} :
