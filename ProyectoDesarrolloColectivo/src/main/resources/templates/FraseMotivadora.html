@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang='es' xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset='utf-8'>
     <title>Frase del Día</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' href='../Styles/BaseJuarez.css'>
-    <link rel='stylesheet' href='../Styles/FraseMotivadora.css'>
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-regular-straight/css/uicons-regular-straight.css">
+    <link rel='stylesheet' th:href="@{/FraseMotivadora.css}">
+    <link rel='stylesheet' th:href="@{/Base.css}">
 </head>
 <body>
 
 <nav>
-  <a href="index.html" class="nav-logo">Evoluciona</a>
+  <a th:href="@{/}" class="nav-logo">Evoluciona</a>
   <ul class="nav-links">
-    <li><a href="index.html">Inicio</a></li>
+    <li><a th:href="@{/}">Inicio</a></li>
   </ul>
 </nav>
 
@@ -21,21 +22,23 @@
     <div class="page-tag">Inspiración diaria</div>
     <h1 class="page-title">Frase <em>Motivadora</em></h1>
   </div>
+  <a th:href="@{/agregarFrase}" class="btn-primary">＋ Nueva Frase</a>
 </div>
 
 <div class="frase-container">
 
-  <div class="frase-card">
+  <div class="frase-card" th:each="f, stat : ${frases}">
 
-      <span class="frase-label">Frase motivadora del día</span>
+    <span class="frase-label" th:text="'Frase No.' + ${stat.count}"></span>
 
-      <p class="frase-texto">
-        “El éxito no es casualidad, es disciplina constante.”
-      </p>
+    <p class="frase-texto" th:text="${f.texto}"></p>
 
-      <p class="frase-autor">
-        — Jim Rohn
-      </p>
+    <p class="frase-autor" th:text="'--' + ${f.autor}"></p>
+
+    <div class="detalle-footer">
+      <a th:href="@{'/editarFrase/' + ${f.idFraseMotivadora} }" class="btn-editar"><i class="fi fi-rs-pencil"></i></a>
+      <a th:href="@{'/eliminar-frase/' + ${f.idFraseMotivadora}}" class="btn-eliminar"><i class="fi fi-rs-trash"></i></a>
+    </div>
 
   </div>
 
