@@ -2,9 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Ejercicio</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Libro</title>
     <link rel="stylesheet" th:href="@{/Base.css}">
     <link rel="stylesheet" th:href="@{/Libro.css}">
 </head>
@@ -12,6 +10,9 @@
 
 <nav>
     <a th:href="@{/index}" class="nav-logo">Evoluciona</a>
+    <ul class="nav-links">
+        <li><a th:href="@{/index}">Inicio</a></li>
+    </ul>
 </nav>
 
 <div th:if="${exito}" class="alerta" th:text="${exito}"></div>
@@ -21,49 +22,81 @@
 </div>
 
 <div class="libros-container">
-  
-  <div class="toolbar">
-    <form th:action="@{/libro/buscarLibro}" method="get" style="display:contents;">
-      <div class="search-wrap">
-        <input type="text" name="id" class="search-input" placeholder="Buscar por Id"/>
-      </div>
-    </form>
 
-    <span th:text="${#lists.size(libros)} + ' libro(s)'"></span>
-  </div>
+    <div class="toolbar">
+        <div class="search-wrap">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+            <input type="number" name="id" class="search-input" placeholder="Buscar por ID..."/>
+        </div>
+        <form th:action="@{/libro/buscarLibro}" method="get" class="search-wrap">
+            <input type="number" name="id" class="search-input" placeholder="Buscar por Id"/>
+        </form>
+
+        <span th:text="${#lists.size(libros)} + ' libro(s)'"></span>
+    </div>
 
     <div class="libros-grid">
 
         <div class="libro-card" th:each="libro : ${libros}">
 
-            <div class="libro-"libro-card">
-              <div class="libro-avatar" th:text="${#strings.substring(libro.titulo_libro,0,1)}">L</div>
-            
-            </div>
             <div class="libro-spine"
-                 
+                 th:classappend="${libro.estado}">
             </div>
 
             <div class="libro-cover">
+
                 <div class="libro-icon">📚</div>
 
                 <div class="libro-meta">
-                    <div th:text="${l.titulo_libro}"></div>
-                    <div th:text="${l.autor_libro}"></div>
 
-                    <span th:text="${l.estado}"></span>
+                    <div class="libro-titulo"
+                         th:text="${libro.titulo_libro}">
+                    </div>
+
+                    <div class="libro-autor"
+                         th:text="${libro.autor_libro}">
+                    </div>
+
+                    <span class="libro-estado-badge"
+                          th:classappend="
+                          ${libro.estado == 'pendiente'} ? 'badge-pendiente' :
+                          (${libro.estado == 'leyendo'} ? 'badge-leyendo' : 'badge-terminado')"
+                          th:text="${libro.estado}">
+                    </span>
+
+                </div>
+            </div>
+
+            <div class="libro-progreso">
+                <div class="progreso-texto">
+                    <span th:text="${libro.cantidad_leido} + ' / ' + ${libro.cantidad_pag}"></span>
+                    <span th:text="${(libro.cantidad_leido * 100) / libro.cantidad_pag} + '%'"></span>
+                </div>
+
+                <div class="progreso-bar">
+                    <div class="progreso-fill"
+                         th:style="'width:' + ${(libro.cantidad_leido * 100) / libro.cantidad_pag} + '%'"
+                         th:classappend="${libro.estado == 'terminado'} ? 'completo'">
+                    </div>
                 </div>
             </div>
 
             <div class="libro-footer">
                 <span>Usuario <strong th:text="${l.fk_id_usuario}"></strong></span>
 
-                <a th:href="@{/libro/editarLibro/{id}(id=${l.id_libro})}">✏️</a>
+                <span class="libro-footer-stat">
+                    Usuario <strong th:text="${libro.fk_id_usuario}"></strong>
+                </span>
 
-                <form th:action="@{/libro/eliminarLibro/{id}(id=${l.id_libro})}" method="post">
-                    <button type="submit">🗑️</button>
-                </form>
-            </div>
+                <div class="libro-actions">
+                    <a th:href="@{/libro/editarLibro/{id}(id=${libro.id_libro})}">✏️</a>
+
+                    <form th:action="@{/libro/eliminarLibro/{id}(id=${libro.id_libro})}" method="post">
+                        <button type="submit">🗑️</button>
+                    </form>
+                </div>
 
         </div>
 
