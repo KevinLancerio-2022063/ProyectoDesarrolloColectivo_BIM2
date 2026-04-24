@@ -84,7 +84,6 @@
             </div>
 
             <div class="libro-footer">
-                <span>Usuario <strong th:text="${l.fk_id_usuario}"></strong></span>
 
                 <span class="libro-footer-stat">
                     Usuario <strong th:text="${libro.fk_id_usuario}"></strong>
@@ -98,46 +97,91 @@
                     </form>
                 </div>
 
+            </div>
+
         </div>
 
     </div>
 </div>
-<form th:object="${librosFormu}"
-      th:action="${librosFormu.id_libro != null} ?
-      @{/libro/actualizarLibro/{id}(id=${librosFormu.id_libro})} :
-      @{/libro/guardarLibro}"
-      method="post">
 
-    <h2 th:text="${librosFormu.id_libro != null} ? 'Editar Libro' : 'Nuevo Libro'"></h2>
+<div class="form-section-wrap">
 
-    <input type="text" th:field="*{titulo_libro}" placeholder="Título"/>
-    <span th:errors="*{titulo_libro}"></span>
+    <div class="form-section">
 
-    <input type="text" th:field="*{autor_libro}" placeholder="Autor"/>
-    <span th:errors="*{autor_libro}"></span>
+        <div class="form-section-header">
+            <h2 class="form-section-title"
+                th:text="${librosFormu.id_libro != null} ? 'Editar Libro' : 'Nuevo Libro'">
+            </h2>
 
-    <select th:field="*{estado}">
-        <option value="">Seleccionar</option>
-        <option value="pendiente">Pendiente</option>
-        <option value="leyendo">Leyendo</option>
-        <option value="terminado">Terminado</option>
-    </select>
-    <span th:errors="*{estado}"></span>
+            <p class="form-section-sub">
+                Completa la información de tu libro y lleva el control de tu progreso.
+            </p>
+        </div>
 
-    <input type="number" th:field="*{cantidad_pag}" placeholder="Total páginas"/>
-    <span th:errors="*{cantidad_pag}"></span>
+        <form th:object="${librosFormu}"
+              th:action="${librosFormu.id_libro != null} ?
+          @{/libro/actualizarLibro/{id}(id=${librosFormu.id_libro})} :
+          @{/libro/guardarLibro}"
+              method="post">
 
-    <input type="number" th:field="*{cantidad_leido}" placeholder="Leídas"/>
-    <span th:errors="*{cantidad_leido}"></span>
+            <input type="hidden" th:field="*{id_libro}"/>
 
-    <input type="number" th:field="*{fk_id_usuario}" placeholder="Usuario"/>
-    <span th:errors="*{fk_id_usuario}"></span>
+            <div class="form-group">
+                <label class="form-label">Título</label>
+                <input class="form-input" type="text" th:field="*{titulo_libro}" placeholder="Nombre del libro"/>
+                <span th:errors="*{titulo_libro}"></span>
+            </div>
 
-    <button type="submit"
-            th:text="${librosFormu.id_libro != null} ? 'Actualizar' : 'Guardar'">
-    </button>
+            <div class="form-group">
+                <label class="form-label">Autor</label>
+                <input class="form-input" type="text" th:field="*{autor_libro}" placeholder="Autor del libro"/>
+                <span th:errors="*{autor_libro}"></span>
+            </div>
 
-</form>
+            <div class="form-group">
+                <label class="form-label">Estado</label>
+                <select class="form-select" th:field="*{estado}">
+                    <option value="">Seleccionar</option>
+                    <option value="pendiente">Pendiente</option>
+                    <option value="leyendo">Leyendo</option>
+                    <option value="terminado">Terminado</option>
+                </select>
+                <span th:errors="*{estado}"></span>
+            </div>
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label class="form-label">Total páginas</label>
+                    <input class="form-input" type="number" th:field="*{cantidad_pag}"/>
+                    <span th:errors="*{cantidad_pag}"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Páginas leídas</label>
+                    <input class="form-input" type="number" th:field="*{cantidad_leido}"/>
+                    <span th:errors="*{cantidad_leido}"></span>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Usuario</label>
+                <input class="form-input" type="number" th:field="*{fk_id_usuario}"/>
+                <span th:errors="*{fk_id_usuario}"></span>
+            </div>
+
+            <div class="form-actions">
+
+                <button type="submit" class="btn-primary"
+                        th:text="${librosFormu.id_libro != null} ? 'Actualizar' : 'Guardar'">
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
 
 </body>
 </html>
