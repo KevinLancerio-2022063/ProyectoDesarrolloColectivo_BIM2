@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset='utf-8'>
-    <title>Libro</title>
+    <meta charset="utf-8">
+    <title>Mis Lecturas</title>
     <link rel="stylesheet" th:href="@{/Base.css}">
     <link rel="stylesheet" th:href="@{/Libro.css}">
 </head>
@@ -18,23 +18,26 @@
 <div th:if="${exito}" class="alerta" th:text="${exito}"></div>
 
 <div class="page-header">
-    <h1>Mis Lecturas</h1>
+    <div class="page-header-left">
+        <div class="page-tag">Lectura y progreso</div>
+        <h1 class="page-title">Mis <em>Lecturas</em></h1>
+    </div>
+    <a th:href="@{/libro}" class="btn-primary">＋ Nuevo libro</a>
 </div>
 
 <div class="libros-container">
 
     <div class="toolbar">
-        <div class="search-wrap">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-            </svg>
-            <input type="number" name="id" class="search-input" placeholder="Buscar por ID..."/>
-        </div>
-        <form th:action="@{/libro/buscarLibro}" method="get" class="search-wrap">
-            <input type="number" name="id" class="search-input" placeholder="Buscar por Id"/>
+        <form th:action="@{/libro/buscarLibro}" method="get" style="display:contents;">
+            <div class="search-wrap">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                </svg>
+                <input type="number" name="id" class="search-input" placeholder="Buscar por ID..."/>
+            </div>
         </form>
-
-        <span th:text="${#lists.size(libros)} + ' libro(s)'"></span>
+        <span style="font-size:0.82rem;opacity:0.5;margin-left:auto;"
+              th:text="${#lists.size(libros)} + ' libro(s)'">0 libro(s)</span>
     </div>
 
     <div class="libros-grid">
@@ -42,7 +45,7 @@
         <div class="libro-card" th:each="libro : ${libros}">
 
             <div class="libro-spine"
-                 th:classappend="${libro.estado}">
+                 th:classappend="${libro.estado == 'leyendo'} ? 'leyendo' : (${libro.estado == 'terminado'} ? 'terminado' : '')">
             </div>
 
             <div class="libro-cover">
@@ -50,34 +53,24 @@
                 <div class="libro-icon">📚</div>
 
                 <div class="libro-meta">
-
-                    <div class="libro-titulo"
-                         th:text="${libro.titulo_libro}">
-                    </div>
-
-                    <div class="libro-autor"
-                         th:text="${libro.autor_libro}">
-                    </div>
-
+                    <div class="libro-titulo" th:text="${libro.titulo_libro}">Título</div>
+                    <div class="libro-autor"  th:text="${libro.autor_libro}">Autor</div>
                     <span class="libro-estado-badge"
-                          th:classappend="
-                          ${libro.estado == 'pendiente'} ? 'badge-pendiente' :
-                          (${libro.estado == 'leyendo'} ? 'badge-leyendo' : 'badge-terminado')"
-                          th:text="${libro.estado}">
-                    </span>
-
+                          th:classappend="${libro.estado == 'pendiente'} ? 'badge-pendiente' :
+                                         (${libro.estado == 'leyendo'}  ? 'badge-leyendo'   : 'badge-terminado')"
+                          th:text="${libro.estado}">estado</span>
                 </div>
             </div>
 
             <div class="libro-progreso">
                 <div class="progreso-texto">
-                    <span th:text="${libro.cantidad_leido} + ' / ' + ${libro.cantidad_pag}"></span>
-                    <span th:text="${(libro.cantidad_leido * 100) / libro.cantidad_pag} + '%'"></span>
+                    <span th:text="${libro.cantidad_leido} + ' / ' + ${libro.cantidad_pag} + ' págs'"></span>
+                    <span th:text="${libro.cantidad_pag > 0} ? ${(libro.cantidad_leido * 100) / libro.cantidad_pag} + '%' : '0%'"></span>
                 </div>
 
                 <div class="progreso-bar">
                     <div class="progreso-fill"
-                         th:style="'width:' + ${(libro.cantidad_leido * 100) / libro.cantidad_pag} + '%'"
+                         th:style="'width:' + (${libro.cantidad_pag > 0} ? ${(libro.cantidad_leido * 100) / libro.cantidad_pag} : 0) + '%'"
                          th:classappend="${libro.estado == 'terminado'} ? 'completo'">
                     </div>
                 </div>
