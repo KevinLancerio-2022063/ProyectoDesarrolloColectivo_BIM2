@@ -30,7 +30,7 @@ public class LibroController {
     @GetMapping("/editarLibro/{id}")
     public String editarLibro(@PathVariable Integer id, Model model){
         model.addAttribute("libros", libroService.getAListLibro());
-        model.addAttribute("librosformu",libroService.getLibroById(id));
+        model.addAttribute("librosFormu",libroService.getLibroById(id));
         return "libro";
     }
 
