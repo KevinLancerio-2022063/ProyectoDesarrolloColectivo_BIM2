@@ -2,7 +2,7 @@
 <html lang='es' xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset='utf-8'>
-    <title>Frase del Día</title>
+    <title>Frases Motivadoras</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-regular-straight/css/uicons-regular-straight.css">
     <link rel='stylesheet' th:href="@{/FraseMotivadora.css}">
@@ -35,7 +35,7 @@
 
     <p class="frase-autor" th:text="'--' + ${f.autor}"></p>
 
-    <div class="detalle-footer">
+    <div class="detalle-footers">
       <a th:href="@{'/editarFrase/' + ${f.idFraseMotivadora} }" class="btn-editar"><i class="fi fi-rs-pencil"></i></a>
       <a th:href="@{'/eliminar-frase/' + ${f.idFraseMotivadora}}" class="btn-eliminar"><i class="fi fi-rs-trash"></i></a>
     </div>
