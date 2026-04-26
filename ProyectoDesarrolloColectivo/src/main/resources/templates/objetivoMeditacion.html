@@ -4,96 +4,46 @@
 <head>
     <meta charset="UTF-8">
     <title>Objetivo Meditación</title>
-    <link rel="stylesheet" th:href="@{/baseLancerio.css}">
+    <link rel="stylesheet" th:href="@{/css/baseLancerio.css}">
 </head>
 
 <body>
 
 <div class="usuario-container">
 
-    <!-- HEADER -->
-    <h1 style="margin-bottom:2rem;">
+    <!-- Encabezado con el texto "Objetivos de Meditación" -->
+    <h1>
         Objetivos de <span style="color: var(--verde-menta);">Meditación</span>
     </h1>
 
-    <!-- STATS (igual que usuarios) -->
-    <div class="stats-pills">
-
-        <div class="stat-pill">
-            <div class="stat-pill-num" th:text="${#lists.size(objetivos)}">0</div>
-            <div class="stat-pill-label">Objetivos</div>
-        </div>
-
-        <div class="stat-pill">
-            <div class="stat-pill-num"
-                 th:text="${#lists.size(objetivos) * 2}">0</div>
-            <div class="stat-pill-label">Acciones</div>
-        </div>
-
-        <div class="stat-pill">
-            <div class="stat-pill-num">100%</div>
-            <div class="stat-pill-label">Activos</div>
-        </div>
-
-    </div>
-
-    <!-- FORM Y TOOLBAR STYLE USUARIOS -->
+    <!-- Este es la opcion para buscar por ID los Objetivos -->
     <div class="toolbar">
+
         <div class="search-wrap">
             <input type="text"
+                   id="buscar"
                    class="search-input"
                    placeholder="Buscar objetivo..."
                    onkeyup="filtrarTabla()">
         </div>
 
+        <!-- Con esto, al darle el botón te mandara a la "vista" que permitira ingresar los datos para agregar el Objetivo -->
         <button class="btn"
-                onclick="document.getElementById('formulario').scrollIntoView()">
+                onclick="window.location.href='/objetivoMeditacion'">
             + Nuevo objetivo
         </button>
-    </div>
-
-    <!-- FORMULARIO -->
-    <div class="card" id="formulario" style="margin-bottom:2rem;">
-
-        <div class="section-title"
-             th:text="${objetivo.id_objetivo_meditacion != null} ? 'Editar Objetivo' : 'Nuevo Objetivo'">
-        </div>
-
-        <form th:action="@{/objetivoMeditacion/guardar}"
-              th:object="${objetivo}"
-              method="post"
-              style="display:grid; gap:1rem;">
-
-            <input type="hidden" th:field="*{id_objetivo_meditacion}">
-
-            <input type="text"
-                   th:field="*{tiempo_objetivo}"
-                   placeholder="Tiempo objetivo (Ej: 30 minutos diarios)">
-
-            <input type="number"
-                   th:field="*{dias_objetivo}"
-                   placeholder="Días objetivo">
-
-            <input type="number"
-                   th:field="*{fk_id_usuario}"
-                   placeholder="ID Usuario">
-
-            <button type="submit" class="btn">Guardar Objetivo</button>
-
-        </form>
 
     </div>
 
-    <!-- TABLA -->
+    <!-- Tabla donde se muestran los objetivos -->
     <div class="table-wrap">
-
         <table class="usuario-table" id="tablaObjetivos">
 
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Tiempo Objetivo</th>
-                <th>Días Objetivo</th>
+                <th>Tiempo</th>
+                <th>Días</th>
                 <th>Usuario</th>
                 <th>Acciones</th>
             </tr>
@@ -104,23 +54,22 @@
             <tr th:each="o : ${objetivos}">
 
                 <td th:text="${o.id_objetivo_meditacion}"></td>
-
                 <td th:text="${o.tiempo_objetivo}"></td>
-
                 <td th:text="${o.dias_objetivo}"></td>
-
                 <td th:text="${o.fk_id_usuario}"></td>
 
-                <td class="td-actions">
+                <td>
                     <div class="td-actions-inner">
 
-                        <a th:href="@{/objetivoMeditacion/editar/{id}(id=${o.id_objetivo_meditacion})}">
-                            <button class="action-btn">✏️</button>
+                        <a class="action-btn"
+                           th:href="@{/objetivoMeditacion/editar/{id}(id=${o.id_objetivo_meditacion})}">
+                            ✏️
                         </a>
 
-                        <a th:href="@{/objetivoMeditacion/eliminar/{id}(id=${o.id_objetivo_meditacion})}"
+                        <a class="action-btn"
+                           th:href="@{/objetivoMeditacion/eliminar/{id}(id=${o.id_objetivo_meditacion})}"
                            onclick="return confirm('¿Eliminar objetivo?')">
-                            <button class="action-btn">🗑️</button>
+                            🗑️
                         </a>
 
                     </div>
@@ -135,10 +84,61 @@
             </tbody>
 
         </table>
+    </div>
+
+    <!-- formulario para ingresar los datos de los Objetivos -->
+    <div id="formulario" style="margin-top:3rem; max-width:500px;">
+
+        <h2 th:text="${objetivo.id_objetivo_meditacion != null} ? 'Editar Objetivo' : 'Nuevo Objetivo'"></h2>
+
+        <form th:action="@{/objetivoMeditacion/guardar}"
+              th:object="${objetivo}"
+              method="post"
+              style="display:grid; gap:1rem;">
+
+            <input type="hidden" th:field="*{id_objetivo_meditacion}">
+
+            <input type="text"
+                   th:field="*{tiempo_objetivo}"
+                   placeholder="Tiempo objetivo"
+                   required>
+
+            <input type="number"
+                   th:field="*{dias_objetivo}"
+                   placeholder="Días objetivo"
+                   min="1"
+                   required>
+
+            <input type="number"
+                   th:field="*{fk_id_usuario}"
+                   placeholder="ID Usuario"
+                   min="1"
+                   required>
+
+            <!-- Validaciones -->
+            <p th:if="${#fields.hasErrors('tiempo_objetivo')}"
+               th:errors="*{tiempo_objetivo}" class="error"></p>
+
+            <p th:if="${#fields.hasErrors('dias_objetivo')}"
+               th:errors="*{dias_objetivo}" class="error"></p>
+
+            <p th:if="${#fields.hasErrors('fk_id_usuario')}"
+               th:errors="*{fk_id_usuario}" class="error"></p>
+
+            <button type="submit" class="btn">
+                <span th:text="${objetivo.id_objetivo_meditacion != null} ? 'Actualizar' : 'Guardar'"></span>
+            </button>
+
+        </form>
 
     </div>
 
 </div>
+
+<!-- Buscador del Objetivo Meditación por Id -->
+<script
+    th:src="@{/js/buscadorObjetivoMeditacion.js}">
+</script>
 
 </body>
 </html>
