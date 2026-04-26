@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Ejercicio</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel="stylesheet" th:href="@{/Base.css}">
-    <link rel="stylesheet" th:href="@{/Ejercicio.css}">
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ejercicios</title>
+  <link rel="stylesheet" th:href="@{/Base.css}">
+  <link rel="stylesheet" th:href="@{/Ejercicio.css}">
 </head>
 <body>
 
@@ -18,127 +16,89 @@
   </ul>
 </nav>
 
-<div th:if="${exito}" class="alerta" th:text="${exito}" ></div>
+<div th:if="${exito}" class="alerta" th:text="${exito}"></div>
 
 <div class="page-header">
   <div class="page-header-left">
     <div class="page-tag">Tu entrenamiento</div>
     <h1 class="page-title">Mis <em>Ejercicios</em></h1>
   </div>
-  <button class="btn-primary">＋ Nuevo ejercicio</button>
+  <a th:href="@{/ejercicios}" class="btn-primary">＋ Nuevo ejercicio</a>
 </div>
 
 <div class="ejercicios-container">
 
   <div class="toolbar">
-    <div class="search-wrap">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-      </svg>
-      <input type="text" class="search-input" placeholder="Buscar ejercicio..."/>
-    </div>
+    <form th:action="@{/ejercicios/buscarEjercicio}" method="get" class="search-form">
+      <div class="search-wrap">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input type="number" name="id" class="search-input" placeholder="Buscar por ID..."/>
+      </div>
+      <button type="submit" class="btn-primary">Buscar</button>
+    </form>
+    <span class="contador" th:text="${#lists.size(ejercicios)} + ' ejercicio(s)'">0 ejercicio(s)</span>
   </div>
 
-  <div class="table-wrap">
-    <table class="ejercicios-table">
-      <thead>
-        <tr>
-          <th>Ejercicio</th>
-          <th>Series</th>
-          <th>Repeticiones</th>
-          <th>Tiempo</th>
-          <th>Descanso</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <div class="td-nombre">
-              <div><strong>Sentadillas</strong><small>ID #1</small></div>
-            </div>
-          </td>
-          <td><span class="stat-badge">🔁 4 series</span></td>
-          <td><span class="stat-badge">✕ 12 reps</span></td>
-          <td><span class="stat-badge">180s</span></td>
-          <td><span class="stat-badge">60s</span></td>
-          <td class="td-actions">
-            <div class="td-actions-inner">
-              <button class="btn-icon btn-edit">✏️</button>
-              <button class="btn-icon btn-delete">🗑️</button>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="td-nombre">
-              <div><strong>Press de Banca</strong><small>ID #2</small></div>
-            </div>
-          </td>
-          <td><span class="stat-badge">🔁 4 series</span></td>
-          <td><span class="stat-badge">✕ 10 reps</span></td>
-          <td><span class="stat-badge">160s</span></td>
-          <td><span class="stat-badge">90s</span></td>
-          <td class="td-actions">
-            <div class="td-actions-inner">
-              <button class="btn-icon btn-edit">✏️</button>
-              <button class="btn-icon btn-delete">🗑️</button>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="td-nombre">
-              <div><strong>Plancha</strong><small>ID #3</small></div>
-            </div>
-          </td>
-          <td><span class="stat-badge">🔁 3 series</span></td>
-          <td><span style="opacity:0.3">—</span></td>
-          <td><span class="stat-badge">60s</span></td>
-          <td><span class="stat-badge">30s</span></td>
-          <td class="td-actions">
-            <div class="td-actions-inner">
-              <button class="btn-icon btn-edit">✏️</button>
-              <button class="btn-icon btn-delete">🗑️</button>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="td-nombre">
-              <div><strong>Burpees</strong><small>ID #4</small></div>
-            </div>
-          </td>
-          <td><span class="stat-badge">🔁 4 series</span></td>
-          <td><span class="stat-badge">✕ 15 reps</span></td>
-          <td><span style="opacity:0.3">—</span></td>
-          <td><span class="stat-badge">45s</span></td>
-          <td class="td-actions">
-            <div class="td-actions-inner">
-              <button class="btn-icon btn-edit">✏️</button>
-              <button class="btn-icon btn-delete">🗑️</button>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="td-nombre">
-              <div><strong>Peso Muerto</strong><small>ID #5</small></div>
-            </div>
-          </td>
-          <td><span class="stat-badge">🔁 4 series</span></td>
-          <td><span class="stat-badge">✕ 10 reps</span></td>
-          <td><span style="opacity:0.3">—</span></td>
-          <td><span class="stat-badge">90s</span></td>
-          <td class="td-actions">
-            <div class="td-actions-inner">
-              <button class="btn-icon btn-edit">✏️</button>
-              <button class="btn-icon btn-delete">🗑️</button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="ejercicios-grid">
+
+    <div class="ej-card" th:each="ej : ${ejercicios}">
+
+      <div class="ej-card-header">
+        <div>
+          <div class="ej-id" th:text="'# ' + ${ej.id_ejercicio}">ID</div>
+          <div class="ej-nombre" th:text="${ej.nombre_ejercicio}">Nombre</div>
+          <span class="ej-rutina-badge" th:text="'Rutina #' + ${ej.fk_id_rutina}">Rutina</span>
+        </div>
+        <div class="ej-card-actions">
+          <a th:href="@{'/ejercicios/editarEjercicio' + ${ej.id_ejercicio}}"
+             class="ej-btn-edit" title="Editar">✏️</a>
+          <form th:action="@{/ejercicios/eliminarEjercicio/{id}(id=${ej.id_ejercicio})}"
+                method="post" style="display:inline;">
+            <button type="submit" class="ej-btn-delete" title="Eliminar">🗑️</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="ej-stats">
+        <div class="ej-stat">
+          <div class="ej-stat-num" th:text="${ej.series_ejercicio}">0</div>
+          <div class="ej-stat-label">SERIES</div>
+        </div>
+        <div class="ej-stat-divider"></div>
+        <div class="ej-stat">
+          <div class="ej-stat-num" th:text="${ej.repeticiones_ejercicio}">0</div>
+          <div class="ej-stat-label">REPS</div>
+        </div>
+
+        <div class="ej-stat-divider"></div>
+        <div class="ej-stat">
+          <div class="ej-stat-num" th:text="${ej.tiempo_ejercicio}">0</div>
+          <div class="ej-stat-label">SEG</div>
+        </div>
+
+        <div class="ej-stat-divider"></div>
+        <div class="ej-stat">
+          <div class="ej-stat-num" th:text="${ej.descanso_ejercicio}">0</div>
+          <div class="ej-stat-label">DESC.</div>
+        </div>
+      </div>
+
+      <div class="ej-barras">
+        <div class="ej-barra"></div>
+        <div class="ej-barra"></div>
+        <div class="ej-barra ej-barra-dim"></div>
+        <div class="ej-barra ej-barra-dim"></div>
+      </div>
+
+    </div>
+
+    <div class="empty-state" th:if="${#lists.isEmpty(ejercicios)}">
+      <div class="empty-icon">🏋️</div>
+      <p class="empty-text">No hay ejercicios registrados todavía.</p>
+    </div>
+
   </div>
 </div>
 
