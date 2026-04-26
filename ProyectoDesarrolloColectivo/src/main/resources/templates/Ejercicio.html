@@ -104,6 +104,7 @@
 
 <div class="form-section-wrap">
   <div class="form-section">
+
     <div class="form-section-header">
       <h2 class="form-section-title">
         <span th:if="${ejerciciosFormu.id_ejercicio != null}">Editar <em>Ejercicio</em></span>
@@ -127,37 +128,52 @@
         <span th:errors="*{nombre_ejercicio}" class="error"></span>
       </div>
 
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">Series</label>
-        <input type="number" class="form-input" placeholder="4" min="1" max="20"/>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Series</label>
+          <input type="number" th:field="*{series_ejercicio}" class="form-input"
+                 placeholder="4" min="1" max="24"/>
+          <span th:errors="*{series_ejercicio}" class="error"></span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Repeticiones</label>
+          <input type="number" th:field="*{repeticiones_ejercicio}" class="form-input"
+                 placeholder="12" min="1" max="100"/>
+          <span th:errors="*{repeticiones_ejercicio}" class="error"></span>
+        </div>
       </div>
-      <div class="form-group">
-        <label class="form-label">Repeticiones</label>
-        <input type="number" class="form-input" placeholder="12" min="0" max="200"/>
-      </div>
-    </div>
 
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">Tiempo (seg)</label>
-        <input type="number" class="form-input" placeholder="0 si no aplica" min="0" max="300"/>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Tiempo (segundos)</label>
+          <input type="number" th:field="*{tiempo_ejercicio}" class="form-input"
+                 placeholder="0" min="0" max="3600"/>
+          <span th:errors="*{tiempo_ejercicio}" class="error"></span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Descanso (segundos)</label>
+          <input type="number" th:field="*{descanso_ejercicio}" class="form-input"
+                 placeholder="60" min="0" max="600"/>
+          <span th:errors="*{descanso_ejercicio}" class="error"></span>
+        </div>
       </div>
+
       <div class="form-group">
-        <label class="form-label">Descanso (seg)</label>
-        <input type="number" class="form-input" placeholder="60" min="0" max="600"/>
+        <label class="form-label">ID de la rutina</label>
+        <input type="number" th:field="*{fk_id_rutina}" class="form-input"
+               placeholder="ID de la rutina" min="1"/>
+        <span th:errors="*{fk_id_rutina}" class="error"></span>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label class="form-label">ID de la rutina</label>
-      <input type="number" class="form-input" placeholder="ID de la rutina" min="1"/>
-    </div>
+      <div class="form-actions">
+        <a th:href="@{/ejercicios}" class="btn-secondary">Cancelar</a>
+        <button type="submit" class="btn-primary"
+                th:text="${ejerciciosFormu.id_ejercicio != null} ? 'Actualizar ejercicio' : 'Guardar ejercicio'">
+          Guardar
+        </button>
+      </div>
 
-    <div class="form-actions">
-      <button class="btn-secondary">Cancelar</button>
-      <button class="btn-primary">Guardar ejercicio</button>
-    </div>
+    </form>
   </div>
 </div>
 
