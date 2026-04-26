@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Frase</title>
+    <link rel="stylesheet" th:href="@{/Base.css}">
+    <link rel="stylesheet" th:href="@{/FraseMotivadora.css}">
 </head>
 <body>
     <nav>
@@ -37,7 +39,10 @@
                     <label for="autor">Autor:</label>
                     <input type="text" id="autor" th:field="*{autor}" required>
                 </div>
-                <button type="submit" class="btn-primary">Guardar Frase</button>
+                <div class="detalle-footer">
+                    <button type="submit" class="btn-primary">Guardar Frase</button>
+                    <a th:href="@{/frasesMotivadoras}" class="btn-secondary">Cancelar</a>
+                </div>
             </form>
         </div>
     </div>
