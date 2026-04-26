@@ -17,6 +17,9 @@
   position: relative;
   overflow: hidden;
   animation: fadeUp 0.6s ease both;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .frase-card:hover {
@@ -65,32 +68,121 @@
   }
 }
 
-.detalle-footer {
-  margin-top: 25px;
+.detalle-footers {
+  margin-top: auto;
+  display: flex;
+  gap: 10px;
 }
 
 .btn-editar {
-    background-color: #28a745;
-    color: white;
-    padding: 6px 10px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 16px;
+  background-color: #28a745;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 16px;
 }
 
 .btn-editar:hover {
-    background-color: #218838;
+  background-color: #218838;
 }
 
 .btn-eliminar {
-    background-color: #dc3545;
-    color: white;
-    padding: 6px 10px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 16px;
+  background-color: #dc3545;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 16px;
 }
 
 .btn-eliminar:hover {
-    background-color: #c82333;
+  background-color: #c82333;
+}
+
+/* ===== CONTENEDOR GENERAL ===== */
+.detalle-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+  padding: 40px 15px;
+}
+
+/* ===== TARJETA ===== */
+.detalle-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 700px;
+  border-radius: 16px;
+  padding: 35px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  animation: fadeUp 0.4s ease;
+}
+
+/* ===== HEADER ===== */
+.detalle-header {
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+.detalle-titulo {
+  margin: 0;
+  font-size: 28px;
+  color: #2c3e50;
+}
+
+/* ===== FORMULARIO ===== */
+.frase-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+/* ===== GRUPOS ===== */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== LABELS ===== */
+.form-group label {
+  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
+  color: var(--verde-oscuro);
+  font-weight: 600;
+}
+
+/* ===== INPUTS Y TEXTAREA ===== */
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.15);
+  font-size: 0.95rem;
+  font-family: inherit;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+/* ===== TEXTAREA MÁS GRANDE ===== */
+.form-group textarea {
+  min-height: 160px;
+  resize: vertical;
+}
+
+/* ===== FOCUS ===== */
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--verde-oscuro);
+  box-shadow: 0 0 0 3px rgba(45,74,62,0.15);
+}
+
+/* ===== FOOTER ===== */
+.detalle-footer {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
 }
