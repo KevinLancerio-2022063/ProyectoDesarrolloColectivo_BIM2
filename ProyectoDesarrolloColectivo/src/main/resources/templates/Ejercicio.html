@@ -105,14 +105,27 @@
 <div class="form-section-wrap">
   <div class="form-section">
     <div class="form-section-header">
-      <h2 class="form-section-title">Nuevo <em>Ejercicio</em></h2>
-      <p class="form-section-sub">Completa los campos para registrar un ejercicio en una rutina.</p>
+      <h2 class="form-section-title">
+        <span th:if="${ejerciciosFormu.id_ejercicio != null}">Editar <em>Ejercicio</em></span>
+        <span th:unless="${ejerciciosFormu.id_ejercicio != null}">Nuevo <em>Ejercicio</em></span>
+      </h2>
+      <p class="form-section-sub">Completa los campos para registrar el ejercicio en tu rutina.</p>
     </div>
 
-    <div class="form-group">
-      <label class="form-label">Nombre del ejercicio</label>
-      <input type="text" class="form-input" placeholder="Ej. Sentadillas" maxlength="60"/>
-    </div>
+    <form th:object="${ejerciciosFormu}"
+          th:action="${ejerciciosFormu.id_ejercicio != null}
+                          ? @{/ejercicios/actualizarEjercicio/{id}(id=${ejerciciosFormu.id_ejercicio})}
+                          : @{/ejercicios/guardarEjercicio}"
+          method="post">
+
+      <input type="hidden" th:field="*{id_ejercicio}"/>
+
+      <div class="form-group">
+        <label class="form-label">Nombre del ejercicio</label>
+        <input type="text" th:field="*{nombre_ejercicio}" class="form-input"
+               placeholder="Ej. Sentadillas" maxlength="60"/>
+        <span th:errors="*{nombre_ejercicio}" class="error"></span>
+      </div>
 
     <div class="form-row">
       <div class="form-group">
