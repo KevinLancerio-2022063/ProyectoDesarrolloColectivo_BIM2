@@ -2,7 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Perfil Nutricional</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel="stylesheet" th:href="@{/Base.css}">
@@ -24,7 +23,7 @@
     <div class="page-tag">Salud y bienestar</div>
     <h1 class="page-title">Perfil <em>Nutricional</em></h1>
   </div>
-    <button class="btn-primary">＋ Nuevo perfil</button>
+    <button class="btn-primary">Nuevo perfil</button>
 </div>
 
 <div class="perfiles-container">
@@ -47,7 +46,7 @@
 
       <div class="perfil-card-top">
         <div class="perfil-card-avatar"
-             th:text="${#strings.substring(perfilNutri.genero,0,1)}">U</div>
+             th:text="${#strings.substring(perfilNutri.genero,0,1)}"></div>
 
         <div>
           <div class="perfil-card-user"
@@ -103,7 +102,6 @@
   </div>
 </div>
 
-<!-- FORMULARIO -->
 <div class="form-section-wrap">
   <div class="form-section">
 
