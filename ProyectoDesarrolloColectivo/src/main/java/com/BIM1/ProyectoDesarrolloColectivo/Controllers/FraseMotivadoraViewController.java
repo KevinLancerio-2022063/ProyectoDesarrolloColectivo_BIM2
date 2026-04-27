@@ -17,7 +17,7 @@ public class FraseMotivadoraViewController {
     private FraseMotivadoraService fraseMotivadoraService;
 
     @GetMapping("/frasesMotivadoras")
-    public String mostrarFraseMotivadora(org.springframework.ui.Model model) {
+    public String mostrarFraseMotivadora(Model model) {
         model.addAttribute("frases", fraseMotivadoraService.getAllFraseMotivadora());
         return "FraseMotivadora";
     }
