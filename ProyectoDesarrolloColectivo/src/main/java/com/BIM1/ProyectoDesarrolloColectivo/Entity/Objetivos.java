@@ -15,6 +15,10 @@ public class Objetivos {
     private Integer idObjetivos;
 
     @NotBlank(message = "Todos los campos son Obligatorios")
+    @Column(name = "titulo_objetivo")
+    private String tituloObjetivo;
+
+    @NotBlank(message = "Todos los campos son Obligatorios")
     @Column(name = "descripcion_objetivo")
     private String descripcionObjetivo;
 
@@ -45,6 +49,14 @@ public class Objetivos {
 
     public void setIdObjetivos(Integer idObjetivos) {
         this.idObjetivos = idObjetivos;
+    }
+
+    public String getTituloObjetivo() {
+        return tituloObjetivo;
+    }
+
+    public void setTituloObjetivo(String tituloObjetivo) {
+        this.tituloObjetivo = tituloObjetivo;
     }
 
     public String getDescripcionObjetivo() {
