@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Objetivo</title>
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-regular-straight/css/uicons-regular-straight.css">
+    <link rel="stylesheet" th:href="@{/Base.css}">
+    <link rel="stylesheet" th:href="@{/Objetivos.css}">
+</head>
+<body>
+    <nav>
+        <a th:href="@{/}" class="nav-logo">Evoluciona</a>
+        <ul class="nav-links">
+        <li><a th:href="@{/}">Inicio</a></li>
+        </ul>
+    </nav>
+
+    <div class="page-header">
+        <div class="page-header-left">
+        <div class="page-tag">Metas personales</div>
+        <h1 class="page-title">Obje<em>tivos</em></h1>
+        </div>
+    </div>
+
+    <div class="detalle-container">
+        <div class="detalle-card">
+            <div class="detalle-header">
+                <h1 class="detalle-titulo" th:text="${objetivo.tituloObjetivo}"></h1>
+            </div>
+            <div class="detalle-contenido">
+                    <div class="detalle-info">
+                        <div class="detalle-contenido">
+                            <strong>Descripción:</strong>
+                            <p th:text="${objetivo.descripcionObjetivo}"></p>
+                        </div>
+                        <p>
+                            <strong>Estado:</strong>
+                            <div class="objetivo-estado"
+                                th:text="${objetivo.estadoObjetivo}"
+                                th:classappend="${objetivo.estadoObjetivo == 'Pendiente'} ? ' pendiente' :
+                                                (${objetivo.estadoObjetivo == 'En progreso'} ? ' progreso' :
+                                                (${objetivo.estadoObjetivo == 'Completado'} ? ' completado' : ' otro'))">
+                            </div>
+                        </p>
+                        <p>
+                            <strong>Fecha del Objetivo:</strong>
+                            <span th:text="${objetivo.fechaObjetivo}"></span>
+                        </p>
+                        <div class="detalle-contenido"> 
+                            <strong>Usuario:</strong>
+                            <p th:text="${objetivo.usuario.nombre_completo}"></p>
+                        </div>
+                        <div class="detalle-contenido">
+                            <strong>Frase motivadora:</strong>
+                            <p th:text="${objetivo.fraseMotivadora.texto}"></p>
+                        </div>
+
+                        <div class="detalle-footer">
+                            <a th:href="@{/objetivos}" class="btn-secondary">← Volver</a>
+                            <a th:href="@{'/editarObjetivo/' + ${objetivo.idObjetivos} }" class="btn-editar"><i class="fi fi-rs-pencil"></i></a>
+                            <a th:href="@{'/eliminar-objetivo/' + ${objetivo.idObjetivos}}" class="btn-eliminar"><i class="fi fi-rs-trash"></i></a>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
