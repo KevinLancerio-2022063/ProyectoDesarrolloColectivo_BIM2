@@ -2,10 +2,17 @@
   padding: 0 4rem 5rem;
 }
 
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
 .objetivos-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.4rem;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-top: 45px;
 }
 
 .objetivo-card {
@@ -14,7 +21,8 @@
   padding: 1.8rem;
   box-shadow: 0 4px 20px var(--sombra);
   transition: transform var(--trans), box-shadow var(--trans);
-  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
 }
 
 .objetivo-card:hover {
@@ -76,4 +84,123 @@
   .objetivos-container {
     padding: 0 1.5rem 4rem;
   }
+}
+
+.detalle-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 15px;
+}
+
+.detalle-card {
+  background: white;
+  width: 100%;
+  max-width: 700px;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.detalle-header {
+  border-bottom: 1px solid #eee;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+}
+
+.detalle-titulo {
+  margin: 0;
+  font-size: 26px;
+  color: #2c3e50;
+}
+
+.detalle-contenido {
+  margin-top: 20px;
+  padding: 15px;
+  background: #fafafa;
+  border-left: 4px solid #1abc9c;
+  border-radius: 6px;
+  line-height: 1.6;
+}
+
+.detalle-header {
+  border-bottom: 1px solid #eee;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+}
+
+.detalle-titulo {
+  margin: 0;
+  font-size: 26px;
+  color: #2c3e50;
+}
+
+.detalle-info p {
+  margin: 10px 0;
+  font-size: 15px;
+}
+
+.detalle-info strong {
+  color: #555;
+}
+
+.detalle-footer {
+    margin-top: 25px;
+}
+
+.btn-secondary {
+    background-color: #406e48;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.detalle-info p {
+    margin: 10px 0;
+    font-size: 15px;
+}
+
+.detalle-info strong {
+    color: #555;
+}
+
+.detalle-footer {
+  margin-top: 25px;
+}
+
+.btn-editar {
+    background-color: #28a745;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.btn-editar:hover {
+    background-color: #218838;
+}
+
+.btn-eliminar {
+    background-color: #dc3545;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.btn-eliminar:hover {
+    background-color: #c82333;
+}
+
+.btn-secondary {
+    background-color: #406e48;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
 }
