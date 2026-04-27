@@ -1,7 +1,6 @@
 package com.BIM1.ProyectoDesarrolloColectivo.Service;
 
 import com.BIM1.ProyectoDesarrolloColectivo.Entity.ApoyoEmocional;
-import com.BIM1.ProyectoDesarrolloColectivo.Entity.FraseMotivadora;
 import com.BIM1.ProyectoDesarrolloColectivo.Repository.ApoyoEmocionalRepository;
 import com.BIM1.ProyectoDesarrolloColectivo.Validator.ApoyoEmocionalValidator;
 import org.springframework.stereotype.Service;
