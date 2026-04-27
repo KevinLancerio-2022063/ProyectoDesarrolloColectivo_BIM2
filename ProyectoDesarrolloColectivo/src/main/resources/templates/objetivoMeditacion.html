@@ -98,7 +98,7 @@
 
             <input type="hidden" th:field="*{id_objetivo_meditacion}">
 
-            <input type="text"
+            <input type="number"
                    th:field="*{tiempo_objetivo}"
                    placeholder="Tiempo objetivo"
                    required>
@@ -114,16 +114,6 @@
                    placeholder="ID Usuario"
                    min="1"
                    required>
-
-            <!-- Validaciones -->
-            <p th:if="${#fields.hasErrors('tiempo_objetivo')}"
-               th:errors="*{tiempo_objetivo}" class="error"></p>
-
-            <p th:if="${#fields.hasErrors('dias_objetivo')}"
-               th:errors="*{dias_objetivo}" class="error"></p>
-
-            <p th:if="${#fields.hasErrors('fk_id_usuario')}"
-               th:errors="*{fk_id_usuario}" class="error"></p>
 
             <button type="submit" class="btn">
                 <span th:text="${objetivo.id_objetivo_meditacion != null} ? 'Actualizar' : 'Guardar'"></span>
