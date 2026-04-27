@@ -34,6 +34,22 @@ public class FraseMotivadoraViewController {
         return "redirect:/frasesMotivadoras";
     }
 
+    @GetMapping("/editarFrase/{id}")
+    public String editarFraseMotivadora(@PathVariable int id, Model model) {
+        FraseMotivadora frase = fraseMotivadoraService.getById(id);
+        model.addAttribute("frase", frase);
+        return "editarFrase";
+    }
+
+    @PostMapping("/guardarFrase")
+    public String guardarFrase(@ModelAttribute FraseMotivadora frase) {
+        FraseMotivadora original = fraseMotivadoraService.getById(frase.getIdFraseMotivadora());
+        original.setTexto(frase.getTexto());
+        original.setAutor(frase.getAutor());
+        fraseMotivadoraService.updateFraseMotivadora(frase.getIdFraseMotivadora(), original);
+        return "redirect:/frasesMotivadoras";
+    }
+
     @GetMapping("/eliminar-frase/{id}")
     public String eliminarFraseMotivador(@PathVariable int id){
         fraseMotivadoraService.deleteFraseMotivadora(id);
