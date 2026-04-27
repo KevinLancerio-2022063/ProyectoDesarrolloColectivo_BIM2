@@ -11,36 +11,36 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/registroSuenos")
+@RequestMapping("/registroSueno")
 public class RegistroSuenoViewController {
 
     @Autowired
     private RegistroSuenoService regService;
 
     @GetMapping
-    public String listarReg(Model model) {
+    public String listar(Model model) {
         model.addAttribute("registro", new RegistroSueno());
         model.addAttribute("registros", regService.getAllRegistrosSuenos());
-        return "registroSuenos";
+        return "registroSueno";
     }
 
-    @PostMapping("/guardarReg")
-    public String guardarReg(RegistroSueno registro) {
+    @PostMapping("/guardar")
+    public String guardar(RegistroSueno registro) {
         regService.saveRegistroSueno(registro);
-        return "redirect:/registroSuenos";
+        return "redirect:/registroSueno";
     }
 
-    @GetMapping("/editarReg/{id}")
-    public String editarReg(@PathVariable Integer id, Model model) {
+    @GetMapping("/editar/{id}")
+    public String editar(@PathVariable Integer id, Model model) {
         model.addAttribute("registro", regService.getRegistrosSuenosById(id));
         model.addAttribute("registros", regService.getAllRegistrosSuenos());
-        return "registroSuenos";
+        return "registroSueno";
     }
     
-    @GetMapping("/eliminarReg/{id}")
-    public String eliminarReg(@PathVariable Integer id) {
+    @GetMapping("/eliminar/{id}")
+    public String eliminar(@PathVariable Integer id) {
         regService.deleteRegistroSueno(id);
-        return "redirect:/registroSuenos";
+        return "redirect:/registroSueno";
     }
 
 }
