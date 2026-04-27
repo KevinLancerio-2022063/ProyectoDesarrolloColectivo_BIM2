@@ -4,64 +4,45 @@
 <head>
     <meta charset="UTF-8">
     <title>Usuarios</title>
-    <link rel="stylesheet" th:href="@{/baseLancerio.css}">
+    <link rel="stylesheet" th:href="@{/css/baseLancerio.css}">
 </head>
 
 <body>
 
 <div class="usuario-container">
 
-    <!-- HEADER -->
-    <h1 style="margin-bottom:2rem;">
-        Mis <span style="color: var(--verde-menta);">Usuarios</span>
+    <!-- Encabezado con el texto: "Gestión de Usuarios" -->
+    <h1>
+        Gestión de <span style="color: var(--verde-menta);">Usuarios</span>
     </h1>
 
-    <!-- STATS -->
-    <div class="stats-pills">
-
-        <div class="stat-pill">
-            <div class="stat-pill-num" th:text="${#lists.size(usuarios)}">0</div>
-            <div class="stat-pill-label">Usuarios</div>
-        </div>
-
-        <div class="stat-pill">
-            <div class="stat-pill-num"
-                 th:text="${#lists.size(usuarios) * 2}">0</div>
-            <div class="stat-pill-label">Acciones</div>
-        </div>
-
-        <div class="stat-pill">
-            <div class="stat-pill-num">100%</div>
-            <div class="stat-pill-label">Activos</div>
-        </div>
-
-    </div>
-
-    <!-- TOOLBAR -->
+    <!-- Barra del buscador por Id de Usuario -->
     <div class="toolbar">
 
         <div class="search-wrap">
-            <input type="text" id="buscar"
+            <input type="text"
+                   id="buscar"
                    class="search-input"
                    placeholder="Buscar usuario..."
                    onkeyup="filtrarTabla()">
         </div>
 
+        <!-- Al darle al botón Nuevo Usuario cambia a la "vista" Registrar Usuario -->
         <button class="btn"
-                onclick="document.getElementById('formulario').scrollIntoView()">
+                onclick="window.location.href='/usuarios'">
             + Nuevo usuario
         </button>
 
     </div>
 
-    <!-- TABLA -->
+    <!-- Tabla donde se muestran los registros de los Usuario -->
     <div class="table-wrap">
-
         <table class="usuario-table" id="tablaUsuarios">
 
             <thead>
             <tr>
-                <th>Usuario</th>
+                <th>ID</th>
+                <th>Nombre</th>
                 <th>Correo</th>
                 <th>Contraseña</th>
                 <th>Acciones</th>
@@ -72,34 +53,27 @@
 
             <tr th:each="u : ${usuarios}">
 
-                <!-- NOMBRE -->
-                <td class="td-nombre">
-                    <div class="usuario-dot">👤</div>
-                    <div>
-                        <strong th:text="${u.nombre_completo}"></strong>
-                        <small th:text="'ID #' + ${u.id_usuario}"></small>
-                    </div>
-                </td>
-
-                <!-- CORREO -->
+                <td th:text="${u.id_usuario}"></td>
+                <td th:text="${u.nombre_completo}"></td>
                 <td th:text="${u.correoUsuario}"></td>
 
-                <!-- PASSWORD -->
+                <!-- Protección de las contraseñas para que no se vean-->
                 <td>
                     <span class="stat-badge">****</span>
                 </td>
 
-                <!-- ACCIONES -->
-                <td class="td-actions">
+                <td>
                     <div class="td-actions-inner">
 
-                        <a th:href="@{/usuarios/editar/{id}(id=${u.id_usuario})}">
-                            <button class="action-btn">✏️</button>
+                        <a class="action-btn"
+                           th:href="@{/usuarios/editar/{id}(id=${u.id_usuario})}">
+                            ✏️
                         </a>
 
-                        <a th:href="@{/usuarios/eliminar/{id}(id=${u.id_usuario})}"
+                        <a class="action-btn"
+                           th:href="@{/usuarios/eliminar/{id}(id=${u.id_usuario})}"
                            onclick="return confirm('¿Eliminar usuario?')">
-                            <button class="action-btn">🗑️</button>
+                            🗑️
                         </a>
 
                     </div>
@@ -108,21 +82,18 @@
             </tr>
 
             <tr th:if="${#lists.isEmpty(usuarios)}">
-                <td colspan="4">No hay usuarios registrados</td>
+                <td colspan="5">No hay usuarios registrados</td>
             </tr>
 
             </tbody>
 
         </table>
-
     </div>
 
-    <!-- FORMULARIO -->
+    <!-- Formulario para registrar un Usuario -->
     <div id="formulario" style="margin-top:3rem; max-width:500px;">
 
-        <h2 style="margin-bottom:1rem;"
-            th:text="${usuario.id_usuario != null} ? 'Editar Usuario' : 'Nuevo Usuario'">
-        </h2>
+        <h2 th:text="${usuario.id_usuario != null} ? 'Editar Usuario' : 'Nuevo Usuario'"></h2>
 
         <form th:action="@{/usuarios/guardar}"
               th:object="${usuario}"
@@ -131,26 +102,24 @@
 
             <input type="hidden" th:field="*{id_usuario}">
 
-            <input type="text" th:field="*{nombre_completo}" placeholder="Nombre completo" required>
+            <input type="text"
+                   th:field="*{nombre_completo}"
+                   placeholder="Nombre completo"
+                   required>
 
             <input type="email"
                    th:field="*{correoUsuario}"
                    placeholder="Correo electrónico"
-                   th:readonly="${usuario.id_usuario != null}">
+                   required>
 
-            <input type="password" th:field="*{contraseña}" placeholder="Contraseña" required>
+            <input type="password"
+                   th:field="*{contraseña}"
+                   placeholder="Contraseña"
+                   required>
 
-<!--            &lt;!&ndash; ERRORES &ndash;&gt;-->
-<!--            <p th:if="${#fields.hasErrors('nombre_completo')}"-->
-<!--               th:errors="*{nombre_completo}" style="color:red;"></p>-->
-
-<!--            <p th:if="${#fields.hasErrors('correoUsuario')}"-->
-<!--               th:errors="*{correoUsuario}" style="color:red;"></p>-->
-
-<!--            <p th:if="${#fields.hasErrors('contraseña')}"-->
-<!--               th:errors="*{contraseña}" style="color:red;"></p>-->
-
-            <button type="submit" class="btn">Guardar</button>
+            <button type="submit" class="btn">
+                <span th:text="${usuario.id_usuario != null} ? 'Actualizar' : 'Guardar'"></span>
+            </button>
 
         </form>
 
@@ -158,17 +127,9 @@
 
 </div>
 
-<!-- BUSCADOR -->
-<script>
-    function filtrarTabla() {
-        let input = document.getElementById("buscar").value.toLowerCase();
-        let filas = document.querySelectorAll("#tablaUsuarios tbody tr");
-
-        filas.forEach(fila => {
-            let texto = fila.innerText.toLowerCase();
-            fila.style.display = texto.includes(input) ? "" : "none";
-        });
-    }
+<!-- dirección del buscador por Id de Usuario -->
+<script
+        th:src="@{/js/buscadorUsuario.js}">
 </script>
 
 </body>
