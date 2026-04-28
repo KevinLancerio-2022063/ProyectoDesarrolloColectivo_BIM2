@@ -2,39 +2,49 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login - Desarrollo Colectivo</title>
-    <link rel="stylesheet" th:href="@{/css/estilos.css}" href="../static/css/estilos.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/rachas.css}" href="../static/css/rachas.css" />
 </head>
 <body>
+<div class="bg"></div>
+<div class="bg bg2"></div>
+<div class="bg bg3"></div>
 
 <div class="contenedor">
-    <h1 class="titulo">Desarrollo Colectivo</h1>
-
     <div class="tarjeta">
-        <h2 class="subtitulo">Iniciar sesión</h2>
+        <div class="panel-form">
+            <h2 class="subtitulo">Iniciar sesión</h2>
+            <p th:if="${error}" th:text="${error}" style="color: #d9534f; font-size: 14px; margin-bottom: 15px; text-align: center; font-weight: 600;"></p>
 
-        <p th:if="${error}" th:text="${error}" style="color: #d9534f; font-size: 14px; margin-bottom: 10px;"></p>
+            <form class="formulario" th:action="@{/login}" method="post">
+                <label for="correo">Correo</label>
+                <input id="correo" name="usuario" type="email" placeholder="tu@correo.com" required />
 
-        <form class="formulario" th:action="@{/login}" method="post">
-            <label for="correo">Correo</label>
-            <input id="correo" name="usuario" type="email" placeholder="tu@correo.com" required />
+                <label for="clave">Contraseña</label>
+                <input id="clave" name="password" type="password" placeholder="••••••••" required />
 
-            <label for="clave">Contraseña</label>
-            <input id="clave" name="password" type="password" placeholder="••••••••" required />
-
-            <button type="submit" class="btn">Entrar</button>
-        </form>
-
-
-        <p class="ayuda">
-            ¿No tienes cuenta?
-            <a class="link" th:href="@{/register}">Crear cuenta</a>
-        </p>
+                <button type="submit" class="btn">Entrar</button>
+            </form>
+            <p class="ayuda">
+                ¿No tienes cuenta?
+                <a class="link" th:href="@{/register}">Crear cuenta</a>
+            </p>
+        </div>
+        <div class="panel-info">
+            <ul class="circles"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul>
+            <div class="info-contenido">
+                <div class="logo-placeholder">LOGO</div>
+                <p class="titulo-proyecto">Sistema Integral de Gestión <br> del <strong>Desarrollo Personal</strong></p>
+            </div>
+        </div>
     </div>
-
     <p class="footer">Proyecto Desarrollo Personal</p>
 </div>
-
 </body>
 </html>
