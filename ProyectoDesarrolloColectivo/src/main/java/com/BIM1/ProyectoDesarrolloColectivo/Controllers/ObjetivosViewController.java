@@ -9,12 +9,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.BIM1.ProyectoDesarrolloColectivo.Entity.Objetivos;
+import com.BIM1.ProyectoDesarrolloColectivo.Service.FraseMotivadoraService;
 import com.BIM1.ProyectoDesarrolloColectivo.Service.ObjetivosService;
+import com.BIM1.ProyectoDesarrolloColectivo.Service.UsuarioService;
 
 @Controller
 public class ObjetivosViewController {
     @Autowired
     private ObjetivosService service;
+
+    @Autowired
+    private UsuarioService usuarioService;
+
+    @Autowired
+    private FraseMotivadoraService frasesMotivadorasService;
 
     @GetMapping("/objetivos")
     public String mostrarObjetivos(Model model){
@@ -33,6 +41,8 @@ public class ObjetivosViewController {
     @GetMapping("/agregarObjetivo")
     public String agregarObjetivo(Model model) {
         model.addAttribute("objetivo", new Objetivos());
+        model.addAttribute("usuario",usuarioService.getAllUsuarios());
+        model.addAttribute("frase",frasesMotivadorasService.getAllFraseMotivadora());
         return "agregarObjetivo";
     }
 
