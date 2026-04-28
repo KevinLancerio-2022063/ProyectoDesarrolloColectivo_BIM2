@@ -56,6 +56,8 @@ public class ObjetivosViewController {
     public String editarObjetivo(@PathVariable int id, Model model) {
         Objetivos objetivo = service.getById(id);
         model.addAttribute("objetivo", objetivo);
+        model.addAttribute("usuario",usuarioService.getAllUsuarios());
+        model.addAttribute("frase",frasesMotivadorasService.getAllFraseMotivadora());
         return "editarObjetivo";
     }
 
@@ -68,7 +70,7 @@ public class ObjetivosViewController {
         original.setFechaObjetivo(objetivo.getFechaObjetivo());
         original.setUsuario(objetivo.getUsuario());
         original.setFraseMotivadora(objetivo.getFraseMotivadora());
-        service.saveObjetivos(original);
+        service.updateObjetivos(objetivo.getIdObjetivos(), original);
         return "redirect:/objetivos";
     }
 
