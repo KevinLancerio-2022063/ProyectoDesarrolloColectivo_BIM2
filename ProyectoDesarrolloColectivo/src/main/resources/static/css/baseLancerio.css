@@ -360,8 +360,19 @@ nav {
 }
 
 .error-card {
-  margin-bottom: 10px;
+  max-width: 320px;
+  border-left: 5px solid #dc2626;
   animation: slideIn 0.3s ease;
+}
+
+.error-card .title {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.error-card .message {
+  color: #6b7280;
+  font-size: 0.85rem;
 }
 
 @keyframes slideIn {
@@ -373,18 +384,19 @@ nav {
     transform: translateX(0);
     opacity: 1;
   }
-}.error-card {
-   max-width: 320px;
-   border-left: 5px solid #dc2626;
-   animation: slideIn 0.3s ease;
- }
+}
 
- .error-card .title {
-   color: #dc2626;
-   font-weight: 600;
- }
+.success-card {
+  border-left: 5px solid #16a34a;
+  animation: slideIn 0.3s ease;
+}
 
- .error-card .message {
-   color: #6b7280;
-   font-size: 0.85rem;
- }
+.success-card .title {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+.success-card .message {
+  color: #065f46;
+  font-size: 0.85rem;
+}
