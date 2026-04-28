@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Objetivo</title>
+    <link rel="stylesheet" th:href="@{/Base.css}">
+    <link rel="stylesheet" th:href="@{/Objetivos.css}">
+</head>
+<body>
+    <nav>
+        <a th:href="@{/}" class="nav-logo">Evoluciona</a>
+        <ul class="nav-links">
+        <li><a th:href="@{/}">Inicio</a></li>
+        </ul>
+    </nav>
+
+    <div class="page-header">
+        <div class="page-header-left">
+        <div class="page-tag">Metas personales</div>
+        <h1 class="page-title">Obje<em>tivos</em></h1>
+        </div>
+    </div>
+
+    <div class="detalle-container">
+        <div class="detalle-card">
+            <div class="detalle-header">
+                <h1 class="detalle-titulo">Agregar Objetivo</h1>
+            </div>
+           
+            <form th:action="@{/guardarObjetivoCreado}" th:object="${objetivo}" method="post">
+                <div class="form-group">
+                    <label for="titulo">Título:</label>
+                    <input type="text" id="titulo" th:field="*{tituloObjetivo}" required>
+                </div>
+                <div class="form-group">
+                    <label for="descripcion">Descripción:</label>
+                    <textarea id="descripcion" th:field="*{descripcionObjetivo}" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="estado">Estado:</label>
+                    <select id="estado" th:field="*{estadoObjetivo}" required>
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="En progreso">En progreso</option>
+                        <option value="Completado">Completado</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="fecha">Fecha del Objetivo:</label>
+                    <input type="date" id="fecha" th:field="*{fechaObjetivo}" required>
+                </div>
+                <div class="form-group">
+                    <label for="usuario">Usuario:</label>
+                    <select id="usuario" th:field="*{usuario}" required>
+                        <option value="">Seleccionar...</option>
+                        <option th:each="user : ${usuario}" th:value="${user.id_usuario}" th:text="${user.nombre_completo}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="fraseMotivadora">Frase motivadora:</label>
+                    <select id="fraseMotivadora" th:field="*{fraseMotivadora}" required>
+                        <option value="">Seleccionar...</option>
+                        <option th:each="frase : ${frase}" th:value="${frase.idFraseMotivadora}" th:text="${frase.texto}"></option>
+                    </select>
+                </div>
+                <div class="detalle-footer">
+                    <button type="submit" class="btn-primary">Agregar Objetivo</button>
+                    <a th:href="@{/objetivos}" class="btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
