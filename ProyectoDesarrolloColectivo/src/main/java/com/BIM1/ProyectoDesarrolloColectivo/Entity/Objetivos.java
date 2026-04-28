@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-import java.util.Date;
+import java.time.LocalDate;
+
 
 @Entity
 @Table(name = "Objetivos")
@@ -28,7 +29,7 @@ public class Objetivos {
 
     @NotNull(message = "Todos los campos son Obligatorios")
     @Column(name = "fecha_objetivo")
-    private Date fechaObjetivo;
+    private LocalDate fechaObjetivo;
 
     @NotNull(message = "Todos los campos son Obligatorios")
     @ManyToOne
@@ -75,11 +76,11 @@ public class Objetivos {
         this.estadoObjetivo = estadoObjetivo;
     }
 
-    public Date getFechaObjetivo() {
+    public LocalDate getFechaObjetivo() {
         return fechaObjetivo;
     }
 
-    public void setFechaObjetivo(Date fechaObjetivo) {
+    public void setFechaObjetivo(LocalDate fechaObjetivo) {
         this.fechaObjetivo = fechaObjetivo;
     }
 
