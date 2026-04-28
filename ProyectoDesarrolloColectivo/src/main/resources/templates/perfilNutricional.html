@@ -58,8 +58,9 @@
 
                 <div class="card-header">
                     <div class="card-avatar-wrap">
-                        <div class="card-avatar"
-                             th:text="${p.genero == 'Masculino'} ? '👨' : '👩'">👤</div>
+                        <div class="card-avatar">
+                            <i th:class="${p.genero == 'Masculino'} ? 'bi bi-person-standing' : 'bi bi-person-standing-dress'"></i>
+                        </div>
                     </div>
                     <div class="card-header-info">
                         <div class="card-genero" th:text="${p.genero}">Género</div>
