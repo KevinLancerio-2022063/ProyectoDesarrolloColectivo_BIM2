@@ -1,7 +1,6 @@
 package com.BIM1.ProyectoDesarrolloColectivo.Validator;
 
 import com.BIM1.ProyectoDesarrolloColectivo.Entity.Objetivos;
-import com.BIM1.ProyectoDesarrolloColectivo.Entity.Usuario;
 import com.BIM1.ProyectoDesarrolloColectivo.Exceptions.CustomException;
 import com.BIM1.ProyectoDesarrolloColectivo.Repository.FraseMotivadoraRepository;
 import com.BIM1.ProyectoDesarrolloColectivo.Repository.ObjetivosRepository;
