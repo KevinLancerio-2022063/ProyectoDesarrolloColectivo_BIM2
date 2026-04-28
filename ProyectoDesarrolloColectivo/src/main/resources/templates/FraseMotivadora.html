@@ -10,39 +10,64 @@
 </head>
 <body>
 
-<nav>
-  <a th:href="@{/}" class="nav-logo">Evoluciona</a>
-  <ul class="nav-links">
-    <li><a th:href="@{/}">Inicio</a></li>
-  </ul>
-</nav>
+  <nav>
+    <a th:href="@{/}" class="nav-logo">Evoluciona</a>
+    <ul class="nav-links">
+      <li><a th:href="@{/}">Inicio</a></li>
+    </ul>
+  </nav>
 
-<div class="page-header">
-  <div class="page-header-left">
-    <div class="page-tag">Inspiración diaria</div>
-    <h1 class="page-title">Frase <em>Motivadora</em></h1>
+  <div class="page-header">
+    <div class="page-header-left">
+      <div class="page-tag">Inspiración diaria</div>
+      <h1 class="page-title">Frase <em>Motivadora</em></h1>
+    </div>
+    <a th:href="@{/agregarFrase}" class="btn-primary">＋ Nueva Frase</a>
   </div>
-  <a th:href="@{/agregarFrase}" class="btn-primary">＋ Nueva Frase</a>
-</div>
 
-<div class="frase-container">
+  <div id="overlay" class="overlay" onclick="cerrarModal()"></div>
+      <div id="modal-confirmar" class="card" style="display:none;" th:each="f : ${frases}">
+          <div class="header">
+                  <div class="image">
+                      <svg aria-hidden="true" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" fill="none">
+                          <path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
+                          stroke-linejoin="round" stroke-linecap="round"></path>
+                      </svg>
+                  </div>
+                  <div class="content">
+                      <span class="title">Eliminar apoyo emocional</span>
+                      <p class="message">
+                          ¿Estás seguro de que deseas eliminar este registro? 
+                          Esta acción no se puede deshacer.
+                      </p>
+                  </div>
+                  <div class="actions">
+                      <a id="btn-confirmar-eliminar" th:href="@{'/eliminar-frase/' + ${f.idFraseMotivadora}}" 
+                          class="desactivate">Eliminar</a>
+                      <button onclick="cerrarModal()" class="cancel" type="button">Cancelar</button>
+                  </div>
+          </div>
+      </div>
 
-  <div class="frase-card" th:each="f, stat : ${frases}">
+  <div class="frase-container">
 
-    <span class="frase-label" th:text="'Frase No.' + ${stat.count}"></span>
+    <div class="frase-card" th:each="f, stat : ${frases}">
 
-    <p class="frase-texto" th:text="${f.texto}"></p>
+      <span class="frase-label" th:text="'Frase No.' + ${stat.count}"></span>
 
-    <p class="frase-autor" th:text="'--' + ${f.autor}"></p>
+      <p class="frase-texto" th:text="${f.texto}"></p>
 
-    <div class="detalle-footers">
-      <a th:href="@{'/editarFrase/' + ${f.idFraseMotivadora} }" class="btn-editar"><i class="fi fi-rs-pencil"></i></a>
-      <a th:href="@{'/eliminar-frase/' + ${f.idFraseMotivadora}}" class="btn-eliminar"><i class="fi fi-rs-trash"></i></a>
+      <p class="frase-autor" th:text="'--' + ${f.autor}"></p>
+
+      <div class="detalle-footers">
+        <a th:href="@{'/editarFrase/' + ${f.idFraseMotivadora} }" class="btn-editar"><i class="fi fi-rs-pencil"></i></a>
+        <button onclick="abrirModal()" class="btn-eliminar"><i class="fi fi-rs-trash"></i></button>
+      </div>
+
     </div>
 
   </div>
 
-</div>
-
+  <script th:src="@{/Base.js}"></script>
 </body>
 </html>
