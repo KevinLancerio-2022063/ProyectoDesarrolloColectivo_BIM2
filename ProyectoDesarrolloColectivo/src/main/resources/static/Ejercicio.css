@@ -35,10 +35,7 @@
     max-width: 420px;
 }
 
-.search-wrap {
-    position: relative;
-    flex: 1;
-}
+.search-wrap { position: relative; flex: 1; }
 
 .search-wrap svg {
     position: absolute;
@@ -64,11 +61,7 @@
 
 .search-input:focus { border-color: var(--verde-menta); }
 
-.contador {
-    margin-left: auto;
-    font-size: 0.82rem;
-    opacity: 0.5;
-}
+.contador { margin-left: auto; font-size: 0.82rem; opacity: 0.5; }
 
 .ejercicios-grid {
     display: grid;
@@ -82,15 +75,9 @@
     box-shadow: 0 6px 28px rgba(0,0,0,0.18);
     transition: transform var(--trans), box-shadow var(--trans);
     animation: fadeUp 0.55s ease both;
-    display: flex;
-    flex-direction: column;
-    background: linear-gradient(145deg, #2D4A3E 0%, #1e3329 100%);
 }
 
-.ej-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 18px 42px rgba(0,0,0,0.28);
-}
+.ej-card:hover { transform: translateY(-6px); box-shadow: 0 18px 42px rgba(0,0,0,0.28); }
 
 .ej-card:nth-child(1) { animation-delay: 0.05s; }
 .ej-card:nth-child(2) { animation-delay: 0.10s; }
@@ -99,15 +86,23 @@
 .ej-card:nth-child(5) { animation-delay: 0.25s; }
 .ej-card:nth-child(6) { animation-delay: 0.30s; }
 
-.ej-card:nth-child(3n + 1) {
+.ej-flip-check { display: none; }
+.ej-back  { display: none; }
+.ej-front { display: flex; flex-direction: column; }
+.ej-flip-check:checked ~ .ej-front { display: none; }
+.ej-flip-check:checked ~ .ej-back  { display: block; }
+
+.ej-front {
+    height: 100%;
+}
+
+.ej-card:nth-child(3n+1) .ej-front {
     background: linear-gradient(145deg, #2D4A3E 0%, #1e3329 60%, #162820 100%);
 }
-
-.ej-card:nth-child(3n + 2) {
+.ej-card:nth-child(3n+2) .ej-front {
     background: linear-gradient(145deg, #1C3558 0%, #142844 60%, #0e1e35 100%);
 }
-
-.ej-card:nth-child(3n + 3) {
+.ej-card:nth-child(3n+3) .ej-front {
     background: linear-gradient(145deg, #6b4f2e 0%, #503a1f 60%, #3a2912 100%);
 }
 
@@ -154,6 +149,7 @@
     flex-shrink: 0;
 }
 
+.ej-btn-flip,
 .ej-btn-edit,
 .ej-btn-delete {
     width: 34px;
@@ -167,9 +163,13 @@
     cursor: pointer;
     transition: background var(--trans), transform var(--trans);
     text-decoration: none;
+    color: rgba(255,255,255,0.7);
 }
 
-.ej-btn-edit  { background: rgba(126,176,155,0.2); }
+.ej-btn-flip  { background: rgba(255,255,255,0.1); }
+.ej-btn-flip:hover  { background: rgba(255,255,255,0.22); transform: scale(1.1); color: #fff; }
+
+.ej-btn-edit  { background: rgba(126,176,155,0.2); color: rgba(255,255,255,0.8); }
 .ej-btn-edit:hover  { background: rgba(126,176,155,0.4); transform: scale(1.1); }
 
 .ej-btn-delete { background: rgba(255,255,255,0.08); }
@@ -182,10 +182,7 @@
     flex: 1;
 }
 
-.ej-stat {
-    flex: 1;
-    text-align: center;
-}
+.ej-stat { flex: 1; text-align: center; }
 
 .ej-stat-num {
     font-family: Georgia, serif;
@@ -217,23 +214,179 @@
     padding: 0 1.6rem 1.4rem;
 }
 
-.ej-barra {
-    height: 3px;
-    flex: 1;
-    border-radius: 2px;
-    background: rgba(255,255,255,0.35);
+.ej-barra { height: 3px; flex: 1; border-radius: 2px; }
+.ej-barra-dim { }
+
+.ej-card:nth-child(3n+1) .ej-barra     { background: var(--verde-menta); }
+.ej-card:nth-child(3n+1) .ej-barra-dim { background: rgba(126,176,155,0.2); }
+.ej-card:nth-child(3n+2) .ej-barra     { background: var(--azul-indigo-luz); }
+.ej-card:nth-child(3n+2) .ej-barra-dim { background: rgba(58,97,153,0.2); }
+.ej-card:nth-child(3n+3) .ej-barra     { background: var(--cafe-claro); }
+.ej-card:nth-child(3n+3) .ej-barra-dim { background: rgba(196,168,130,0.2); }
+
+.ej-back {
+    background: var(--blanco);
+    padding: 1.6rem;
+    border-radius: var(--radio-lg);
+    animation: fadeIn 0.25s ease both;
+    border-top: 4px solid var(--verde-menta);
 }
 
-.ej-barra-dim { background: rgba(255,255,255,0.10); }
+.ej-card:nth-child(3n+1) .ej-back { border-top-color: var(--verde-menta); }
+.ej-card:nth-child(3n+2) .ej-back { border-top-color: var(--azul-indigo-luz); }
+.ej-card:nth-child(3n+3) .ej-back { border-top-color: var(--cafe-claro); }
 
-.ej-card:nth-child(3n+1) .ej-barra      { background: var(--verde-menta); }
-.ej-card:nth-child(3n+1) .ej-barra-dim  { background: rgba(126,176,155,0.2); }
+.ej-back-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
 
-.ej-card:nth-child(3n+2) .ej-barra      { background: var(--azul-indigo-luz); }
-.ej-card:nth-child(3n+2) .ej-barra-dim  { background: rgba(58,97,153,0.2); }
+.ej-back-eyebrow {
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cafe);
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
 
-.ej-card:nth-child(3n+3) .ej-barra      { background: var(--cafe-claro); }
-.ej-card:nth-child(3n+3) .ej-barra-dim  { background: rgba(196,168,130,0.2); }
+.ej-back-rutina-nombre {
+    font-family: Georgia, serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--verde-oscuro);
+    line-height: 1.2;
+}
+
+.ej-btn-close {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(45,74,62,0.07);
+    color: var(--verde-oscuro);
+    cursor: pointer;
+    transition: background var(--trans);
+    flex-shrink: 0;
+}
+
+.ej-btn-close:hover { background: rgba(45,74,62,0.14); }
+
+.ej-back-dias-wrap { margin-bottom: 1.2rem; }
+
+.ej-back-section-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cafe);
+    margin-bottom: 0.4rem;
+    font-weight: 500;
+    opacity: 0.75;
+}
+
+.ej-back-dias {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+}
+
+.ej-dia-chip {
+    background: rgba(126,176,155,0.15);
+    color: var(--verde-oscuro);
+    font-size: 0.7rem;
+    padding: 0.22rem 0.65rem;
+    border-radius: 100px;
+    font-weight: 500;
+    border: 1px solid rgba(126,176,155,0.25);
+}
+
+.ej-back-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 0.5rem;
+    margin-bottom: 1.2rem;
+}
+
+.ej-back-stat {
+    background: rgba(45,74,62,0.05);
+    border: 1px solid rgba(45,74,62,0.08);
+    border-radius: 10px;
+    padding: 0.6rem 0.4rem;
+    text-align: center;
+}
+
+.ej-back-stat-num {
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--verde-oscuro);
+    line-height: 1;
+    margin-bottom: 0.2rem;
+}
+
+.ej-back-stat-lbl {
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cafe);
+    opacity: 0.7;
+}
+
+.ej-back-footer {
+    display: flex;
+    gap: 0.6rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(45,74,62,0.07);
+}
+
+.ej-btn-volver {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    color: var(--verde-oscuro);
+    border: 1.5px solid rgba(45,74,62,0.2);
+    padding: 0.6rem 1rem;
+    border-radius: 100px;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: border-color var(--trans), background var(--trans);
+    font-family: system-ui, sans-serif;
+}
+
+.ej-btn-volver:hover {
+    border-color: var(--verde-oscuro);
+    background: rgba(45,74,62,0.05);
+}
+
+.ej-btn-edit-back {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--verde-oscuro);
+    color: var(--crema);
+    padding: 0.6rem 1rem;
+    border-radius: 100px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background var(--trans);
+}
+
+.ej-btn-edit-back:hover { background: var(--cafe); }
+
+.error {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--coral);
+    margin-top: 0.3rem;
+}
 
 .empty-state {
     grid-column: 1 / -1;
@@ -251,17 +404,10 @@
     color: var(--verde-oscuro);
 }
 
-
-.error {
-    display: block;
-    font-size: 0.78rem;
-    color: var(--coral);
-    margin-top: 0.3rem;
-}
-
 @media (max-width: 768px) {
     .ejercicios-container { padding: 0 1.5rem 4rem; }
     .alerta               { margin: 1rem 1.5rem; }
     .ej-stat-num          { font-size: 1.5rem; }
     .search-form          { max-width: 100%; }
+    .ej-back-stats        { grid-template-columns: 1fr 1fr; }
 }
