@@ -25,6 +25,30 @@
         </div>
     </div>
 
+    <div id="overlay" class="overlay" onclick="cerrarModal()"></div>
+    <div id="modal-confirmar" class="card" style="display:none;">
+        <div class="header">
+                <div class="image">
+                    <svg aria-hidden="true" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
+                        stroke-linejoin="round" stroke-linecap="round"></path>
+                    </svg>
+                </div>
+                <div class="content">
+                    <span class="title">Eliminar apoyo emocional</span>
+                    <p class="message">
+                        ¿Estás seguro de que deseas eliminar este registro? 
+                        Esta acción no se puede deshacer.
+                    </p>
+                </div>
+                <div class="actions">
+                    <a id="btn-confirmar-eliminar" th:href="@{'/eliminar-apoyo/' + ${apoyo.idApoyoEmocional}}" 
+                        class="desactivate">Eliminar</a>
+                    <button onclick="cerrarModal()" class="cancel" type="button">Cancelar</button>
+                </div>
+        </div>
+    </div>
+
     <div class="detalle-container">
 
         <div class="detalle-card">
@@ -62,12 +86,13 @@
             <div class="detalle-footer">
                 <a th:href="@{/apoyoEmocional}" class="btn-secondary">← Volver</a>
                 <a th:href="@{'/editarApoyo/' + ${apoyo.idApoyoEmocional} }" class="btn-editar"><i class="fi fi-rs-pencil"></i></a>
-                <a th:href="@{'/eliminar-apoyo/' + ${apoyo.idApoyoEmocional}}" class="btn-eliminar"><i class="fi fi-rs-trash"></i></a>
+                <button onclick="abrirModal()" class="btn-eliminar"><i class="fi fi-rs-trash"></i></button>
             </div>
 
         </div>
 
     </div>
 
+    <script th:src="@{/Base.js}"></script>
 </body>
 </html>
