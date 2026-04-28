@@ -41,6 +41,7 @@
   border-radius: 100px;
   font-size: 0.75rem;
   font-weight: 500;
+  display: inline-block;
 }
 
 .objetivo-estado.pendiente {
@@ -134,7 +135,6 @@
   font-size: 26px;
   color: #2c3e50;
 }
-
 .detalle-info p {
   margin: 10px 0;
   font-size: 15px;
@@ -157,14 +157,6 @@
     font-size: 16px;
 }
 
-.detalle-info p {
-    margin: 10px 0;
-    font-size: 15px;
-}
-
-.detalle-info strong {
-    color: #555;
-}
 
 .detalle-footer {
   margin-top: 25px;
@@ -203,4 +195,17 @@
     border-radius: 5px;
     text-decoration: none;
     font-size: 16px;
+}
+
+/* INPUTS, SELECT Y TEXTAREA */
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 0.6rem 0.7rem;
+  border-radius: 6px;
+  border: 1px solid rgba(0,0,0,0.15);
+  font-size: 0.9rem;
+  font-family: inherit;
+  outline: none;
+  transition: border var(--trans), box-shadow var(--trans);
 }
