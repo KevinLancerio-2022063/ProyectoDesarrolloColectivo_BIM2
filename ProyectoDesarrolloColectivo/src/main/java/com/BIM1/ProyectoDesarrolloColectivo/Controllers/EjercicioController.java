@@ -24,32 +24,32 @@ public class EjercicioController {
     public String Listar(Model model){
         model.addAttribute("ejercicios", ejercicioService.getAListEjercicio());
         model.addAttribute("ejerciciosFormu", new Ejercicio());
-        return "ejercicio";
+        return "ejercicios";
     }
 
     @PostMapping("/guardarEjercicio")
     public String guardarEjercicio(@Valid @ModelAttribute("ejerciciosFormu") Ejercicio ejercicio, BindingResult result, RedirectAttributes redirectAttributes, Model model){
         if(result.hasErrors()){
             model.addAttribute("ejercicios", ejercicioService.getAListEjercicio());
-            return "ejercicio";
+            return "ejercicios";
         }
         ejercicioService.saveEjercicio(ejercicio);
         redirectAttributes.addFlashAttribute("exito", "el ejercicio fue añadido");
-        return "ejercicio";
+        return "redirect:/ejercicios";
     }
 
     @GetMapping("/editarEjercicio{id}")
     public String editarEjercicio(@PathVariable Integer id, Model model){
         model.addAttribute("ejercicios", ejercicioService.getAListEjercicio());
         model.addAttribute("ejerciciosFormu", ejercicioService.getEjercicioById(id));
-        return "ejercicio";
+        return "ejercicios";
     }
 
     @PostMapping("/eliminarEjercicio/{id}")
     public String eliminarEjercicio(@PathVariable Integer id, RedirectAttributes redirectAttributes){
         ejercicioService.deleteEjercicio(id);
         redirectAttributes.addFlashAttribute("exito", "el ejercicio fue eliminado");
-        return "redirect:/ejercicio";
+        return "redirect:/ejercicios";
     }
 
     @GetMapping("/buscarEjercicio")
@@ -57,7 +57,7 @@ public class EjercicioController {
         Ejercicio ejercicio = ejercicioService.getEjercicioById(id);
         model.addAttribute("ejercicios", ejercicioService.getEjercicioById(id));
         model.addAttribute("ejerciciosFormu", ejercicio);
-        return "ejercicio";
+        return "ejercicios";
 
     }
 
@@ -66,11 +66,11 @@ public class EjercicioController {
 
         if(result.hasErrors()){
             model.addAttribute("ejercicios", ejercicioService.getAListEjercicio());
-            return "ejercicio";
+            return "ejercicios";
         }
         ejercicioService.updateEjercicio(id, ejercicio);
         redirectAttributes.addFlashAttribute("exito", "el ejercicio se ha actualizado");
-        return "redirect:/ejercicio";
+        return "redirect:/ejercicios";
     }
 
 }
