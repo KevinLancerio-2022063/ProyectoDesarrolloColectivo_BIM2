@@ -45,8 +45,11 @@
   <div class="rutinas-grid">
 
     <div class="rutina-card"
-         th:each="r : ${rutina != null ? rutina : T(java.util.Collections).emptyList()}"
-         th:id="'rt-' + ${r.id_rutina}">
+         th:each="r : ${rutina != null ? rutina : T(java.util.Collections).emptyList()}">
+
+      <input type="checkbox"
+             th:id="'flip-' + ${r.id_rutina}"
+             class="card-flip-check"/>
 
       <div class="card-front">
 
@@ -63,9 +66,9 @@
         <div class="card-dias-wrap">
           <div class="card-dias-label">DÍAS</div>
           <div class="card-dias-chips">
-            <span class="dia-chip"
-                  th:each="dia : ${#strings.arraySplit(r.dias_semana, ',')}"
-                  th:text="${#strings.trim(dia)}">Lunes</span>
+                        <span class="dia-chip"
+                              th:each="dia : ${#strings.arraySplit(r.dias_semana, ',')}"
+                              th:text="${#strings.trim(dia)}">Lunes</span>
           </div>
         </div>
 
@@ -74,12 +77,12 @@
                         👤 <strong th:text="'Usuario #' + ${r.fk_id_usuario}">Usuario</strong>
                     </span>
           <div class="card-actions">
-            <a th:href="'#rt-' + ${r.id_rutina}" class="btn-flip" title="Ver detalle">
+            <label th:for="'flip-' + ${r.id_rutina}" class="btn-flip" title="Ver ejercicios">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                 <circle cx="12" cy="12" r="3"/>
               </svg>
-            </a>
+            </label>
             <a th:href="@{/rutina/editarRutina/{id}(id=${r.id_rutina})}"
                class="btn-icon btn-edit" title="Editar">✏️</a>
             <form th:action="@{/rutina/eliminarRutina/{id}(id=${r.id_rutina})}"
@@ -95,46 +98,51 @@
 
         <div class="back-header">
           <div>
-            <div class="back-label">RUTINA</div>
+            <div class="back-label">EJERCICIOS DE LA RUTINA</div>
             <div class="back-nombre" th:text="${r.nombre_rutina}">Nombre</div>
           </div>
-
-          <a href="#_" class="btn-flip btn-flip-back" title="Cerrar">
+          <label th:for="'flip-' + ${r.id_rutina}" class="btn-flip btn-flip-back" title="Cerrar">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <path d="M18 6 6 18M6 6l12 12"/>
             </svg>
-          </a>
+          </label>
         </div>
 
-        <div class="back-body">
+        <div class="back-dias">
+                    <span class="dia-chip dia-chip-back"
+                          th:each="dia : ${#strings.arraySplit(r.dias_semana, ',')}"
+                          th:text="${#strings.trim(dia)}">Lunes</span>
+        </div>
 
-          <div class="back-id-big" th:text="'#' + ${r.id_rutina}">01</div>
+        <div class="ejercicios-list">
 
-          <div class="back-section">
-            <div class="back-section-label">Días de entrenamiento</div>
-            <div class="back-dias">
-                            <span class="dia-chip dia-chip-back"
-                                  th:each="dia : ${#strings.arraySplit(r.dias_semana, ',')}"
-                                  th:text="${#strings.trim(dia)}">Lunes</span>
+          <div th:each="ej : ${ejercicios != null ? ejercicios : T(java.util.Collections).emptyList()}">
+            <div class="ej-row" th:if="${ej.fk_id_rutina == r.id_rutina}">
+              <div class="ej-row-left">
+                <div class="ej-dot">💪</div>
+                <div>
+                  <div class="ej-row-nombre" th:text="${ej.nombre_ejercicio}">Ejercicio</div>
+                  <div class="ej-row-id" th:text="'ID #' + ${ej.id_ejercicio}">ID</div>
+                </div>
+              </div>
+              <div class="ej-row-stats">
+                <span class="ej-mini-stat" th:text="${ej.series_ejercicio} + ' series'"></span>
+                <span class="ej-mini-stat" th:text="${ej.repeticiones_ejercicio} + ' reps'"></span>
+              </div>
             </div>
           </div>
 
-          <div class="back-section">
-            <div class="back-section-label">Usuario asignado</div>
-            <div class="back-usuario" th:text="'Usuario #' + ${r.fk_id_usuario}">Usuario</div>
-          </div>
-
-          <div class="back-stat">
-            <div class="back-stat-num"
-                 th:text="${#strings.arraySplit(r.dias_semana, ',').length}">0</div>
-            <div class="back-stat-label">días / semana</div>
+          <div class="ej-empty"
+               th:if="${ejercicios == null or #lists.isEmpty(ejercicios)}">
+            Sin ejercicios asignados
           </div>
 
         </div>
 
-
         <div class="back-footer">
-          <a href="#_" class="btn-secondary btn-back-volver">← Volver</a>
+          <label th:for="'flip-' + ${r.id_rutina}" class="btn-back-volver">
+            ← Volver
+          </label>
           <a th:href="@{/rutina/editarRutina/{id}(id=${r.id_rutina})}"
              class="btn-primary btn-back-edit">Editar rutina</a>
         </div>
