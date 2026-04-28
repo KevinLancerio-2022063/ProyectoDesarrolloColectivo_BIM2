@@ -1,104 +1,195 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset='utf-8'>
     <title>Perfil Nutricional</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel="stylesheet" th:href="@{/Base.css}">
     <link rel="stylesheet" th:href="@{/PerfilNutricional.css}">
 </head>
 <body>
 
 <nav>
-  <a th:href="@{/index}" class="nav-logo">Evoluciona</a>
-  <ul class="nav-links">
-    <li><a th:href="@{/index}">Inicio</a></li>
-  </ul>
+    <a th:href="@{/index}" class="nav-logo">Evoluciona</a>
+    <ul class="nav-links">
+        <li><a th:href="@{/index}">Inicio</a></li>
+    </ul>
 </nav>
 
 <div th:if="${exito}" class="alerta" th:text="${exito}"></div>
 
 <div class="page-header">
-  <div class="page-header-left">
-    <div class="page-tag">Salud y bienestar</div>
-    <h1 class="page-title">Perfil <em>Nutricional</em></h1>
-  </div>
-    <button class="btn-primary">Nuevo perfil</button>
+    <div class="page-header-left">
+        <div class="page-tag">Salud y bienestar</div>
+        <h1 class="page-title">Perfil <em>Nutricional</em></h1>
+    </div>
+    <a th:href="@{/perfilNutricional}" class="btn-primary">＋ Nuevo perfil</a>
 </div>
 
 <div class="perfiles-container">
 
-  <div class="toolbar">
-    <form th:action="@{/perfilNutricional/buscarPerfilNutricional}" method="get" class="search-form">
-      <div class="search-wrap">
-        <input type="number" name="id" class="search-input" placeholder="Buscar por ID"/>
-      </div>
-      <button type="submit" class="btn-primary">Buscar</button>
-    </form>
-
-    <span style="font-size:0.82rem;opacity:0.5;margin-left:auto;"
-          th:text="${perfilNutricional != null ? #lists.size(perfilNutricional) : 0} + ' perfil(es)'">
-    </span>
-  </div>
-
-  <div class="perfiles-grid">
-
-    <div class="perfil-card" th:each="perfilNutri : ${perfilNutricional}">
-
-      <div class="perfil-card-top">
-        <div class="perfil-card-avatar"
-             th:text="${#strings.substring(perfilNutri.genero,0,1)}"></div>
-
-        <div>
-          <div class="perfil-card-user"
-               th:text="'Usuario #' + ${perfilNutri.fk_id_usuario}"></div>
-
-          <div class="perfil-card-id"
-               th:text="'Perfil #' + ${perfilNutri.id_perfil_nutricional}"></div>
-        </div>
-      </div>
-
-      <div class="perfil-card-body">
-
-        <div class="perfil-metrics">
-          <div class="metric-item">
-            <div class="metric-val"
-                 th:text="${perfilNutri.peso_kg} + ' kg'"></div>
-            <div class="metric-label">Peso</div>
-          </div>
-
-          <div class="metric-item">
-            <div class="metric-val"
-                 th:text="${perfilNutri.altura} + ' m'"></div>
-            <div class="metric-label">Altura</div>
-          </div>
-
-          <div class="metric-item">
-            <div class="metric-val"
-                 th:text="${perfilNutri.edad} + ' años'"></div>
-            <div class="metric-label">Edad</div>
-          </div>
-        </div>
-
-        <div class="perfil-tags">
-          <span class="perfil-tag" th:text="${perfilNutri.genero}"></span>
-          <span class="perfil-tag" th:text="'Nivel: ' + ${perfilNutri.nivel_actividad}"></span>
-          <span class="perfil-tag" th:text="${perfilNutri.objetivo}"></span>
-        </div>
-
-      </div>
-
-      <div class="perfil-card-footer">
-        <a th:href="@{/perfilNutricional/editarPerfilNutricional/{id}(id=${perfilNutri.id_perfil_nutricional})}"
-           class="btn-icon btn-edit">✏️</a>
-
-        <form th:action="@{/perfilNutricional/eliminarPerfilNutricional/{id}(id=${perfilNutri.id_perfil_nutricional})}"
-              method="post" style="display:inline;">
-          <button type="submit" class="btn-icon btn-delete">🗑️</button>
+    <div class="toolbar">
+        <form th:action="@{/perfilNutricional/buscarPerfilNutricional}" method="get" class="search-form">
+            <div class="search-wrap">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                </svg>
+                <input type="number" name="id" class="search-input" placeholder="Buscar por ID"/>
+            </div>
+            <button type="submit" class="btn-primary">Buscar</button>
         </form>
-      </div>
-
+        <span class="contador"
+              th:text="${perfilNutricional != null ? #lists.size(perfilNutricional) : 0} + ' perfil(es)'">
+            0 perfil(es)
+        </span>
     </div>
+
+    <div class="perfiles-grid">
+
+        <div class="perfil-card"
+             th:each="p : ${perfilNutricional != null ? perfilNutricional : T(java.util.Collections).emptyList()}">
+
+            <input type="checkbox"
+                   th:id="'flip-' + ${p.id_perfil_nutricional}"
+                   class="card-flip-check"/>
+
+            <div class="card-front">
+
+                <div class="card-header">
+                    <div class="card-avatar-wrap">
+                        <div class="card-avatar"
+                             th:text="${p.genero == 'Masculino'} ? '👨' : '👩'">👤</div>
+                    </div>
+                    <div class="card-header-info">
+                        <div class="card-genero" th:text="${p.genero}">Género</div>
+                        <div class="card-ids">
+                            <span th:text="'Usuario #' + ${p.fk_id_usuario}">Usuario</span>
+                            <span class="card-id-dot">·</span>
+                            <span th:text="'Perfil #' + ${p.id_perfil_nutricional}">Id</span>
+                        </div>
+                    </div>
+
+                    <label th:for="'flip-' + ${p.id_perfil_nutricional}"
+                           class="btn-imc-flip" title="IMC (indice de masa corporal)">
+                        IMC
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="m9 18 6-6-6-6"/>
+                        </svg>
+                    </label>
+                </div>
+
+                <div class="card-metrics">
+                    <div class="metric-block">
+                        <div class="metric-num" th:text="${p.peso_kg}">0</div>
+                        <div class="metric-unit">kg</div>
+                        <div class="metric-lbl">Peso</div>
+                    </div>
+                    <div class="metric-sep"></div>
+                    <div class="metric-block">
+                        <div class="metric-num" th:text="${p.altura}">0</div>
+                        <div class="metric-unit">m</div>
+                        <div class="metric-lbl">Altura</div>
+                    </div>
+                    <div class="metric-sep"></div>
+                    <div class="metric-block">
+                        <div class="metric-num" th:text="${p.edad}">0</div>
+                        <div class="metric-unit">años</div>
+                        <div class="metric-lbl">Edad</div>
+                    </div>
+                </div>
+
+                <div class="card-tags">
+                    <span class="tag tag-nivel"
+                          th:text="'' + ${p.nivel_actividad}">Nivel</span>
+                    <span class="tag tag-objetivo"
+                          th:text="'' + ${p.objetivo}">Objetivo</span>
+                </div>
+
+                <div class="card-footer">
+                    <a th:href="@{/perfilNutricional/editarPerfilNutricional/{id}(id=${p.id_perfil_nutricional})}"
+                       class="btn-icon btn-edit" title="Editar">✏️</a>
+                    <form th:action="@{/perfilNutricional/eliminarPerfilNutricional/{id}(id=${p.id_perfil_nutricional})}"
+                          method="post" style="display:inline;">
+                        <button type="submit" class="btn-icon btn-delete" title="Eliminar">🗑️</button>
+                    </form>
+                </div>
+
+            </div>
+
+            <div class="card-back">
+
+                <div class="back-top">
+                    <div>
+                        <div class="back-eyebrow">Índice de Masa Corporal</div>
+                        <div class="back-user" th:text="'Usuario #' + ${p.fk_id_usuario}">Usuario</div>
+                    </div>
+                    <label th:for="'flip-' + ${p.id_perfil_nutricional}"
+                           class="btn-back-close" title="Cerrar">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M18 6 6 18M6 6l12 12"/>
+                        </svg>
+                    </label>
+                </div>
+
+                <div class="imc-hero">
+                    <div class="imc-num"
+                         th:text="${#numbers.formatDecimal(p.peso_kg / (p.altura * p.altura), 1, 1)}">
+                        00.0
+                    </div>
+                    <div class="imc-unit">IMC</div>
+                </div>
+
+                <div class="imc-badge-wrap">
+                    <span class="imc-badge imc-bajo"
+                          th:if="${p.peso_kg / (p.altura * p.altura) < 18.5}">
+                        Bajo peso
+                    </span>
+                    <span class="imc-badge imc-normal"
+                          th:if="${p.peso_kg / (p.altura * p.altura) >= 18.5 and p.peso_kg / (p.altura * p.altura) < 25}">
+                        Normal
+                    </span>
+                    <span class="imc-badge imc-sobre"
+                          th:if="${p.peso_kg / (p.altura * p.altura) >= 25 and p.peso_kg / (p.altura * p.altura) < 30}">
+                        Sobrepeso
+                    </span>
+                    <span class="imc-badge imc-obeso"
+                          th:if="${p.peso_kg / (p.altura * p.altura) >= 30}">
+                        Obesidad
+                    </span>
+                </div>
+
+                <div class="imc-scale">
+                    <div class="imc-zone zone-bajo">Bajo<br/>&lt;18.5</div>
+                    <div class="imc-zone zone-normal">Normal<br/>18.5–25</div>
+                    <div class="imc-zone zone-sobre">Sobrepeso<br/>25–30</div>
+                    <div class="imc-zone zone-obeso">Obesidad<br/>≥30</div>
+                </div>
+
+                <div class="back-info-grid">
+                    <div class="back-info-item">
+                        <div class="back-info-label">Nivel de actividad</div>
+                        <div class="back-info-val" th:text="${p.nivel_actividad}">—</div>
+                    </div>
+                    <div class="back-info-item">
+                        <div class="back-info-label">Objetivo</div>
+                        <div class="back-info-val" th:text="${p.objetivo}">—</div>
+                    </div>
+                </div>
+
+                <div class="back-footer">
+                    <label th:for="'flip-' + ${p.id_perfil_nutricional}"
+                           class="btn-back-volver">← Volver al perfil</label>
+                    <a th:href="@{/perfilNutricional/editarPerfilNutricional/{id}(id=${p.id_perfil_nutricional})}"
+                       class="btn-primary btn-back-edit">Editar</a>
+                </div>
+
+            </div>
+
+        </div>>
+
+        <div class="empty-state" th:if="${perfilNutricional == null or #lists.isEmpty(perfilNutricional)}">
+            <div class="empty-icon"></div>
+            <p class="empty-text">No hay perfiles nutricionales registrados.</p>
+        </div>
 
   </div>
 </div>
@@ -155,16 +246,16 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <label>Nivel de actividad</label>
-        <select th:field="*{nivel_actividad}" class="form-select">
-          <option value="">Nivel de actividad</option>
-          <option value="bajo">Bajo</option>
-          <option value="medio">Medio</option>
-          <option value="alto">Alto</option>
-        </select>
-        <span th:errors="*{nivel_actividad}" class="error"></span>
-      </div>
+            <div class="form-group">
+                <label class="form-label">Nivel de actividad</label>
+                <select th:field="*{nivel_actividad}" class="form-select">
+                    <option value="">Seleccionar nivel</option>
+                    <option value="bajo">Bajo (1 a 2 días)</option>
+                    <option value="medio">Medio(3 a 4 días)</option>
+                    <option value="alto">Alto(5 a 7 días)</option>
+                </select>
+                <span th:errors="*{nivel_actividad}" class="error"></span>
+            </div>
 
       <div class="form-group">
         <label>Objetivo</label>
