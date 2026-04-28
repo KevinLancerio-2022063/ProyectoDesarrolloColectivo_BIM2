@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
-  <meta charset='utf-8'>
-  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <title>Rutina</title>
-  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rutinas</title>
   <link rel="stylesheet" th:href="@{/Base.css}">
-  <link rel="stylesheet" th:href="@{/rutina.css}">
+  <link rel="stylesheet" th:href="@{/Rutina.css}">
 </head>
 <body>
+
 <nav>
   <a th:href="@{/index}" class="nav-logo">Evoluciona</a>
   <ul class="nav-links">
@@ -23,46 +23,129 @@
     <div class="page-tag">Tu entrenamiento</div>
     <h1 class="page-title">Mis <em>Rutinas</em></h1>
   </div>
-  <button class="btn-primary">＋ Nueva rutina</button>
+  <a th:href="@{/rutina}" class="btn-primary">＋ Nueva rutina</a>
 </div>
 
 <div class="rutinas-container">
 
   <div class="toolbar">
-    <form th:action="@{/rutina/buscarRutina}" method="get" style="display:contents;">
+    <form th:action="@{/rutina/buscarRutina}" method="get" class="search-form">
       <div class="search-wrap">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
         </svg>
         <input type="number" name="id" class="search-input" placeholder="Buscar por ID..."/>
       </div>
+      <button type="submit" class="btn-primary">Buscar</button>
     </form>
-    <span style="font-size:0.82rem;opacity:0.5;margin-left:auto;"
-          th:text="${#lists.size(rutina)} + ' rutina(s)'">1 rutina</span>
+    <span class="contador"
+          th:text="${rutina != null ? #lists.size(rutina) : 0} + ' rutina(s)'">0 rutina(s)</span>
   </div>
 
   <div class="rutinas-grid">
 
-    <div class="rutina-card" th:each="r : ${rutina}">
-      <div class="rutina-card-header">
-        <div class="rutina-avatar"
-             th:text="${#strings.substring(r.nombre_rutina, 0, 1)}">R</div>
-        <div class="rutina-actions">
-          <a th:href="@{/rutina/editarRutina/{id}(id=${r.id_rutina})}"
-             class="btn-icon btn-edit">✏️</a>
-          <form th:action="@{/rutina/eliminarRutina/{id}(id=${r.id_rutina})}"
-                method="post" style="display:inline;">
-            <button type="submit" class="btn-icon btn-delete">🗑️</button>
-          </form>
+    <div class="rutina-card"
+         th:each="r : ${rutina != null ? rutina : T(java.util.Collections).emptyList()}"
+         th:id="'rt-' + ${r.id_rutina}">
+
+      <div class="card-front">
+
+        <div class="card-stripe"></div>
+
+        <div class="card-top">
+          <div class="card-avatar"
+               th:text="${#strings.substring(r.nombre_rutina, 0, 1)}">R</div>
+          <div class="card-id-badge" th:text="'#' + ${r.id_rutina}">ID</div>
         </div>
+
+        <div class="card-nombre" th:text="${r.nombre_rutina}">Nombre</div>
+
+        <div class="card-dias-wrap">
+          <div class="card-dias-label">DÍAS</div>
+          <div class="card-dias-chips">
+            <span class="dia-chip"
+                  th:each="dia : ${#strings.arraySplit(r.dias_semana, ',')}"
+                  th:text="${#strings.trim(dia)}">Lunes</span>
+          </div>
+        </div>
+
+        <div class="card-footer">
+                    <span class="card-usuario">
+                        👤 <strong th:text="'Usuario #' + ${r.fk_id_usuario}">Usuario</strong>
+                    </span>
+          <div class="card-actions">
+            <a th:href="'#rt-' + ${r.id_rutina}" class="btn-flip" title="Ver detalle">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </a>
+            <a th:href="@{/rutina/editarRutina/{id}(id=${r.id_rutina})}"
+               class="btn-icon btn-edit" title="Editar">✏️</a>
+            <form th:action="@{/rutina/eliminarRutina/{id}(id=${r.id_rutina})}"
+                  method="post" style="display:inline;">
+              <button type="submit" class="btn-icon btn-delete" title="Eliminar">🗑️</button>
+            </form>
+          </div>
+        </div>
+
       </div>
-      <div class="rutina-name" th:text="${r.nombre_rutina}">Rutina de Fuerza</div>
-      <div class="rutina-days">
-        <span class="day-chip" th:text="${r.dias_semana}">Lunes, Miércoles</span>
+
+      <div class="card-back">
+
+        <div class="back-header">
+          <div>
+            <div class="back-label">RUTINA</div>
+            <div class="back-nombre" th:text="${r.nombre_rutina}">Nombre</div>
+          </div>
+
+          <a href="#_" class="btn-flip btn-flip-back" title="Cerrar">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M18 6 6 18M6 6l12 12"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="back-body">
+
+          <div class="back-id-big" th:text="'#' + ${r.id_rutina}">01</div>
+
+          <div class="back-section">
+            <div class="back-section-label">Días de entrenamiento</div>
+            <div class="back-dias">
+                            <span class="dia-chip dia-chip-back"
+                                  th:each="dia : ${#strings.arraySplit(r.dias_semana, ',')}"
+                                  th:text="${#strings.trim(dia)}">Lunes</span>
+            </div>
+          </div>
+
+          <div class="back-section">
+            <div class="back-section-label">Usuario asignado</div>
+            <div class="back-usuario" th:text="'Usuario #' + ${r.fk_id_usuario}">Usuario</div>
+          </div>
+
+          <div class="back-stat">
+            <div class="back-stat-num"
+                 th:text="${#strings.arraySplit(r.dias_semana, ',').length}">0</div>
+            <div class="back-stat-label">días / semana</div>
+          </div>
+
+        </div>
+
+
+        <div class="back-footer">
+          <a href="#_" class="btn-secondary btn-back-volver">← Volver</a>
+          <a th:href="@{/rutina/editarRutina/{id}(id=${r.id_rutina})}"
+             class="btn-primary btn-back-edit">Editar rutina</a>
+        </div>
+
       </div>
-      <div class="rutina-footer">
-        <span>Usuario <strong th:text="'#' + ${r.fk_id_usuario}">#1</strong></span>
-      </div>
+
+    </div>
+
+    <div class="empty-state" th:if="${rutina == null or #lists.isEmpty(rutina)}">
+      <div class="empty-icon">🏋️</div>
+      <p class="empty-text">No hay rutinas registradas todavía.</p>
     </div>
 
   </div>
@@ -71,59 +154,55 @@
 <div class="form-section-wrap">
   <div class="form-section">
 
-    <form th:action="${rutinaFormu.id_rutina != null}
-                          ? @{/rutina/actualizarRutina/{id}(id=${rutinaFormu.id_rutina})}
-                          : @{/rutina/guardarRutina}"
-          method="post"
-          th:object="${rutinaFormu}">
+    <div class="form-section-header">
+      <h2 class="form-section-title">
+        <span th:if="${rutinaFormu.id_rutina != null}">Editar <em>Rutina</em></span>
+        <span th:unless="${rutinaFormu.id_rutina != null}">Nueva <em>Rutina</em></span>
+      </h2>
+      <p class="form-section-sub">Completa los campos para registrar una nueva rutina de entrenamiento.</p>
+    </div>
 
-      <div class="form-section-header">
-        <h2 class="form-section-title">
-          <span th:if="${rutinaFormu.id_rutina != null}">Editar <em>Rutina</em></span>
-          <span th:unless="${rutinaFormu.id_rutina != null}">Nueva <em>Rutina</em></span>
-        </h2>
-        <p class="form-section-sub">Completa los campos para registrar una nueva rutina.</p>
-      </div>
+    <form th:object="${rutinaFormu}"
+          th:action="${rutinaFormu.id_rutina != null
+                          ? '/rutina/actualizarRutina/' + rutinaFormu.id_rutina
+                          : '/rutina/guardarRutina'}"
+          method="post">
+
+      <input type="hidden" th:field="*{id_rutina}"/>
 
       <div class="form-group">
         <label class="form-label">Nombre de la rutina</label>
         <input type="text" th:field="*{nombre_rutina}" class="form-input"
                placeholder="Ej. Rutina de fuerza" maxlength="50"/>
-        <span th:if="${#fields.hasErrors('nombre_rutina')}"
-              th:errors="*{nombre_rutina}" class="error"></span>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Usuario (ID)</label>
-        <input type="number" th:field="*{fk_id_usuario}" class="form-input"
-               placeholder="ID del usuario" min="1"/>
-        <span th:if="${#fields.hasErrors('fk_id_usuario')}"
-              th:errors="*{fk_id_usuario}" class="error"></span>
+        <span th:errors="*{nombre_rutina}" class="error"></span>
       </div>
 
       <div class="form-group">
         <label class="form-label">Días de la semana</label>
-        <p class="form-section-sub" style="margin: 0 0 0.6rem;">
-        </p>
-        <input type="text"
-               th:field="*{dias_semana}"
-               class="form-input"
-               placeholder="Lunes, Miércoles, Viernes"
-               maxlength="100"/>
-        <span th:if="${#fields.hasErrors('dias_semana')}"
-              th:errors="*{dias_semana}" class="error"></span>
+        <input type="text" th:field="*{dias_semana}" class="form-input"
+               placeholder="Ej. Lunes, Miércoles, Viernes" maxlength="100"/>
+        <span class="form-hint">Separa los días con comas</span>
+        <span th:errors="*{dias_semana}" class="error"></span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">ID de usuario</label>
+        <input type="number" th:field="*{fk_id_usuario}" class="form-input"
+               placeholder="ID del usuario" min="1"/>
+        <span th:errors="*{fk_id_usuario}" class="error"></span>
       </div>
 
       <div class="form-actions">
         <a th:href="@{/rutina}" class="btn-secondary">Cancelar</a>
         <button type="submit" class="btn-primary"
                 th:text="${rutinaFormu.id_rutina != null} ? 'Actualizar rutina' : 'Guardar rutina'">
-          Guardar rutina
+          Guardar
         </button>
       </div>
 
     </form>
   </div>
 </div>
+
 </body>
 </html>
