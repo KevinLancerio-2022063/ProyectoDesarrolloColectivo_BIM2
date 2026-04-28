@@ -39,52 +39,69 @@
       </div>
       <button type="submit" class="btn-primary">Buscar</button>
     </form>
-    <span class="contador" th:text="${#lists.size(ejercicios)} + ' ejercicio(s)'">0 ejercicio(s)</span>
+    <span class="contador"
+          th:text="${ejercicios != null ? #lists.size(ejercicios) : 0} + ' ejercicio(s)'">0 ejercicio(s)</span>
   </div>
 
   <div class="ejercicios-grid">
 
-    <div class="ej-card" th:each="ej : ${ejercicios}">
+    <div class="ej-card"
+         th:each="ej : ${ejercicios != null ? ejercicios : T(java.util.Collections).emptyList()}">
 
-      <div class="ej-card-header">
-        <div>
-          <div class="ej-id" th:text="'# ' + ${ej.id_ejercicio}">ID</div>
-          <div class="ej-nombre" th:text="${ej.nombre_ejercicio}">Nombre</div>
-          <span class="ej-rutina-badge" th:text="'Rutina #' + ${ej.fk_id_rutina}">Rutina</span>
-        </div>
-        <div class="ej-card-actions">
-          <a th:href="@{'/ejercicios/editarEjercicio' + ${ej.id_ejercicio}}"
-             class="ej-btn-edit" title="Editar"><i class="bi bi-pencil-square"></i></a>
-          <form th:action="@{/ejercicios/eliminarEjercicio/{id}(id=${ej.id_ejercicio})}"
-                method="post" style="display:inline;">
-            <button type="submit" class="ej-btn-delete" title="Eliminar"><i class="bi bi-trash-fill"></i></button>
-          </form>
-        </div>
-      </div>
+      <input type="checkbox"
+             th:id="'flip-ej-' + ${ej.id_ejercicio}"
+             class="ej-flip-check"/>
 
-      <div class="ej-stats">
-        <div class="ej-stat">
-          <div class="ej-stat-num" th:text="${ej.series_ejercicio}">0</div>
-          <div class="ej-stat-label">SERIES</div>
-        </div>
-        <div class="ej-stat-divider"></div>
-        <div class="ej-stat">
-          <div class="ej-stat-num" th:text="${ej.repeticiones_ejercicio}">0</div>
-          <div class="ej-stat-label">REPS</div>
+      <div class="ej-front">
+
+        <div class="ej-card-header">
+          <div>
+            <div class="ej-id" th:text="'# ' + ${ej.id_ejercicio}">ID</div>
+            <div class="ej-nombre" th:text="${ej.nombre_ejercicio}">Nombre</div>
+            <span class="ej-rutina-badge" th:text="'Rutina #' + ${ej.fk_id_rutina}">Rutina</span>
+          </div>
+          <div class="ej-card-actions">
+            <label th:for="'flip-ej-' + ${ej.id_ejercicio}"
+                   class="ej-btn-flip" title="Ver detalle de rutina">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </label>
+            <a th:href="@{'/ejercicios/editarEjercicio' + ${ej.id_ejercicio}}"
+               class="ej-btn-edit" title="Editar">
+              <i class="bi bi-pencil-square"></i>
+            </a>
+            <form th:action="@{/ejercicios/eliminarEjercicio/{id}(id=${ej.id_ejercicio})}"
+                  method="post" style="display:inline;">
+              <button type="submit" class="ej-btn-delete" title="Eliminar">
+                <i class="bi bi-trash-fill"></i>
+              </button>
+            </form>
+          </div>
         </div>
 
-        <div class="ej-stat-divider"></div>
-        <div class="ej-stat">
-          <div class="ej-stat-num" th:text="${ej.tiempo_ejercicio}">0</div>
-          <div class="ej-stat-label">SEG</div>
+        <div class="ej-stats">
+          <div class="ej-stat">
+            <div class="ej-stat-num" th:text="${ej.series_ejercicio}">0</div>
+            <div class="ej-stat-label">SERIES</div>
+          </div>
+          <div class="ej-stat-divider"></div>
+          <div class="ej-stat">
+            <div class="ej-stat-num" th:text="${ej.repeticiones_ejercicio}">0</div>
+            <div class="ej-stat-label">REPS</div>
+          </div>
+          <div class="ej-stat-divider"></div>
+          <div class="ej-stat">
+            <div class="ej-stat-num" th:text="${ej.tiempo_ejercicio}">0</div>
+            <div class="ej-stat-label">SEG</div>
+          </div>
+          <div class="ej-stat-divider"></div>
+          <div class="ej-stat">
+            <div class="ej-stat-num" th:text="${ej.descanso_ejercicio}">0</div>
+            <div class="ej-stat-label">DESC.</div>
+          </div>
         </div>
-
-        <div class="ej-stat-divider"></div>
-        <div class="ej-stat">
-          <div class="ej-stat-num" th:text="${ej.descanso_ejercicio}">0</div>
-          <div class="ej-stat-label">DESC.</div>
-        </div>
-      </div>
 
       <div class="ej-barras">
         <div class="ej-barra"></div>
