@@ -195,3 +195,111 @@
   gap: 10px;
   margin-top: 10px;
 }
+
+/* Overlay (fondo oscuro) */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  z-index: 9999;
+}
+
+/* Modal centrado */
+.card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  background-color: #ffffff;
+  text-align: left;
+  border-radius: 0.5rem;
+  max-width: 320px;
+  width: 90%;
+  z-index: 10000;
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.2),
+    0 10px 10px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* resto casi igual */
+.header {
+  padding: 1.25rem 1rem 1rem 1rem;
+}
+
+.image {
+  display: flex;
+  margin: auto;
+  background-color: #fee2e2;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+}
+
+.image svg {
+  color: #dc2626;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.content {
+  margin-top: 0.75rem;
+  text-align: center;
+}
+
+.title {
+  color: #111827;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.message {
+  margin-top: 0.5rem;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.actions {
+  margin-top: 1rem;
+}
+
+.desactivate {
+  display: inline-flex;
+  padding: 0.6rem;
+  background-color: #dc2626;
+  color: #fff;
+  justify-content: center;
+  width: 100%;
+  border-radius: 0.375rem;
+  border: none;
+}
+
+.desactivate:hover {
+  background-color: #b91c1c;
+}
+
+.cancel {
+  display: inline-flex;
+  margin-top: 0.5rem;
+  padding: 0.6rem;
+  background-color: #ffffff;
+  color: #374151;
+  justify-content: center;
+  width: 100%;
+  border-radius: 0.375rem;
+  border: 1px solid #d1d5db;
+}
+
+.cancel:hover {
+  background-color: #f3f4f6;
+}
+
+button {
+  cursor: pointer;
+}
