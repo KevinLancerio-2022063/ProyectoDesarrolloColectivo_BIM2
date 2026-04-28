@@ -1,6 +1,8 @@
 package com.BIM1.ProyectoDesarrolloColectivo.Controllers;
 
+import com.BIM1.ProyectoDesarrolloColectivo.Entity.Ejercicio;
 import com.BIM1.ProyectoDesarrolloColectivo.Entity.Rutina;
+import com.BIM1.ProyectoDesarrolloColectivo.Service.EjercicioService;
 import com.BIM1.ProyectoDesarrolloColectivo.Service.RutinaService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -14,21 +16,25 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/rutina")
 public class RutinaController {
     private final RutinaService rutinaService;
+    private final EjercicioService ejercicioService;
 
-    public RutinaController(RutinaService rutinaService) {
+    public RutinaController(RutinaService rutinaService, EjercicioService ejercicioService) {
         this.rutinaService = rutinaService;
+        this.ejercicioService = ejercicioService;
     }
 
     @GetMapping
     public String listar(Model model){
         model.addAttribute("rutina", rutinaService.getAListRutina());
         model.addAttribute("rutinaFormu", new Rutina());
+        model.addAttribute("ejercicios", ejercicioService.getAListEjercicio());
         return "rutina";
     }
 
     @GetMapping("/editarRutina/{id}")
     public String editarRutina(@PathVariable Integer id, Model model){
         model.addAttribute("rutina", rutinaService.getAListRutina());
+        model.addAttribute("ejercicios", ejercicioService.getAListEjercicio());
         model.addAttribute("rutinaFormu", rutinaService.getRutinaById(id));
         return "rutina";
     }
@@ -37,6 +43,7 @@ public class RutinaController {
     public String buscarRutina(@RequestParam Integer id, Model model){
         Rutina rutina = rutinaService.getRutinaById(id);
         model.addAttribute("rutina", rutinaService.getAListRutina());
+        model.addAttribute("ejercicios", ejercicioService.getAListEjercicio());
         model.addAttribute("rutinaFormu", rutina);
         return "rutina";
     }
@@ -45,6 +52,7 @@ public class RutinaController {
     public String actualizarRutina(@PathVariable Integer id, @Valid @ModelAttribute("rutinaFormu")Rutina rutina, Model model, BindingResult result, RedirectAttributes redirectAttributes){
         if(result.hasErrors()){
             model.addAttribute("rutina", rutinaService.getAListRutina());
+            model.addAttribute("ejercicios", ejercicioService.getAListEjercicio());
             return "rutina";
         }
         rutinaService.updateRutina(id, rutina);
@@ -56,6 +64,7 @@ public class RutinaController {
     public String guardarRutina(@Valid @ModelAttribute("rutinaFormu")Rutina rutina, Model model, BindingResult result, RedirectAttributes redirectAttributes){
         if (result.hasErrors()){
             model.addAttribute("rutina", rutinaService.getAListRutina());
+            model.addAttribute("ejercicios", ejercicioService.getAListEjercicio());
             return "rutina";
         }
         rutinaService.saveRutina(rutina);
