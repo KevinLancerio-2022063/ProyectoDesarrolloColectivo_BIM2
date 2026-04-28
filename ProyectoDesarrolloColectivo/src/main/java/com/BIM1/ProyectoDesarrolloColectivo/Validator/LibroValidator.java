@@ -25,6 +25,10 @@ public class LibroValidator {
             throw new Exception("las paginas leidas deben de ser 0 por el estado en el que se encuentra");
         }
 
+        if(libro.getCantidad_leido() == libro.getCantidad_pag()){
+            throw new Exception("las paginas totales ya han sido leidas, por lo que el estado del libro tiene que ser 'terminado' ");
+        }
+
         List<String> validarEstados = Arrays.asList("pendiente", "leyendo", "terminado");
         if(!validarEstados.contains(libro.getEstado())){
             throw new Exception("el estado solo puede ser: pendiente, leyendo o terminado ");
