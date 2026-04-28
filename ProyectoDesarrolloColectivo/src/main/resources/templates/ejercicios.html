@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ejercicios</title>
-  <link rel="stylesheet" th:href="@{/Base.css}">
-  <link rel="stylesheet" th:href="@{/Ejercicio.css}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ejercicios</title>
+    <link rel="stylesheet" th:href="@{/Base.css}">
+    <link rel="stylesheet" th:href="@{/Ejercicio.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
 <body>
 
@@ -53,10 +54,10 @@
         </div>
         <div class="ej-card-actions">
           <a th:href="@{'/ejercicios/editarEjercicio' + ${ej.id_ejercicio}}"
-             class="ej-btn-edit" title="Editar">✏️</a>
+             class="ej-btn-edit" title="Editar"><i class="bi bi-pencil-square"></i></a>
           <form th:action="@{/ejercicios/eliminarEjercicio/{id}(id=${ej.id_ejercicio})}"
                 method="post" style="display:inline;">
-            <button type="submit" class="ej-btn-delete" title="Eliminar">🗑️</button>
+            <button type="submit" class="ej-btn-delete" title="Eliminar"><i class="bi bi-trash-fill"></i></button>
           </form>
         </div>
       </div>
