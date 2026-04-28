@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Perfil Nutricional</title>
     <link rel="stylesheet" th:href="@{/Base.css}">
     <link rel="stylesheet" th:href="@{/PerfilNutricional.css}">
@@ -191,60 +192,64 @@
             <p class="empty-text">No hay perfiles nutricionales registrados.</p>
         </div>
 
-  </div>
+    </div>
 </div>
 
 <div class="form-section-wrap">
-  <div class="form-section">
+    <div class="form-section">
 
-    <form th:action="${perfilNutricionalFormu.id_perfil_nutricional != null
-                  ? '/perfilNutricional/actualizarPerfilNutricional/' + perfilNutricionalFormu.id_perfil_nutricional
-                  : '/perfilNutricional/guardarPerfilNutricional'}"
-          method="post"
-          th:object="${perfilNutricionalFormu}">
-
-      <div class="form-section-header">
-        <h2 class="form-section-title">
-          <span th:if="${perfilNutricionalFormu.id_perfil_nutricional != null}">
-            Editar <em>Perfil</em>
-          </span>
-          <span th:unless="${perfilNutricionalFormu.id_perfil_nutricional != null}">
-            Nuevo <em>Perfil</em>
-          </span>
-        </h2>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label>Peso</label>
-          <input type="number" th:field="*{peso_kg}" class="form-input" placeholder="peso en kg"/>
-          <span th:errors="*{peso_kg}" class="error"></span>
+        <div class="form-section-header">
+            <h2 class="form-section-title">
+                <span th:if="${perfilNutricionalFormu.id_perfil_nutricional != null}">
+                    Editar <em>Perfil</em>
+                </span>
+                <span th:unless="${perfilNutricionalFormu.id_perfil_nutricional != null}">
+                    Nuevo <em>Perfil</em>
+                </span>
+            </h2>
+            <p class="form-section-sub">Completa la información para calcular tu IMC y llevar el control nutricional.</p>
         </div>
 
-        <div class="form-group">
-          <label>Altura</label>
-          <input type="number" step="0.01" th:field="*{altura}" class="form-input" placeholder="altura en metros"/>
-          <span th:errors="*{altura}" class="error"></span>
-        </div>
-      </div>
+        <form th:object="${perfilNutricionalFormu}"
+              th:action="${perfilNutricionalFormu.id_perfil_nutricional != null
+                          ? '/perfilNutricional/actualizarPerfilNutricional/' + perfilNutricionalFormu.id_perfil_nutricional
+                          : '/perfilNutricional/guardarPerfilNutricional'}"
+              method="post">
 
-      <div class="form-row">
-        <div class="form-group">
-          <label>Edad</label>
-          <input type="number" th:field="*{edad}" class="form-input" placeholder="edad"/>
-          <span th:errors="*{edad}" class="error"></span>
-        </div>
+            <input type="hidden" th:field="*{id_perfil_nutricional}"/>
 
-        <div class="form-group">
-          <label>Género</label>
-          <select th:field="*{genero}" class="form-select">
-            <option value="">Seleccionar género</option>
-            <option value="Masculino">Masculino</option>
-            <option value="Femenino">Femenino</option>
-          </select>
-          <span th:errors="*{genero}" class="error"></span>
-        </div>
-      </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Peso (kg)</label>
+                    <input type="number" th:field="*{peso_kg}" class="form-input"
+                           placeholder="Ej. 70" min="45" max="300"/>
+                    <span th:errors="*{peso_kg}" class="error"></span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Altura (m)</label>
+                    <input type="number" step="0.01" th:field="*{altura}" class="form-input"
+                           placeholder="Ej. 1.75" min="0.50" max="2.50"/>
+                    <span th:errors="*{altura}" class="error"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Edad</label>
+                    <input type="number" th:field="*{edad}" class="form-input"
+                           placeholder="Ej. 25" min="12" max="120"/>
+                    <span th:errors="*{edad}" class="error"></span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Género</label>
+                    <select th:field="*{genero}" class="form-select">
+                        <option value="">Seleccionar género</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                    </select>
+                    <span th:errors="*{genero}" class="error"></span>
+                </div>
+            </div>
 
             <div class="form-group">
                 <label class="form-label">Nivel de actividad</label>
@@ -257,28 +262,30 @@
                 <span th:errors="*{nivel_actividad}" class="error"></span>
             </div>
 
-      <div class="form-group">
-        <label>Objetivo</label>
-        <input type="text" th:field="*{objetivo}" class="form-input" placeholder="Objetivo físico"/>
-        <span th:errors="*{objetivo}" class="error"></span>
-      </div>
+            <div class="form-group">
+                <label class="form-label">Objetivo</label>
+                <input type="text" th:field="*{objetivo}" class="form-input"
+                       placeholder="Ej. Bajar de peso, Recomposicion corporal...." maxlength="75"/>
+                <span th:errors="*{objetivo}" class="error"></span>
+            </div>
 
-      <div class="form-group">
-        <label>ID Usuario</label>
-        <input type="number" th:field="*{fk_id_usuario}" class="form-input" placeholder="ID del usuario"/>
-        <span th:errors="*{fk_id_usuario}" class="error"></span>
-      </div>
+            <div class="form-group">
+                <label class="form-label">Id de usuario</label>
+                <input type="number" th:field="*{fk_id_usuario}" class="form-input"
+                       placeholder="ID del usuario" min="1"/>
+                <span th:errors="*{fk_id_usuario}" class="error"></span>
+            </div>
 
-      <div class="form-actions">
-        <a th:href="@{/perfilNutricional}" class="btn-secondary">Cancelar</a>
-        <button type="submit" class="btn-primary"
-                th:text="${perfilNutricionalFormu.id_perfil_nutricional != null} ? 'Actualizar' : 'Guardar'">
-        </button>
-      </div>
+            <div class="form-actions">
+                <a th:href="@{/perfilNutricional}" class="btn-secondary">Cancelar</a>
+                <button type="submit" class="btn-primary"
+                        th:text="${perfilNutricionalFormu.id_perfil_nutricional != null} ? 'Actualizar perfil' : 'Guardar perfil'">
+                    Guardar
+                </button>
+            </div>
 
-    </form>
-
-  </div>
+        </form>
+    </div>
 </div>
 
 </body>
