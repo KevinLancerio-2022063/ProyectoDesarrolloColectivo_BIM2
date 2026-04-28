@@ -118,8 +118,9 @@
 
         <div class="ejercicios-list">
 
-          <div th:each="ej : ${ejercicios != null ? ejercicios : T(java.util.Collections).emptyList()}">
-            <div class="ej-row" th:if="${ej.fk_id_rutina == r.id_rutina}">
+          <div th:each="ej : ${ejercicios != null ? ejercicios : T(java.util.Collections).emptyList()}"
+               th:if="${ej.fk_id_rutina == r.id_rutina}">
+            <div class="ej-row">
               <div class="ej-row-left">
                 <div class="ej-dot"><i class="fa-light fa-dumbbell"></i></div>
                 <div>
