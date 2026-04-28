@@ -3,126 +3,144 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Usuarios</title>
+    <title>Gestión de Usuarios</title>
     <link rel="stylesheet" th:href="@{/css/baseLancerio.css}">
 </head>
 
 <body>
+<nav>
+    <a th:href="@{/index}" class="nav-logo">Evoluciona</a>
+    <ul class="nav-links">
+        <li><a th:href="@{/index}">Inicio</a></li>
+    </ul>
+</nav>
 
 <div class="usuario-container">
 
-    <!-- Encabezado con el texto: "Gestión de Usuarios" -->
-    <h1>
-        Gestión de <span style="color: var(--verde-menta);">Usuarios</span>
-    </h1>
+    <!-- Encabezado -->
+    <div class="page-header">
+        <p class="page-tag">Administración</p>
+        <h1 class="page-title">Gestión de <em>Usuarios</em></h1>
+    </div>
 
-    <!-- Barra del buscador por Id de Usuario -->
+    <!-- Barra para el buscador por Id -->
     <div class="toolbar">
 
         <div class="search-wrap">
+            <span class="search-icon">🔍</span>
             <input type="text"
                    id="buscar"
                    class="search-input"
-                   placeholder="Buscar usuario..."
+                   placeholder="Buscar por ID..."
                    onkeyup="filtrarTabla()">
         </div>
 
-        <!-- Al darle al botón Nuevo Usuario cambia a la "vista" Registrar Usuario -->
-        <button class="btn"
+        <span class="result-count"
+              th:text="${#lists.size(usuarios)} + ' usuarios'">
+        </span>
+
+        <button class="btn-primary"
                 onclick="window.location.href='/usuarios'">
-            + Nuevo usuario
+            ＋ Nuevo usuario
         </button>
 
     </div>
 
-    <!-- Tabla donde se muestran los registros de los Usuario -->
-    <div class="table-wrap">
-        <table class="usuario-table" id="tablaUsuarios">
+    <!-- Tarjetas con los botones -->
+    <div class="usuarios-grid" id="tablaUsuarios">
 
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Correo</th>
-                <th>Contraseña</th>
-                <th>Acciones</th>
-            </tr>
-            </thead>
+        <div class="usuario-card"
+             th:each="u : ${usuarios}"
+             th:attr="data-id=${u.id_usuario}">
 
-            <tbody>
+            <div class="card-header">
 
-            <tr th:each="u : ${usuarios}">
+                <div class="usuario-avatar"
+                     th:text="${#strings.toUpperCase(#strings.substring(u.nombre_completo,0,2))}">
+                </div>
 
-                <td th:text="${u.id_usuario}"></td>
-                <td th:text="${u.nombre_completo}"></td>
-                <td th:text="${u.correoUsuario}"></td>
+                <div class="card-actions">
+                    <a class="btn-icon"
+                       th:href="@{/usuarios/editar/{id}(id=${u.id_usuario})}">✏️</a>
 
-                <!-- Protección de las contraseñas para que no se vean-->
-                <td>
-                    <span class="stat-badge">****</span>
-                </td>
+                    <a class="btn-icon"
+                       th:href="@{/usuarios/eliminar/{id}(id=${u.id_usuario})}"
+                       onclick="return confirm('¿Eliminar usuario?')">🗑️</a>
+                </div>
 
-                <td>
-                    <div class="td-actions-inner">
+            </div>
 
-                        <a class="action-btn"
-                           th:href="@{/usuarios/editar/{id}(id=${u.id_usuario})}">
-                            ✏️
-                        </a>
+            <div class="card-body">
+                <p class="card-name" th:text="${u.nombre_completo}"></p>
+                <p class="card-email" th:text="${u.correoUsuario}"></p>
+            </div>
 
-                        <a class="action-btn"
-                           th:href="@{/usuarios/eliminar/{id}(id=${u.id_usuario})}"
-                           onclick="return confirm('¿Eliminar usuario?')">
-                            🗑️
-                        </a>
+            <div class="card-footer">
+                <span class="card-id" th:text="'#' + ${u.id_usuario}"></span>
+                <span class="pass-badge">••••••</span>
+            </div>
 
-                    </div>
-                </td>
+        </div>
 
-            </tr>
+        <!-- Si no hya usuarios mostrará este mensaje -->
+        <div class="card-empty" th:if="${#lists.isEmpty(usuarios)}">
+            <p>No hay usuarios registrados</p>
+        </div>
 
-            <tr th:if="${#lists.isEmpty(usuarios)}">
-                <td colspan="5">No hay usuarios registrados</td>
-            </tr>
-
-            </tbody>
-
-        </table>
     </div>
 
-    <!-- Formulario para registrar un Usuario -->
-    <div id="formulario" style="margin-top:3rem; max-width:500px;">
+    <!-- Formulario para ingresar los datos -->
+    <div class="form-section-wrap">
+        <div class="form-section">
 
-        <h2 th:text="${usuario.id_usuario != null} ? 'Editar Usuario' : 'Nuevo Usuario'"></h2>
+            <h2 class="form-title">
+                <span th:if="${usuario.id_usuario != null}">
+                    Editar <em>usuario</em>
+                </span>
+                <span th:if="${usuario.id_usuario == null}">
+                    Nuevo <em>usuario</em>
+                </span>
+            </h2>
 
-        <form th:action="@{/usuarios/guardar}"
-              th:object="${usuario}"
-              method="post"
-              style="display:grid; gap:1rem;">
+            <form th:action="@{/usuarios/guardar}"
+                  th:object="${usuario}"
+                  method="post">
 
-            <input type="hidden" th:field="*{id_usuario}">
+                <input type="hidden" th:field="*{id_usuario}">
 
-            <input type="text"
-                   th:field="*{nombre_completo}"
-                   placeholder="Nombre completo"
-                   required>
+                <input class="form-input"
+                       type="text"
+                       th:field="*{nombre_completo}"
+                       placeholder="Nombre completo"
+                       required>
 
-            <input type="email"
-                   th:field="*{correoUsuario}"
-                   placeholder="Correo electrónico"
-                   required>
+                <input class="form-input"
+                       type="email"
+                       th:field="*{correoUsuario}"
+                       placeholder="Correo"
+                       required>
 
-            <input type="password"
-                   th:field="*{contraseña}"
-                   placeholder="Contraseña"
-                   required>
+                <input class="form-input"
+                       type="password"
+                       th:field="*{contraseña}"
+                       placeholder="Contraseña"
+                       required>
 
-            <button type="submit" class="btn">
-                <span th:text="${usuario.id_usuario != null} ? 'Actualizar' : 'Guardar'"></span>
-            </button>
+                <div class="form-actions">
+                    <button type="button"
+                            class="btn-secondary"
+                            onclick="window.location.href='/usuarios'">
+                        Cancelar
+                    </button>
 
-        </form>
+                    <button type="submit" class="btn-primary">
+                        <span th:text="${usuario.id_usuario != null}
+                          ? 'Actualizar' : 'Guardar'"></span>
+                    </button>
+                </div>
 
+            </form>
+        </div>
     </div>
 
 </div>
