@@ -115,9 +115,9 @@
     </div>
 
     <form th:object="${ejerciciosFormu}"
-          th:action="${ejerciciosFormu.id_ejercicio != null}
-                          ? @{/ejercicios/actualizarEjercicio/{id}(id=${ejerciciosFormu.id_ejercicio})}
-                          : @{/ejercicios/guardarEjercicio}"
+          th:action="${ejerciciosFormu.id_ejercicio != null
+                          ? '/ejercicios/actualizarEjercicio/' + ejerciciosFormu.id_ejercicio
+                          : '/ejercicios/guardarEjercicio'}"
           method="post">
 
       <input type="hidden" th:field="*{id_ejercicio}"/>
