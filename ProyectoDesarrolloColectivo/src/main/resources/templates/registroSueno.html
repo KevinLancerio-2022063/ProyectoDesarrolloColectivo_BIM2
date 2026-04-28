@@ -8,18 +8,27 @@
 </head>
 
 <body>
+<nav>
+    <a th:href="@{/index}" class="nav-logo">Evoluciona</a>
+    <ul class="nav-links">
+        <li><a th:href="@{/index}">Inicio</a></li>
+    </ul>
+</nav>
 
 <div class="usuario-container">
 
     <!-- Encabezado para el texto "Registro Sueño" -->
-    <h1>
-        Registro de <span style="color: var(--verde-menta);">Sueño</span>
-    </h1>
+    <div class="page-header">
+        <h1 class="page-title">
+            Registro de <em>Sueño</em>
+        </h1>
+    </div>
 
     <!-- Bara del buscador para ver los registros por Id -->
     <div class="toolbar">
 
         <div class="search-wrap">
+            <span class="search-icon">🔍</span>
             <input type="text"
                    id="buscar"
                    class="search-input"
@@ -27,115 +36,115 @@
                    onkeyup="filtrarTabla()">
         </div>
 
-        <button class="btn"
+        <button class="btn-primary"
                 onclick="window.location.href='/registroSueno'">
             + Nuevo registro
         </button>
 
     </div>
 
-    <!-- Tabla para ver los demás registros del sueño -->
-    <div class="table-wrap">
-        <table class="usuario-table" id="tablaRegistros">
+    <!-- Grid para ver los demás registros del sueño -->
+    <div class="usuarios-grid" id="tablaRegistros">
 
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Fecha</th>
-                <th>Horas</th>
-                <th>Calidad</th>
-                <th>Usuario</th>
-                <th>Acciones</th>
-            </tr>
-            </thead>
+        <div class="usuario-card"
+             th:each="r : ${registros}"
+             th:attr="data-id=${r.id_registro_sueño}">
 
-            <tbody>
+            <div class="card-header">
+                <div class="usuario-avatar">RS</div>
 
-            <tr th:each="r : ${registros}">
+                <div class="card-actions">
+                    <a class="btn-icon"
+                       th:href="@{/registroSueno/editar/{id}(id=${r.id_registro_sueño})}">
+                        ✏️
+                    </a>
 
-                <td th:text="${r.id_registro_sueño}"></td>
-                <td th:text="${r.fecha_sueño}"></td>
-                <td th:text="${r.horas_dormidas}"></td>
-                <td th:text="${r.calidad_sueño}"></td>
-                <td th:text="${r.fk_id_usuario}"></td>
+                    <a class="btn-icon"
+                       th:href="@{/registroSueno/eliminar/{id}(id=${r.id_registro_sueño})}"
+                       onclick="return confirm('¿Eliminar registro?')">
+                        🗑️
+                    </a>
+                </div>
+            </div>
 
-                <td>
-                    <div class="td-actions-inner">
+            <div class="card-body">
+                <p><strong>Fecha:</strong> <span th:text="${r.fecha_sueño}"></span></p>
+                <p><strong>Horas:</strong> <span th:text="${r.horas_dormidas}"></span></p>
+                <p><strong>Calidad:</strong> <span th:text="${r.calidad_sueño}"></span></p>
+                <p><strong>Usuario:</strong> <span th:text="${r.fk_id_usuario}"></span></p>
+            </div>
 
-                        <a class="action-btn"
-                           th:href="@{/registroSueno/editar/{id}(id=${r.id_registro_sueño})}">
-                            ✏️
-                        </a>
+            <div class="card-footer">
+                <span class="card-id"
+                      th:text="'#' + ${r.id_registro_sueño}"></span>
+            </div>
 
-                        <a class="action-btn"
-                           th:href="@{/registroSueno/eliminar/{id}(id=${r.id_registro_sueño})}"
-                           onclick="return confirm('¿Eliminar registro?')">
-                            🗑️
-                        </a>
+        </div>
 
-                    </div>
-                </td>
+        <!-- Estado vacío -->
+        <div class="card-empty"
+             th:if="${#lists.isEmpty(registros)}">
+            <p>No hay registros de sueño</p>
+        </div>
 
-            </tr>
-
-            <tr th:if="${#lists.isEmpty(registros)}">
-                <td colspan="6">No hay registros de sueño</td>
-            </tr>
-
-            </tbody>
-
-        </table>
     </div>
 
     <!-- Formulario para ingresar un nuevo registro de sueño -->
-    <div id="formulario" style="margin-top:3rem; max-width:500px;">
+    <div class="form-section-wrap">
 
-        <h2 th:text="${registro.id_registro_sueño != null} ? 'Editar Registro' : 'Nuevo Registro'"></h2>
+        <div class="form-section">
 
-        <form th:action="@{/registroSueno/guardar}"
-              th:object="${registro}"
-              method="post"
-              style="display:grid; gap:1rem;">
+            <h2 class="form-title"
+                th:text="${registro.id_registro_sueño != null} ? 'Editar Registro' : 'Nuevo Registro'">
+            </h2>
 
-            <input type="hidden" th:field="*{id_registro_sueño}">
+            <form th:action="@{/registroSueno/guardar}"
+                  th:object="${registro}"
+                  method="post">
 
-            <input type="date"
-                   th:field="*{fecha_sueño}"
-                   required>
+                <input type="hidden" th:field="*{id_registro_sueño}">
 
-            <input type="number"
-                   min="1"
-                   max="15"
-                   th:field="*{horas_dormidas}"
-                   placeholder="Horas dormidas"
-                   required>
+                <input class="form-input"
+                       type="date"
+                       th:field="*{fecha_sueño}"
+                       required>
 
-            <input type="text"
-                   th:field="*{calidad_sueño}"
-                   placeholder="Calidad del sueño"
-                   maxlength="100"
-                   required>
+                <input class="form-input"
+                       type="number"
+                       min="1"
+                       max="15"
+                       th:field="*{horas_dormidas}"
+                       placeholder="Horas dormidas"
+                       required>
 
-            <input type="number"
-                   th:field="*{fk_id_usuario}"
-                   placeholder="ID Usuario"
-                   min="1"
-                   required>
+                <input class="form-input"
+                       type="text"
+                       th:field="*{calidad_sueño}"
+                       placeholder="Calidad del sueño"
+                       required>
 
-            <button type="submit" class="btn">
-                <span th:text="${registro.id_registro_sueño != null} ? 'Actualizar' : 'Guardar'"></span>
-            </button>
+                <input class="form-input"
+                       type="number"
+                       th:field="*{fk_id_usuario}"
+                       placeholder="ID Usuario"
+                       required>
 
-        </form>
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">
+                        <span th:text="${registro.id_registro_sueño != null} ? 'Actualizar' : 'Guardar'"></span>
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
 
     </div>
 
 </div>
 
-<!-- Dirección del buscador de Id para el Registro Sueño -->
-<script
-    th:src="@{/js/buscadorRegistroSueno.js}">
-</script>
+<!--Dirección del script buscar por id-->
+<script th:src="@{/js/buscadorRegistroSueno.js}"></script>
 
 </body>
 </html>
