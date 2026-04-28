@@ -8,18 +8,27 @@
 </head>
 
 <body>
+<nav>
+    <a th:href="@{/index}" class="nav-logo">Evoluciona</a>
+    <ul class="nav-links">
+        <li><a th:href="@{/index}">Inicio</a></li>
+    </ul>
+</nav>
 
 <div class="usuario-container">
 
     <!-- Encabezado con el texto "Objetivos de Meditación" -->
-    <h1>
-        Objetivos de <span style="color: var(--verde-menta);">Meditación</span>
-    </h1>
+    <div class="page-header">
+        <h1 class="page-title">
+            Objetivos de <em>Meditación</em>
+        </h1>
+    </div>
 
     <!-- Este es la opcion para buscar por ID los Objetivos -->
     <div class="toolbar">
 
         <div class="search-wrap">
+            <span class="search-icon">🔍</span>
             <input type="text"
                    id="buscar"
                    class="search-input"
@@ -28,102 +37,113 @@
         </div>
 
         <!-- Con esto, al darle el botón te mandara a la "vista" que permitira ingresar los datos para agregar el Objetivo -->
-        <button class="btn"
+        <button class="btn-primary"
                 onclick="window.location.href='/objetivoMeditacion'">
             + Nuevo objetivo
         </button>
 
     </div>
 
-    <!-- Tabla donde se muestran los objetivos -->
-    <div class="table-wrap">
-        <table class="usuario-table" id="tablaObjetivos">
+    <!-- Grid donde se muestran los objetivos -->
+    <div class="usuarios-grid" id="tablaObjetivos">
 
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Tiempo</th>
-                <th>Días</th>
-                <th>Usuario</th>
-                <th>Acciones</th>
-            </tr>
-            </thead>
+        <div class="usuario-card"
+             th:each="o : ${objetivos}"
+             th:attr="data-id=${o.id_objetivo_meditacion}">
 
-            <tbody>
+            <div class="card-header">
 
-            <tr th:each="o : ${objetivos}">
+                <!-- Avatar simple -->
+                <div class="usuario-avatar">OM</div>
 
-                <td th:text="${o.id_objetivo_meditacion}"></td>
-                <td th:text="${o.tiempo_objetivo}"></td>
-                <td th:text="${o.dias_objetivo}"></td>
-                <td th:text="${o.fk_id_usuario}"></td>
+                <div class="card-actions">
 
-                <td>
-                    <div class="td-actions-inner">
+                    <a class="btn-icon"
+                       th:href="@{/objetivoMeditacion/editar/{id}(id=${o.id_objetivo_meditacion})}">
+                        ✏️
+                    </a>
 
-                        <a class="action-btn"
-                           th:href="@{/objetivoMeditacion/editar/{id}(id=${o.id_objetivo_meditacion})}">
-                            ✏️
-                        </a>
+                    <a class="btn-icon"
+                       th:href="@{/objetivoMeditacion/eliminar/{id}(id=${o.id_objetivo_meditacion})}"
+                       onclick="return confirm('¿Eliminar objetivo?')">
+                        🗑️
+                    </a>
 
-                        <a class="action-btn"
-                           th:href="@{/objetivoMeditacion/eliminar/{id}(id=${o.id_objetivo_meditacion})}"
-                           onclick="return confirm('¿Eliminar objetivo?')">
-                            🗑️
-                        </a>
+                </div>
 
-                    </div>
-                </td>
+            </div>
 
-            </tr>
+            <div class="card-body">
+                <p><strong>Tiempo:</strong> <span th:text="${o.tiempo_objetivo}"></span></p>
+                <p><strong>Días:</strong> <span th:text="${o.dias_objetivo}"></span></p>
+                <p><strong>Usuario:</strong> <span th:text="${o.fk_id_usuario}"></span></p>
+            </div>
 
-            <tr th:if="${#lists.isEmpty(objetivos)}">
-                <td colspan="5">No hay objetivos registrados</td>
-            </tr>
+            <div class="card-footer">
+                <span class="card-id"
+                      th:text="'#' + ${o.id_objetivo_meditacion}">
+                </span>
+            </div>
 
-            </tbody>
+        </div>
 
-        </table>
+        <!-- Estado vacío -->
+        <div class="card-empty"
+             th:if="${#lists.isEmpty(objetivos)}">
+            <p>No hay objetivos registrados</p>
+        </div>
+
     </div>
 
     <!-- formulario para ingresar los datos de los Objetivos -->
-    <div id="formulario" style="margin-top:3rem; max-width:500px;">
+    <div class="form-section-wrap">
 
-        <h2 th:text="${objetivo.id_objetivo_meditacion != null} ? 'Editar Objetivo' : 'Nuevo Objetivo'"></h2>
+        <div class="form-section">
 
-        <form th:action="@{/objetivoMeditacion/guardar}"
-              th:object="${objetivo}"
-              method="post"
-              style="display:grid; gap:1rem;">
+            <h2 class="form-title"
+                th:text="${objetivo.id_objetivo_meditacion != null} ? 'Editar Objetivo' : 'Nuevo Objetivo'">
+            </h2>
 
-            <input type="hidden" th:field="*{id_objetivo_meditacion}">
+            <form th:action="@{/objetivoMeditacion/guardar}"
+                  th:object="${objetivo}"
+                  method="post">
 
-            <input type="number"
-                   th:field="*{tiempo_objetivo}"
-                   placeholder="Tiempo objetivo"
-                   required>
+                <input type="hidden" th:field="*{id_objetivo_meditacion}">
 
-            <input type="number"
-                   th:field="*{dias_objetivo}"
-                   placeholder="Días objetivo"
-                   min="1"
-                   required>
+                <input class="form-input"
+                       type="text"
+                       th:field="*{tiempo_objetivo}"
+                       placeholder="Tiempo objetivo"
+                       required>
 
-            <input type="number"
-                   th:field="*{fk_id_usuario}"
-                   placeholder="ID Usuario"
-                   min="1"
-                   required>
+                <input class="form-input"
+                       type="number"
+                       th:field="*{dias_objetivo}"
+                       placeholder="Días objetivo"
+                       min="1"
+                       required>
 
-            <button type="submit" class="btn">
-                <span th:text="${objetivo.id_objetivo_meditacion != null} ? 'Actualizar' : 'Guardar'"></span>
-            </button>
+                <input class="form-input"
+                       type="number"
+                       th:field="*{fk_id_usuario}"
+                       placeholder="ID Usuario"
+                       min="1"
+                       required>
 
-        </form>
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">
+                        <span th:text="${objetivo.id_objetivo_meditacion != null} ? 'Actualizar' : 'Guardar'"></span>
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
 
     </div>
 
 </div>
+
 
 <!-- Buscador del Objetivo Meditación por Id -->
 <script
