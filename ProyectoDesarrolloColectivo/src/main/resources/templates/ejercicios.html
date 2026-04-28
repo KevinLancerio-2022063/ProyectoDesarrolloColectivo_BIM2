@@ -103,16 +103,81 @@
           </div>
         </div>
 
-      <div class="ej-barras">
-        <div class="ej-barra"></div>
-        <div class="ej-barra"></div>
-        <div class="ej-barra ej-barra-dim"></div>
-        <div class="ej-barra ej-barra-dim"></div>
+        <div class="ej-barras">
+          <div class="ej-barra"></div>
+          <div class="ej-barra"></div>
+          <div class="ej-barra ej-barra-dim"></div>
+          <div class="ej-barra ej-barra-dim"></div>
+        </div>
+
+      </div>
+
+      <div class="ej-back">
+
+        <div class="ej-back-header">
+          <div>
+            <div class="ej-back-eyebrow">Rutina asignada</div>
+
+            <div class="ej-back-rutina-nombre">
+                            <span th:each="r : ${rutina != null ? rutina : T(java.util.Collections).emptyList()}"
+                                  th:if="${r.id_rutina == ej.fk_id_rutina}"
+                                  th:text="${r.nombre_rutina}">—</span>
+              <span th:if="${rutina == null or #lists.isEmpty(rutina)}"
+                    th:text="'Rutina #' + ${ej.fk_id_rutina}">—</span>
+            </div>
+          </div>
+          <label th:for="'flip-ej-' + ${ej.id_ejercicio}"
+                 class="ej-btn-close" title="Cerrar">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M18 6 6 18M6 6l12 12"/>
+            </svg>
+          </label>
+        </div>
+
+        <div class="ej-back-dias-wrap">
+          <div class="ej-back-section-label">Días de entrenamiento</div>
+          <div class="ej-back-dias">
+                        <span th:each="r : ${rutina != null ? rutina : T(java.util.Collections).emptyList()}"
+                              th:if="${r.id_rutina == ej.fk_id_rutina}">
+                            <span class="ej-dia-chip"
+                                  th:each="dia : ${#strings.arraySplit(r.dias_semana, ',')}"
+                                  th:text="${#strings.trim(dia)}">Lunes</span>
+                        </span>
+          </div>
+        </div>
+
+        <div class="ej-back-section-label" style="margin-bottom:0.5rem;">Detalles del ejercicio</div>
+        <div class="ej-back-stats">
+          <div class="ej-back-stat">
+            <div class="ej-back-stat-num" th:text="${ej.series_ejercicio}">0</div>
+            <div class="ej-back-stat-lbl">Series</div>
+          </div>
+          <div class="ej-back-stat">
+            <div class="ej-back-stat-num" th:text="${ej.repeticiones_ejercicio}">0</div>
+            <div class="ej-back-stat-lbl">Reps</div>
+          </div>
+          <div class="ej-back-stat">
+            <div class="ej-back-stat-num" th:text="${ej.tiempo_ejercicio} + 's'">0s</div>
+            <div class="ej-back-stat-lbl">Tiempo</div>
+          </div>
+          <div class="ej-back-stat">
+            <div class="ej-back-stat-num" th:text="${ej.descanso_ejercicio} + 's'">0s</div>
+            <div class="ej-back-stat-lbl">Descanso</div>
+          </div>
+        </div>
+
+        <div class="ej-back-footer">
+          <label th:for="'flip-ej-' + ${ej.id_ejercicio}"
+                 class="ej-btn-volver">← Volver</label>
+          <a th:href="@{'/ejercicios/editarEjercicio' + ${ej.id_ejercicio}}"
+             class="ej-btn-edit-back">Editar ejercicio</a>
+        </div>
+
       </div>
 
     </div>
 
-    <div class="empty-state" th:if="${#lists.isEmpty(ejercicios)}">
+    <div class="empty-state" th:if="${ejercicios == null or #lists.isEmpty(ejercicios)}">
       <div class="empty-icon">🏋️</div>
       <p class="empty-text">No hay ejercicios registrados todavía.</p>
     </div>
