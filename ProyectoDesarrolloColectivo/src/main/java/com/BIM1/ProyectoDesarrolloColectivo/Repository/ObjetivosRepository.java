@@ -9,7 +9,8 @@ import java.time.LocalDate;
 
 
 public interface ObjetivosRepository extends JpaRepository<Objetivos,Integer> {
-    boolean existsByDescripcionObjetivoAndEstadoObjetivoAndFechaObjetivoAndUsuarioAndFraseMotivadora(
+    boolean existsByTituloObjetivoAndDescripcionObjetivoAndEstadoObjetivoAndFechaObjetivoAndUsuarioAndFraseMotivadora(
+            String tituloObjetivo,
             String descripcionObjetivo,
             String estadoObjetivo,
             LocalDate fechaObjetivo,

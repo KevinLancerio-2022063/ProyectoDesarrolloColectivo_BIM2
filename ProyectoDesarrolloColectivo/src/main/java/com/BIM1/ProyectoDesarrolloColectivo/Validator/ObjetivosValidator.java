@@ -28,8 +28,8 @@ public class ObjetivosValidator {
             throw new CustomException("texto muy grande,caracteres maximos 45");
         }
 
-        if (objetivosRepository.existsByDescripcionObjetivoAndEstadoObjetivoAndFechaObjetivoAndUsuarioAndFraseMotivadora(
-                objetivos.getDescripcionObjetivo(),objetivos.getEstadoObjetivo(),objetivos.getFechaObjetivo(),
+        if (objetivosRepository.existsByTituloObjetivoAndDescripcionObjetivoAndEstadoObjetivoAndFechaObjetivoAndUsuarioAndFraseMotivadora(
+                objetivos.getTituloObjetivo(),objetivos.getDescripcionObjetivo(),objetivos.getEstadoObjetivo(),objetivos.getFechaObjetivo(),
                 objetivos.getUsuario(),objetivos.getFraseMotivadora()
         )){
             throw new CustomException("Ya existe un Objetivo con los mismos datos");
