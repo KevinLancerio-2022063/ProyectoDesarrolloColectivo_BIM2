@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro Meditación</title>
-    <link rel="stylesheet" th:href="@{/registroMeditacion.css}">
+    <link rel="stylesheet" th:href="@{/registroMeditacion.css(v=${#dates.createNow().time})}">
 </head>
 <body>
 
@@ -27,11 +27,11 @@
 </header>
 
 <section class="meditaciones-container">
-    <div th:if="${exito}" class="toast show">
+    <div th:if="${exito}" class="toast">
         <span th:text="${exito}"></span>
     </div>
 
-    <div th:if="${error}" class="toast show toast-error">
+    <div th:if="${error}" class="toast toast-error">
         <span th:text="${error}"></span>
     </div>
 
@@ -44,15 +44,15 @@
         <div class="meditacion-card" th:each="meditacion : ${registroMeditacion}">
             <div class="meditacion-card-header">
                 <div class="meditacion-avatar">RM</div>
+
                 <div class="meditacion-actions">
                     <a th:href="@{/registroMeditacion/editar/{id}(id=${meditacion.id_registro_meditacion})}"
                        class="btn-icon btn-edit"
                        title="Editar">✏</a>
 
-                    <a th:href="@{/registroMeditacion/eliminar/{id}(id=${meditacion.id_registro_meditacion})}"
+                    <a th:href="@{/registroMeditacion/confirmarEliminar/{id}(id=${meditacion.id_registro_meditacion})}"
                        class="btn-icon btn-delete"
-                       title="Eliminar"
-                       onclick="return confirm('¿Deseas eliminar este registro de meditación?');">🗑️</a>
+                       title="Eliminar">🗑️</a>
                 </div>
             </div>
 
@@ -82,8 +82,12 @@
     <div class="form-section">
         <div class="form-section-header">
             <h2 class="form-section-title">
-                <span th:if="${registroMeditacionFormu.id_registro_meditacion == null}">Nuevo <em>Registro</em></span>
-                <span th:if="${registroMeditacionFormu.id_registro_meditacion != null}">Editar <em>Registro</em></span>
+                <span th:if="${registroMeditacionFormu.id_registro_meditacion == null}">
+                    Nuevo <em>Registro</em>
+                </span>
+                <span th:if="${registroMeditacionFormu.id_registro_meditacion != null}">
+                    Editar <em>Registro</em>
+                </span>
             </h2>
             <p class="form-section-sub">
                 Completa la información para registrar tu sesión de meditación y dar seguimiento a tu bienestar.
@@ -100,6 +104,7 @@
 
             <div class="form-group">
                 <label class="form-label">Tipo de meditación</label>
+
                 <div class="tipos-picker">
                     <div class="tipo-toggle">
                         <input type="radio" id="guiada" th:field="*{tipo_meditacion}" value="Guiada">
@@ -161,13 +166,6 @@
         </form>
     </div>
 </section>
-
-<script>
-    setTimeout(() => {
-        const toasts = document.querySelectorAll('.toast');
-        toasts.forEach(toast => toast.classList.remove('show'));
-    }, 3000);
-</script>
 
 </body>
 </html>
