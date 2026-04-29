@@ -1,6 +1,5 @@
 package com.BIM1.ProyectoDesarrolloColectivo.Exceptions;
 
-import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
