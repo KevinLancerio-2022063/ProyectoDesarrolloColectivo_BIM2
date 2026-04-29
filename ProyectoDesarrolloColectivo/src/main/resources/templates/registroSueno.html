@@ -7,7 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/baseLancerio.css}">
 </head>
 
-<body>
+<body>e
 <nav>
     <a th:href="@{/index}" class="nav-logo">Evoluciona</a>
     <ul class="nav-links">
@@ -54,24 +54,37 @@
                 <div class="usuario-avatar">RS</div>
 
                 <div class="card-actions">
-                    <a class="btn-icon"
+                    <a class="btn-icon btn-edit"
                        th:href="@{/registroSueno/editar/{id}(id=${r.id_registro_sueño})}">
                         ✏️
                     </a>
 
-                    <a class="btn-icon"
-                       th:href="@{/registroSueno/eliminar/{id}(id=${r.id_registro_sueño})}"
-                       onclick="return confirm('¿Eliminar registro?')">
+                    <a class="btn-icon btn-delete"
+                       href="#"
+                       th:attr="onclick=|openModal('/registroSueno/eliminar/${r.id_registro_sueño}')|">
                         🗑️
                     </a>
                 </div>
             </div>
 
             <div class="card-body">
-                <p><strong>Fecha:</strong> <span th:text="${r.fecha_sueño}"></span></p>
-                <p><strong>Horas:</strong> <span th:text="${r.horas_dormidas}"></span></p>
-                <p><strong>Calidad:</strong> <span th:text="${r.calidad_sueño}"></span></p>
-                <p><strong>Usuario:</strong> <span th:text="${r.fk_id_usuario}"></span></p>
+
+                <p class="card-name">
+                    <strong th:text="${r.fecha_sueño}"></strong>
+                </p>
+
+                <p class="card-email">
+                    🕒 <span th:text="${r.horas_dormidas}"></span> horas
+                </p>
+
+                <p class="card-email">
+                    🌙 <span th:text="${r.calidad_sueño}"></span>
+                </p>
+
+                <p class="card-email">
+                    👤 Usuario #<span th:text="${r.fk_id_usuario}"></span>
+                </p>
+
             </div>
 
             <div class="card-footer">
@@ -82,9 +95,42 @@
         </div>
 
         <!-- Estado vacío -->
-        <div class="card-empty"
-             th:if="${#lists.isEmpty(registros)}">
+        <div class="card-empty" th:if="${#lists.isEmpty(registros)}">
             <p>No hay registros de sueño</p>
+        </div>
+
+    </div>
+
+    <div th:if="${errores != null}" class="error-container">
+
+        <div class="card error-card" th:each="err : ${errores}">
+
+            <div class="header">
+                <div class="image">❌</div>
+
+                <div class="content">
+                    <span class="title">Error</span>
+                    <p class="message" th:text="${err}"></p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div th:if="${success}" class="error-container">
+
+        <div class="card success-card">
+
+            <div class="header">
+                <div class="image">✅</div>
+
+                <div class="content">
+                    <span class="title">Operación exitosa</span>
+                    <p class="message" th:text="${success}"></p>
+                </div>
+            </div>
+
         </div>
 
     </div>
@@ -111,23 +157,50 @@
 
                 <input class="form-input"
                        type="number"
+                       step="0.01"
                        min="1"
                        max="15"
                        th:field="*{horas_dormidas}"
                        placeholder="Horas dormidas"
                        required>
 
-                <input class="form-input"
-                       type="text"
-                       th:field="*{calidad_sueño}"
-                       placeholder="Calidad del sueño"
-                       required>
+                <!-- Calidad sueño como botones -->
+                <div class="quality-group">
 
-                <input class="form-input"
-                       type="number"
-                       th:field="*{fk_id_usuario}"
-                       placeholder="ID Usuario"
-                       required>
+                    <label class="quality-option">
+                        <input type="radio" th:field="*{calidad_sueño}" value="Excelente" required>
+                        <span class="quality-btn excelente">Excelente</span>
+                    </label>
+
+                    <label class="quality-option">
+                        <input type="radio" th:field="*{calidad_sueño}" value="Bien">
+                        <span class="quality-btn bien">Bien</span>
+                    </label>
+
+                    <label class="quality-option">
+                        <input type="radio" th:field="*{calidad_sueño}" value="Regular">
+                        <span class="quality-btn regular">Regular</span>
+                    </label>
+
+                    <label class="quality-option">
+                        <input type="radio" th:field="*{calidad_sueño}" value="Mal">
+                        <span class="quality-btn mal">Mal</span>
+                    </label>
+
+                </div>
+
+                <select class="form-input"
+                        th:field="*{fk_id_usuario}"
+                        required>
+
+                    <option value="">Seleccione un usuario</option>
+
+                    <option th:each="u : ${usuarios}"
+                            th:value="${u.id_usuario}"
+                            th:text="'ID: ' + ${u.id_usuario} + ' - ' + ${u.nombre_completo}">
+                    </option>
+
+                </select>
 
                 <div class="form-actions">
                     <button type="submit" class="btn-primary">
@@ -143,8 +216,34 @@
 
 </div>
 
-<!--Dirección del script buscar por id-->
-<script th:src="@{/js/buscadorRegistroSueno.js}"></script>
+<!-- Modal del Eliminar -->
+<div id="confirmModal" class="modal hidden">
+    <div class="card confirm-card">
+
+        <div class="header">
+            <div class="image">⚠️</div>
+
+            <div class="content">
+                <span class="title">¿Eliminar registro?</span>
+                <p class="message">Esta acción no se puede deshacer</p>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button id="btnDelete" class="desactivate">
+                Eliminar
+            </button>
+
+            <button onclick="closeModal()" class="cancel">
+                Cancelar
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<!--Dirección del script buscar por id y el modal-->
+<script th:src="@{/js/registroSueno.js}"></script>
 
 </body>
 </html>
