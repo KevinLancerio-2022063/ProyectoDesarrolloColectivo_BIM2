@@ -88,7 +88,18 @@ public class RegistroMeditacionViewController {
         return "redirect:/registroMeditacion";
     }
 
-    @GetMapping("/eliminar/{id}")
+    @GetMapping("/confirmarEliminar/{id}")
+    public String confirmarEliminar(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
+        try {
+            model.addAttribute("meditacion", registroMeditacionService.getRegistroMeditacionById(id));
+            return "registroMeditacionEliminar";
+        } catch (ObjectNotFoundException e) {
+            redirectAttributes.addFlashAttribute("error", "Registro de meditación no encontrado");
+            return "redirect:/registroMeditacion";
+        }
+    }
+
+    @PostMapping("/eliminar/{id}")
     public String eliminarRegistroMeditacion(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         try {
             registroMeditacionService.deleteRegistroMeditacion(id);
