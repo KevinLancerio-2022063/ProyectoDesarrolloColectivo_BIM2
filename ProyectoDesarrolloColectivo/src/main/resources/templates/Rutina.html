@@ -25,7 +25,6 @@
     <div class="page-tag">Tu entrenamiento</div>
     <h1 class="page-title">Mis <em>Rutinas</em></h1>
   </div>
-  <a th:href="@{/rutina}" class="btn-primary">＋ Nueva rutina</a>
 </div>
 
 <div class="rutinas-container">
@@ -122,7 +121,12 @@
                th:if="${ej.fk_id_rutina == r.id_rutina}">
             <div class="ej-row">
               <div class="ej-row-left">
-                <div class="ej-dot"><i class="fa-light fa-dumbbell"></i></div>
+                <div class="ej-dot"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-barbell">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M4 7a1 1 0 0 1 1 1v8a1 1 0 0 1 -2 0v-3h-1a1 1 0 0 1 0 -2h1v-3a1 1 0 0 1 1 -1" />
+                    <path d="M20 7a1 1 0 0 1 1 1v3h1a1 1 0 0 1 0 2h-1v3a1 1 0 0 1 -2 0v-8a1 1 0 0 1 1 -1" />
+                    <path d="M16 5a2 2 0 0 1 2 2v10a2 2 0 1 1 -4 0v-4h-4v4a2 2 0 1 1 -4 0v-10a2 2 0 1 1 4 0v4h4v-4a2 2 0 0 1 2 -2" />
+                </svg></i></div>
                 <div>
                   <div class="ej-row-nombre" th:text="${ej.nombre_ejercicio}">Ejercicio</div>
                   <div class="ej-row-id" th:text="'ID #' + ${ej.id_ejercicio}">ID</div>
