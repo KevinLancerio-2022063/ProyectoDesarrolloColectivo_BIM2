@@ -88,7 +88,18 @@ public class EntradaDiarioViewController {
         return "redirect:/entradaDiario";
     }
 
-    @GetMapping("/eliminar/{id}")
+    @GetMapping("/confirmarEliminar/{id}")
+    public String confirmarEliminar(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
+        try {
+            model.addAttribute("entrada", entradaDiarioService.getEntradaDiarioById(id));
+            return "entradaDiarioEliminar";
+        } catch (ObjectNotFoundException e) {
+            redirectAttributes.addFlashAttribute("error", "Entrada de diario no encontrada");
+            return "redirect:/entradaDiario";
+        }
+    }
+
+    @PostMapping("/eliminar/{id}")
     public String eliminarEntradaDiario(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         try {
             entradaDiarioService.deleteEntradaDiario(id);
