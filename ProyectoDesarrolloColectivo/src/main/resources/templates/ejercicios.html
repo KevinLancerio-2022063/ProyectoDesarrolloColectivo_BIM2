@@ -17,7 +17,7 @@
   </ul>
 </nav>
 
-<div th:if="${exito != null}" class="alerta" th:text="${exito}"></div>
+<div class="error" th:if="${exito}" th:text="${exito}"></div>
 
 <div class="page-header">
   <div class="page-header-left">
@@ -168,7 +168,7 @@
         <div class="ej-back-footer">
           <label th:for="'flip-ej-' + ${ej.id_ejercicio}"
                  class="ej-btn-volver">← Volver</label>
-          <a th:href="@{'/ejercicios/editarEjercicio' + ${ej.id_ejercicio}}"
+          <a th:href="@{'/ejercicios/editarEjercicio/' + ${ej.id_ejercicio}}"
              class="ej-btn-edit-back">Editar ejercicio</a>
         </div>
 
