@@ -33,21 +33,20 @@
     </div>
 
       <div class="apoyo-grid">
-
-          <a th:each="apoyo : ${listaApoyos}"
-            th:href="@{'/detalleApoyo/' + ${apoyo.idApoyoEmocional}}"
-            class="apoyo-card">
-
-              <div class="apoyo-titulo" th:text="${apoyo.titulo}"></div>
-
-              <div class="apoyo-categoria">
-                  Categoría: <strong th:text="${apoyo.categoria}"></strong>
-              </div>
-
-              <div class="apoyo-contenido" th:text="${apoyo.contenido}"></div>
-
-          </a>
-
+        <a th:each="apoyo : ${listaApoyos}"
+          th:href="@{'/detalleApoyo/' + ${apoyo.idApoyoEmocional}}"
+          class="apoyo-card">
+          <div class="apoyo-glow"></div>
+          <div class="apoyo-borderglow"></div>
+          <div class="apoyo-titulo" th:text="${apoyo.titulo}"></div>
+          <div class="apoyo-categoria">
+            Categoría: <strong th:text="${apoyo.categoria}"></strong>
+          </div>
+          <div class="apoyo-contenido" th:text="${apoyo.contenido}"></div>
+          <div class="apoyo-info">
+            <span th:text="${'Apoyo: #' + apoyo.idApoyoEmocional}"></span>
+          </div>
+        </a>
       </div>
   </div>
 </body>
