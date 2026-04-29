@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Eliminar Entrada Diario</title>
+    <link rel="stylesheet" th:href="@{/entradaDiario.css(v=${#dates.createNow().time})}">
+</head>
+<body>
+
+<nav>
+    <a href="#" class="nav-logo">Evolu<span>ciona</span></a>
+    <ul class="nav-links">
+        <li><a th:href="@{/}">Inicio</a></li>
+        <li><a th:href="@{/entradaDiario}" class="active">Entrada Diario</a></li>
+        <li><a th:href="@{/registroMeditacion}">Meditación</a></li>
+        <li><a th:href="@{/registrosSuenos}">Sueño</a></li>
+    </ul>
+</nav>
+<main class="delete-page">
+    <section class="delete-box">
+        <div class="delete-icon">!</div>
+        <p class="delete-tag">Confirmación · Entrada Diario</p>
+        <h1>Eliminar <em>Entrada</em></h1>
+        <p class="delete-message">
+            Estás a punto de eliminar esta entrada de diario. Esta acción no se puede deshacer.
+        </p>
+        <div class="delete-info">
+            <p><strong>ID:</strong> <span th:text="${entrada.id_entrada_diario}"></span></p>
+            <p><strong>Fecha:</strong> <span th:text="${entrada.fecha}"></span></p>
+            <p><strong>¿Qué pasó?</strong> <span th:text="${entrada.que_paso}"></span></p>
+            <p><strong>Reflexión:</strong> <span th:text="${entrada.reflexion}"></span></p>
+        </div>
+        <form class="delete-form"
+              th:action="@{/entradaDiario/eliminar/{id}(id=${entrada.id_entrada_diario})}"
+              method="post">
+            <div class="delete-buttons">
+                <a th:href="@{/entradaDiario}" class="delete-cancel">Cancelar</a>
+                <button type="submit" class="delete-confirm">Sí, eliminar</button>
+            </div>
+        </form>
+    </section>
+</main>
+</body>
+</html>
