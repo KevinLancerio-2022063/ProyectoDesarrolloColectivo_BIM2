@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Eliminar Registro Meditación</title>
+    <link rel="stylesheet" th:href="@{/registroMeditacion.css(v=${#dates.createNow().time})}">
+</head>
+<body>
+<nav>
+    <a href="#" class="nav-logo">Evolu<span>ciona</span></a>
+    <ul class="nav-links">
+        <li><a th:href="@{/}">Inicio</a></li>
+        <li><a th:href="@{/entradaDiario}">Entrada Diario</a></li>
+        <li><a th:href="@{/registroMeditacion}" class="active">Meditación</a></li>
+        <li><a th:href="@{/registrosSuenos}">Sueño</a></li>
+    </ul>
+</nav>
+<main class="delete-page">
+    <section class="delete-box">
+        <div class="delete-icon">!</div>
+        <p class="delete-tag">Confirmación · Registro Meditación</p>
+        <h1>Eliminar <em>Registro</em></h1>
+        <p class="delete-message">
+            Estás a punto de eliminar este registro de meditación. Esta acción no se puede deshacer.
+        </p>
+        <div class="delete-info">
+            <p><strong>ID:</strong> <span th:text="${meditacion.id_registro_meditacion}"></span></p>
+            <p><strong>Tipo:</strong> <span th:text="${meditacion.tipo_meditacion}"></span></p>
+            <p><strong>Duración:</strong> <span th:text="${meditacion.duracion_minutos}"></span> minutos</p>
+            <p><strong>Dificultad:</strong> <span th:text="${meditacion.nivel_dificultad}"></span></p>
+            <p>
+                <strong>Fecha:</strong>
+                <span th:text="${#temporals.format(meditacion.fecha_registro, 'yyyy-MM-dd HH:mm')}"></span>
+            </p>
+        </div>
+        <form class="delete-form"
+              th:action="@{/registroMeditacion/eliminar/{id}(id=${meditacion.id_registro_meditacion})}"
+              method="post">
+            <div class="delete-buttons">
+                <a th:href="@{/registroMeditacion}" class="delete-cancel">Cancelar</a>
+                <button type="submit" class="delete-confirm">Sí, eliminar</button>
+            </div>
+        </form>
+    </section>
+</main>
+</body>
+</html>
