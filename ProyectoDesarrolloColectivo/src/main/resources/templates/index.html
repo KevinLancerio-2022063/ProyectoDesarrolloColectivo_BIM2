@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -8,12 +7,12 @@
     <link th:href="@{/Index.css}" rel="stylesheet"/>
     <style>
         a.module-card {
-          text-decoration: none;
-          color: inherit;
-          display: block;
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
         a.module-card:hover {
-          cursor: pointer;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -26,7 +25,9 @@
         <li><a href="#">Rutinas</a></li>
         <li><a href="#">Nutrición</a></li>
         <li><a href="#">Bienestar</a></li>
-        <li><a href="#" class="nav-cta">Comenzar</a></li>
+
+        <!-- 🔥 BOTÓN FUNCIONAL -->
+        <li><a th:href="@{/login}" class="nav-cta">Comenzar</a></li>
     </ul>
 </nav>
 
@@ -42,7 +43,10 @@
             Registra tus hábitos, monitorea tu sueño, sigue tus lecturas y mantén el enfoque en lo que realmente importa.
         </p>
         <div class="hero-actions">
-            <a href="#" class="btn-primary">Empezar ahora</a>
+
+            <!-- 🔥 BOTÓN FUNCIONAL -->
+            <a th:href="@{/login}" class="btn-primary">Empezar ahora</a>
+
             <a href="#" class="btn-ghost">Ver módulos →</a>
         </div>
     </div>
@@ -114,7 +118,6 @@
 
     <div class="modules-grid">
 
-
         <a href="Registromeditacion.html" class="module-card featured">
             <div class="module-icon">🧘</div>
             <div class="module-name">Meditación & Bienestar</div>
@@ -130,7 +133,6 @@
             <div class="module-stat"><div class="module-dot"></div> Series, repeticiones y descanso</div>
             <img src="../static/ejercicio.jpg" alt="imagen registro de gym">
         </a>
-
 
         <a href="PerfilNutricional.html" class="module-card">
             <div class="module-icon">🥗</div>
@@ -155,7 +157,6 @@
             <div class="module-stat"><div class="module-dot"></div> Promedio semanal y calidad</div>
             <img src="../static/registro_sueño.jpg" alt="imagen registro de sueño">
         </a>
-
 
         <a href="entradaDiario.html" class="module-card">
             <div class="module-icon">📓</div>
