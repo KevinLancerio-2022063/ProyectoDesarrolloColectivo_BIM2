@@ -46,6 +46,7 @@
     <div class="usuarios-grid" id="tablaUsuarios">
 
         <div class="usuario-card"
+
              th:each="u : ${usuarios}"
              th:attr="data-id=${u.id_usuario}">
 
@@ -58,35 +59,36 @@
                 <div class="card-actions">
 
                     <!-- botón editar -->
-                    <a class="btn-icon"
+                    <!-- El th:attr sirve para establecer el valor de cualquier atributo html, ejecuta la eliminación si el usuario lo confirma -->
+                    <a class="btn-icon btn-edit"
                        th:href="@{/usuarios/editar/{id}(id=${u.id_usuario})}">
                         ✏️
                     </a>
 
                     <!-- boton Eliminar con el modal -->
-                    <a class="btn-icon"
+                    <a class="btn-icon btn-delete"
                        href="#"
-                       th:attr="onclick=|openModal('/usuarios/eliminar/${u.id_usuario}')|">
-                        🗑️
-                    </a>
+                    th:attr="onclick=|openModal('/usuarios/eliminar/${u.id_usuario}')|">
+                     🗑️
+                 </a>
 
-                </div>
+             </div>
 
-            </div>
+         </div>
 
-            <div class="card-body">
-                <p class="card-name" th:text="${u.nombre_completo}"></p>
-                <p class="card-email" th:text="${u.correoUsuario}"></p>
-            </div>
+         <div class="card-body">
+             <p class="card-name" th:text="${u.nombre_completo}"></p>
+             <p class="card-email" th:text="${u.correoUsuario}"></p>
+         </div>
 
-            <div class="card-footer">
-                <span class="card-id" th:text="'#' + ${u.id_usuario}"></span>
-                <span class="pass-badge">••••••</span>
-            </div>
+         <div class="card-footer">
+             <span class="card-id" th:text="'#' + ${u.id_usuario}"></span>
+             <span class="pass-badge">••••••</span>
+         </div>
 
-        </div>
+     </div>
 
-        <!-- Si no hay usuarios lo indicará con el mensaje -->
+     <!-- Si no hay usuarios lo indicará con el mensaje -->
         <div class="card-empty" th:if="${#lists.isEmpty(usuarios)}">
             <p>No hay usuarios registrados</p>
         </div>
@@ -127,7 +129,7 @@
 
     </div>
 
-    <!-- FORM -->
+    <!-- Formulario ingresar los datos -->
     <div class="form-section-wrap">
         <div class="form-section">
 
@@ -183,7 +185,7 @@
 
 </div>
 
-<!-- 🔴 MODAL ELIMINAR -->
+<!-- Modal del Eliminar -->
 <div id="confirmModal" class="modal hidden">
     <div class="card confirm-card">
 
@@ -209,54 +211,11 @@
     </div>
 </div>
 
-<!-- 🔴 CONTENEDOR DE ERRORES -->
+<!-- Contenedor de errores -->
 <div id="errorContainer" class="error-container"></div>
 
-<!-- JS -->
-<script th:src="@{/js/buscadorUsuario.js}"></script>
-
-<script>
-    let deleteUrl = "";
-
-    /* MODAL */
-    function openModal(url) {
-        deleteUrl = url;
-        document.getElementById("confirmModal").classList.remove("hidden");
-    }
-
-    function closeModal() {
-        document.getElementById("confirmModal").classList.add("hidden");
-    }
-
-    document.getElementById("btnDelete").addEventListener("click", () => {
-        window.location.href = deleteUrl;
-    });
-
-    /* ERRORES VISUALES */
-    function mostrarErrores(errores) {
-        const container = document.getElementById("errorContainer");
-        container.innerHTML = "";
-
-        errores.forEach(err => {
-            const card = document.createElement("div");
-            card.className = "card error-card";
-
-            card.innerHTML = `
-                <div class="header">
-                    <div class="image">❌</div>
-                    <div class="content">
-                        <span class="title">Error</span>
-                        <p class="message">${err}</p>
-                    </div>
-                </div>
-            `;
-
-            container.appendChild(card);
-        });
-
-        setTimeout(() => container.innerHTML = "", 5000);
-    }
-</script>
+<!-- Dirección del script buscar por id y el modal -->
+<script th:src="@{/js/usuario.js}"></script>
 
 </body>
 </html>
