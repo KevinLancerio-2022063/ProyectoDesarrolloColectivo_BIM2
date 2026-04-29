@@ -27,21 +27,25 @@ public class UsuarioViewController {
         return "usuarios";
     }
 
+    // EL BindingResult result almacena los errores de validación
+    // RedirectAttributes redirect permite enviar datos durante una operación redirect: de esta forma los datos se mantienen en la nueva solicitud
     @PostMapping("/guardar")
     public String guardar(@Valid Usuario usuario, BindingResult result, Model model, RedirectAttributes redirect) {
 
         if (result.hasErrors()) {
-            model.addAttribute("usuarios", service.getAllUsuarios());
-            model.addAttribute("errores", result.getFieldErrors().stream().map(e -> e.getDefaultMessage()).toList());
+            model.addAttribute("usuarios", service.getAllUsuarios()); // Recargamos la lista para evitar tener problemas con la vista
+            model.addAttribute("errores", result.getFieldErrors().stream().map(e -> e.getDefaultMessage()).toList()); // Transforma los errores en mensajes simples
 
             return "usuarios";
         }
 
+        // Si el Id es nulo es porque es un nuevo Usuario, si no, si el Id tiene un valor es porque lo está editando
         boolean nuevaCuenta = (usuario.getId_usuario() == null);
 
         service.saveUsuario(usuario);
 
         if (nuevaCuenta) {
+            // Con el redirect.addFlashAttribute pasamos datos de un controlador a un controlador a otro a través de una redirección
             redirect.addFlashAttribute("success", "Tu cuenta se ha agregado correctamente " + usuario.getNombre_completo());
         } else {
             redirect.addFlashAttribute("success", usuario.getNombre_completo() + " se ha actualizado correctamente");
