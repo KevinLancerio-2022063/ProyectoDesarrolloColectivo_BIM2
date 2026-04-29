@@ -33,10 +33,17 @@
 
     <div class="objetivos-grid">
 
-      <a th:each="objetivo : ${listaObjetivos}" th:href="@{'/detalleObjetivos/' + ${objetivo.idObjetivos}}" class="objetivo-card">
+      <a th:each="objetivo : ${listaObjetivos}" 
+        th:href="@{'/detalleObjetivos/' + ${objetivo.idObjetivos}}" 
+        class="objetivo-card">
+        <div class="objetivo-glow"></div>
+        <div class="objetivo-borderglow"></div>
         <div class="objetivo-titulo" th:text="${objetivo.tituloObjetivo}"></div>
         <div class="objetivo-descripcion" th:text="${objetivo.descripcionObjetivo}"></div>
-        <div class="objetivo-info"><span></span><span th:text="${'Objetivo: #' + objetivo.idObjetivos}"></span></div>
+        <div class="objetivo-info">
+          <span></span>
+          <span th:text="${'Objetivo: #' + objetivo.idObjetivos}"></span>
+        </div>
       </a>
 
     </div>
