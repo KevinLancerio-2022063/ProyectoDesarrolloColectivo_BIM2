@@ -17,7 +17,7 @@
   </ul>
 </nav>
 
-<div th:if="${exito}" class="alerta" th:text="${exito}"></div>
+<div th:if="${exito != null}" class="alerta" th:text="${exito}"></div>
 
 <div class="page-header">
   <div class="page-header-left">
@@ -67,7 +67,7 @@
                 <circle cx="12" cy="12" r="3"/>
               </svg>
             </label>
-            <a th:href="@{'/ejercicios/editarEjercicio' + ${ej.id_ejercicio}}"
+            <a th:href="@{'/ejercicios/editarEjercicio/' + ${ej.id_ejercicio}}"
                class="ej-btn-edit" title="Editar">
               <i class="bi bi-pencil-square"></i>
             </a>
