@@ -4,65 +4,105 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Racha de Lectura</title>
-    <link rel="stylesheet"
-          th:href="@{/css/rachas.css}"
-          href="../static/css/rachas.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/rachas.css}" href="../static/css/rachas.css">
 </head>
 <body>
 
-<header class="barra">Racha de Lectura</header>
+<div class="bg"></div>
+<div class="bg bg2"></div>
+<div class="bg bg3"></div>
 
-<main class="wrap">
+<!-- LOGO FLOTANTE -->
+<a th:href="@{/home}" href="/home" class="logo-flotante">
+    <img th:src="@{/img/logo.png}" src="../static/img/logo.png" alt="Logo">
+</a>
+
+<main class="contenedor">
+
+    <header class="card header-card">
+        <a th:href="@{/home}" href="/home" class="btn-home">
+            <i class="fas fa-home"></i>
+        </a>
+        <h1><i class="fas fa-book-open"></i> Racha de Lectura</h1>
+    </header>
+
+    <!-- LLAMA DE RACHA -->
+    <section class="card llama-card"
+             th:classappend="${rachas != null and !#lists.isEmpty(rachas) and rachas[0].diasConsecutivos >= 15} ? 'racha-roja' :
+                        (${rachas != null and !#lists.isEmpty(rachas) and rachas[0].diasConsecutivos >= 10} ? 'racha-naranja' :
+                        (${rachas != null and !#lists.isEmpty(rachas) and rachas[0].diasConsecutivos >= 5}  ? 'racha-amarilla' : ''))">
+        <div class="flame-scene">
+            <div class="ember e1"></div>
+            <div class="ember e2"></div>
+            <div class="ember e3"></div>
+            <div class="ember e4"></div>
+            <div class="flame f1"></div>
+            <div class="flame f2"></div>
+            <div class="flame f3"></div>
+            <div class="flame f4"></div>
+            <div class="flame f5"></div>
+        </div>
+        <div class="base-llama"></div>
+        <div class="racha-num">
+            <span th:text="${rachas != null and !#lists.isEmpty(rachas)} ? ${rachas[0].diasConsecutivos} : '0'">0</span>
+        </div>
+        <div class="racha-label">días de racha</div>
+        <div class="racha-sub"
+             th:text="${rachas != null and !#lists.isEmpty(rachas) and rachas[0].diasConsecutivos >= 15} ? '🔥 ¡imparable!' :
+                      (${rachas != null and !#lists.isEmpty(rachas) and rachas[0].diasConsecutivos >= 10} ? '💪 ¡vas muy bien!' :
+                      (${rachas != null and !#lists.isEmpty(rachas) and rachas[0].diasConsecutivos >= 5}  ? '⭐ ¡sigue así!' :
+                      (${rachas != null and !#lists.isEmpty(rachas)} ? '¡buen comienzo!' : 'registra tu primera racha')))">
+            registra tu primera racha
+        </div>
+    </section>
 
     <section class="card">
-        <h2 class="h2">Agregar racha</h2>
+        <h2 class="h2"><i class="fas fa-plus-circle"></i> Agregar racha</h2>
 
-        <p th:if="${error}" style="color:red;" th:text="${error}"></p>
+        <p th:if="${error}" style="color:red; text-align: center; margin-bottom: 10px;" th:text="${error}"></p>
 
         <form th:action="@{/rachaLectura}" method="post">
             <div class="form-group">
-                <div class="input-box">
-                    <label for="fecha">Fecha</label>
-                    <input id="fecha"
-                           name="fechaRacha"
-                           type="date"
-                           required>
-                </div>
+                <label for="fecha" style="display: block; margin-bottom: 8px; color: #555;">Selecciona la fecha:</label>
+                <input id="fecha" name="fechaRacha" type="date" required>
             </div>
 
             <div class="acciones">
-                <button type="submit" class="btn">Guardar</button>
-                <button type="reset" class="btn sec">Limpiar</button>
+                <button type="submit" class="btn"><i class="fas fa-save"></i> Guardar</button>
+                <button type="reset" class="btn sec"><i class="fas fa-eraser"></i> Limpiar</button>
             </div>
         </form>
     </section>
 
     <section class="card">
-        <h2 class="h2">Historial</h2>
+        <h2 class="h2"><i class="fas fa-history"></i> Historial</h2>
 
-        <table>
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Fecha</th>
-                <th>Días consecutivos</th>
-            </tr>
-            </thead>
-
-            <tbody>
-            <tr th:if="${rachas == null or #lists.isEmpty(rachas)}">
-                <td colspan="3" style="text-align:center;">
-                    No hay rachas registradas
-                </td>
-            </tr>
-
-            <tr th:each="r : ${rachas}">
-                <td th:text="${r.idRachaLectura}"></td>
-                <td th:text="${r.fecha}"></td>
-                <td th:text="${r.diasConsecutivos}"></td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="tabla-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Fecha</th>
+                    <th><i class="fas fa-fire" style="color: #e67e22;"></i> Racha</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${rachas == null or #lists.isEmpty(rachas)}">
+                    <td colspan="3" style="text-align:center; padding: 20px; color: #888;">
+                        No hay rachas registradas todavía
+                    </td>
+                </tr>
+                <tr th:each="r : ${rachas}">
+                    <td th:text="${r.idRachaLectura}"></td>
+                    <td th:text="${r.fecha}"></td>
+                    <td style="font-weight: bold; color: #e67e22;">
+                        <span th:text="${r.diasConsecutivos}"></span> días
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </section>
 
     <p class="foot">Proyecto Desarrollo Personal</p>
