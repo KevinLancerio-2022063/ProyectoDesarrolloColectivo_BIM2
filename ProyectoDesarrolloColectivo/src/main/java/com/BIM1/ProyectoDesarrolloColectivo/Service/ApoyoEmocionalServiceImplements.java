@@ -24,6 +24,7 @@ public class ApoyoEmocionalServiceImplements implements ApoyoEmocionalService{
 
     @Override
     public ApoyoEmocional getById(Integer id) {
+        apoyoEmocionalValidator.ApoyoEmocionalValidacionId(id);
         return apoyoEmocionalRepository.findById(id).orElse(null);
     }
 
