@@ -20,25 +20,30 @@
 
 <header class="page-header">
     <div>
-        <div class="page-tag">Bienestar · Diario</div>
+        <div class="page-tag">Bienestar · Diario personal</div>
         <h1 class="page-title">Gestión de <em>Entrada Diario</em></h1>
+        <p class="page-description">
+            Registra tus pensamientos, reflexiones y planes para dar seguimiento a tu crecimiento personal.
+        </p>
     </div>
+
     <a href="#formulario" class="btn-primary">+ Nueva entrada</a>
 </header>
 
 <section class="meditaciones-container">
 
-    <div th:if="${exito}" class="toast show">
+    <div th:if="${exito}" class="toast">
         <span th:text="${exito}"></span>
     </div>
 
-    <div th:if="${error}" class="toast show" style="background:#8B6F47;">
+    <div th:if="${error}" class="toast error">
         <span th:text="${error}"></span>
     </div>
 
     <div th:if="${#lists.isEmpty(entradaDiario)}" class="empty-state">
         <div class="empty-icon">📝</div>
         <div class="empty-text">No hay entradas de diario registradas</div>
+        <p>Agrega una nueva entrada para comenzar tu seguimiento personal.</p>
     </div>
 
     <div th:if="${not #lists.isEmpty(entradaDiario)}" class="meditaciones-grid">
@@ -50,32 +55,42 @@
 
                 <div class="meditacion-actions">
                     <a th:href="@{/entradaDiario/editar/{id}(id=${entrada.id_entrada_diario})}"
-                       class="btn-icon btn-edit" title="Editar">✏</a>
+                       class="btn-icon btn-edit"
+                       title="Editar">
+                        ✏
+                    </a>
 
-                    <a th:href="@{/entradaDiario/eliminar/{id}(id=${entrada.id_entrada_diario})}"
+                    <a th:href="@{/entradaDiario/confirmarEliminar/{id}(id=${entrada.id_entrada_diario})}"
                        class="btn-icon btn-delete"
-                       title="Eliminar"
-                       onclick="return confirm('¿Deseas eliminar esta entrada de diario?');">🗑</a>
+                       title="Eliminar">
+                        🗑
+                    </a>
                 </div>
             </div>
 
-            <h3 class="meditacion-tipo" th:text="${entrada.que_paso}">Qué pasó</h3>
+            <div class="card-body">
+                <p class="card-label">¿Qué pasó?</p>
+                <h3 class="meditacion-tipo" th:text="${entrada.que_paso}">Qué pasó</h3>
 
-            <div class="meditacion-chips">
-                <span class="nivel-chip">
-                    Fecha: <span th:text="${entrada.fecha}"></span>
-                </span>
+                <div class="meditacion-chips">
+                    <span class="nivel-chip">
+                        Fecha:
+                        <strong th:text="${entrada.fecha}"></strong>
+                    </span>
+                </div>
+
+                <div class="diario-info">
+                    <p>
+                        <strong>Plan mañana:</strong>
+                        <span th:text="${entrada.plan_mañana}"></span>
+                    </p>
+
+                    <p>
+                        <strong>Reflexión:</strong>
+                        <span th:text="${entrada.reflexion}"></span>
+                    </p>
+                </div>
             </div>
-
-            <p style="margin-bottom: 1rem; color: var(--verde-oscuro); opacity: 0.75; line-height: 1.6;">
-                <strong>Plan mañana:</strong>
-                <span th:text="${entrada.plan_mañana}"></span>
-            </p>
-
-            <p style="margin-bottom: 1rem; color: var(--verde-oscuro); opacity: 0.75; line-height: 1.6;">
-                <strong>Reflexión:</strong>
-                <span th:text="${entrada.reflexion}"></span>
-            </p>
 
             <div class="meditacion-footer">
                 <span>ID</span>
@@ -90,6 +105,8 @@
     <div class="form-section">
 
         <div class="form-section-header">
+            <div class="form-badge">Formulario</div>
+
             <h2 class="form-section-title">
                 <span th:if="${entradaDiarioFormu.id_entrada_diario == null}">
                     Nueva <em>Entrada</em>
@@ -112,9 +129,16 @@
 
             <input type="hidden" th:field="*{id_entrada_diario}">
 
-            <div class="form-group">
-                <label class="form-label">Fecha</label>
-                <input type="date" class="form-input" th:field="*{fecha}" required>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label class="form-label">Fecha</label>
+                    <input type="date" class="form-input" th:field="*{fecha}" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">ID Usuario</label>
+                    <input type="number" class="form-input" th:field="*{fk_id_usuario}" required>
+                </div>
             </div>
 
             <div class="form-group">
@@ -132,11 +156,6 @@
                 <textarea class="form-input" th:field="*{reflexion}" rows="4"></textarea>
             </div>
 
-            <div class="form-group">
-                <label class="form-label">ID Usuario</label>
-                <input type="number" class="form-input" th:field="*{fk_id_usuario}" required>
-            </div>
-
             <div class="form-actions">
                 <a th:href="@{/entradaDiario}" class="btn-secondary">Cancelar</a>
 
@@ -148,12 +167,5 @@
         </form>
     </div>
 </section>
-
-<script>
-    setTimeout(() => {
-        document.querySelectorAll('.toast').forEach(t => t.classList.remove('show'));
-    }, 3000);
-</script>
-
 </body>
 </html>
