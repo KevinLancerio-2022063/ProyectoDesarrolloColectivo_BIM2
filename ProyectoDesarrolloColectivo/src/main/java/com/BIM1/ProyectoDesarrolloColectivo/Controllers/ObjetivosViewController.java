@@ -1,17 +1,18 @@
 package com.BIM1.ProyectoDesarrolloColectivo.Controllers;
 
+import com.BIM1.ProyectoDesarrolloColectivo.Entity.ApoyoEmocional;
+import com.BIM1.ProyectoDesarrolloColectivo.Exceptions.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.BIM1.ProyectoDesarrolloColectivo.Entity.Objetivos;
 import com.BIM1.ProyectoDesarrolloColectivo.Service.FraseMotivadoraService;
 import com.BIM1.ProyectoDesarrolloColectivo.Service.ObjetivosService;
 import com.BIM1.ProyectoDesarrolloColectivo.Service.UsuarioService;
+
+import java.util.List;
 
 @Controller
 public class ObjetivosViewController {
@@ -78,5 +79,28 @@ public class ObjetivosViewController {
     public String eliminarObjetivo(@PathVariable int id){
         service.deleteObjetivos(id);
         return "redirect:/objetivos";
+    }
+
+    @GetMapping("/buscar")
+    public String lisatrObjetivos(@RequestParam(required = false) Integer id, Model model) {
+        List<Objetivos> listaObjetivos;
+
+        try {
+            if (id != null) {
+                Objetivos buscar = service.getById(id); // 🔥 aquí ya puede lanzar excepción
+                listaObjetivos = List.of(buscar);
+            } else {
+                listaObjetivos = service.getAllObjetivos();
+            }
+
+            model.addAttribute("listaObjetivos", listaObjetivos);
+
+        } catch (CustomException e) {
+            System.out.println("🔥 ERROR CAPTURADO: " + e.getMessage());
+            model.addAttribute("error", e.getMessage());
+            model.addAttribute("listaObjetivos", List.of()); // ← sin llamar al service
+        }
+
+        return "Objetivos";
     }
 }
