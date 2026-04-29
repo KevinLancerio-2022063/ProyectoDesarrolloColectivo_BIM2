@@ -43,7 +43,7 @@ public class EjercicioController {
         return "redirect:/ejercicios";
     }
 
-    @GetMapping("/editarEjercicio{id}")
+    @GetMapping("/editarEjercicio/{id}")
     public String editarEjercicio(@PathVariable Integer id, Model model){
         model.addAttribute("ejercicios", ejercicioService.getAListEjercicio());
         model.addAttribute("ejerciciosFormu", ejercicioService.getEjercicioById(id));
