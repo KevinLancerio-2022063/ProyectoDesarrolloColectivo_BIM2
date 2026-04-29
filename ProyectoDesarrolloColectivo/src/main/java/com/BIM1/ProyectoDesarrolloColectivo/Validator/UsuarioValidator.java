@@ -39,7 +39,7 @@ public class UsuarioValidator {
                     continue;
                 }
 
-                throw new IllegalArgumentException("El correo del usuario ya existe");
+                throw new Exception("El correo del usuario ya existe");
             }
         }
     }
