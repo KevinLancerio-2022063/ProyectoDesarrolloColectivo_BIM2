@@ -1,11 +1,11 @@
 package com.BIM1.ProyectoDesarrolloColectivo.Controllers;
 
-import com.BIM1.ProyectoDesarrolloColectivo.Entity.ApoyoEmocional;
 import com.BIM1.ProyectoDesarrolloColectivo.Exceptions.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.BIM1.ProyectoDesarrolloColectivo.Entity.Objetivos;
 import com.BIM1.ProyectoDesarrolloColectivo.Service.FraseMotivadoraService;
@@ -48,9 +48,15 @@ public class ObjetivosViewController {
     }
 
     @PostMapping("/guardarObjetivoCreado")
-    public String guardarObjetivoCreado(@ModelAttribute Objetivos objetivo) {
-        service.saveObjetivos(objetivo);
-        return "redirect:/objetivos";
+    public String guardarObjetivoCreado(@ModelAttribute Objetivos objetivo, RedirectAttributes redirectAttributes) {
+        try {
+            service.saveObjetivos(objetivo);
+            return "redirect:/objetivos";
+        } catch (CustomException e) {
+            System.out.println("🔥 ERROR CAPTURADO: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/agregarObjetivo";
+        }
     }
 
     @GetMapping("/editarObjetivo/{id}")
@@ -63,16 +69,22 @@ public class ObjetivosViewController {
     }
 
     @PostMapping("/guardarObjetivo")
-    public String guardarObjetivo(@ModelAttribute  Objetivos objetivo) {
-        Objetivos original = service.getById(objetivo.getIdObjetivos());
-        original.setTituloObjetivo(objetivo.getTituloObjetivo());
-        original.setDescripcionObjetivo(objetivo.getDescripcionObjetivo());
-        original.setEstadoObjetivo(objetivo.getEstadoObjetivo());
-        original.setFechaObjetivo(objetivo.getFechaObjetivo());
-        original.setUsuario(objetivo.getUsuario());
-        original.setFraseMotivadora(objetivo.getFraseMotivadora());
-        service.updateObjetivos(objetivo.getIdObjetivos(), original);
-        return "redirect:/objetivos";
+    public String guardarObjetivo(@ModelAttribute  Objetivos objetivo, RedirectAttributes redirectAttributes) {
+        try{
+            Objetivos original = service.getById(objetivo.getIdObjetivos());
+            original.setTituloObjetivo(objetivo.getTituloObjetivo());
+            original.setDescripcionObjetivo(objetivo.getDescripcionObjetivo());
+            original.setEstadoObjetivo(objetivo.getEstadoObjetivo());
+            original.setFechaObjetivo(objetivo.getFechaObjetivo());
+            original.setUsuario(objetivo.getUsuario());
+            original.setFraseMotivadora(objetivo.getFraseMotivadora());
+            service.updateObjetivos(objetivo.getIdObjetivos(), original);
+            return "redirect:/detalleObjetivos/" + objetivo.getIdObjetivos();
+        } catch (CustomException e) {
+            System.out.println("🔥 ERROR CAPTURADO: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/editarObjetivo/" + objetivo.getIdObjetivos();
+        }
     }
 
     @GetMapping("/eliminar-objetivo/{id}")
