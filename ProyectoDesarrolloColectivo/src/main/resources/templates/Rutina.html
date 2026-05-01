@@ -7,9 +7,40 @@
     <link rel="stylesheet" th:href="@{/Base.css}">
     <link rel="stylesheet" th:href="@{/Rutina.css}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <script th:src="@{/js/alertas.js}" defer></script>
 </head>
 <body>
+
+<span id="toast-msg" th:if="${exito}" th:text="${exito}" style="display:none;"></span>
+
+<div id="toast" class="toast">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+    <path d="M20 6 9 17l-5-5"/>
+  </svg>
+  <span id="toast-text"></span>
+</div>
+
+<div id="modal-overlay-confirmar" class="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title">¿Confirmar eliminación?</h3>
+      <button id="btn-cancelar-eliminar" class="modal-close">✕</button>
+    </div>
+    <p class="modal-body-texto">¿Estás seguro de que deseas eliminar este registro?
+    </p>
+    <div class="modal-acciones">
+      <button id="btn-cancelar-eliminar-2" class="btn-secondary"
+              onclick="document.getElementById('modal-overlay-confirmar').classList.remove('open')">
+        Cancelar
+      </button>
+      <button id="btn-confirmar-eliminar" class="btn-primary"
+              style="background:#C4684A;">
+        Sí, eliminar
+      </button>
+    </div>
+  </div>
+</div>
 
 <nav>
   <a th:href="@{/index}" class="nav-logo">Evoluciona</a>
@@ -86,8 +117,7 @@
             </label>
             <a th:href="@{/rutina/editarRutina/{id}(id=${r.id_rutina})}"
                class="btn-icon btn-edit" title="Editar"> <i class="bi bi-pencil-square"></i> </a>
-            <form th:action="@{/rutina/eliminarRutina/{id}(id=${r.id_rutina})}"
-                  method="post" style="display:inline;">
+            <form class="form-eliminar" th:action="@{/rutina/eliminarRutina/{id}(id=${r.id_rutina})}" method="post" style="display:inline;">
               <button type="submit" class="btn-icon btn-delete" title="Eliminar"><i class="bi bi-trash-fill"></i></button>
             </form>
           </div>
