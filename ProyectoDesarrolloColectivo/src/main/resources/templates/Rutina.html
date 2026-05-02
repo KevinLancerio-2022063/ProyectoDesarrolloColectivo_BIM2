@@ -227,6 +227,7 @@
                placeholder="Ej. Lunes, Miércoles, Viernes"/>
         <span class="form-hint">Separa los días con comas</span>
         <span th:errors="*{dias_semana}" class="error"></span>
+        <div th:if="${errores}" th:each="err : ${errores}" class="error" th:text="${err}"></div>
       </div>
 
       <div class="form-group">
