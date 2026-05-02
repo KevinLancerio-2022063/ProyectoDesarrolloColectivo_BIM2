@@ -29,6 +29,14 @@ html { scroll-behavior: smooth; }
     justify-content: flex-end;
 }
 
+.error {
+    display: block;
+    font-size: 0.78rem;
+    color: #C4684A;
+    margin-top: 0.3rem;
+}
+
+
 /* se creo el body de las paginas*/
 body {
   background: var(--crema);
