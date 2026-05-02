@@ -236,7 +236,7 @@
       <div class="form-group">
         <label class="form-label">Nombre del ejercicio</label>
         <input type="text" th:field="*{nombre_ejercicio}" class="form-input"
-               placeholder="Ej. Sentadillas" maxlength="60"/>
+               placeholder="Ej. Sentadillas"/>
         <span th:errors="*{nombre_ejercicio}" class="error"></span>
       </div>
 
@@ -244,13 +244,13 @@
         <div class="form-group">
           <label class="form-label">Series</label>
           <input type="number" th:field="*{series_ejercicio}" class="form-input"
-                 placeholder="4" min="1" max="24"/>
+                 placeholder="4"/>
           <span th:errors="*{series_ejercicio}" class="error"></span>
         </div>
         <div class="form-group">
           <label class="form-label">Repeticiones</label>
           <input type="number" th:field="*{repeticiones_ejercicio}" class="form-input"
-                 placeholder="12" min="1" max="100"/>
+                 placeholder="12"/>
           <span th:errors="*{repeticiones_ejercicio}" class="error"></span>
         </div>
       </div>
@@ -259,13 +259,13 @@
         <div class="form-group">
           <label class="form-label">Tiempo (segundos)</label>
           <input type="number" th:field="*{tiempo_ejercicio}" class="form-input"
-                 placeholder="0" min="0" max="3600"/>
+                 placeholder="0"/>
           <span th:errors="*{tiempo_ejercicio}" class="error"></span>
         </div>
         <div class="form-group">
           <label class="form-label">Descanso (segundos)</label>
           <input type="number" th:field="*{descanso_ejercicio}" class="form-input"
-                 placeholder="60" min="0" max="600"/>
+                 placeholder="60"/>
           <span th:errors="*{descanso_ejercicio}" class="error"></span>
         </div>
       </div>
@@ -273,7 +273,7 @@
       <div class="form-group">
         <label class="form-label">ID de la rutina</label>
         <input type="number" th:field="*{fk_id_rutina}" class="form-input"
-               placeholder="ID de la rutina" min="1"/>
+               placeholder="ID de la rutina"/>
         <span th:errors="*{fk_id_rutina}" class="error"></span>
       </div>
 
