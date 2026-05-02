@@ -47,7 +47,6 @@
     </ul>
 </nav>
 
-<div th:if="${exito}" class="alerta" th:text="${exito}"></div>
 
 <div class="page-header">
     <div class="page-header-left">
@@ -68,12 +67,12 @@
             </div>
         </form>
         <span style="font-size:0.82rem;opacity:0.5;margin-left:auto;"
-              th:text="${#lists.size(libros)} + ' libro(s)'">0 libro(s)</span>
+              th:text="${libros != null ? #lists.size(libros) : 0} + ' libro(s)'"></span>
     </div>
 
     <div class="libros-grid">
 
-        <div class="libro-card" th:each="libro : ${libros}">
+        <div class="libro-card" th:each="libro : ${libros != null ? libros : T(java.util.Collections).emptyList()}">
 
             <div class="libro-spine"
                  th:classappend="${libro.estado == 'leyendo'} ? 'leyendo' : (${libro.estado == 'terminado'} ? 'terminado' : '')">
@@ -133,9 +132,9 @@
         </div>
 
         <form th:object="${librosFormu}"
-              th:action="${librosFormu.id_libro != null}
-                          ? @{/libro/actualizarLibro/{id}(id=${librosFormu.id_libro})}
-                          : @{/libro/guardarLibro}"
+              th:action="${librosFormu.id_libro != null
+                  ? '/libro/actualizarLibro/' + librosFormu.id_libro
+                  : '/libro/guardarLibro'}"
               method="post">
 
             <input type="hidden" th:field="*{id_libro}"/>
@@ -143,14 +142,14 @@
             <div class="form-group">
                 <label class="form-label">Título del libro</label>
                 <input type="text" th:field="*{titulo_libro}" class="form-input"
-                       placeholder="Ej. El Principito" maxlength="100"/>
+                       placeholder="Ej. El Principito"/>
                 <span th:errors="*{titulo_libro}" class="error"></span>
             </div>
 
             <div class="form-group">
                 <label class="form-label">Autor</label>
                 <input type="text" th:field="*{autor_libro}" class="form-input"
-                       placeholder="Ej. Antoine de Saint-Exupéry" maxlength="100"/>
+                       placeholder="Ej. Antoine de Saint-Exupéry"/>
                 <span th:errors="*{autor_libro}" class="error"></span>
             </div>
 
@@ -169,13 +168,13 @@
                 <div class="form-group">
                     <label class="form-label">Total de páginas</label>
                     <input type="number" th:field="*{cantidad_pag}" class="form-input"
-                           placeholder="300" min="1" max="4000"/>
+                           placeholder="300"/>
                     <span th:errors="*{cantidad_pag}" class="error"></span>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Páginas leídas</label>
                     <input type="number" th:field="*{cantidad_leido}" class="form-input"
-                           placeholder="0" min="0"/>
+                           placeholder="0"/>
                     <span th:errors="*{cantidad_leido}" class="error"></span>
                 </div>
             </div>
@@ -183,7 +182,7 @@
             <div class="form-group">
                 <label class="form-label">ID de usuario</label>
                 <input type="number" th:field="*{fk_id_usuario}" class="form-input"
-                       placeholder="ID del usuario" min="1"/>
+                       placeholder="ID del usuario"/>
                 <span th:errors="*{fk_id_usuario}" class="error"></span>
             </div>
 
