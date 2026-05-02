@@ -49,7 +49,6 @@
   </ul>
 </nav>
 
-<div th:if="${exito}" class="alerta" th:text="${exito}"></div>
 
 <div class="page-header">
   <div class="page-header-left">
@@ -218,14 +217,14 @@
       <div class="form-group">
         <label class="form-label">Nombre de la rutina</label>
         <input type="text" th:field="*{nombre_rutina}" class="form-input"
-               placeholder="Ej. Rutina de fuerza" maxlength="50"/>
+               placeholder="Ej. Rutina de fuerza"/>
         <span th:errors="*{nombre_rutina}" class="error"></span>
       </div>
 
       <div class="form-group">
         <label class="form-label">Días de la semana</label>
         <input type="text" th:field="*{dias_semana}" class="form-input"
-               placeholder="Ej. Lunes, Miércoles, Viernes" maxlength="100"/>
+               placeholder="Ej. Lunes, Miércoles, Viernes"/>
         <span class="form-hint">Separa los días con comas</span>
         <span th:errors="*{dias_semana}" class="error"></span>
       </div>
@@ -233,7 +232,7 @@
       <div class="form-group">
         <label class="form-label">ID de usuario</label>
         <input type="number" th:field="*{fk_id_usuario}" class="form-input"
-               placeholder="ID del usuario" min="1"/>
+               placeholder="ID del usuario" />
         <span th:errors="*{fk_id_usuario}" class="error"></span>
       </div>
 
