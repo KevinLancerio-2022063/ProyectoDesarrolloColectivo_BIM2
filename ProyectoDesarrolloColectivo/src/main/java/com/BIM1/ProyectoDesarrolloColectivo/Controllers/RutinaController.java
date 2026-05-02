@@ -1,6 +1,5 @@
 package com.BIM1.ProyectoDesarrolloColectivo.Controllers;
 
-import com.BIM1.ProyectoDesarrolloColectivo.Entity.Ejercicio;
 import com.BIM1.ProyectoDesarrolloColectivo.Entity.Rutina;
 import com.BIM1.ProyectoDesarrolloColectivo.Service.EjercicioService;
 import com.BIM1.ProyectoDesarrolloColectivo.Service.RutinaService;
@@ -49,7 +48,7 @@ public class RutinaController {
     }
 
      @PostMapping("/actualizarRutina/{id}")
-    public String actualizarRutina(@PathVariable Integer id, @Valid @ModelAttribute("rutinaFormu")Rutina rutina, Model model, BindingResult result, RedirectAttributes redirectAttributes){
+    public String actualizarRutina(@PathVariable Integer id, @Valid @ModelAttribute("rutinaFormu")Rutina rutina,BindingResult result, Model model, RedirectAttributes redirectAttributes){
         if(result.hasErrors()){
             model.addAttribute("rutina", rutinaService.getAListRutina());
             model.addAttribute("ejercicios", ejercicioService.getAListEjercicio());
@@ -61,7 +60,7 @@ public class RutinaController {
      }
 
      @PostMapping("/guardarRutina")
-    public String guardarRutina(@Valid @ModelAttribute("rutinaFormu")Rutina rutina, Model model, BindingResult result, RedirectAttributes redirectAttributes){
+    public String guardarRutina(@Valid @ModelAttribute("rutinaFormu")Rutina rutina, BindingResult result, Model model, RedirectAttributes redirectAttributes){
         if (result.hasErrors()){
             model.addAttribute("rutina", rutinaService.getAListRutina());
             model.addAttribute("ejercicios", ejercicioService.getAListEjercicio());
