@@ -162,6 +162,7 @@
                     <option value="terminado">Terminado</option>
                 </select>
                 <span th:errors="*{estado}" class="error"></span>
+                <div th:if="${errores}" th:each="err : ${errores}" class="error" th:text="${err}"></div>
             </div>
 
             <div class="form-row">
@@ -176,6 +177,7 @@
                     <input type="number" th:field="*{cantidad_leido}" class="form-input"
                            placeholder="0"/>
                     <span th:errors="*{cantidad_leido}" class="error"></span>
+                    <div th:if="${errores}" th:each="err : ${errores}" class="error" th:text="${err}"></div>
                 </div>
             </div>
 
