@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Inicio · Florece</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="stylesheet" href="principal.css">
+    <link rel="stylesheet" th:href="@{/Home.css}">
+</head>
+<body>
+<aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-logo">
+        <div class="logo-mark">
+            <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 19.23L5.71 21l1-2.3A4.49 4.49 0 008 19c8-2 9-14 9-14zm-5.5 6.5c.56-.31 1.29-.58 2.26-.72-.66.57-1.37 1.07-2.26 1.45v-.73z"/></svg>
+        </div>
+        <span class="logo-text">Vita<span>Flow</span></span>
+    </div>
+
+    <nav class="sidebar-nav">
+
+        <div class="nav-section-label">Principal</div>
+        <a class="nav-item active" th:href="@{/dashboard}">
+            <span class="nav-icon">🏠</span> Inicio
+        </a>
+
+        <div class="nav-section-label">Salud Física</div>
+        <a class="nav-item" th:href="@{/perfilNutricional}">
+            <span class="nav-icon">🥗</span> Perfil Nutricional
+        </a>
+        <a class="nav-item" th:href="@{/rutinas}">
+            <span class="nav-icon">🏋️</span> Rutinas
+        </a>
+        <a class="nav-item" th:href="@{/ejercicios}">
+            <span class="nav-icon">⚡</span> Ejercicios
+        </a>
+        <a class="nav-item" th:href="@{/rachaEjercicio}">
+            <span class="nav-icon">🔥</span> Racha Ejercicio
+        </a>
+
+        <div class="nav-section-label">Lectura</div>
+        <a class="nav-item" th:href="@{/libros}">
+            <span class="nav-icon">📚</span> Biblioteca
+        </a>
+        <a class="nav-item" th:href="@{/rachaLectura}">
+            <span class="nav-icon">📖</span> Racha Lectura
+        </a>
+
+        <div class="nav-section-label">Mente & Alma</div>
+        <a class="nav-item" th:href="@{/meditacion}">
+            <span class="nav-icon">🧘</span> Meditación
+        </a>
+        <a class="nav-item" th:href="@{/sueno}">
+            <span class="nav-icon">🌙</span> Sueño
+        </a>
+        <a class="nav-item" th:href="@{/diario}">
+            <span class="nav-icon">📝</span> Diario
+        </a>
+        <a class="nav-item" th:href="@{/apoyoEmocional}">
+            <span class="nav-icon">💛</span> Apoyo Emocional
+        </a>
+        <a class="nav-item" th:href="@{/objetivos}">
+            <span class="nav-icon">🎯</span> Objetivos
+        </a>
+        <a class="nav-item" th:href="@{/frases}">
+            <span class="nav-icon">✨</span> Frases Motivadoras
+        </a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="user-card">
+            <div class="user-avatar" th:text="${#strings.substring(usuario?.nombre ?: 'U', 0, 1)}">U</div>
+            <div class="user-info">
+                <div class="user-name" th:text="${usuario?.nombre ?: 'Usuario'}">Usuario</div>
+                <div class="user-role">Miembro activo</div>
+            </div>
+            <a class="logout-btn" th:href="@{/logout}" title="Cerrar sesión">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</aside>
+
+
+<div class="main">
+
+
+    <header class="topbar">
+        <div class="topbar-left">
+            <div class="topbar-greeting">Buenos días,</div>
+            <div class="topbar-title">
+                <span th:text="${usuario?.nombre ?: 'Usuario'}">Usuario</span>
+                <span> — Tu bienestar hoy</span>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <span class="topbar-date" id="fechaHoy"></span>
+            <span class="topbar-badge">Sistema activo</span>
+        </div>
+    </header>
+
+
+    <div class="page-content">
+
+        <div class="welcome-banner">
+            <div class="welcome-deco">🌿</div>
+            <div class="welcome-text">
+                <div class="welcome-label">✦ Dashboard · Vista General</div>
+                <div class="welcome-heading">
+                    Todo tu bienestar,<br>en un vistazo.
+                </div>
+                <div class="welcome-sub">Aquí tienes el resumen de tus módulos activos y tu progreso del día.</div>
+            </div>
+            <div class="welcome-actions">
+                <a th:href="@{/perfilNutricional/nuevo}" class="btn-banner btn-banner-primary">
+                    + Nuevo registro
+                </a>
+                <a th:href="@{/rutinas}" class="btn-banner btn-banner-ghost">
+                    Ver rutinas →
+                </a>
+            </div>
+        </div>
+
+
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-card-top">
+                    <div class="stat-card-icon green">🏋️</div>
+                    <span class="stat-card-trend up">↑ Activo</span>
+                </div>
+                <div class="stat-card-num" th:text="${totalRutinas ?: '—'}">—</div>
+                <div class="stat-card-label">Rutinas creadas</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-top">
+                    <div class="stat-card-icon cafe">📚</div>
+                    <span class="stat-card-trend up">↑ Leyendo</span>
+                </div>
+                <div class="stat-card-num" th:text="${totalLibros ?: '—'}">—</div>
+                <div class="stat-card-label">Libros registrados</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-top">
+                    <div class="stat-card-icon dark">🧘</div>
+                    <span class="stat-card-trend neu">En calma</span>
+                </div>
+                <div class="stat-card-num" th:text="${totalMeditaciones ?: '—'}">—</div>
+                <div class="stat-card-label">Meditaciones</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-top">
+                    <div class="stat-card-icon warm">🔥</div>
+                    <span class="stat-card-trend up">↑ Racha</span>
+                </div>
+                <div class="stat-card-num" th:text="${rachaActual ?: '0'}">0</div>
+                <div class="stat-card-label">Días en racha</div>
+            </div>
+        </div>
+
+
+        <div class="content-grid">
+
+
+            <div class="module-panel">
+                <div class="panel-stripe"></div>
+                <div class="panel-head">
+                    <div class="panel-title-wrap">
+                        <span class="panel-emoji">⚡</span>
+                        <span class="panel-title">Accesos rápidos</span>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="qa-item">
+                        <div class="qa-icon">🥗</div>
+                        <div class="qa-info">
+                            <div class="qa-name">Perfil Nutricional</div>
+                            <div class="qa-sub">Peso, IMC, calorías</div>
+                        </div>
+                        <a class="qa-action" th:href="@{/perfilNutricional}">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-icon">🏋️</div>
+                        <div class="qa-info">
+                            <div class="qa-name">Mis Rutinas</div>
+                            <div class="qa-sub">Planifica tu semana</div>
+                        </div>
+                        <a class="qa-action" th:href="@{/rutinas}">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-icon">📚</div>
+                        <div class="qa-info">
+                            <div class="qa-name">Biblioteca</div>
+                            <div class="qa-sub">Libros y progreso</div>
+                        </div>
+                        <a class="qa-action" th:href="@{/libros}">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-icon">🌙</div>
+                        <div class="qa-info">
+                            <div class="qa-name">Registro de Sueño</div>
+                            <div class="qa-sub">Calidad del descanso</div>
+                        </div>
+                        <a class="qa-action" th:href="@{/sueno}">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-icon">📝</div>
+                        <div class="qa-info">
+                            <div class="qa-name">Diario emocional</div>
+                            <div class="qa-sub">Tu espacio personal</div>
+                        </div>
+                        <a class="qa-action" th:href="@{/diario}">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="module-panel">
+                <div class="panel-stripe cafe-grad"></div>
+                <div class="panel-head">
+                    <div class="panel-title-wrap">
+                        <span class="panel-emoji">📚</span>
+                        <span class="panel-title">Lectura activa</span>
+                    </div>
+                    <a class="panel-link" th:href="@{/libros}">
+                        Ver todos
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+                <div class="panel-body">
+
+                    <div th:if="${librosActivos != null and !librosActivos.isEmpty()}">
+                        <div th:each="libro : ${librosActivos}" class="progress-item">
+                            <div class="progress-label-row">
+                                <span class="progress-name" th:text="${libro.titulo}">Título del libro</span>
+                                <span class="progress-pct"
+                                      th:text="${libro.cantidadPag > 0 ? #numbers.formatDecimal(libro.cantidadLeido * 100.0 / libro.cantidadPag, 0, 0) + '%' : '0%'}">0%</span>
+                            </div>
+                            <div class="progress-track">
+                                <div class="progress-fill cafe-fill"
+                                     th:style="'width:' + (libro.cantidadPag > 0 ? libro.cantidadLeido * 100 / libro.cantidadPag : 0) + '%'"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:if="${librosActivos == null or librosActivos.isEmpty()}" class="empty-state">
+                        <div class="empty-emoji">📖</div>
+                        <div class="empty-title">Sin libros activos</div>
+                        <div class="empty-sub">Agrega tu primer libro para ver el progreso</div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="module-panel">
+                <div class="panel-stripe dark-grad"></div>
+                <div class="panel-head">
+                    <div class="panel-title-wrap">
+                        <span class="panel-emoji">🕐</span>
+                        <span class="panel-title">Actividad reciente</span>
+                    </div>
+                </div>
+                <div class="panel-body">
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Módulo de Rutinas disponible</div>
+                            <div class="timeline-time">Planifica tus entrenamientos semanales</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot cafe"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Registro de Sueño</div>
+                            <div class="timeline-time">Monitorea tu descanso nocturno</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot dark"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Diario Emocional</div>
+                            <div class="timeline-time">Escribe tus reflexiones del día</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Sesión de Meditación</div>
+                            <div class="timeline-time">Registra tu práctica de mindfulness</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot cafe"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Perfil Nutricional</div>
+                            <div class="timeline-time">Actualiza tus métricas corporales</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="content-grid-2" style="margin-top: 1.2rem;">
+
+
+            <div style="display:flex; flex-direction:column; gap:1.2rem;">
+
+
+                <div class="racha-widget">
+                    <div class="racha-label">🔥 Racha de ejercicio</div>
+                    <div class="racha-num">
+                        <span th:text="${rachaActual ?: '0'}">0</span>
+                        <span class="racha-emoji">🔥</span>
+                    </div>
+                    <div class="racha-sub">días consecutivos · ¡Sigue así!</div>
+                    <div class="racha-days">
+                        <div class="racha-day done">Lun</div>
+                        <div class="racha-day done">Mar</div>
+                        <div class="racha-day done">Mié</div>
+                        <div class="racha-day done">Jue</div>
+                        <div class="racha-day today">Vie</div>
+                        <div class="racha-day miss">Sáb</div>
+                        <div class="racha-day miss">Dom</div>
+                    </div>
+                </div>
+
+
+                <div class="frase-card">
+                    <div class="frase-deco">"</div>
+                    <div class="frase-label">✦ Frase del día</div>
+                    <div class="frase-text"
+                         th:text="${fraseDelDia?.contenido ?: 'El secreto de salir adelante es comenzar.'}">
+                        El secreto de salir adelante es comenzar.
+                    </div>
+                    <div class="frase-author"
+                         th:text="${fraseDelDia?.autor != null ? '— ' + fraseDelDia.autor : '— Mark Twain'}">
+                        — Mark Twain
+                    </div>
+                </div>
+            </div>
+
+            <div class="module-panel">
+                <div class="panel-stripe"></div>
+                <div class="panel-head">
+                    <div class="panel-title-wrap">
+                        <span class="panel-emoji">⚡</span>
+                        <span class="panel-title">Ejercicios activos</span>
+                    </div>
+                    <a class="panel-link" th:href="@{/ejercicios}">
+                        Ver todos
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+                <div class="panel-body">
+                    <div th:if="${ejerciciosRecientes != null and !ejerciciosRecientes.isEmpty()}">
+                        <div th:each="ej : ${ejerciciosRecientes}" class="qa-item">
+                            <div class="qa-icon">💪</div>
+                            <div class="qa-info">
+                                <div class="qa-name" th:text="${ej.nombre}">Ejercicio</div>
+                                <div class="qa-sub" th:text="${ej.rutina?.nombre ?: 'Sin rutina'}">Rutina</div>
+                            </div>
+                            <a class="qa-action" th:href="@{/ejercicios}">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div th:if="${ejerciciosRecientes == null or ejerciciosRecientes.isEmpty()}" class="empty-state">
+                        <div class="empty-emoji">⚡</div>
+                        <div class="empty-title">Sin ejercicios aún</div>
+                        <div class="empty-sub">Crea una rutina y agrega tus ejercicios</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modules-section">
+            <div class="section-header">
+                <div>
+                    <div class="section-heading">Todos los módulos</div>
+                    <div class="section-sub">Accede a cualquier sección desde aquí</div>
+                </div>
+            </div>
+
+            <div class="modules-nav">
+                <a class="mod-nav-card" th:href="@{/perfilNutricional}">
+                    <div class="mod-nav-icon">🥗</div>
+                    <div class="mod-nav-name">Perfil Nutricional</div>
+                    <div class="mod-nav-count">Métricas corporales</div>
+                </a>
+                <a class="mod-nav-card" th:href="@{/rutinas}">
+                    <div class="mod-nav-icon">🏋️</div>
+                    <div class="mod-nav-name">Rutinas</div>
+                    <div class="mod-nav-count">Entrenamiento semanal</div>
+                </a>
+                <a class="mod-nav-card" th:href="@{/ejercicios}">
+                    <div class="mod-nav-icon">⚡</div>
+                    <div class="mod-nav-name">Ejercicios</div>
+                    <div class="mod-nav-count">Catálogo de movimientos</div>
+                </a>
+                <a class="mod-nav-card" th:href="@{/libros}">
+                    <div class="mod-nav-icon">📚</div>
+                    <div class="mod-nav-name">Biblioteca</div>
+                    <div class="mod-nav-count">Progreso de lectura</div>
+                </a>
+                <a class="mod-nav-card" th:href="@{/meditacion}">
+                    <div class="mod-nav-icon">🧘</div>
+                    <div class="mod-nav-name">Meditación</div>
+                    <div class="mod-nav-count">Mindfulness y calma</div>
+                </a>
+                <a class="mod-nav-card" th:href="@{/sueno}">
+                    <div class="mod-nav-icon">🌙</div>
+                    <div class="mod-nav-name">Sueño</div>
+                    <div class="mod-nav-count">Calidad del descanso</div>
+                </a>
+                <a class="mod-nav-card" th:href="@{/diario}">
+                    <div class="mod-nav-icon">📝</div>
+                    <div class="mod-nav-name">Diario</div>
+                    <div class="mod-nav-count">Reflexiones personales</div>
+                </a>
+                <a class="mod-nav-card" th:href="@{/apoyoEmocional}">
+                    <div class="mod-nav-icon">💛</div>
+                    <div class="mod-nav-name">Apoyo Emocional</div>
+                    <div class="mod-nav-count">Bienestar mental</div>
+                </a>
+                <a class="mod-nav-card" th:href="@{/objetivos}">
+                    <div class="mod-nav-icon">🎯</div>
+                    <div class="mod-nav-name">Objetivos</div>
+                    <div class="mod-nav-count">Metas de vida</div>
+                </a>
+                <a class="mod-nav-card" th:href="@{/frases}">
+                    <div class="mod-nav-icon">✨</div>
+                    <div class="mod-nav-name">Frases</div>
+                    <div class="mod-nav-count">Motivación diaria</div>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    // ── Fecha actual en topbar ──
+    const d = new Date();
+    const dias = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+    const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+    document.getElementById('fechaHoy').textContent =
+        `${dias[d.getDay()]}, ${d.getDate()} de ${meses[d.getMonth()]}`;
+
+    // ── Animación de barras de progreso ──
+    const fills = document.querySelectorAll('.progress-fill');
+    const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.style.width = e.target.style.width || '0%';
+                io.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.3 });
+    fills.forEach(f => {
+        const w = f.style.width;
+        f.style.width = '0%';
+        setTimeout(() => { f.style.width = w; }, 200);
+    });
+
+    // ── Saludo dinámico ──
+    const h = new Date().getHours();
+    const greeting = document.querySelector('.topbar-greeting');
+    if (greeting) {
+        if (h < 12)       greeting.textContent = 'Buenos días,';
+        else if (h < 18)  greeting.textContent = 'Buenas tardes,';
+        else              greeting.textContent = 'Buenas noches,';
+    }
+</script>
+</body>
+</html>
