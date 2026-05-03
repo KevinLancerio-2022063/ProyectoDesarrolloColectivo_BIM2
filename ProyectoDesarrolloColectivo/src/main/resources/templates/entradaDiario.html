@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entrada Diario</title>
-    <link rel="stylesheet" th:href="@{/entradaDiario.css}">
+    <link rel="stylesheet" th:href="@{/entradaDiario.css(v=${#dates.createNow().time})}">
 </head>
 <body>
 
@@ -22,91 +22,69 @@
     <div>
         <div class="page-tag">Bienestar · Diario personal</div>
         <h1 class="page-title">Gestión de <em>Entrada Diario</em></h1>
-        <p class="page-description">
-            Registra tus pensamientos, reflexiones y planes para dar seguimiento a tu crecimiento personal.
-        </p>
     </div>
-
     <a href="#formulario" class="btn-primary">+ Nueva entrada</a>
 </header>
 
 <section class="meditaciones-container">
-
     <div th:if="${exito}" class="toast">
         <span th:text="${exito}"></span>
     </div>
 
-    <div th:if="${error}" class="toast error">
+    <div th:if="${error}" class="toast toast-error">
         <span th:text="${error}"></span>
     </div>
 
     <div th:if="${#lists.isEmpty(entradaDiario)}" class="empty-state">
         <div class="empty-icon">📝</div>
         <div class="empty-text">No hay entradas de diario registradas</div>
-        <p>Agrega una nueva entrada para comenzar tu seguimiento personal.</p>
     </div>
 
     <div th:if="${not #lists.isEmpty(entradaDiario)}" class="meditaciones-grid">
-
         <div class="meditacion-card" th:each="entrada : ${entradaDiario}">
-
             <div class="meditacion-card-header">
                 <div class="meditacion-avatar">ED</div>
 
                 <div class="meditacion-actions">
                     <a th:href="@{/entradaDiario/editar/{id}(id=${entrada.id_entrada_diario})}"
                        class="btn-icon btn-edit"
-                       title="Editar">
-                        ✏
-                    </a>
+                       title="Editar">✏</a>
 
                     <a th:href="@{/entradaDiario/confirmarEliminar/{id}(id=${entrada.id_entrada_diario})}"
                        class="btn-icon btn-delete"
-                       title="Eliminar">
-                        🗑
-                    </a>
+                       title="Eliminar">🗑️</a>
                 </div>
             </div>
 
-            <div class="card-body">
-                <p class="card-label">¿Qué pasó?</p>
-                <h3 class="meditacion-tipo" th:text="${entrada.que_paso}">Qué pasó</h3>
+            <h3 class="meditacion-tipo" th:text="${entrada.que_paso}">Qué pasó</h3>
 
-                <div class="meditacion-chips">
-                    <span class="nivel-chip">
-                        Fecha:
-                        <strong th:text="${entrada.fecha}"></strong>
-                    </span>
-                </div>
-
-                <div class="diario-info">
-                    <p>
-                        <strong>Plan mañana:</strong>
-                        <span th:text="${entrada.plan_mañana}"></span>
-                    </p>
-
-                    <p>
-                        <strong>Reflexión:</strong>
-                        <span th:text="${entrada.reflexion}"></span>
-                    </p>
-                </div>
+            <div class="meditacion-chips">
+                <span class="nivel-chip">
+                    Fecha: <span th:text="${entrada.fecha}">2026-05-03</span>
+                </span>
             </div>
+
+            <p class="meditacion-fecha">
+                <strong>Plan mañana:</strong>
+                <span th:text="${entrada.plan_mañana}">Plan</span>
+            </p>
+
+            <p class="meditacion-fecha">
+                <strong>Reflexión:</strong>
+                <span th:text="${entrada.reflexion}">Reflexión</span>
+            </p>
 
             <div class="meditacion-footer">
                 <span>ID</span>
-                <strong th:text="${entrada.id_entrada_diario}"></strong>
+                <strong th:text="${entrada.id_entrada_diario}">1</strong>
             </div>
-
         </div>
     </div>
 </section>
 
 <section class="form-section-wrap" id="formulario">
     <div class="form-section">
-
         <div class="form-section-header">
-            <div class="form-badge">Formulario</div>
-
             <h2 class="form-section-title">
                 <span th:if="${entradaDiarioFormu.id_entrada_diario == null}">
                     Nueva <em>Entrada</em>
@@ -115,9 +93,8 @@
                     Editar <em>Entrada</em>
                 </span>
             </h2>
-
             <p class="form-section-sub">
-                Completa la información de tu entrada diaria.
+                Completa la información para registrar tu entrada diaria y dar seguimiento a tu bienestar.
             </p>
         </div>
 
@@ -129,7 +106,7 @@
 
             <input type="hidden" th:field="*{id_entrada_diario}">
 
-            <div class="form-grid">
+            <div class="form-row">
                 <div class="form-group">
                     <label class="form-label">Fecha</label>
                     <input type="date" class="form-input" th:field="*{fecha}" required>
@@ -143,29 +120,38 @@
 
             <div class="form-group">
                 <label class="form-label">¿Qué pasó?</label>
-                <textarea class="form-input" th:field="*{que_paso}" rows="4" required></textarea>
+                <textarea class="form-input textarea-diario"
+                          th:field="*{que_paso}"
+                          placeholder="Escribe lo más importante de tu día..."
+                          required></textarea>
             </div>
 
             <div class="form-group">
                 <label class="form-label">Plan para mañana</label>
-                <input type="text" class="form-input" th:field="*{plan_mañana}">
+                <input type="text"
+                       class="form-input"
+                       th:field="*{plan_mañana}"
+                       placeholder="Ej. Organizar pendientes, descansar mejor...">
             </div>
 
             <div class="form-group">
                 <label class="form-label">Reflexión</label>
-                <textarea class="form-input" th:field="*{reflexion}" rows="4"></textarea>
+                <textarea class="form-input textarea-diario"
+                          th:field="*{reflexion}"
+                          placeholder="Escribe una reflexión personal..."></textarea>
             </div>
 
             <div class="form-actions">
                 <a th:href="@{/entradaDiario}" class="btn-secondary">Cancelar</a>
-
-                <button type="submit" class="btn-primary"
+                <button type="submit"
+                        class="btn-primary"
                         th:text="${entradaDiarioFormu.id_entrada_diario == null} ? 'Guardar' : 'Actualizar'">
+                    Guardar
                 </button>
             </div>
-
         </form>
     </div>
 </section>
+
 </body>
 </html>
