@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <title>Gestión de Usuarios</title>
     <link rel="stylesheet" th:href="@{/css/baseLancerio.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
 </head>
 
 <body>
@@ -26,8 +28,8 @@
     <!-- Barra para buscar por Id y botón de agregar usuario -->
     <div class="toolbar">
 
-        <div class="search-wrap">
-            <span class="search-icon">🔍</span>
+        <div class="search-wrap">     <!-- Ícono de la lupa del buscar -->
+            <span class="search-icon"><i class="bi bi-search"></i></span>
             <input type="text"
                    id="buscar"
                    class="search-input"
@@ -59,17 +61,19 @@
                 <div class="card-actions">
 
                     <!-- botón editar -->
-                    <!-- El th:attr sirve para establecer el valor de cualquier atributo html, ejecuta la eliminación si el usuario lo confirma -->
                     <a class="btn-icon btn-edit"
                        th:href="@{/usuarios/editar/{id}(id=${u.id_usuario})}">
-                        ✏️
+                        <!-- Ícono del lápiz -->
+                        <i class="bi bi-pencil"></i>
                     </a>
 
                     <!-- boton Eliminar con el modal -->
+                    <!-- El th:attr sirve para establecer el valor de cualquier atributo html, ejecuta la eliminación si el usuario lo confirma -->
                     <a class="btn-icon btn-delete"
                        href="#"
                     th:attr="onclick=|openModal('/usuarios/eliminar/${u.id_usuario}')|">
-                     🗑️
+                        <!-- Ícono del bote de basura -->
+                        <i class="bi bi-trash-fill"></i>
                  </a>
 
              </div>
@@ -95,12 +99,13 @@
 
     </div>
 
+    <!--Tarjeta/Notificación de Error -->
     <div th:if="${errores != null}" class="error-container">
 
         <div class="card error-card" th:each="err : ${errores}">
 
-            <div class="header">
-                <div class="image">❌</div>
+            <div class="header">   <!--Ícono de Error (X) -->
+                <div class="image"><i class="bi bi-x"></i></div>
 
                 <div class="content">
                     <span class="title">Error</span>
@@ -112,12 +117,13 @@
 
     </div>
 
+    <!--Tarjeta/Notificación de Éxito -->
     <div th:if="${success}" class="error-container">
 
         <div class="card success-card">
 
-            <div class="header">
-                <div class="image">✅</div>
+            <div class="header">   <!--Ícono de éxito (Cheque) -->
+                <div class="image"><i class="bi bi-check-lg"></i></div>
 
                 <div class="content">
                     <span class="title">Operación exitosa</span>
@@ -189,8 +195,8 @@
 <div id="confirmModal" class="modal hidden">
     <div class="card confirm-card">
 
-        <div class="header">
-            <div class="image">⚠️</div>
+        <div class="header">             <!-- Ícono de un triángulo de peligro -->
+            <div class="image"><i class="bi bi-exclamation-triangle text-danger"></i>️</div>
 
             <div class="content">
                 <span class="title">¿Eliminar usuario?</span>
