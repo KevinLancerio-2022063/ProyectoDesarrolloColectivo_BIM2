@@ -1,250 +1,541 @@
 :root {
-    --verde-oscuro: #2D4A3E;
-    --verde-profundo: #18382E;
-    --verde-menta: #7EB09B;
-    --verde-suave: #EAF3EF;
-    --crema: #F5F0E8;
-    --crema-claro: #FBF8F2;
-    --cafe: #8B6F47;
-    --cafe-claro: #c4a882;
-    --rojo: #B35A4A;
-    --rojo-suave: #F7E7E3;
-    --sombra: rgba(45, 74, 62, 0.14);
-    --borde: rgba(45, 74, 62, 0.12);
+  --verde-oscuro: #2D4A3E;
+  --verde-profundo: #18382E;
+  --verde-menta: #7EB09B;
+  --verde-suave: #EAF3EF;
+  --crema: #F5F0E8;
+  --crema-claro: #FBF8F2;
+  --cafe: #8B6F47;
+  --cafe-claro: #c4a882;
+  --rojo: #B35A4A;
+  --rojo-suave: #F7E7E3;
+  --sombra: rgba(45, 74, 62, 0.14);
+  --sombra-hover: rgba(45, 74, 62, 0.22);
+  --blanco: #FFFFFF;
+  --borde: rgba(45, 74, 62, 0.12);
+  --radio-lg: 24px;
+  --radio-md: 16px;
+  --radio-sm: 12px;
+  --trans: 0.3s ease;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Arial, sans-serif;
 }
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 body {
-    background: var(--crema);
-    color: var(--verde-oscuro);
+  background: var(--crema);
+  color: var(--verde-oscuro);
+  overflow-x: hidden;
 }
 
 nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.2rem 3rem;
-    background: white;
-    box-shadow: 0 2px 14px var(--sombra);
-    position: sticky;
-    top: 0;
-    z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 4rem;
+  background: var(--blanco);
+  box-shadow: 0 4px 16px var(--sombra);
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .nav-logo {
-    font-size: 1.6rem;
-    font-weight: 800;
-    color: var(--verde-oscuro);
-    text-decoration: none;
+  text-decoration: none;
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: var(--verde-oscuro);
 }
 
 .nav-logo span {
-    color: var(--verde-menta);
+  color: var(--verde-menta);
 }
 
 .nav-links {
-    list-style: none;
-    display: flex;
-    gap: 1.8rem;
+  display: flex;
+  list-style: none;
+  gap: 1.4rem;
 }
 
 .nav-links a {
-    text-decoration: none;
-    color: var(--verde-oscuro);
-    font-weight: 700;
-    position: relative;
+  text-decoration: none;
+  color: var(--verde-oscuro);
+  font-weight: 700;
+  transition: color var(--trans);
 }
 
-.nav-links a.active,
-.nav-links a:hover {
-    color: var(--cafe);
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--cafe);
 }
 
 .page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 2.4rem 3rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2.5rem 4rem 1.5rem;
+  gap: 1rem;
+}
+
+.page-tag {
+  font-size: 0.9rem;
+  color: var(--cafe);
+  margin-bottom: 0.6rem;
+  font-weight: 600;
 }
 
 .page-title {
-    font-size: 2.2rem;
-    color: var(--verde-profundo);
+  font-size: 2.2rem;
+  color: var(--verde-profundo);
 }
 
-.page-title em {
-    color: var(--cafe);
-}
-
-.meditaciones-container {
-    padding: 1.5rem 3rem;
-}
-
-.meditaciones-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-    gap: 1.6rem;
-}
-
-.meditacion-card {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 22px;
-    box-shadow: 0 12px 28px var(--sombra);
-}
-
-.form-section {
-    background: white;
-    padding: 2rem;
-    border-radius: 26px;
-    box-shadow: 0 14px 32px var(--sombra);
-    max-width: 1100px;
-    margin: auto;
-}
-
-.form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 0.8rem;
+.page-title em,
+.form-section-title em,
+.delete-box h1 em {
+  color: var(--cafe);
+  font-style: italic;
 }
 
 .btn-primary,
-.btn-secondary,
-.btn-danger {
-    padding: 0.75rem 1.3rem;
-    border-radius: 999px;
-    font-weight: 800;
-    cursor: pointer;
-    border: none;
-    text-decoration: none;
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.2rem;
+  border-radius: 999px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 800;
+  transition: all var(--trans);
 }
 
 .btn-primary {
-    background: var(--verde-oscuro);
-    color: white;
+  background: var(--verde-oscuro);
+  color: var(--blanco);
+}
+
+.btn-primary:hover {
+  background: var(--verde-profundo);
 }
 
 .btn-secondary {
-    background: #DDD8CF;
-    color: var(--verde-profundo);
+  background: #DDD8CF;
+  color: var(--verde-profundo);
 }
 
-.btn-danger {
-    background: var(--rojo);
-    color: white;
+.btn-secondary:hover {
+  background: var(--cafe-claro);
+  color: var(--blanco);
 }
 
-/* ===== ELIMINAR (FIX DEFINITIVO) ===== */
+.toast {
+  margin-bottom: 1rem;
+  background: var(--verde-oscuro);
+  color: var(--blanco);
+  padding: 1rem 1.2rem;
+  border-radius: var(--radio-md);
+  box-shadow: 0 8px 18px var(--sombra);
+}
+
+.toast-error,
+.toast.error {
+  background: var(--cafe);
+}
+
+.meditaciones-container {
+  padding: 0 4rem 3rem;
+}
+
+.empty-state {
+  background: var(--blanco);
+  border-radius: var(--radio-lg);
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 4px 20px var(--sombra);
+}
+
+.empty-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.empty-text {
+  font-size: 1.1rem;
+  color: var(--verde-oscuro);
+  font-weight: 700;
+}
+
+.meditaciones-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.4rem;
+}
+
+.meditacion-card {
+  background: var(--blanco);
+  border-radius: var(--radio-lg);
+  padding: 1.8rem;
+  box-shadow: 0 4px 20px var(--sombra);
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--trans), box-shadow var(--trans);
+}
+
+.meditacion-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 36px var(--sombra-hover);
+}
+
+.meditacion-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--verde-menta);
+}
+
+.meditacion-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+}
+
+.meditacion-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: var(--verde-oscuro);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--crema);
+}
+
+.meditacion-actions {
+  display: flex;
+  gap: 0.45rem;
+}
+
+.btn-icon {
+  text-decoration: none;
+  font-size: 1rem;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  transition: all var(--trans);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon:hover {
+  transform: scale(1.06);
+}
+
+.btn-edit {
+  background: rgba(126, 176, 155, 0.18);
+}
+
+.btn-delete {
+  background: var(--rojo-suave);
+}
+
+.meditacion-tipo {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--verde-profundo);
+  margin-bottom: 0.6rem;
+  line-height: 1.2;
+}
+
+.meditacion-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 1.2rem;
+}
+
+.nivel-chip {
+  background: rgba(126, 176, 155, 0.15);
+  color: var(--verde-oscuro);
+  font-size: 0.78rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 100px;
+  font-weight: 700;
+}
+
+.meditacion-fecha {
+  margin-bottom: 1rem;
+  color: var(--verde-oscuro);
+  opacity: 0.8;
+  line-height: 1.6;
+}
+
+.meditacion-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(45,74,62,0.07);
+  font-size: 0.85rem;
+  color: var(--cafe);
+}
+
+.meditacion-footer strong {
+  color: var(--verde-oscuro);
+}
+
+.form-section-wrap {
+  padding: 0 4rem 4rem;
+}
+
+.form-section {
+  background: var(--blanco);
+  border-radius: var(--radio-lg);
+  box-shadow: 0 4px 20px var(--sombra);
+  padding: 2rem;
+}
+
+.form-section-header {
+  margin-bottom: 1.6rem;
+}
+
+.form-section-title {
+  font-size: 1.8rem;
+  color: var(--verde-profundo);
+  margin-bottom: 0.6rem;
+}
+
+.form-section-sub {
+  color: var(--verde-oscuro);
+  opacity: 0.8;
+  line-height: 1.6;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.45rem;
+  font-weight: 700;
+  color: var(--verde-profundo);
+}
+
+.form-input,
+.form-select {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1.5px solid rgba(45,74,62,0.15);
+  border-radius: var(--radio-sm);
+  outline: none;
+  font-size: 0.95rem;
+  background: var(--blanco);
+  color: var(--verde-profundo);
+}
+
+.form-input:focus,
+.form-select:focus {
+  border-color: var(--verde-menta);
+  box-shadow: 0 0 0 4px rgba(126, 176, 155, 0.18);
+}
+
+.textarea-diario {
+  min-height: 115px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.8rem;
+  margin-top: 1.4rem;
+}
 
 .delete-page {
-    min-height: calc(100vh - 80px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 60px 30px;
+  min-height: calc(100vh - 80px);
+  background: var(--crema);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 30px;
 }
 
 .delete-box {
-    width: 100%;
-    max-width: 760px;
-    background: white;
-    border-radius: 28px;
-    padding: 45px;
-    text-align: center;
-    box-shadow: 0 18px 40px var(--sombra);
-    border-top: 6px solid var(--rojo);
+  width: 100%;
+  max-width: 760px;
+  background: var(--blanco);
+  border-radius: 28px;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 18px 40px var(--sombra);
+  border-top: 6px solid var(--rojo);
 }
 
 .delete-icon {
-    width: 70px;
-    height: 70px;
-    background: var(--rojo-suave);
-    color: var(--rojo);
-    border-radius: 50%;
-    margin: 0 auto 18px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2rem;
-    font-weight: 900;
+  width: 70px;
+  height: 70px;
+  background: var(--rojo-suave);
+  color: var(--rojo);
+  border-radius: 50%;
+  margin: 0 auto 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: 900;
+}
+
+.delete-tag {
+  color: var(--cafe);
+  font-weight: 700;
+  margin-bottom: 8px;
 }
 
 .delete-box h1 {
-    color: var(--verde-profundo);
-    margin-bottom: 15px;
-}
-
-.delete-box h1 em {
-    color: var(--cafe);
+  color: var(--verde-profundo);
+  font-size: 2rem;
+  margin-bottom: 15px;
 }
 
 .delete-message {
-    margin-bottom: 25px;
+  color: var(--verde-oscuro);
+  line-height: 1.6;
+  margin-bottom: 25px;
 }
 
 .delete-info {
-    background: var(--crema-claro);
-    border: 1px solid var(--borde);
-    border-radius: 18px;
-    padding: 22px;
-    text-align: left;
-    margin-bottom: 40px;
+  background: var(--crema-claro);
+  border: 1px solid var(--borde);
+  border-radius: 18px;
+  padding: 22px;
+  text-align: left;
+  margin-bottom: 40px;
 }
 
 .delete-info p {
-    margin-bottom: 10px;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.delete-info p:last-child {
+  margin-bottom: 0;
+}
+
+.delete-info strong {
+  color: var(--cafe);
+}
+
+.delete-form {
+  width: 100%;
+  margin-top: 0;
 }
 
 .delete-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  margin-top: 10px;
 }
 
 .delete-cancel,
 .delete-confirm {
-    min-width: 150px;
-    height: 45px;
-    border-radius: 999px;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 800;
+  width: auto !important;
+  min-width: 150px;
+  height: 45px;
+  padding: 0 22px;
+  border-radius: 999px;
+  border: none;
+  text-decoration: none;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .delete-cancel {
-    background: #DDD8CF;
-    color: var(--verde-profundo);
+  background: #DDD8CF;
+  color: var(--verde-profundo);
 }
 
 .delete-confirm {
-    background: var(--rojo);
-    color: white;
+  background: var(--rojo);
+  color: white;
 }
 
-/* IMPORTANTE: rompe cualquier width global */
+.delete-cancel:hover {
+  background: var(--cafe-claro);
+  color: white;
+}
+
+.delete-confirm:hover {
+  background: #8F3F33;
+}
+
 .delete-buttons button,
 .delete-buttons a {
-    width: auto !important;
+  width: auto !important;
 }
 
 @media (max-width: 768px) {
-    .delete-buttons {
-        flex-direction: column;
-    }
+  nav,
+  .page-header,
+  .meditaciones-container,
+  .form-section-wrap {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
 
-    .delete-cancel,
-    .delete-confirm {
-        width: 100%;
-    }
+  nav {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions,
+  .delete-buttons {
+    flex-direction: column;
+  }
+
+  .delete-cancel,
+  .delete-confirm {
+    width: 100% !important;
+  }
 }
