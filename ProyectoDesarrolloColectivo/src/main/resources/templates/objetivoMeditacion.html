@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Objetivo Meditación</title>
     <link rel="stylesheet" th:href="@{/css/baseLancerio.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
 <body>
@@ -27,8 +28,8 @@
     <!-- Este es la opcion para buscar por ID los Objetivos -->
     <div class="toolbar">
 
-        <div class="search-wrap">
-            <span class="search-icon">🔍</span>
+        <div class="search-wrap">     <!-- Ícono de la lupa del buscar -->
+            <span class="search-icon"><i class="bi bi-search"></i></span>
             <input type="text"
                    id="buscar"
                    class="search-input"
@@ -60,13 +61,15 @@
 
                     <a class="btn-icon btn-edit"
                        th:href="@{/objetivoMeditacion/editar/{id}(id=${o.id_objetivo_meditacion})}">
-                        ✏️
+                        <!-- Ícono del lápiz -->
+                        <i class="bi bi-pencil"></i>
                     </a>
 
                     <a class="btn-icon btn-delete"
                        href="#"
                        th:attr="onclick=|openModal('/objetivoMeditacion/eliminar/${o.id_objetivo_meditacion}')|">
-                        🗑️
+                        <!-- Ícono del bote de basura -->
+                        <i class="bi bi-trash-fill"></i>
                     </a>
 
                 </div>
@@ -99,8 +102,8 @@
     <div th:if="${errores != null}" class="error-container">
 
         <div class="card error-card" th:each="err : ${errores}">
-            <div class="header">
-                <div class="image">❌</div>
+            <div class="header">      <!-- Ícono de Equis -->
+                <div class="image"><i class="bi bi-x"></i></div>
                 <div class="content">
                     <span class="title">Error</span>
                     <p class="message" th:text="${err}"></p>
@@ -114,8 +117,8 @@
     <div th:if="${success}" class="error-container">
 
         <div class="card success-card">
-            <div class="header">
-                <div class="image">✅</div>
+            <div class="header">       <!-- Ícono de Cheque -->
+                <div class="image"><i class="bi bi-check-lg"></i></div>
                 <div class="content">
                     <span class="title">Operación exitosa</span>
                     <p class="message" th:text="${success}"></p>
@@ -182,8 +185,8 @@
 <div id="confirmModal" class="modal hidden">
     <div class="card confirm-card">
 
-        <div class="header">
-            <div class="image">⚠️</div>
+        <div class="header">        <!-- Ícono de Peligro -->
+            <div class="image"><i class="bi bi-exclamation-triangle text-danger"></i></div>
 
             <div class="content">
                 <span class="title">¿Eliminar objetivo?</span>
