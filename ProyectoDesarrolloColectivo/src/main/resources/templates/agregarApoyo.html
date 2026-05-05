@@ -36,7 +36,16 @@
                 </div>
                 <div class="form-group">
                     <label for="categoria">Categoría:</label>
-                    <input type="text" id="categoria" th:field="*{categoria}" required>
+                    <select id="categoria" th:field="*{categoria}" required>
+                        <option value="">Seleccionar...</option>
+                        <option value="Tristeza">Tristeza</option>
+                        <option value="Ansiedad">Ansiedad</option>
+                        <option value="Ira">Ira</option>
+                        <option value="Bienestar">Bienestar</option>
+                        <option value="Autoestima">Autoestima</option>
+                        <option value="Estrés">Estrés</option>
+                        <option value="Soledad">Soledad</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="contenido">Contenido:</label>
