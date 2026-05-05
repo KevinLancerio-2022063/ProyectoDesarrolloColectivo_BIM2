@@ -24,16 +24,25 @@ public class RachaLecturaViewController {
     public String mostrarVista(HttpSession session, Model model) {
 
         Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
 
-        // Protección: si no hay sesión
-        if (usuarioId == null) {
+        if (usuarioId == null || rol == null) {
             return "redirect:/login";
         }
 
-        model.addAttribute(
-                "rachas",
-                rachaLecturaService.getRachasByUsuario(usuarioId)
-        );
+        if ("ADMIN".equals(rol)) {
+            model.addAttribute(
+                    "rachas",
+                    rachaLecturaService.getAllRachas()
+            );
+        }
+
+        else {
+            model.addAttribute(
+                    "rachas",
+                    rachaLecturaService.getRachasByUsuario(usuarioId)
+            );
+        }
 
         return "racha-lectura";
     }
