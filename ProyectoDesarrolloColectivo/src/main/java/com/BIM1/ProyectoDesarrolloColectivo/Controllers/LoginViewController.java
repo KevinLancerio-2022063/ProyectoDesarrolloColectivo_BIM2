@@ -43,6 +43,7 @@ public class LoginViewController {
 
         session.setAttribute("usuarioId", encontrado.getId_usuario());
         session.setAttribute("usuarioNombre", encontrado.getNombre_completo());
+        session.setAttribute("rol", encontrado.getRol());
 
 
         return "redirect:/fraseMotivadora";
