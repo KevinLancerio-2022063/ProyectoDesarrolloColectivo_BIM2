@@ -26,7 +26,7 @@ public class RegisterViewController {
     @PostMapping
     public String procesarRegister(
             @RequestParam String nombre,
-            @RequestParam String usuario, // correo
+            @RequestParam String usuario,
             @RequestParam String password,
             @RequestParam String confirmarPassword,
             Model model) {
@@ -41,13 +41,15 @@ public class RegisterViewController {
         nuevo.setCorreoUsuario(usuario);
         nuevo.setContraseña(password);
 
+
+        nuevo.setRol("USER");
+
         try {
             usuarioService.saveUsuario(nuevo);
         } catch (RuntimeException e) {
             model.addAttribute("error", e.getMessage());
             return "register";
         }
-
 
         return "redirect:/login";
     }

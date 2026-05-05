@@ -99,4 +99,16 @@ public class RachaEjercicioServiceImplements implements RachaEjercicioService {
 
         return repository.save(racha);
     }
+    @Override
+    public List<RachaEjercicio> getAllRachas() {
+
+        List<RachaEjercicio> todas = repository.findAll();
+
+        if (todas == null || todas.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        Collections.sort(todas, POR_FECHA_DESC);
+        return todas;
+    }
     }

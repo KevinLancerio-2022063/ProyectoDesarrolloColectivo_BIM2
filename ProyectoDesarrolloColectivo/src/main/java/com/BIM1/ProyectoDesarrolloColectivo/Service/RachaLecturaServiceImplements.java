@@ -102,5 +102,16 @@ public class RachaLecturaServiceImplements implements RachaLecturaService {
 
         return repository.save(racha);
     }
+    @Override
+    public List<RachaLectura> getAllRachas() {
 
+        List<RachaLectura> todas = repository.findAll();
+
+        if (todas == null || todas.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        Collections.sort(todas, POR_FECHA_DESC);
+        return todas;
+    }
 }
