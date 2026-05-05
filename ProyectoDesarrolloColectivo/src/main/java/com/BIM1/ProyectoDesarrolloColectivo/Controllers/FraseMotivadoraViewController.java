@@ -1,8 +1,12 @@
 package com.BIM1.ProyectoDesarrolloColectivo.Controllers;
 
+import com.BIM1.ProyectoDesarrolloColectivo.Repository.FraseMotivadoraRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
+import java.time.LocalDate;
+import java.util.Random;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,10 +20,39 @@ public class FraseMotivadoraViewController {
     @Autowired
     private FraseMotivadoraService fraseMotivadoraService;
 
+    @Autowired
+    private FraseMotivadoraRepository repository;
+
     @GetMapping("/frasesMotivadoras")
     public String mostrarFraseMotivadora(Model model) {
         model.addAttribute("frases", fraseMotivadoraService.getAllFraseMotivadora());
         return "FraseMotivadora";
+    }
+
+    @GetMapping("fraseMotivadora")
+    public String fraseAlAZar(Model model){
+
+        long total = repository.count();
+
+        if (total == 0) {
+            model.addAttribute("frases", "No hay frases disponibles");
+            return "FraseMotivadoraAdmin";
+        }
+
+        // Obtener fecha actual
+        LocalDate hoy = LocalDate.now();
+
+        // Convertir la fecha a número (por ejemplo: días desde epoch)
+        long seed = hoy.toEpochDay();
+
+        // Crear Random con semilla fija del día
+        Random random = new Random(seed);
+
+        int numeroAleatorio = random.nextInt((int) total);
+
+        model.addAttribute("frases", fraseMotivadoraService.getById(numeroAleatorio));
+
+        return "FraseMotivadoraUser";
     }
 
     @GetMapping("/agregarFrase")
