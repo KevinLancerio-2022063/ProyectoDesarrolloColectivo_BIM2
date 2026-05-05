@@ -21,7 +21,10 @@ public class RachaLecturaViewController {
     }
 
     @GetMapping
-    public String mostrarVista(HttpSession session, Model model) {
+    public String mostrarVista(
+            @RequestParam(value = "usuarioIdBuscar", required = false) Integer usuarioIdBuscar,
+            HttpSession session,
+            Model model) {
 
         Integer usuarioId = (Integer) session.getAttribute("usuarioId");
         String rol = (String) session.getAttribute("rol");
@@ -30,11 +33,22 @@ public class RachaLecturaViewController {
             return "redirect:/login";
         }
 
+
         if ("ADMIN".equals(rol)) {
-            model.addAttribute(
-                    "rachas",
-                    rachaLecturaService.getAllRachas()
-            );
+
+            if (usuarioIdBuscar != null) {
+                model.addAttribute(
+                        "rachas",
+                        rachaLecturaService.getRachasByUsuario(usuarioIdBuscar)
+                );
+                model.addAttribute("usuarioBuscado", usuarioIdBuscar);
+            } else {
+                model.addAttribute(
+                        "rachas",
+                        rachaLecturaService.getAllRachas()
+                );
+            }
+
         }
 
         else {
