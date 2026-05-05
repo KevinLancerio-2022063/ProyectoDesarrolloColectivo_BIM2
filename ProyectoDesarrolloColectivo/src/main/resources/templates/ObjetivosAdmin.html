@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Objetivos</title>
+    <link rel="stylesheet" th:href="@{/css/Base.css}">
+    <link rel="stylesheet" th:href="@{/css/ObjetivosAdmin.css}">
+</head>
+<body>
+    <nav>
+        <a th:href="@{/}" class="nav-logo">Evoluciona</a>
+        <ul class="nav-links">
+        <li><a th:href="@{/}">Inicio</a></li>
+        </ul>
+    </nav>
+
+    <div class="page-header">
+        <div class="page-header-left">
+            <div class="page-tag">Metas personales</div>
+            <h1 class="page-title">Obje<em>tivos</em></h1>
+        </div>
+    </div>
+    <div class="objetivos-wrap">
+    
+        <!--
+        ══════════════════════════════════════════════
+        TU CONTROLLER pasa:
+            labels     → List.of("Completados", "Pendientes", "En Progreso")
+            data       → List.of(completados, pendientes, enProgreso)
+            porcentajes→ List.of(pCompletados, pPendientes, pEnProgreso)
+            listaObjetivos → List<Objetivos>
+    
+        Índices:
+            [0] = Completados
+            [1] = Pendientes
+            [2] = En Progreso
+        ══════════════════════════════════════════════
+        -->
+    
+        <!-- ── CARDS RESUMEN ── -->
+        <div class="cards-row">
+            <div class="stat-card">
+                <span class="num" style="color:#1a1a2e"
+                    th:text="${data[0] + data[1] + data[2]}">0</span>
+                <span class="lbl">Total objetivos</span>
+            </div>
+            <div class="stat-card">
+                <span class="num" style="color:#16a34a"
+                    th:text="${data[0]}">0</span>
+                <span class="lbl" th:text="${labels[0]}">Completados</span>
+            </div>
+            <div class="stat-card">
+                <span class="num" style="color:#1d4ed8"
+                    th:text="${data[2]}">0</span>
+                <span class="lbl" th:text="${labels[2]}">En Progreso</span>
+            </div>
+            <div class="stat-card">
+                <span class="num" style="color:#ca8a04"
+                    th:text="${data[1]}">0</span>
+                <span class="lbl" th:text="${labels[1]}">Pendientes</span>
+            </div>
+        </div>
+    
+        <!-- ── DONUT + LEYENDA ── -->
+        <div class="chart-section">
+            <div class="donut-wrap">
+                <svg id="donut-svg" width="180" height="180" viewBox="0 0 180 180"></svg>
+                <div class="center-label">
+                    <span class="big" th:text="${porcentajes[0]} + '%'">0%</span>
+                    <span class="sub">completados</span>
+                </div>
+            </div>
+    
+            <div class="legend">
+                <p class="section-title">Distribución por estado</p>
+    
+                <!-- Completados — data[0], porcentajes[0] -->
+                <div class="legend-item">
+                    <div class="legend-dot" style="background:#16a34a"></div>
+                    <div class="legend-info">
+                        <div class="legend-name" th:text="${labels[0]}">Completados</div>
+                        <div class="legend-count">
+                            <span th:text="${data[0]}">0</span> objetivos
+                        </div>
+                    </div>
+                    <span class="legend-pct" style="color:#16a34a"
+                        th:text="${porcentajes[0]} + '%'">0%</span>
+                </div>
+    
+                <!-- En Progreso — data[2], porcentajes[2] -->
+                <div class="legend-item">
+                    <div class="legend-dot" style="background:#1d4ed8"></div>
+                    <div class="legend-info">
+                        <div class="legend-name" th:text="${labels[2]}">En Progreso</div>
+                        <div class="legend-count">
+                            <span th:text="${data[2]}">0</span> objetivos
+                        </div>
+                    </div>
+                    <span class="legend-pct" style="color:#1d4ed8"
+                        th:text="${porcentajes[2]} + '%'">0%</span>
+                </div>
+    
+                <!-- Pendientes — data[1], porcentajes[1] -->
+                <div class="legend-item">
+                    <div class="legend-dot" style="background:#ca8a04"></div>
+                    <div class="legend-info">
+                        <div class="legend-name" th:text="${labels[1]}">Pendientes</div>
+                        <div class="legend-count">
+                            <span th:text="${data[1]}">0</span> objetivos
+                        </div>
+                    </div>
+                    <span class="legend-pct" style="color:#ca8a04"
+                        th:text="${porcentajes[1]} + '%'">0%</span>
+                </div>
+            </div>
+        </div>
+    
+        <!-- ── BARRAS DE PROGRESO INDIVIDUALES ──
+            Requiere que tu entidad Objetivos tenga getProgresoObjetivo() → int (0-100)
+            Si no lo tienes, lee la nota al final del archivo -->
+        <div class="progress-section-card">
+            <p class="section-title">Progreso individual</p>
+            <div class="prog-list">
+    
+                <div class="prog-row" th:each="obj : ${listaObjetivos}">
+    
+                    <span class="prog-label"
+                        th:text="${obj.tituloObjetivo}">Título</span>
+    
+                    <div class="prog-track">
+                        <div class="prog-fill"
+                            th:attr="data-progress=${obj.progresoObjetivo}"
+                            th:style="'background:' +
+                                (${#strings.equalsIgnoreCase(obj.estadoObjetivo,'Completado')}
+                                    ? '#16a34a'
+                                    : (${#strings.equalsIgnoreCase(obj.estadoObjetivo,'En progreso')}
+                                        ? '#1d4ed8' : '#ca8a04'))">
+                        </div>
+                    </div>
+    
+                    <span class="prog-pct"
+                        th:text="${obj.progresoObjetivo} + '%'">0%</span>
+    
+                    <span class="badge"
+                        th:text="${obj.estadoObjetivo}"
+                        th:classappend="${#strings.equalsIgnoreCase(obj.estadoObjetivo,'Completado')}
+                                            ? 'badge-completado'
+                                            : (${#strings.equalsIgnoreCase(obj.estadoObjetivo,'En progreso')}
+                                                ? 'badge-en-progreso' : 'badge-pendiente')">
+                    </span>
+    
+                </div>
+            </div>
+        </div>
+ 
+    </div>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const COMPLETADO  = /*[[${data[0]}]]*/ 0;
+        const PENDIENTE   = /*[[${data[1]}]]*/ 0;
+        const EN_PROGRESO = /*[[${data[2]}]]*/ 0;
+        const TOTAL = COMPLETADO + PENDIENTE + EN_PROGRESO;
+        
+        const cx = 90, cy = 90, r = 72, SW = 18;
+        const circ = 2 * Math.PI * r;
+        
+        const segmentos = [
+            { valor: COMPLETADO,  color: '#16a34a' },
+            { valor: EN_PROGRESO, color: '#1d4ed8' },
+            { valor: PENDIENTE,   color: '#ca8a04' },
+        ];
+        
+        const svg = document.getElementById('donut-svg');
+        
+        // Pista base gris
+        const base = document.createElementNS('http://www.w3.org/2000/svg','circle');
+        base.setAttribute('cx',cx); base.setAttribute('cy',cy); base.setAttribute('r',r);
+        base.setAttribute('fill','none'); base.setAttribute('stroke','#f0f2f7');
+        base.setAttribute('stroke-width',SW);
+        svg.appendChild(base);
+        
+        let offset = 0;
+        segmentos.forEach(seg => {
+            if (!seg.valor || TOTAL === 0) return;
+            const pct  = seg.valor / TOTAL;
+            const dash = pct * circ;
+            const gap  = circ - dash;
+        
+            const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+            c.setAttribute('cx',cx); c.setAttribute('cy',cy); c.setAttribute('r',r);
+            c.setAttribute('fill','none');
+            c.setAttribute('stroke', seg.color);
+            c.setAttribute('stroke-width', SW);
+            c.setAttribute('stroke-dasharray', `0 ${circ}`);
+            c.setAttribute('stroke-dashoffset', -(offset * circ));
+            c.setAttribute('stroke-linecap','round');
+            c.style.transform = 'rotate(-90deg)';
+            c.style.transformOrigin = 'center';
+            c.style.transition = 'stroke-dasharray 1.2s cubic-bezier(.4,0,.2,1)';
+            svg.appendChild(c);
+        
+            setTimeout(() => c.setAttribute('stroke-dasharray',`${dash} ${gap}`), 80);
+            offset += pct;
+        });
+        
+        // Animar barras individuales
+        setTimeout(() => {
+            document.querySelectorAll('.prog-fill').forEach(bar => {
+                bar.style.width = (bar.getAttribute('data-progress') || '0') + '%';
+            });
+        }, 150);
+        /*]]>*/
+    </script>
+</body>
+</html>
