@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Racha de Ejercicio</title>
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Tu CSS local -->
     <link rel="stylesheet" th:href="@{/css/rachas.css}">
 </head>
 <body>
@@ -21,9 +19,8 @@
     <img th:src="@{/img/logo.png}" src="../static/img/logo.png" alt="Logo">
 </a>
 <main class="contenedor">
-    <!-- HEADER -->
     <header class="card header-card">
-        <a th:href="@{/home}" class="btn-home-home">
+        <a th:href="@{/home}" href="/home" class="btn-home">
             <i class="fas fa-home"></i>
         </a>
         <h1>
@@ -38,7 +35,6 @@
         </h2>
         <p style="text-align:center; color:#666;">
             Estás visualizando las rachas registradas por todos los usuarios.
-            Esta vista es solo de consulta.
         </p>
     </section>
 
@@ -73,11 +69,12 @@
         </p>
     </section>
 
-    <!-- LLAMA (VISIBLE PARA USER Y ADMIN) -->
+    <!-- LLAMA -->
     <section class="card llama-card"
+             th:if="${session.rol == 'USER'}"
              th:classappend="${rachas != null and !#lists.isEmpty(rachas) and rachas[0].diasConsecutivos >= 15} ? 'racha-roja' :
-                             (${rachas != null and !#lists.isEmpty(rachas) and rachas[0].diasConsecutivos >= 10} ? 'racha-naranja' :
-                             (${rachas != null and !#lists.isEmpty(rachas) and rachas[0].diasConsecutivos >= 5}  ? 'racha-amarilla' : ''))">
+                         (${rachas != null and !#lists.isEmpty(rachas) and rachas[0].diasConsecutivos >= 10} ? 'racha-naranja' :
+                         (${rachas != null and !#lists.isEmpty(rachas) and rachas[0].diasConsecutivos >= 5}  ? 'racha-amarilla' : ''))">
 
         <div class="flame-scene">
             <div class="ember e1"></div>
@@ -101,9 +98,9 @@
 
         <div class="racha-sub"
              th:text="${rachas != null and !#lists.isEmpty(rachas) and rachas[0].diasConsecutivos >= 15} ? '🔥 ¡imparable!' :
-                     (${rachas != null and !#lists.isEmpty(rachas) and rachas[0].diasConsecutivos >= 10} ? '💪 ¡vas muy bien!' :
-                     (${rachas != null and !#lists.isEmpty(rachas) and rachas[0].diasConsecutivos >= 5}  ? '⭐ ¡sigue así!' :
-                     (${rachas != null and !#lists.isEmpty(rachas)} ? '¡buen comienzo!' : 'registra tu primera racha')))">
+                 (${rachas != null and !#lists.isEmpty(rachas) and rachas[0].diasConsecutivos >= 10} ? '💪 ¡vas muy bien!' :
+                 (${rachas != null and !#lists.isEmpty(rachas) and rachas[0].diasConsecutivos >= 5}  ? '⭐ ¡sigue así!' :
+                 (${rachas != null and !#lists.isEmpty(rachas)} ? '¡buen comienzo!' : 'registra tu primera racha')))">
             registra tu primera racha
         </div>
     </section>
@@ -145,7 +142,7 @@
             <table>
                 <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>ID Usuario</th>
                     <th>Fecha</th>
                     <th>
                         <i class="fas fa-fire" style="color:#e67e22;"></i> Racha
@@ -162,7 +159,7 @@
                 </tr>
 
                 <tr th:each="r : ${rachas}">
-                    <td th:text="${r.idRachaEjercicio}"></td>
+                    <td th:text="${r.fkIdUsuario}"></td>
                     <td th:text="${#temporals.format(r.fecha, 'dd/MM/yyyy')}"></td>
                     <td style="font-weight:bold; color:#e67e22;">
                         <span th:text="${r.diasConsecutivos}"></span> días
