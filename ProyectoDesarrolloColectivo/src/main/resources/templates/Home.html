@@ -54,7 +54,7 @@
         </a>
 
         <!-- CONEXIÓN: Rutinas -->
-        <a class="nav-item" th:href="@{/rutinas}">
+        <a class="nav-item" th:href="@{/rutina}">
             <span class="nav-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M6 7v10"/>
@@ -78,7 +78,7 @@
         </a>
 
         <!-- CONEXIÓN: Racha Ejercicio -->
-        <a class="nav-item" th:href="@{/rachaEjercicio}">
+        <a class="nav-item" th:href="@{/racha-ejercicio}">
             <span class="nav-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M12 2C9 6 6 8.5 6 13a6 6 0 0012 0c0-4.5-3-7-6-11z"/>
@@ -91,7 +91,7 @@
         <div class="nav-section-label">Lectura</div>
 
         <!-- CONEXIÓN: Biblioteca / Libros -->
-        <a class="nav-item" th:href="@{/libros}">
+        <a class="nav-item" th:href="@{/libro}">
             <span class="nav-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
@@ -104,7 +104,7 @@
         </a>
 
         <!-- CONEXIÓN: Racha Lectura -->
-        <a class="nav-item" th:href="@{/rachaLectura}">
+        <a class="nav-item" th:href="@{/racha-lectura}">
             <span class="nav-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M12 6v15"/>
@@ -118,7 +118,7 @@
         <div class="nav-section-label">Mente & Alma</div>
 
         <!-- CONEXIÓN: Meditación -->
-        <a class="nav-item" th:href="@{/meditacion}">
+        <a class="nav-item" th:href="@{/registroMeditacion}">
             <span class="nav-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="5" r="2"/>
@@ -132,7 +132,7 @@
         </a>
 
         <!-- CONEXIÓN: Sueño -->
-        <a class="nav-item" th:href="@{/sueno}">
+        <a class="nav-item" th:href="@{/registrosSuenos}">
             <span class="nav-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>
@@ -142,7 +142,7 @@
         </a>
 
         <!-- CONEXIÓN: Diario -->
-        <a class="nav-item" th:href="@{/diario}">
+        <a class="nav-item" th:href="@{/entradaDiario}">
             <span class="nav-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M4 4h16v16H4z"/>
@@ -165,7 +165,7 @@
         </a>
 
         <!-- CONEXIÓN: Objetivos -->
-        <a class="nav-item" th:href="@{/objetivos}">
+        <a class="nav-item" th:href="@{/ObjetivosController}">
             <span class="nav-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="10"/>
@@ -177,7 +177,7 @@
         </a>
 
         <!-- CONEXIÓN: Frases Motivadoras -->
-        <a class="nav-item" th:href="@{/frases}">
+        <a class="nav-item" th:href="@{/fraseMotivadora}">
             <span class="nav-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M12 2l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/>
@@ -233,7 +233,7 @@
             </div>
 
             <div class="welcome-text">
-                <div class="welcome-label">Dashboard · Vista General</div>
+                <div class="welcome-label">Home · Vista General</div>
                 <div class="welcome-heading">
                     Todo tu bienestar,<br>en un vistazo.
                 </div>
@@ -249,7 +249,7 @@
                 </a>
 
                 <!-- CONEXIÓN: vista de rutinas -->
-                <a th:href="@{/rutinas}" class="btn-banner btn-banner-ghost">
+                <a th:href="@{/rutina}" class="btn-banner btn-banner-ghost">
                     Ver rutinas →
                 </a>
             </div>
@@ -371,7 +371,7 @@
                             <div class="qa-name">Mis Rutinas</div>
                             <div class="qa-sub">Planifica tu semana</div>
                         </div>
-                        <a class="qa-action" th:href="@{/rutinas}">
+                        <a class="qa-action" th:href="@{/rutina}">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M5 12h14"/>
                                 <path d="M12 5l7 7-7 7"/>
@@ -391,7 +391,7 @@
                             <div class="qa-name">Biblioteca</div>
                             <div class="qa-sub">Libros y progreso</div>
                         </div>
-                        <a class="qa-action" th:href="@{/libros}">
+                        <a class="qa-action" th:href="@{/libro}">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M5 12h14"/>
                                 <path d="M12 5l7 7-7 7"/>
@@ -410,7 +410,7 @@
                             <div class="qa-name">Registro de Sueño</div>
                             <div class="qa-sub">Calidad del descanso</div>
                         </div>
-                        <a class="qa-action" th:href="@{/sueno}">
+                        <a class="qa-action" th:href="@{/registrosSuenos}">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M5 12h14"/>
                                 <path d="M12 5l7 7-7 7"/>
@@ -432,7 +432,7 @@
                             <div class="qa-name">Diario emocional</div>
                             <div class="qa-sub">Tu espacio personal</div>
                         </div>
-                        <a class="qa-action" th:href="@{/diario}">
+                        <a class="qa-action" th:href="@{/entradaDiario}">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M5 12h14"/>
                                 <path d="M12 5l7 7-7 7"/>
@@ -457,7 +457,7 @@
                     </div>
 
                     <!-- CONEXIÓN: Libros -->
-                    <a class="panel-link" th:href="@{/libros}">
+                    <a class="panel-link" th:href="@{/libro}">
                         Ver todos
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M5 12h14"/>
@@ -695,7 +695,7 @@
                 </a>
 
                 <!-- CONEXIÓN: Rutinas -->
-                <a class="mod-nav-card" th:href="@{/rutinas}">
+                <a class="mod-nav-card" th:href="@{/rutina}">
                     <div class="mod-nav-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M6 7v10"/>
@@ -721,7 +721,7 @@
                 </a>
 
                 <!-- CONEXIÓN: Biblioteca -->
-                <a class="mod-nav-card" th:href="@{/libros}">
+                <a class="mod-nav-card" th:href="@{/libro}">
                     <div class="mod-nav-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
@@ -733,7 +733,7 @@
                 </a>
 
                 <!-- CONEXIÓN: Meditación -->
-                <a class="mod-nav-card" th:href="@{/meditacion}">
+                <a class="mod-nav-card" th:href="@{/registroMeditacion}">
                     <div class="mod-nav-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="5" r="2"/>
@@ -746,7 +746,7 @@
                 </a>
 
                 <!-- CONEXIÓN: Sueño -->
-                <a class="mod-nav-card" th:href="@{/sueno}">
+                <a class="mod-nav-card" th:href="@{/registrosSuenos}">
                     <div class="mod-nav-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>
@@ -757,7 +757,7 @@
                 </a>
 
                 <!-- CONEXIÓN: Diario -->
-                <a class="mod-nav-card" th:href="@{/diario}">
+                <a class="mod-nav-card" th:href="@{/entradaDiario}">
                     <div class="mod-nav-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M4 4h16v16H4z"/>
@@ -782,7 +782,7 @@
                 </a>
 
                 <!-- CONEXIÓN: Objetivos -->
-                <a class="mod-nav-card" th:href="@{/objetivos}">
+                <a class="mod-nav-card" th:href="@{/ObjetivosController}">
                     <div class="mod-nav-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="10"/>
@@ -795,7 +795,7 @@
                 </a>
 
                 <!-- CONEXIÓN: Frases -->
-                <a class="mod-nav-card" th:href="@{/frases}">
+                <a class="mod-nav-card" th:href="@{/fraseMotivadora}">
                     <div class="mod-nav-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M12 2l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/>
