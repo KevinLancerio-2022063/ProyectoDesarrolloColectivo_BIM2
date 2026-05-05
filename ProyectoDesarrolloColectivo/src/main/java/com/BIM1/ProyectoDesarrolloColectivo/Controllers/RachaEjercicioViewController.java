@@ -21,20 +21,41 @@ public class RachaEjercicioViewController {
     }
 
     @GetMapping
-    public String mostrarVista(HttpSession session, Model model) {
+    public String mostrarVista(
+            @RequestParam(required = false) Integer usuarioIdBuscar,
+            HttpSession session,
+            Model model) {
 
         Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
 
-        // Protección: si no hay sesión
-        if (usuarioId == null) {
+        if (usuarioId == null || rol == null) {
             return "redirect:/login";
         }
 
-        model.addAttribute(
-                "rachas",
-                rachaEjercicioService.getRachasByUsuario(usuarioId)
-        );
+        if ("ADMIN".equals(rol)) {
 
+            if (usuarioIdBuscar != null) {
+                model.addAttribute(
+                        "rachas",
+                        rachaEjercicioService.getRachasByUsuario(usuarioIdBuscar)
+                );
+                model.addAttribute("usuarioBuscado", usuarioIdBuscar);
+            } else {
+                model.addAttribute(
+                        "rachas",
+                        rachaEjercicioService.getAllRachas()
+                );
+            }
+
+        }
+
+        else {
+            model.addAttribute(
+                    "rachas",
+                    rachaEjercicioService.getRachasByUsuario(usuarioId)
+            );
+        }
         return "racha-ejercicio";
     }
 
