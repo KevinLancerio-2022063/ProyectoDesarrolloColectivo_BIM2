@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApoyoEmocional</title>
+    <link rel="stylesheet" th:href="@{/css/Base.css}">
+    <link rel="stylesheet" th:href="@{/css/ApoyoEmocionalAdmin.css}">
+</head>
+<body>
+    <nav>
+        <a th:href="@{/}" class="nav-logo">Evoluciona</a>
+        <ul class="nav-links">
+            <li><a th:href="@{/}">Inicio</a></li>
+        </ul>
+    </nav>
+    
+    <div class="page-header">
+        <div>
+            <div class="page-tag">Bienestar mental</div>
+            <h1 class="page-title">Apoyo <em>Emocional</em></h1>
+        </div>
+    </div>
+    
+    <div class="apoyo-wrap">
+    
+        <!-- ── CARDS RESUMEN ── -->
+        <div class="cards-row">
+            <div class="stat-card">
+                <span class="num" style="color:#1e1b4b"
+                    th:text="${data[0] + data[1] + data[2]}">0</span>
+                <span class="lbl">Total registros</span>
+            </div>
+            <div class="stat-card">
+                <span class="num" style="color:var(--alto)"
+                    th:text="${data[0]}">0</span>
+                <span class="lbl" th:text="${labels[0]}">Bien</span>
+            </div>
+            <div class="stat-card">
+                <span class="num" style="color:var(--medio)"
+                    th:text="${data[1]}">0</span>
+                <span class="lbl" th:text="${labels[1]}">Mas o menos</span>
+            </div>
+            <div class="stat-card">
+                <span class="num" style="color:var(--bajo)"
+                    th:text="${data[2]}">0</span>
+                <span class="lbl" th:text="${labels[2]}">Mal</span>
+            </div>
+        </div>
+    
+        <!-- ── DONUT + LEYENDA ── -->
+        <div class="chart-section">
+            <div class="donut-wrap">
+                <svg id="donut-svg" width="180" height="180" viewBox="0 0 180 180"></svg>
+                <div class="center-label">
+                    <span class="big" th:text="${porcentajes[0]} + '%'">0%</span>
+                    <span class="sub">Bien</span>
+                </div>
+            </div>
+    
+            <div class="legend">
+                <p class="section-title">Distribución por nivel de ánimo</p>
+    
+                <!-- Alto -->
+                <div class="legend-item">
+                    <div class="legend-dot" style="background:var(--alto)"></div>
+                    <div class="legend-info">
+                        <div class="legend-name" th:text="${labels[0]}">Bien</div>
+                        <div class="legend-count">
+                            <span th:text="${data[0]}">0</span> registros
+                        </div>
+                    </div>
+                    <span class="legend-pct" style="color:var(--alto)"
+                        th:text="${porcentajes[0]} + '%'">0%</span>
+                </div>
+    
+                <!-- Medio -->
+                <div class="legend-item">
+                    <div class="legend-dot" style="background:var(--medio)"></div>
+                    <div class="legend-info">
+                        <div class="legend-name" th:text="${labels[1]}">Mas o menos</div>
+                        <div class="legend-count">
+                            <span th:text="${data[1]}">0</span> registros
+                        </div>
+                    </div>
+                    <span class="legend-pct" style="color:var(--medio)"
+                        th:text="${porcentajes[1]} + '%'">0%</span>
+                </div>
+    
+                <!-- Bajo -->
+                <div class="legend-item">
+                    <div class="legend-dot" style="background:var(--bajo)"></div>
+                    <div class="legend-info">
+                        <div class="legend-name" th:text="${labels[2]}">Mal</div>
+                        <div class="legend-count">
+                            <span th:text="${data[2]}">0</span> registros
+                        </div>
+                    </div>
+                    <span class="legend-pct" style="color:var(--bajo)"
+                        th:text="${porcentajes[2]} + '%'">0%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── BARRAS POR CATEGORÍA ── -->
+        <div class="categories-section">
+            <p class="section-title">Distribución por categoría</p>
+            <div class="cat-row" th:each="cat, iterStat : ${categorias}">
+                <div class="cat-label" th:text="${cat}">Categoría</div>
+
+                <div class="cat-track">
+                    <div class="cat-fill"
+                        th:attr="data-w=${countCat[iterStat.index]}"></div>
+                </div>
+
+                <div class="cat-count"
+                    th:text="${countCat[iterStat.index]} + ' registros'">
+                    0 registro(s)
+                </div>
+            </div>    
+        </div>
+    
+    </div>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const ALTO   = /*[[${data[0]}]]*/ 0;
+        const MEDIO  = /*[[${data[1]}]]*/ 0;
+        const BAJO   = /*[[${data[2]}]]*/ 0;
+        const TOTAL  = ALTO + MEDIO + BAJO;
+        
+        // ── Donut chart ──
+        const cx = 90, cy = 90, r = 72, SW = 18;
+        const circ = 2 * Math.PI * r;
+        
+        const segmentos = [
+            { valor: ALTO,  color: '#7c3aed' },
+            { valor: MEDIO, color: '#0ea5e9' },
+            { valor: BAJO,  color: '#f59e0b' },
+        ];
+        
+        const svg = document.getElementById('donut-svg');
+        
+        // pista base
+        const base = document.createElementNS('http://www.w3.org/2000/svg','circle');
+        base.setAttribute('cx', cx); base.setAttribute('cy', cy); base.setAttribute('r', r);
+        base.setAttribute('fill', 'none'); base.setAttribute('stroke', '#ede9fe');
+        base.setAttribute('stroke-width', SW);
+        svg.appendChild(base);
+        
+        let offset = 0;
+        segmentos.forEach(seg => {
+            if (!seg.valor || TOTAL === 0) return;
+            const pct  = seg.valor / TOTAL;
+            const dash = pct * circ;
+            const gap  = circ - dash;
+        
+            const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            c.setAttribute('cx', cx); c.setAttribute('cy', cy); c.setAttribute('r', r);
+            c.setAttribute('fill', 'none');
+            c.setAttribute('stroke', seg.color);
+            c.setAttribute('stroke-width', SW);
+            c.setAttribute('stroke-dasharray', `0 ${circ}`);
+            c.setAttribute('stroke-dashoffset', -(offset * circ));
+            c.setAttribute('stroke-linecap', 'round');
+            c.style.transform = 'rotate(-90deg)';
+            c.style.transformOrigin = 'center';
+            c.style.transition = 'stroke-dasharray 1.2s cubic-bezier(.4,0,.2,1)';
+            svg.appendChild(c);
+        
+            setTimeout(() => c.setAttribute('stroke-dasharray', `${dash} ${gap}`), 80);
+            offset += pct;
+        });
+        
+        // ── Barras por categoría ──
+        setTimeout(() => {
+            document.querySelectorAll('.cat-fill').forEach(bar => {
+                bar.style.width = (bar.getAttribute('data-w') || '0') + '%';
+            });
+        }, 150);
+        /*]]>*/
+    </script>
+</body>
+</html>
