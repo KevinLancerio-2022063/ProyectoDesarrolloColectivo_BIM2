@@ -93,10 +93,7 @@
           <div class="ej-card-actions">
             <label th:for="'flip-ej-' + ${ej.id_ejercicio}"
                    class="ej-btn-flip" title="Ver detalle de rutina">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                <circle cx="12" cy="12" r="3"/>
-              </svg>
+                <i class="bi bi-eye-fill"></i>
             </label>
             <a th:href="@{'/ejercicios/editarEjercicio/' + ${ej.id_ejercicio}}"
                class="ej-btn-edit" title="Editar">
