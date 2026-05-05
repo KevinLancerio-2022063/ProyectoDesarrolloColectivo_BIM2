@@ -10,7 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ApoyoEmocionalViewController {
@@ -107,4 +110,56 @@ public class ApoyoEmocionalViewController {
         return "ApoyoEmocional";
     }
 
+    @GetMapping("/apoyoEmocional-Admin")
+    public String mostrarApoyoAdmin(Model model){
+        List<ApoyoEmocional> list = service.getAllApoyoEmovional();
+
+        int mal = 0;
+        int maso = 0;
+        int bien = 0;
+
+        Map<String, Integer> conteoCategorias = new HashMap<>();
+
+        for (ApoyoEmocional ap : list) {
+            String cat = ap.getCategoria();
+
+            if (cat != null) {
+                conteoCategorias.put(cat, conteoCategorias.getOrDefault(cat, 0) + 1);
+            }
+        }
+
+        List<String> categorias = new ArrayList<>(conteoCategorias.keySet());
+        List<Integer> countCat = categorias.stream()
+                .map(conteoCategorias::get)
+                .toList();
+
+        int maxCat = countCat.stream().max(Integer::compare).orElse(1);
+
+        for (ApoyoEmocional ap : list){
+            String nivelAnimo = ap.getNivelAnimo();
+            if (nivelAnimo.equalsIgnoreCase("mal")){
+                mal++;
+            } else if (nivelAnimo.equalsIgnoreCase("mas o menos")){
+                maso++;
+            } else if (nivelAnimo.equalsIgnoreCase("bien")){
+                bien++;
+            }
+            
+        }
+
+        int total = bien + maso + mal;
+
+        int pBien = total > 0 ? (bien * 100) / total : 0;
+        int pMaso = total > 0 ? (maso * 100) / total : 0;
+        int pMal = total > 0 ? (mal * 100) / total : 0;
+
+        model.addAttribute("listaApoyos",list);
+        model.addAttribute("data", List.of(bien, maso, mal));
+        model.addAttribute("labels", List.of("Bien", "Mas o menos", "Mal"));
+        model.addAttribute("porcentajes", List.of(pBien, pMaso, pMal));
+        model.addAttribute("categorias", categorias);
+        model.addAttribute("countCat", countCat);
+        model.addAttribute("maxCat", maxCat);
+        return "ApoyoEmocionalAdmin";
+    }
 }
