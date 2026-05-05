@@ -25,7 +25,7 @@ public class LibroValidator {
             throw new Exception("las paginas leidas deben de ser 0 por el estado en el que se encuentra");
         }
 
-        if(libro.getCantidad_leido() == libro.getCantidad_pag()){
+        if(libro.getEstado().equals("leyendo") && libro.getCantidad_leido() == libro.getCantidad_pag()){
             throw new Exception("las paginas totales ya han sido leidas, por lo que el estado del libro tiene que ser 'terminado' ");
         }
 
