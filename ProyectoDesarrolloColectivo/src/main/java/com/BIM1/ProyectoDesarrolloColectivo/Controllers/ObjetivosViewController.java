@@ -81,7 +81,7 @@ public class ObjetivosViewController {
             service.updateObjetivos(objetivo.getIdObjetivos(), original);
             return "redirect:/detalleObjetivos/" + objetivo.getIdObjetivos();
         } catch (CustomException e) {
-            System.out.println("🔥 ERROR CAPTURADO: " + e.getMessage());
+            System.out.println(" ERROR CAPTURADO: " + e.getMessage());
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/editarObjetivo/" + objetivo.getIdObjetivos();
         }
@@ -99,7 +99,7 @@ public class ObjetivosViewController {
 
         try {
             if (id != null) {
-                Objetivos buscar = service.getById(id); // 🔥 aquí ya puede lanzar excepción
+                Objetivos buscar = service.getById(id); //  aquí ya puede lanzar excepción , dime que mas quieres que haga
                 listaObjetivos = List.of(buscar);
             } else {
                 listaObjetivos = service.getAllObjetivos();
@@ -108,9 +108,9 @@ public class ObjetivosViewController {
             model.addAttribute("listaObjetivos", listaObjetivos);
 
         } catch (CustomException e) {
-            System.out.println("🔥 ERROR CAPTURADO: " + e.getMessage());
+            System.out.println(" ERROR CAPTURADO: " + e.getMessage());
             model.addAttribute("error", e.getMessage());
-            model.addAttribute("listaObjetivos", List.of()); // ← sin llamar al service
+            model.addAttribute("listaObjetivos", List.of()); // ← sin llamar al service , Listo para copiar y pegar
         }
 
         return "Objetivos";
@@ -143,7 +143,6 @@ public class ObjetivosViewController {
         int pCompletados = total > 0 ? (completados * 100) / total : 0;
         int pPendientes = total > 0 ? (pendientes * 100) / total : 0;
         int pEnProgreso = total > 0 ? (enProgreso * 100) / total : 0;
-
         model.addAttribute("listaObjetivos", lista);
         model.addAttribute("labels", List.of("Completados", "Pendientes", "En Progreso"));
         model.addAttribute("data", List.of(completados, pendientes, enProgreso));
