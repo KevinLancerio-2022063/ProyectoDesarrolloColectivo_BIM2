@@ -24,7 +24,7 @@
             display: flex;
         }
 
-        /* ─── SIDEBAR ─── */
+
         .sidebar {
             width: 256px;
             min-height: 100vh;
@@ -59,7 +59,7 @@
         }
         .logo-text span { color: var(--verde-menta); }
 
-        /* Nav sections */
+
         .sidebar-nav { flex: 1; padding: 1.2rem 0.75rem; overflow-y: auto; }
 
         .nav-section-label {
@@ -153,7 +153,7 @@
         .logout-btn:hover { background: rgba(196,104,74,0.15); color: #e88b70; }
         .logout-btn svg { width: 15px; height: 15px; }
 
-        /* ─── MAIN ─── */
+
         .main {
             margin-left: 256px;
             flex: 1;
@@ -162,7 +162,7 @@
             min-height: 100vh;
         }
 
-        /* Top bar */
+
         .topbar {
             display: flex;
             align-items: center;
@@ -209,13 +209,13 @@
             animation: pulse 2s ease infinite;
         }
 
-        /* ─── PAGE CONTENT ─── */
+
         .page-content {
             padding: 2.4rem 2.8rem 4rem;
             flex: 1;
         }
 
-        /* ─── WELCOME BANNER ─── */
+
         .welcome-banner {
             background: var(--verde-oscuro);
             border-radius: 20px;
@@ -283,7 +283,6 @@
         }
         .btn-banner-ghost:hover { background: rgba(245,240,232,0.16); }
 
-        /* ─── QUICK STATS ─── */
         .stats-row {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -337,7 +336,7 @@
             opacity: 0.5; margin-top: 0.3rem;
         }
 
-        /* ─── GRID 3 COL ─── */
+
         .content-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -350,7 +349,6 @@
             gap: 1.2rem;
         }
 
-        /* ─── MODULE CARD ─── */
         .module-panel {
             background: var(--blanco);
             border-radius: var(--radio-lg);
@@ -632,3 +630,50 @@
             .stats-row { grid-template-columns: 1fr 1fr; }
             .modules-nav { grid-template-columns: repeat(2, 1fr); }
         }
+.nav-icon svg,
+.qa-icon svg,
+.stat-card-icon svg {
+    width: 20px;
+    height: 20px;
+}
+.nav-icon svg,
+.qa-icon svg,
+.stat-card-icon svg,
+.panel-emoji svg,
+.mod-nav-icon svg,
+.empty-emoji svg,
+.racha-label svg,
+.racha-emoji svg,
+.welcome-deco svg {
+    width: 22px;
+    height: 22px;
+    display: block;
+}
+
+.nav-icon svg,
+.qa-icon svg,
+.stat-card-icon svg,
+.panel-emoji svg,
+.mod-nav-icon svg,
+.empty-emoji svg,
+.racha-label svg,
+.racha-emoji svg,
+.welcome-deco svg {
+    width: 28px;
+    height: 28px;
+    display: block;
+}
+
+.nav-icon,
+.qa-icon,
+.stat-card-icon,
+.panel-emoji,
+.mod-nav-icon,
+.empty-emoji,
+.racha-label,
+.racha-emoji,
+.welcome-deco {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
