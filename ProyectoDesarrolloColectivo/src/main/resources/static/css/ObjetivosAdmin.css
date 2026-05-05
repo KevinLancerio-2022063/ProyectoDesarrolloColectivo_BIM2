@@ -1,0 +1,202 @@
+.objetivos-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+/* ── SUMMARY CARDS ── */
+.cards-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.stat-card {
+    background: #ffffff;
+    border: 1px solid #e8eaf0;
+    border-radius: 14px;
+    padding: 1.1rem 1.25rem;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.stat-card .num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    display: block;
+}
+
+.stat-card .lbl {
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-top: 3px;
+    display: block;
+}
+
+/* ── CHART + LEGEND ── */
+.chart-section {
+    background: #ffffff;
+    border: 1px solid #e8eaf0;
+    border-radius: 18px;
+    padding: 1.75rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 2rem;
+    align-items: center;
+}
+
+.donut-wrap {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.donut-wrap svg { overflow: visible; }
+
+.center-label {
+    position: absolute;
+    text-align: center;
+    pointer-events: none;
+}
+
+.center-label .big {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    display: block;
+}
+
+.center-label .sub {
+    font-size: 0.72rem;
+    color: #6b7280;
+    display: block;
+    margin-top: 2px;
+}
+
+.legend {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.section-title {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: #9ca3af;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.legend-info { flex: 1; }
+
+.legend-name {
+    font-size: 0.85rem;
+    color: #1a1a2e;
+    font-weight: 500;
+}
+
+.legend-count {
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+.legend-pct {
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: 'Syne', sans-serif;
+}
+
+/* ── PROGRESS BARS ── */
+.progress-section-card {
+    background: #ffffff;
+    border: 1px solid #e8eaf0;
+    border-radius: 18px;
+    padding: 1.75rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.prog-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    margin-top: 0.75rem;
+}
+
+.prog-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.prog-label {
+    font-size: 0.82rem;
+    color: #374151;
+    width: 170px;
+    flex-shrink: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.prog-track {
+    flex: 1;
+    height: 8px;
+    background: #f0f2f7;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.prog-fill {
+    height: 100%;
+    border-radius: 999px;
+    width: 0%;
+    transition: width 1.2s cubic-bezier(.4,0,.2,1);
+}
+
+.prog-pct {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #374151;
+    width: 38px;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.badge {
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 2px 9px;
+    border-radius: 999px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.badge-completado  { background: #dcfce7; color: #166534; }
+.badge-pendiente   { background: #fef9c3; color: #854d0e; }
+.badge-en-progreso { background: #dbeafe; color: #1e40af; }
+
+@media (max-width: 600px) {
+    .chart-section  { grid-template-columns: 1fr; }
+    .cards-row      { grid-template-columns: 1fr 1fr; }
+    .prog-label     { width: 110px; }
+}
