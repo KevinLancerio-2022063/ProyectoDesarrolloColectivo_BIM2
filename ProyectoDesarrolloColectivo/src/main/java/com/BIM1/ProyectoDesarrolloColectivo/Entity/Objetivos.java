@@ -99,4 +99,13 @@ public class Objetivos {
     public void setFraseMotivadora(FraseMotivadora fraseMotivadora) {
         this.fraseMotivadora = fraseMotivadora;
     }
+
+    public int getProgresoObjetivo() {
+        if (estadoObjetivo == null) return 0;
+        return switch (estadoObjetivo.toLowerCase()) {
+            case "completado"  -> 100;
+            case "en progreso" -> 50;
+            default            -> 0;
+        };
+    }
 }

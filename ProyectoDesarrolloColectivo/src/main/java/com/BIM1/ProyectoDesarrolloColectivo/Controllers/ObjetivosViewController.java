@@ -115,4 +115,40 @@ public class ObjetivosViewController {
 
         return "Objetivos";
     }
+
+   @GetMapping("/objetivosAdmin")
+    public String mostrarObjetivosAdmin(Model model) {
+
+        List<Objetivos> lista = service.getAllObjetivos();
+
+        int completados = 0;
+        int pendientes = 0;
+        int enProgreso = 0;
+
+        for (Objetivos obj : lista) {
+
+            String estado = obj.getEstadoObjetivo();
+
+            if (estado.equalsIgnoreCase("completado")) {
+                completados++;
+            } else if (estado.equalsIgnoreCase("pendiente")) {
+                pendientes++;
+            } else if (estado.equalsIgnoreCase("en progreso")) {
+                enProgreso++;
+            }
+        }
+
+        int total = completados + pendientes + enProgreso;
+
+        int pCompletados = total > 0 ? (completados * 100) / total : 0;
+        int pPendientes = total > 0 ? (pendientes * 100) / total : 0;
+        int pEnProgreso = total > 0 ? (enProgreso * 100) / total : 0;
+
+        model.addAttribute("listaObjetivos", lista);
+        model.addAttribute("labels", List.of("Completados", "Pendientes", "En Progreso"));
+        model.addAttribute("data", List.of(completados, pendientes, enProgreso));
+        model.addAttribute("porcentajes", List.of(pCompletados, pPendientes, pEnProgreso));
+
+        return "ObjetivosAdmin";
+    }
 }
