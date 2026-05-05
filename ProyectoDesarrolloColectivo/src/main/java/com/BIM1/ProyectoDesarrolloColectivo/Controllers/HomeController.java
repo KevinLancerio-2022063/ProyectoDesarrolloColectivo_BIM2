@@ -35,4 +35,7 @@ public class HomeController {
     public String nutricion() {
         return "entradaDiario";
     }
+
+    @GetMapping("/home")
+    public String home() {return "Home";}
 }
