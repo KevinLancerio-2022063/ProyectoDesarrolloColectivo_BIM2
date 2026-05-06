@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Rutinas</title>
-    <link rel="stylesheet" th:href="@{/css/Base.css}">
-    <link rel="stylesheet" th:href="@{/css/Rutina.css}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
-    <script th:src="@{/js/alertas.js}" defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rutinas</title>
+  <link rel="stylesheet" th:href="@{/css/Base.css}">
+  <link rel="stylesheet" th:href="@{/css/Rutina.css}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+  <script th:src="@{/js/alertas.js}" defer></script>
 </head>
 <body>
 
@@ -27,8 +27,7 @@
       <h3 class="modal-title">¿Confirmar eliminación?</h3>
       <button id="btn-cancelar-eliminar" class="modal-close">✕</button>
     </div>
-    <p class="modal-body-texto">¿Estás seguro de que deseas eliminar este registro?
-    </p>
+    <p class="modal-body-texto">¿Estás seguro de que deseas eliminar este registro?</p>
     <div class="modal-acciones">
       <button id="btn-cancelar-eliminar-2" class="btn-secondary"
               onclick="document.getElementById('modal-overlay-confirmar').classList.remove('open')">
@@ -48,7 +47,6 @@
     <li><a th:href="@{/index}">Inicio</a></li>
   </ul>
 </nav>
-
 
 <div class="page-header">
   <div class="page-header-left">
@@ -82,31 +80,37 @@
              th:id="'flip-' + ${r.id_rutina}"
              class="card-flip-check"/>
 
+      <!-- ════════ CARA FRONTAL ════════ -->
       <div class="card-front">
 
         <div class="card-stripe"></div>
 
-        <div class="card-top">
-          <div class="card-avatar"
-               th:text="${#strings.substring(r.nombre_rutina, 0, 1)}">R</div>
-          <div class="card-id-badge" th:text="'#' + ${r.id_rutina}">ID</div>
-        </div>
+        <div class="card-body">
 
-        <div class="card-nombre" th:text="${r.nombre_rutina}">Nombre</div>
-
-        <div class="card-dias-wrap">
-          <div class="card-dias-label">DÍAS</div>
-          <div class="card-dias-chips">
-                        <span class="dia-chip"
-                              th:each="dia : ${#strings.arraySplit(r.dias_semana, ',')}"
-                              th:text="${#strings.trim(dia)}">Lunes</span>
+          <div class="card-top">
+            <div class="card-avatar"
+                 th:text="${#strings.substring(r.nombre_rutina, 0, 1)}">R</div>
+            <div class="card-id-badge" th:text="'#' + ${r.id_rutina}">ID</div>
           </div>
-        </div>
+
+          <div class="card-nombre" th:text="${r.nombre_rutina}">Nombre</div>
+
+          <div class="card-dias-wrap">
+            <div class="card-dias-label">Días</div>
+            <div class="card-dias-chips">
+              <span class="dia-chip"
+                    th:each="dia : ${#strings.arraySplit(r.dias_semana, ',')}"
+                    th:text="${#strings.trim(dia)}">Lunes</span>
+            </div>
+          </div>
+
+        </div><!-- /card-body -->
 
         <div class="card-footer">
-                    <span class="card-usuario">
-                        <i class="bi bi-person-badge"></i> <strong th:text="'Usuario #' + ${r.fk_id_usuario}">Usuario</strong>
-                    </span>
+          <span class="card-usuario">
+            <i class="bi bi-person-badge"></i>
+            <strong th:text="'Usuario #' + ${r.fk_id_usuario}">Usuario</strong>
+          </span>
           <div class="card-actions">
             <label th:for="'flip-' + ${r.id_rutina}" class="btn-flip" title="Ver ejercicios">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -115,20 +119,27 @@
               </svg>
             </label>
             <a th:href="@{/rutina/editarRutina/{id}(id=${r.id_rutina})}"
-               class="btn-icon btn-edit" title="Editar"> <i class="bi bi-pencil-square"></i> </a>
-            <form class="form-eliminar" th:action="@{/rutina/eliminarRutina/{id}(id=${r.id_rutina})}" method="post" style="display:inline;">
-              <button type="submit" class="btn-icon btn-delete" title="Eliminar"><i class="bi bi-trash-fill"></i></button>
+               class="btn-icon btn-edit" title="Editar">
+              <i class="bi bi-pencil-square"></i>
+            </a>
+            <form class="form-eliminar"
+                  th:action="@{/rutina/eliminarRutina/{id}(id=${r.id_rutina})}"
+                  method="post" style="display:inline;">
+              <button type="submit" class="btn-icon btn-delete" title="Eliminar">
+                <i class="bi bi-trash-fill"></i>
+              </button>
             </form>
           </div>
         </div>
 
-      </div>
+      </div><!-- /card-front -->
 
+      <!-- ════════ CARA TRASERA ════════ -->
       <div class="card-back">
 
         <div class="back-header">
           <div>
-            <div class="back-label">EJERCICIOS DE LA RUTINA</div>
+            <div class="back-label">Ejercicios de la rutina</div>
             <div class="back-nombre" th:text="${r.nombre_rutina}">Nombre</div>
           </div>
           <label th:for="'flip-' + ${r.id_rutina}" class="btn-flip btn-flip-back" title="Cerrar">
@@ -139,9 +150,9 @@
         </div>
 
         <div class="back-dias">
-                    <span class="dia-chip dia-chip-back"
-                          th:each="dia : ${#strings.arraySplit(r.dias_semana, ',')}"
-                          th:text="${#strings.trim(dia)}">Lunes</span>
+          <span class="dia-chip dia-chip-back"
+                th:each="dia : ${#strings.arraySplit(r.dias_semana, ',')}"
+                th:text="${#strings.trim(dia)}">Lunes</span>
         </div>
 
         <div class="ejercicios-list">
@@ -150,12 +161,14 @@
                th:if="${ej.fk_id_rutina == r.id_rutina}">
             <div class="ej-row">
               <div class="ej-row-left">
-                <div class="ej-dot"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-barbell">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M4 7a1 1 0 0 1 1 1v8a1 1 0 0 1 -2 0v-3h-1a1 1 0 0 1 0 -2h1v-3a1 1 0 0 1 1 -1" />
-                    <path d="M20 7a1 1 0 0 1 1 1v3h1a1 1 0 0 1 0 2h-1v3a1 1 0 0 1 -2 0v-8a1 1 0 0 1 1 -1" />
-                    <path d="M16 5a2 2 0 0 1 2 2v10a2 2 0 1 1 -4 0v-4h-4v4a2 2 0 1 1 -4 0v-10a2 2 0 1 1 4 0v4h4v-4a2 2 0 0 1 2 -2" />
-                </svg></i></div>
+                <div class="ej-dot">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M4 7a1 1 0 0 1 1 1v8a1 1 0 0 1 -2 0v-3h-1a1 1 0 0 1 0 -2h1v-3a1 1 0 0 1 1 -1"/>
+                    <path d="M20 7a1 1 0 0 1 1 1v3h1a1 1 0 0 1 0 2h-1v3a1 1 0 0 1 -2 0v-8a1 1 0 0 1 1 -1"/>
+                    <path d="M16 5a2 2 0 0 1 2 2v10a2 2 0 1 1 -4 0v-4h-4v4a2 2 0 1 1 -4 0v-10a2 2 0 1 1 4 0v4h4v-4a2 2 0 0 1 2 -2"/>
+                  </svg>
+                </div>
                 <div>
                   <div class="ej-row-nombre" th:text="${ej.nombre_ejercicio}">Ejercicio</div>
                   <div class="ej-row-id" th:text="'ID #' + ${ej.id_ejercicio}">ID</div>
@@ -173,7 +186,7 @@
             Sin ejercicios asignados
           </div>
 
-        </div>
+        </div><!-- /ejercicios-list -->
 
         <div class="back-footer">
           <label th:for="'flip-' + ${r.id_rutina}" class="btn-back-volver">
@@ -183,18 +196,19 @@
              class="btn-primary btn-back-edit">Editar rutina</a>
         </div>
 
-      </div>
+      </div><!-- /card-back -->
 
-    </div>
+    </div><!-- /rutina-card -->
 
     <div class="empty-state" th:if="${rutina == null or #lists.isEmpty(rutina)}">
       <div class="empty-icon">🏋️</div>
       <p class="empty-text">No hay rutinas registradas todavía.</p>
     </div>
 
-  </div>
-</div>
+  </div><!-- /rutinas-grid -->
+</div><!-- /rutinas-container -->
 
+<!-- ── FORMULARIO ── -->
 <div class="form-section-wrap">
   <div class="form-section">
 
@@ -233,7 +247,7 @@
       <div class="form-group">
         <label class="form-label">ID de usuario</label>
         <input type="number" th:field="*{fk_id_usuario}" class="form-input"
-               placeholder="ID del usuario" />
+               placeholder="ID del usuario"/>
         <span th:errors="*{fk_id_usuario}" class="error"></span>
       </div>
 
