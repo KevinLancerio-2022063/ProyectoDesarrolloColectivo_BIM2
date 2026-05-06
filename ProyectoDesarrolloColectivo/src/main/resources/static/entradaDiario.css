@@ -618,3 +618,121 @@ textarea:focus {
     font-size: 2.3rem;
   }
 }
+body.delete-page {
+  min-height: 100vh;
+  background: var(--crema);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.delete-main {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.delete-box {
+  width: 100%;
+  max-width: 610px;
+  background: var(--blanco);
+  border-radius: 20px;
+  padding: 38px 36px 36px;
+  text-align: center;
+  box-shadow: 0 25px 60px rgba(45, 74, 62, 0.18);
+  border-top: 4px solid var(--rojo);
+}
+
+.delete-icon {
+  width: 54px;
+  height: 54px;
+  background: var(--rojo-suave);
+  color: var(--rojo);
+  border-radius: 50%;
+  margin: 0 auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 900;
+}
+
+.delete-tag {
+  color: var(--cafe);
+  font-size: 13px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.delete-box h1 {
+  color: var(--verde-profundo);
+  font-size: 25px;
+  margin-bottom: 18px;
+}
+
+.delete-box h1 em {
+  color: var(--cafe);
+  font-style: italic;
+}
+
+.delete-message {
+  color: var(--verde-profundo);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.delete-info {
+  background: var(--crema-claro);
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+  padding: 18px;
+  text-align: left;
+  margin-bottom: 28px;
+}
+
+.delete-info p {
+  margin-bottom: 13px;
+  font-size: 14px;
+}
+
+.delete-info strong {
+  color: var(--cafe);
+}
+
+.delete-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  align-items: center;
+}
+
+.delete-form {
+  margin: 0;
+}
+
+.delete-cancel,
+.delete-confirm {
+  min-width: 120px;
+  height: 38px;
+  border-radius: 999px;
+  border: none;
+  font-weight: 800;
+  font-size: 13px;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.delete-cancel {
+  background: #DDD8CF;
+  color: var(--verde-profundo);
+}
+
+.delete-confirm {
+  background: var(--rojo);
+  color: white;
+}
