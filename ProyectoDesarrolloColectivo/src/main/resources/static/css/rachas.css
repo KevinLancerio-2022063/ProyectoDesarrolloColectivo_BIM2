@@ -14,31 +14,55 @@ body {
   font-family: 'Segoe UI', sans-serif;
   overflow-x: hidden;
   position: relative;
+  background: var(--crema);
 }
 
-.bg, .bg2, .bg3 {
+/* --- Fondo de Cubos --- */
+.hero-bg {
   position: fixed;
-  top: 0; bottom: 0;
-  left: -50%; right: -50%;
-  z-index: -10;
-  opacity: .45;
-  animation: slide 12s ease-in-out infinite alternate;
-  background-image: linear-gradient(-60deg, var(--verde-menta) 50%, var(--crema) 50%);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
 }
-.bg2 {
-  animation-direction: alternate-reverse;
-  animation-duration: 16s;
-  background-image: linear-gradient(-60deg, var(--verde) 50%, var(--menta) 50%);
-  opacity: .25;
+
+.cube {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: solid 1px rgba(196, 168, 130, 1);
+  transform-origin: top left;
+  transform: scale(0) rotate(0deg) translate(-50%, -50%);
+  animation: cube 10s ease-in infinite;
+  opacity: 0;
 }
-.bg3 {
-  animation-duration: 20s;
-  background-image: linear-gradient(-60deg, var(--cafe) 50%, var(--crema) 50%);
-  opacity: .15;
-}
-@keyframes slide {
-  0%   { transform: translateX(-25%); }
-  100% { transform: translateX(25%); }
+
+/* Posiciones y Delays */
+.cube:nth-child(1) { top: 80%; left: 45%; animation-delay: 0s; }
+.cube:nth-child(2) { top: 40%; left: 25%; animation-delay: 0.5s; }
+.cube:nth-child(3) { top: 50%; left: 75%; animation-delay: 1s; }
+.cube:nth-child(4) { top: 10%; left: 90%; animation-delay: 1.5s; }
+.cube:nth-child(5) { top: 85%; left: 10%; animation-delay: 2s; }
+.cube:nth-child(6) { top: 10%; left: 50%; animation-delay: 2.5s; }
+.cube:nth-child(7) { top: 20%; left: 15%; animation-delay: 3s; }
+.cube:nth-child(8) { top: 60%; left: 30%; animation-delay: 3.5s; }
+.cube:nth-child(9) { top: 30%; left: 80%; animation-delay: 4s; }
+.cube:nth-child(10) { top: 90%; left: 60%; animation-delay: 4.5s; }
+.cube:nth-child(11) { top: 5%; left: 5%; animation-delay: 5s; }
+.cube:nth-child(12) { top: 70%; left: 95%; animation-delay: 5.5s; }
+
+@keyframes cube {
+  from {
+    transform: scale(0) rotate(0deg) translate(-50%, -50%);
+    opacity: 0.8;
+  }
+  to {
+    transform: scale(20) rotate(960deg) translate(-50%, -50%);
+    opacity: 0;
+  }
 }
 
 .contenedor {
@@ -66,6 +90,7 @@ body {
   text-align: center;
   background: var(--verde);
   color: white;
+  position: relative;
 }
 .header-card h1 { font-size: 1.5rem; color: white; }
 
@@ -110,7 +135,7 @@ th { background: var(--menta); color: var(--verde); }
 
 .foot { text-align: center; padding: 20px; color: #555; }
 
-/* --- LLAMA --- */
+/* --- Llama --- */
 .llama-card {
   display: flex;
   flex-direction: column;
@@ -134,7 +159,6 @@ th { background: var(--menta); color: var(--verde); }
   animation: flicker var(--dur, 1.2s) ease-in-out infinite alternate;
 }
 
-/* default: naranja normal (0-4 días) */
 .f1 { width: 60px; height: 110px; margin-left: -30px; background: #f4831f; --dur: 1.1s; }
 .f2 { width: 44px; height: 90px;  margin-left: -22px; background: #f9a43e; --dur: 0.9s; animation-delay: .15s; }
 .f3 { width: 30px; height: 70px;  margin-left: -15px; background: #fbbf6a; --dur: 1.3s; animation-delay: .05s; }
@@ -192,34 +216,29 @@ th { background: var(--menta); color: var(--verde); }
   color: #888;
 }
 
-/* --- NIVEL 2: 5+ días → naranja fuerte --- */
+/* Niveles */
 .racha-amarilla .f1 { background: #e84f00; }
 .racha-amarilla .f2 { background: #f06a00; }
 .racha-amarilla .f3 { background: #f48c06; }
 .racha-amarilla .f4 { background: #faa307; }
 .racha-amarilla .f5 { background: #ffdd00; }
-.racha-amarilla .racha-num,
-.racha-amarilla .racha-label { color: #e84f00; }
+.racha-amarilla .racha-num, .racha-amarilla .racha-label { color: #e84f00; }
 
-/* --- NIVEL 3: 10+ días → rojo intenso --- */
 .racha-naranja .f1 { background: #ed0909; }
 .racha-naranja .f2 { background: #ad0000; }
 .racha-naranja .f3 { background: #d62828; }
 .racha-naranja .f4 { background: #e05c1a; }
 .racha-naranja .f5 { background: #f4a040; }
-.racha-naranja .racha-num,
-.racha-naranja .racha-label { color: #c00000; }
+.racha-naranja .racha-num, .racha-naranja .racha-label { color: #c00000; }
 
-/* --- NIVEL 4: 15+ días → morado llama --- */
 .racha-roja .f1 { background: #3c00ff; }
 .racha-roja .f2 { background: #6a00b8; }
 .racha-roja .f3 { background: #9b30ff; }
 .racha-roja .f4 { background: #c77dff; }
 .racha-roja .f5 { background: #e8c7ff; }
-.racha-roja .racha-num,
-.racha-roja .racha-label { color: #7b00d4; }
+.racha-roja .racha-num, .racha-roja .racha-label { color: #7b00d4; }
 
-/* --- LOGO FLOTANTE --- */
+/* Logo */
 .logo-flotante {
   position: fixed;
   bottom: 24px;
@@ -234,20 +253,8 @@ th { background: var(--menta); color: var(--verde); }
   transition: transform .2s, box-shadow .2s;
   display: block;
 }
-.logo-flotante:hover {
-  transform: scale(1.08);
-  box-shadow: 0 6px 24px rgba(45,106,79,0.5);
-}
-.logo-flotante img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+.logo-flotante img { width: 100%; height: 100%; object-fit: cover; }
 
-/* --- BOTÓN HOME EN HEADER --- */
-.header-card {
-  position: relative;
-}
 .btn-home {
   position: absolute;
   left: 15px;
@@ -257,6 +264,4 @@ th { background: var(--menta); color: var(--verde); }
   font-size: 1.2rem;
   text-decoration: none;
   opacity: 0.85;
-  transition: opacity .2s;
 }
-.btn-home:hover { opacity: 1; }
