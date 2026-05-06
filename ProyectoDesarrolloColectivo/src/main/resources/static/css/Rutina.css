@@ -114,7 +114,7 @@
 
 .card-stripe {
     height: 5px;
-    background: linear-gradient(90deg, var(--cafe) 0%, var(--cafe-claro) 45%, var(--verde-menta) 100%);
+    background: linear-gradient(90deg, var(--cafe) 0%, #1C3558 45%, var(--verde-menta) 100%);
     flex-shrink: 0;
 }
 
@@ -509,6 +509,48 @@
     color: rgba(245,240,232,0.4);
     margin-top: 0.3rem;
     font-style: italic;
+}
+
+body {
+  cursor: none;
+}
+ 
+.cursor-dot,
+.cursor-ring,
+.cursor-trail {
+  position: fixed;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+ 
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--verde-profundo);
+  border-radius: 50%;
+}
+ 
+.cursor-ring {
+  width: 34px;
+  height: 34px;
+  border: 2px solid var(--verde-menta);
+  border-radius: 50%;
+}
+ 
+.cursor-trail {
+  width: 10px;
+  height: 10px;
+  background: rgba(126,176,155,0.38);
+  border-radius: 50%;
+  animation: trailFade 0.6s ease forwards;
+}
+ 
+@keyframes trailFade {
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2.8);
+  }
 }
 
 @media (max-width: 768px) {
