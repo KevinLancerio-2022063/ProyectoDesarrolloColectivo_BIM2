@@ -15,11 +15,13 @@
 <div class="cursor-ring" id="cursorRing"></div>
 
 <!-- Fondo animado -->
-<div class="area">
-    <ul class="circles">
-        <li></li><li></li><li></li><li></li><li></li>
-        <li></li><li></li><li></li><li></li><li></li>
-    </ul>
+<div class="hero-bg">
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
 </div>
 
 <!--Barra Lateral Izquierda -->
@@ -367,29 +369,8 @@
     </div>
 </div>
 
-<!--Dirección del script buscar por id y el modal-->
+<!-- Dirección del script buscar por id de registroSueno, el modal y los efectos der cursor del mouse -->
 <script th:src="@{/js/registroSueno.js}"></script>
-
-<!-- Script cursor -->
-<script>
-    const dot  = document.getElementById('cursorDot');
-    const ring = document.getElementById('cursorRing');
-    window.addEventListener('mousemove', e => {
-        dot.style.left = e.clientX + 'px';
-        dot.style.top  = e.clientY + 'px';
-        ring.animate({ left: e.clientX + 'px', top: e.clientY + 'px' }, { duration: 380, fill: 'forwards' });
-        const trail = document.createElement('div');
-        trail.className = 'cursor-trail';
-        trail.style.left = e.clientX + 'px';
-        trail.style.top  = e.clientY + 'px';
-        document.body.appendChild(trail);
-        setTimeout(() => trail.remove(), 550);
-    });
-    document.querySelectorAll('a, button, .btn-icon, .usuario-card').forEach(el => {
-        el.addEventListener('mouseenter', () => { ring.style.width='48px'; ring.style.height='48px'; ring.style.borderColor='var(--cafe-claro)'; });
-        el.addEventListener('mouseleave', () => { ring.style.width='32px'; ring.style.height='32px'; ring.style.borderColor='var(--verde-menta)'; });
-    });
-</script>
 
 </body>
 </html>
