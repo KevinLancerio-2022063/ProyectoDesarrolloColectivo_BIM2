@@ -80,7 +80,6 @@
              th:id="'flip-' + ${r.id_rutina}"
              class="card-flip-check"/>
 
-      <!-- ════════ CARA FRONTAL ════════ -->
       <div class="card-front">
 
         <div class="card-stripe"></div>
@@ -104,7 +103,7 @@
             </div>
           </div>
 
-        </div><!-- /card-body -->
+        </div>
 
         <div class="card-footer">
           <span class="card-usuario">
@@ -132,9 +131,8 @@
           </div>
         </div>
 
-      </div><!-- /card-front -->
+      </div>
 
-      <!-- ════════ CARA TRASERA ════════ -->
       <div class="card-back">
 
         <div class="back-header">
@@ -186,7 +184,7 @@
             Sin ejercicios asignados
           </div>
 
-        </div><!-- /ejercicios-list -->
+        </div>
 
         <div class="back-footer">
           <label th:for="'flip-' + ${r.id_rutina}" class="btn-back-volver">
@@ -196,19 +194,19 @@
              class="btn-primary btn-back-edit">Editar rutina</a>
         </div>
 
-      </div><!-- /card-back -->
+      </div>
 
-    </div><!-- /rutina-card -->
+    </div>
 
     <div class="empty-state" th:if="${rutina == null or #lists.isEmpty(rutina)}">
       <div class="empty-icon">🏋️</div>
       <p class="empty-text">No hay rutinas registradas todavía.</p>
     </div>
 
-  </div><!-- /rutinas-grid -->
-</div><!-- /rutinas-container -->
+  </div>
+</div>
 
-<!-- ── FORMULARIO ── -->
+
 <div class="form-section-wrap">
   <div class="form-section">
 

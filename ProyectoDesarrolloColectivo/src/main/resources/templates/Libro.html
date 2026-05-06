@@ -25,8 +25,7 @@
             <h3 class="modal-title">¿Confirmar eliminación?</h3>
             <button id="btn-cancelar-eliminar" class="modal-close">✕</button>
         </div>
-        <p class="modal-body-texto">¿Estás seguro de que deseas eliminar este registro?
-        </p>
+        <p class="modal-body-texto">¿Estás seguro de que deseas eliminar este registro?</p>
         <div class="modal-acciones">
             <button id="btn-cancelar-eliminar-2" class="btn-secondary"
                     onclick="document.getElementById('modal-overlay-confirmar').classList.remove('open')">
@@ -47,12 +46,15 @@
     </ul>
 </nav>
 
-
 <div class="page-header">
     <div class="page-header-left">
         <div class="page-tag">Lectura y progreso</div>
         <h1 class="page-title">Mis <em>Lecturas</em></h1>
     </div>
+    <!-- Botón directo a estadísticas -->
+    <a th:href="@{/libro/estadisticas}" class="btn-estadisticas">
+        <i class="bi bi-bar-chart-line"></i> Ver estadísticas
+    </a>
 </div>
 
 <div class="libros-container">
@@ -72,14 +74,28 @@
 
     <div class="libros-grid">
 
-        <div class="libro-card" th:each="libro : ${libros != null ? libros : T(java.util.Collections).emptyList()}">
+        <div class="libro-card"
+             th:each="libro : ${libros != null ? libros : T(java.util.Collections).emptyList()}">
 
+            <!--
+                La franja de color cambia según el estado del libro.
+                Thymeleaf agrega la clase css 'leyendo' o 'terminado'
+                al div, y el CSS maneja el color correspondiente.
+            -->
             <div class="libro-spine"
-                 th:classappend="${libro.estado == 'leyendo'} ? 'leyendo' : (${libro.estado == 'terminado'} ? 'terminado' : '')">
+                 th:classappend="${libro.estado == 'leyendo'} ? 'leyendo' :
+                                 (${libro.estado == 'terminado'} ? 'terminado' : '')">
             </div>
 
             <div class="libro-cover">
-                <div class="libro-icon"><svg xmlns="http://www.w3.org/2000/svg" height="34px" viewBox="0 -960 960 960" width="34px" fill="#1f1f1f"><path d="M240-80q-50 0-85-35t-35-85v-560q0-50 35-85t85-35h440v640H240q-17 0-28.5 11.5T200-200q0 17 11.5 28.5T240-160h520v-640h80v720H240Zm120-240h240v-480H360v480Zm-80 0v-480h-40q-17 0-28.5 11.5T200-760v447q10-3 19.5-5t20.5-2h40Zm-80-480v487-487Z"/></svg></div>
+
+                <!-- Icono de libro como avatar con fondo café -->
+                <div class="libro-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="26px">
+                        <path d="M240-80q-50 0-85-35t-35-85v-560q0-50 35-85t85-35h440v640H240q-17 0-28.5 11.5T200-200q0 17 11.5 28.5T240-160h520v-640h80v720H240Zm120-240h240v-480H360v480Zm-80 0v-480h-40q-17 0-28.5 11.5T200-760v447q10-3 19.5-5t20.5-2h40Zm-80-480v487-487Z"/>
+                    </svg>
+                </div>
+
                 <div class="libro-meta">
                     <div class="libro-titulo" th:text="${libro.titulo_libro}">Título</div>
                     <div class="libro-autor"  th:text="${libro.autor_libro}">Autor</div>
@@ -88,8 +104,10 @@
                                          (${libro.estado == 'leyendo'}  ? 'badge-leyendo'   : 'badge-terminado')"
                           th:text="${libro.estado}">estado</span>
                 </div>
+
             </div>
 
+            <!-- Barra de progreso -->
             <div class="libro-progreso">
                 <div class="progreso-texto">
                     <span th:text="${libro.cantidad_leido} + ' / ' + ${libro.cantidad_pag} + ' págs'"></span>
@@ -103,23 +121,38 @@
                 </div>
             </div>
 
+            <!-- Footer -->
             <div class="libro-footer">
                 <span class="libro-footer-stat">
+                    <i class="bi bi-person-badge"></i>
                     Usuario <strong th:text="'#' + ${libro.fk_id_usuario}"></strong>
                 </span>
                 <div class="libro-actions">
                     <a th:href="@{/libro/editarLibro/{id}(id=${libro.id_libro})}"
-                       class="btn-icon btn-edit"><i class="bi bi-pencil-square"></i></a>
-                    <form class="form-eliminar" th:action="@{/libro/eliminarLibro/{id}(id=${libro.id_libro})}" method="post" style="display:inline;">
-                        <button type="submit" class="btn-icon btn-delete"><i class="bi bi-trash-fill"></i></button>
+                       class="btn-icon btn-edit" title="Editar">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                    <form class="form-eliminar"
+                          th:action="@{/libro/eliminarLibro/{id}(id=${libro.id_libro})}"
+                          method="post" style="display:inline;">
+                        <button type="submit" class="btn-icon btn-delete" title="Eliminar">
+                            <i class="bi bi-trash-fill"></i>
+                        </button>
                     </form>
                 </div>
             </div>
 
-        </div>
-    </div>
-</div>
+        </div><!-- /libro-card -->
 
+        <div class="empty-state" th:if="${libros == null or #lists.isEmpty(libros)}">
+            <div class="empty-icon">📚</div>
+            <p class="empty-text">No hay libros registrados todavía.</p>
+        </div>
+
+    </div><!-- /libros-grid -->
+</div><!-- /libros-container -->
+
+<!-- ── FORMULARIO ── -->
 <div class="form-section-wrap">
     <div class="form-section">
 
