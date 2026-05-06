@@ -9,176 +9,288 @@
 </head>
 
 <body>
-<nav>
-    <a th:href="@{/index}" class="nav-logo">Evoluciona</a>
-    <ul class="nav-links">
-        <li><a th:href="@{/index}">Inicio</a></li>
+
+<!-- Cursor personalizado -->
+<div class="cursor-dot"  id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Fondo animado -->
+<div class="area">
+    <ul class="circles">
+        <li></li><li></li><li></li><li></li><li></li>
+        <li></li><li></li><li></li><li></li><li></li>
     </ul>
-</nav>
+</div>
 
-<div class="usuario-container">
+<!-- Barra Lateral Izquierda -->
+<aside class="sidebar">
 
-    <!-- Encabezado con el texto "Objetivos de Meditación" -->
-    <div class="page-header">
-        <h1 class="page-title">
-            Objetivos de <em>Meditación</em>
-        </h1>
+    <div class="sidebar-logo">
+        <div class="sidebar-logo-mark">🌿</div>
+        <span class="sidebar-logo-text">Evolu<em>ciona</em></span>
     </div>
 
-    <!-- Este es la opcion para buscar por ID los Objetivos -->
-    <div class="toolbar">
+    <nav class="sidebar-nav">
 
-        <div class="search-wrap">     <!-- Ícono de la lupa del buscar -->
-            <span class="search-icon"><i class="bi bi-search"></i></span>
-            <input type="text"
-                   id="buscar"
-                   class="search-input"
-                   placeholder="Buscar objetivo..."
-                   onkeyup="filtrarTabla()">
+        <div class="sidebar-section-label">Principal</div>
+
+        <a class="sidebar-item" th:href="@{/index}">
+            <i class="bi bi-house-door"></i> Inicio
+        </a>
+
+        <!-- ── Entidades con conexión ── -->
+        <div class="sidebar-section-label">Gestión</div>
+
+        <a class="sidebar-item" th:href="@{/usuarios}">
+            <i class="bi bi-people"></i> Usuarios
+        </a>
+
+        <a class="sidebar-item" th:href="@{/registroSueno}">
+            <i class="bi bi-moon-stars"></i> Registro de Sueño
+        </a>
+
+        <!-- Entidad activa -->
+        <a class="sidebar-item active" th:href="@{/objetivoMeditacion}">
+            <i class="bi bi-peace"></i> Objetivo Meditación
+        </a>
+
+        <!-- ── Entidades sin conexión aún ── -->
+        <div class="sidebar-section-label">Salud Física</div>
+
+        <a class="sidebar-item sin-conexion" href="#">
+            <i class="bi bi-shield-check"></i> Perfil Nutricional
+        </a>
+
+        <a class="sidebar-item sin-conexion" href="#">
+            <i class="bi bi-activity"></i> Rutinas
+        </a>
+
+        <a class="sidebar-item sin-conexion" href="#">
+            <i class="bi bi-lightning"></i> Ejercicios
+        </a>
+
+        <a class="sidebar-item sin-conexion" href="#">
+            <i class="bi bi-fire"></i> Racha Ejercicio
+        </a>
+
+        <div class="sidebar-section-label">Lectura</div>
+
+        <a class="sidebar-item sin-conexion" href="#">
+            <i class="bi bi-book"></i> Biblioteca
+        </a>
+
+        <a class="sidebar-item sin-conexion" href="#">
+            <i class="bi bi-bookmark"></i> Racha Lectura
+        </a>
+
+        <div class="sidebar-section-label">Mente & Alma</div>
+
+        <a class="sidebar-item sin-conexion" href="#">
+            <i class="bi bi-peace"></i> Meditación
+        </a>
+
+        <a class="sidebar-item sin-conexion" href="#">
+            <i class="bi bi-journal-text"></i> Diario
+        </a>
+
+        <a class="sidebar-item sin-conexion" href="#">
+            <i class="bi bi-heart-pulse"></i> Apoyo Emocional
+        </a>
+
+        <a class="sidebar-item sin-conexion" href="#">
+            <i class="bi bi-bullseye"></i> Objetivos
+        </a>
+
+        <a class="sidebar-item sin-conexion" href="#">
+            <i class="bi bi-stars"></i> Frases Motivadoras
+        </a>
+
+        <a class="sidebar-item sin-conexion" href="#">
+            <i class="bi bi-chat-heart"></i> Apoyo IA
+        </a>
+
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="sidebar-user">
+            <div class="sidebar-user-avatar">U</div>
+            <div class="sidebar-user-info">
+                <div class="sidebar-user-name">Usuario</div>
+                <div class="sidebar-user-role">Evoluciona</div>
+            </div>
+        </div>
+    </div>
+
+</aside>
+
+<div class="page-wrapper">
+    <div class="usuario-container">
+
+        <!-- Encabezado con el texto "Objetivos de Meditación" -->
+        <div class="page-header">
+            <h1 class="page-title">
+                Objetivos de <em>Meditación</em>
+            </h1>
         </div>
 
-        <!-- Con esto, al darle el botón te mandara a la "vista" que permitira ingresar los datos para agregar el Objetivo -->
-        <button class="btn-primary"
-                onclick="window.location.href='/objetivoMeditacion'">
-            + Nuevo objetivo
-        </button>
+        <!-- Este es la opcion para buscar por ID los Objetivos -->
+        <div class="toolbar">
 
-    </div>
+            <div class="search-wrap">     <!-- Ícono de la lupa del buscar -->
+                <span class="search-icon"><i class="bi bi-search"></i></span>
+                <input type="text"
+                       id="buscar"
+                       class="search-input"
+                       placeholder="Buscar objetivo..."
+                       onkeyup="filtrarTabla()">
+            </div>
 
-    <!-- Grid donde se muestran los objetivos -->
-    <div class="usuarios-grid" id="tablaObjetivos">
+            <!-- Con esto, al darle el botón te mandara a la "vista" que permitira ingresar los datos para agregar el Objetivo -->
+            <button class="btn-primary"
+                    onclick="window.location.href='/objetivoMeditacion'">
+                + Nuevo objetivo
+            </button>
 
-        <div class="usuario-card"
-             th:each="o : ${objetivos}"
-             th:attr="data-id=${o.id_objetivo_meditacion}">
+        </div>
 
-            <div class="card-header">
+        <!-- Grid donde se muestran los objetivos -->
+        <div class="usuarios-grid" id="tablaObjetivos">
 
-                <!-- Avatar simple -->
-                <div class="usuario-avatar">OM</div>
+            <div class="usuario-card"
+                 th:each="o, stat : ${objetivos}"
+                 th:attr="data-id=${o.id_objetivo_meditacion}"
+                 th:classappend="${stat.index % 3 == 0} ? ' color-verde'
+                          : (${stat.index % 3 == 1} ? ' color-cafe'
+                          :                            ' color-azul')">
 
-                <div class="card-actions">
+                <div class="card-header">
 
-                    <a class="btn-icon btn-edit"
-                       th:href="@{/objetivoMeditacion/editar/{id}(id=${o.id_objetivo_meditacion})}">
-                        <!-- Ícono del lápiz -->
-                        <i class="bi bi-pencil"></i>
-                    </a>
+                    <!-- Avatar simple -->
+                    <div class="usuario-avatar">OM</div>
 
-                    <a class="btn-icon btn-delete"
-                       href="#"
-                       th:attr="onclick=|openModal('/objetivoMeditacion/eliminar/${o.id_objetivo_meditacion}')|">
-                        <!-- Ícono del bote de basura -->
-                        <i class="bi bi-trash-fill"></i>
-                    </a>
+                    <div class="card-actions">
+
+                        <a class="btn-icon btn-edit"
+                           th:href="@{/objetivoMeditacion/editar/{id}(id=${o.id_objetivo_meditacion})}">
+                            <!-- Ícono del lápiz -->
+                            <i class="bi bi-pencil"></i>
+                        </a>
+
+                        <a class="btn-icon btn-delete"
+                           href="#"
+                           th:attr="onclick=|openModal('/objetivoMeditacion/eliminar/${o.id_objetivo_meditacion}')|">
+                            <!-- Ícono del bote de basura -->
+                            <i class="bi bi-trash-fill"></i>
+                        </a>
+
+                    </div>
 
                 </div>
 
-            </div>
+                <div class="card-body">
+                    <p><strong>Tiempo:</strong> <span th:text="${o.tiempo_objetivo}"></span></p>
+                    <p><strong>Días:</strong> <span th:text="${o.dias_objetivo}"></span></p>
+                    <p><strong>Usuario:</strong> <span th:text="${o.fk_id_usuario}"></span></p>
+                </div>
 
-            <div class="card-body">
-                <p><strong>Tiempo:</strong> <span th:text="${o.tiempo_objetivo}"></span></p>
-                <p><strong>Días:</strong> <span th:text="${o.dias_objetivo}"></span></p>
-                <p><strong>Usuario:</strong> <span th:text="${o.fk_id_usuario}"></span></p>
-            </div>
-
-            <div class="card-footer">
+                <div class="card-footer">
                 <span class="card-id"
                       th:text="'#' + ${o.id_objetivo_meditacion}">
                 </span>
+                </div>
+
+            </div>
+
+            <!-- Estado vacío -->
+            <div class="card-empty"
+                 th:if="${#lists.isEmpty(objetivos)}">
+                <p>No hay objetivos registrados</p>
             </div>
 
         </div>
 
-        <!-- Estado vacío -->
-        <div class="card-empty"
-             th:if="${#lists.isEmpty(objetivos)}">
-            <p>No hay objetivos registrados</p>
-        </div>
+        <!-- Tarjetas de Errores -->
+        <div th:if="${errores != null}" class="error-container">
 
-    </div>
-
-    <!-- Tarjetas de Errores -->
-    <div th:if="${errores != null}" class="error-container">
-
-        <div class="card error-card" th:each="err : ${errores}">
-            <div class="header">      <!-- Ícono de Equis -->
-                <div class="image"><i class="bi bi-x"></i></div>
-                <div class="content">
-                    <span class="title">Error</span>
-                    <p class="message" th:text="${err}"></p>
+            <div class="card error-card" th:each="err : ${errores}">
+                <div class="header">      <!-- Ícono de Equis -->
+                    <div class="image"><i class="bi bi-x"></i></div>
+                    <div class="content">
+                        <span class="title">Error</span>
+                        <p class="message" th:text="${err}"></p>
+                    </div>
                 </div>
             </div>
+
         </div>
 
-    </div>
+        <!-- Tarjetas de Éxito -->
+        <div th:if="${success}" class="error-container">
 
-    <!-- Tarjetas de Éxito -->
-    <div th:if="${success}" class="error-container">
-
-        <div class="card success-card">
-            <div class="header">       <!-- Ícono de Cheque -->
-                <div class="image"><i class="bi bi-check-lg"></i></div>
-                <div class="content">
-                    <span class="title">Operación exitosa</span>
-                    <p class="message" th:text="${success}"></p>
+            <div class="card success-card">
+                <div class="header">       <!-- Ícono de Cheque -->
+                    <div class="image"><i class="bi bi-check-lg"></i></div>
+                    <div class="content">
+                        <span class="title">Operación exitosa</span>
+                        <p class="message" th:text="${success}"></p>
+                    </div>
                 </div>
             </div>
-        </div>
-
-    </div>
-
-    <!-- formulario para ingresar los datos de los Objetivos -->
-    <div class="form-section-wrap">
-
-        <div class="form-section">
-
-            <h2 class="form-title"
-                th:text="${objetivo.id_objetivo_meditacion != null} ? 'Editar Objetivo' : 'Nuevo Objetivo'">
-            </h2>
-
-            <form th:action="@{/objetivoMeditacion/guardar}"
-                  th:object="${objetivo}"
-                  method="post">
-
-                <input type="hidden" th:field="*{id_objetivo_meditacion}">
-
-                <input class="form-input"
-                       type="text"
-                       th:field="*{tiempo_objetivo}"
-                       placeholder="Tiempo objetivo"
-                       required>
-
-                <input class="form-input"
-                       type="number"
-                       th:field="*{dias_objetivo}"
-                       placeholder="Días objetivo"
-                       min="1"
-                       required>
-
-                <select class="form-input" th:field="*{fk_id_usuario}" required>
-
-                    <option value="">Seleccione un usuario</option>
-
-                    <option th:each="u : ${usuarios}"
-                            th:value="${u.id_usuario}"
-                            th:text="'ID: ' + ${u.id_usuario} + ' - ' + ${u.nombre_completo}">
-                    </option>
-
-                </select>
-
-                <div class="form-actions">
-                    <button type="submit" class="btn-primary">
-                        <span th:text="${objetivo.id_objetivo_meditacion != null} ? 'Actualizar' : 'Guardar'"></span>
-                    </button>
-                </div>
-
-            </form>
 
         </div>
 
-    </div>
+        <!-- formulario para ingresar los datos de los Objetivos -->
+        <div class="form-section-wrap">
 
+            <div class="form-section">
+
+                <h2 class="form-title"
+                    th:text="${objetivo.id_objetivo_meditacion != null} ? 'Editar Objetivo' : 'Nuevo Objetivo'">
+                </h2>
+
+                <form th:action="@{/objetivoMeditacion/guardar}"
+                      th:object="${objetivo}"
+                      method="post">
+
+                    <input type="hidden" th:field="*{id_objetivo_meditacion}">
+
+                    <input class="form-input"
+                           type="text"
+                           th:field="*{tiempo_objetivo}"
+                           placeholder="Tiempo objetivo"
+                           required>
+
+                    <input class="form-input"
+                           type="number"
+                           th:field="*{dias_objetivo}"
+                           placeholder="Días objetivo"
+                           min="1"
+                           required>
+
+                    <select class="form-input" th:field="*{fk_id_usuario}" required>
+
+                        <option value="">Seleccione un usuario</option>
+
+                        <option th:each="u : ${usuarios}"
+                                th:value="${u.id_usuario}"
+                                th:text="'ID: ' + ${u.id_usuario} + ' - ' + ${u.nombre_completo}">
+                        </option>
+
+                    </select>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">
+                            <span th:text="${objetivo.id_objetivo_meditacion != null} ? 'Actualizar' : 'Guardar'"></span>
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
 </div>
 
 <!-- Modal del Eliminar -->
@@ -207,10 +319,28 @@
     </div>
 </div>
 
-
 <!-- Buscador del Objetivo Meditación por Id y el modal -->
-<script
-    th:src="@{/js/objetivoMeditacion.js}">
+<script th:src="@{/js/objetivoMeditacion.js}"></script>
+
+<!-- Script cursor -->
+<script>
+    const dot  = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
+    window.addEventListener('mousemove', e => {
+        dot.style.left = e.clientX + 'px';
+        dot.style.top  = e.clientY + 'px';
+        ring.animate({ left: e.clientX + 'px', top: e.clientY + 'px' }, { duration: 380, fill: 'forwards' });
+        const trail = document.createElement('div');
+        trail.className = 'cursor-trail';
+        trail.style.left = e.clientX + 'px';
+        trail.style.top  = e.clientY + 'px';
+        document.body.appendChild(trail);
+        setTimeout(() => trail.remove(), 550);
+    });
+    document.querySelectorAll('a, button, .btn-icon, .usuario-card').forEach(el => {
+        el.addEventListener('mouseenter', () => { ring.style.width='48px'; ring.style.height='48px'; ring.style.borderColor='var(--cafe-claro)'; });
+        el.addEventListener('mouseleave', () => { ring.style.width='32px'; ring.style.height='32px'; ring.style.borderColor='var(--verde-menta)'; });
+    });
 </script>
 
 </body>
