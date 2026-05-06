@@ -8,32 +8,44 @@
     <link rel='stylesheet' th:href='@{/css/FraseMotivadoraUser.css}'>
 </head>
 <body>
-
-<nav>
-  <a th:href="@{/}" class="nav-logo">Evoluciona</a>
-  <ul class="nav-links">
-    <li><a th:href="@{/}">Inicio</a></li>
-  </ul>
-</nav>
-
-<div class="page-header">
-  <div class="page-header-left">
-    <div class="page-tag">Inspiración diaria</div>
-    <h1 class="page-title">Frase <em>Motivadora</em></h1>
+  <div class="hero-bg">
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
   </div>
-</div>
+  
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
 
-<div class="frase-container">
+  <nav>
+    <a th:href="@{/}" class="nav-logo">Evoluciona</a>
+    <ul class="nav-links">
+      <li><a th:href="@{/}">Inicio</a></li>
+    </ul>
+  </nav>
 
-  <div class="frase-card" th:each="f : ${frases}">
-
-      <span class="frase-label">Frase motivadora del día</span>
-
-      <p class="frase-texto" th:text="${'“' + f.texto + '”'}"></p>
-
-      <p class="frase-autor" th:text="'— ' + ${f.autor}"></p>
+  <div class="page-header">
+    <div class="page-header-left">
+      <div class="page-tag">Inspiración diaria</div>
+      <h1 class="page-title">Frase <em>Motivadora</em></h1>
+    </div>
   </div>
 
-</div>
+  <div class="frase-container">
+
+    <div class="frase-card" th:each="f : ${frases}">
+
+        <span class="frase-label">Frase motivadora del día</span>
+
+        <p class="frase-texto" th:text="${'“' + f.texto + '”'}"></p>
+
+        <p class="frase-autor" th:text="'~ ' + ${f.autor}"></p>
+    </div>
+
+  </div>
+  <script th:src="@{/js/Base.js}"></script>
 </body>
 </html>
