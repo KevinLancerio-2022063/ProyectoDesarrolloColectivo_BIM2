@@ -6,189 +6,298 @@
     <title>Gestión de Usuarios</title>
     <link rel="stylesheet" th:href="@{/css/baseLancerio.css}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
 </head>
 
 <body>
 
-<nav>
-    <a th:href="@{/index}" class="nav-logo">Evoluciona</a>
-    <ul class="nav-links">
-        <li><a th:href="@{/index}">Inicio</a></li>
+<!-- Cursor personalizado -->
+<div class="cursor-dot"  id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- ================== FONDO ANIMADO CON CUADRADOS ================== -->
+<div class="area">
+    <ul class="circles">
+        <li></li><li></li><li></li><li></li><li></li>
+        <li></li><li></li><li></li><li></li><li></li>
     </ul>
-</nav>
+</div>
 
-<div class="usuario-container">
+<!-- Barra lateral izquierda -->
+<aside class="sidebar">
 
-    <!-- Encabezado con el texto "Gestión de Usuarios" -->
-    <div class="page-header">
-        <h1 class="page-title">Gestión de <em>Usuarios</em></h1>
+    <div class="sidebar-logo">
+        <div class="sidebar-logo-mark">🌿</div>
+        <span class="sidebar-logo-text">Evolu<em>ciona</em></span>
     </div>
 
-    <!-- Barra para buscar por Id y botón de agregar usuario -->
-    <div class="toolbar">
+    <nav class="sidebar-nav">
 
-        <div class="search-wrap">     <!-- Ícono de la lupa del buscar -->
-            <span class="search-icon"><i class="bi bi-search"></i></span>
-            <input type="text"
-                   id="buscar"
-                   class="search-input"
-                   placeholder="Buscar por ID..."
-                   onkeyup="filtrarTabla()">
+        <div class="sidebar-section-label">Principal</div>
+
+        <a class="sidebar-item" th:href="@{/index}">
+            <i class="bi bi-house-door"></i> Inicio
+        </a>
+
+        <!-- ── Entidades con conexión ── -->
+        <div class="sidebar-section-label">Gestión</div>
+
+        <!-- Entidad activa -->
+        <a class="sidebar-item active" th:href="@{/usuarios}">
+            <i class="bi bi-people"></i> Usuarios
+        </a>
+
+        <a class="sidebar-item" th:href="@{/registroSueno}">
+            <i class="bi bi-moon-stars"></i> Registro de Sueño
+        </a>
+
+        <a class="sidebar-item" th:href="@{/objetivoMeditacion}">
+            <i class="bi bi-peace"></i> Objetivo Meditación
+        </a>
+
+        <!-- ── Entidades sin conexión aún ── -->
+        <div class="sidebar-section-label">Salud Física</div>
+
+        <a class="sidebar-item sin-conexion" href="#">
+            <i class="bi bi-shield-check"></i> Perfil Nutricional
+        </a>
+
+        <a class="sidebar-item sin-conexion" href="#">
+            <i class="bi bi-activity"></i> Rutinas
+        </a>
+
+        <a class="sidebar-item sin-conexion" href="#">
+            <i class="bi bi-lightning"></i> Ejercicios
+        </a>
+
+        <a class="sidebar-item sin-conexion" href="#">
+            <i class="bi bi-fire"></i> Racha Ejercicio
+        </a>
+
+        <div class="sidebar-section-label">Lectura</div>
+
+        <a class="sidebar-item sin-conexion" href="#">
+            <i class="bi bi-book"></i> Biblioteca
+        </a>
+
+        <a class="sidebar-item sin-conexion" href="#">
+            <i class="bi bi-bookmark"></i> Racha Lectura
+        </a>
+
+        <div class="sidebar-section-label">Mente & Alma</div>
+
+        <a class="sidebar-item sin-conexion" href="#">
+            <i class="bi bi-peace"></i> Meditación
+        </a>
+
+        <a class="sidebar-item sin-conexion" href="#">
+            <i class="bi bi-journal-text"></i> Diario
+        </a>
+
+        <a class="sidebar-item sin-conexion" href="#">
+            <i class="bi bi-heart-pulse"></i> Apoyo Emocional
+        </a>
+
+        <a class="sidebar-item sin-conexion" href="#">
+            <i class="bi bi-bullseye"></i> Objetivos
+        </a>
+
+        <a class="sidebar-item sin-conexion" href="#">
+            <i class="bi bi-stars"></i> Frases Motivadoras
+        </a>
+
+        <a class="sidebar-item sin-conexion" href="#">
+            <i class="bi bi-chat-heart"></i> Apoyo IA
+        </a>
+
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="sidebar-user">
+            <div class="sidebar-user-avatar">U</div>
+            <div class="sidebar-user-info">
+                <div class="sidebar-user-name">Usuario</div>
+                <div class="sidebar-user-role">Evoluciona</div>
+            </div>
+        </div>
+    </div>
+
+</aside>
+
+<div class="page-wrapper">
+    <div class="usuario-container">
+
+        <!-- Encabezado con el texto "Gestión de Usuarios" -->
+        <div class="page-header">
+            <h1 class="page-title">Gestión de <em>Usuarios</em></h1>
         </div>
 
-        <button class="btn-primary"
-                onclick="window.location.href='/usuarios'">
-            ＋ Nuevo usuario
-        </button>
+        <!-- Barra para buscar por Id y botón de agregar usuario -->
+        <div class="toolbar">
 
-    </div>
+            <div class="search-wrap">     <!-- Ícono de la lupa del buscar -->
+                <span class="search-icon"><i class="bi bi-search"></i></span>
+                <input type="text"
+                       id="buscar"
+                       class="search-input"
+                       placeholder="Buscar por ID..."
+                       onkeyup="filtrarTabla()">
+            </div>
 
-    <!-- Aqui aparecerán las tarjetas de los usuarios -->
-    <div class="usuarios-grid" id="tablaUsuarios">
+            <button class="btn-primary"
+                    onclick="window.location.href='/usuarios'">
+                ＋ Nuevo usuario
+            </button>
 
-        <div class="usuario-card"
-
-             th:each="u : ${usuarios}"
-             th:attr="data-id=${u.id_usuario}">
-
-            <div class="card-header">
-
-                <div class="usuario-avatar"
-                     th:text="${#strings.toUpperCase(#strings.substring(u.nombre_completo,0,2))}">
-                </div>
-
-                <div class="card-actions">
-
-                    <!-- botón editar -->
-                    <a class="btn-icon btn-edit"
-                       th:href="@{/usuarios/editar/{id}(id=${u.id_usuario})}">
-                        <!-- Ícono del lápiz -->
-                        <i class="bi bi-pencil"></i>
-                    </a>
-
-                    <!-- boton Eliminar con el modal -->
-                    <!-- El th:attr sirve para establecer el valor de cualquier atributo html, ejecuta la eliminación si el usuario lo confirma -->
-                    <a class="btn-icon btn-delete"
-                       href="#"
-                    th:attr="onclick=|openModal('/usuarios/eliminar/${u.id_usuario}')|">
-                        <!-- Ícono del bote de basura -->
-                        <i class="bi bi-trash-fill"></i>
-                 </a>
-
-             </div>
-
-         </div>
-
-         <div class="card-body">
-             <p class="card-name" th:text="${u.nombre_completo}"></p>
-             <p class="card-email" th:text="${u.correoUsuario}"></p>
-         </div>
-
-         <div class="card-footer">
-             <span class="card-id" th:text="'#' + ${u.id_usuario}"></span>
-             <span class="pass-badge">••••••</span>
-         </div>
-
-     </div>
-
-     <!-- Si no hay usuarios lo indicará con el mensaje -->
-        <div class="card-empty" th:if="${#lists.isEmpty(usuarios)}">
-            <p>No hay usuarios registrados</p>
         </div>
 
-    </div>
+        <!-- Aqui aparecerán las tarjetas de los usuarios -->
+        <div class="usuarios-grid" id="tablaUsuarios">
 
-    <!--Tarjeta/Notificación de Error -->
-    <div th:if="${errores != null}" class="error-container">
+            <div class="usuario-card"
+                 th:each="u, stat : ${usuarios}"
+                 th:attr="data-id=${u.id_usuario}"
+                 th:classappend="${stat.index % 3 == 0} ? ' color-verde'
+                          : (${stat.index % 3 == 1} ? ' color-cafe'
+                          :                            ' color-azul')">
 
-        <div class="card error-card" th:each="err : ${errores}">
+                <div class="card-header">
 
-            <div class="header">   <!--Ícono de Error (X) -->
-                <div class="image"><i class="bi bi-x"></i></div>
+                    <div class="usuario-avatar"
+                         th:text="${#strings.toUpperCase(#strings.substring(u.nombre_completo,0,2))}">
+                    </div>
 
-                <div class="content">
-                    <span class="title">Error</span>
-                    <p class="message" th:text="${err}"></p>
+                    <div class="card-actions">
+
+                        <!-- botón editar -->
+                        <a class="btn-icon btn-edit"
+                           th:href="@{/usuarios/editar/{id}(id=${u.id_usuario})}">
+                            <!-- Ícono del lápiz -->
+                            <i class="bi bi-pencil"></i>
+                        </a>
+
+                        <!-- boton Eliminar con el modal -->
+                        <!-- El th:attr sirve para establecer el valor de cualquier atributo html, ejecuta la eliminación si el usuario lo confirma -->
+                        <a class="btn-icon btn-delete"
+                           href="#"
+                           th:attr="onclick=|openModal('/usuarios/eliminar/${u.id_usuario}')|">
+                            <!-- Ícono del bote de basura -->
+                            <i class="bi bi-trash-fill"></i>
+                        </a>
+
+                    </div>
+
                 </div>
+
+                <div class="card-body">
+                    <p class="card-name" th:text="${u.nombre_completo}"></p>
+                    <p class="card-email" th:text="${u.correoUsuario}"></p>
+                </div>
+
+                <div class="card-footer">
+                    <span class="card-id" th:text="'#' + ${u.id_usuario}"></span>
+                    <span class="pass-badge">••••••</span>
+                </div>
+
+            </div>
+
+            <!-- Si no hay usuarios lo indicará con el mensaje -->
+            <div class="card-empty" th:if="${#lists.isEmpty(usuarios)}">
+                <p>No hay usuarios registrados</p>
             </div>
 
         </div>
 
-    </div>
+        <!--Tarjeta/Notificación de Error -->
+        <div th:if="${errores != null}" class="error-container">
 
-    <!--Tarjeta/Notificación de Éxito -->
-    <div th:if="${success}" class="error-container">
+            <div class="card error-card" th:each="err : ${errores}">
 
-        <div class="card success-card">
+                <div class="header">   <!--Ícono de Error (X) -->
+                    <div class="image"><i class="bi bi-x"></i></div>
 
-            <div class="header">   <!--Ícono de éxito (Cheque) -->
-                <div class="image"><i class="bi bi-check-lg"></i></div>
-
-                <div class="content">
-                    <span class="title">Operación exitosa</span>
-                    <p class="message" th:text="${success}"></p>
+                    <div class="content">
+                        <span class="title">Error</span>
+                        <p class="message" th:text="${err}"></p>
+                    </div>
                 </div>
+
             </div>
 
         </div>
 
-    </div>
+        <!--Tarjeta/Notificación de Éxito -->
+        <div th:if="${success}" class="error-container">
 
-    <!-- Formulario ingresar los datos -->
-    <div class="form-section-wrap">
-        <div class="form-section">
+            <div class="card success-card">
 
-            <h2 class="form-title">
+                <div class="header">   <!--Ícono de éxito (Cheque) -->
+                    <div class="image"><i class="bi bi-check-lg"></i></div>
+
+                    <div class="content">
+                        <span class="title">Operación exitosa</span>
+                        <p class="message" th:text="${success}"></p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Formulario ingresar los datos -->
+        <div class="form-section-wrap">
+            <div class="form-section">
+
+                <h2 class="form-title">
                 <span th:if="${usuario.id_usuario != null}">
                     Editar <em>usuario</em>
                 </span>
-                <span th:if="${usuario.id_usuario == null}">
+                    <span th:if="${usuario.id_usuario == null}">
                     Nuevo <em>usuario</em>
                 </span>
-            </h2>
+                </h2>
 
-            <form th:action="@{/usuarios/guardar}"
-                  th:object="${usuario}"
-                  method="post">
+                <form th:action="@{/usuarios/guardar}"
+                      th:object="${usuario}"
+                      method="post">
 
-                <input type="hidden" th:field="*{id_usuario}">
+                    <input type="hidden" th:field="*{id_usuario}">
 
-                <input class="form-input"
-                       type="text"
-                       th:field="*{nombre_completo}"
-                       placeholder="Nombre completo"
-                       required>
+                    <input class="form-input"
+                           type="text"
+                           th:field="*{nombre_completo}"
+                           placeholder="Nombre completo"
+                           required>
 
-                <input class="form-input"
-                       type="email"
-                       th:field="*{correoUsuario}"
-                       placeholder="Correo"
-                       required>
+                    <input class="form-input"
+                           type="email"
+                           th:field="*{correoUsuario}"
+                           placeholder="Correo"
+                           required>
 
-                <input class="form-input"
-                       type="password"
-                       th:field="*{contraseña}"
-                       placeholder="Contraseña"
-                       required>
+                    <input class="form-input"
+                           type="password"
+                           th:field="*{contraseña}"
+                           placeholder="Contraseña"
+                           required>
 
-                <div class="form-actions">
-                    <button type="button"
-                            class="btn-secondary"
-                            onclick="window.location.href='/usuarios'">
-                        Cancelar
-                    </button>
+                    <div class="form-actions">
+                        <button type="button"
+                                class="btn-secondary"
+                                onclick="window.location.href='/usuarios'">
+                            Cancelar
+                        </button>
 
-                    <button type="submit" class="btn-primary">
+                        <button type="submit" class="btn-primary">
                         <span th:text="${usuario.id_usuario != null}
                           ? 'Actualizar' : 'Guardar'"></span>
-                    </button>
-                </div>
+                        </button>
+                    </div>
 
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
 
+    </div>
 </div>
 
 <!-- Modal del Eliminar -->
@@ -222,6 +331,27 @@
 
 <!-- Dirección del script buscar por id y el modal -->
 <script th:src="@{/js/usuario.js}"></script>
+
+<!-- Script cursor -->
+<script>
+    const dot  = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
+    window.addEventListener('mousemove', e => {
+        dot.style.left = e.clientX + 'px';
+        dot.style.top  = e.clientY + 'px';
+        ring.animate({ left: e.clientX + 'px', top: e.clientY + 'px' }, { duration: 380, fill: 'forwards' });
+        const trail = document.createElement('div');
+        trail.className = 'cursor-trail';
+        trail.style.left = e.clientX + 'px';
+        trail.style.top  = e.clientY + 'px';
+        document.body.appendChild(trail);
+        setTimeout(() => trail.remove(), 550);
+    });
+    document.querySelectorAll('a, button, .btn-icon, .usuario-card').forEach(el => {
+        el.addEventListener('mouseenter', () => { ring.style.width='48px'; ring.style.height='48px'; ring.style.borderColor='var(--cafe-claro)'; });
+        el.addEventListener('mouseleave', () => { ring.style.width='32px'; ring.style.height='32px'; ring.style.borderColor='var(--verde-menta)'; });
+    });
+</script>
 
 </body>
 </html>
