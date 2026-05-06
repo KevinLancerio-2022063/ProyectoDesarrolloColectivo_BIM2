@@ -41,27 +41,31 @@ let deleteUrl = "";
         window.location.href = deleteUrl;
     });
 
-    // Errores Visuales
-    function mostrarErrores(errores) {
-        const container = document.getElementById("errorContainer");
-        container.innerHTML = "";
+// Script del cursor del mouse
+const dot = document.querySelector(".cursor-dot");
+    const ring = document.querySelector(".cursor-ring");
 
-        errores.forEach(err => {
-            const card = document.createElement("div");
-            card.className = "card error-card";
+    window.addEventListener("mousemove", function(e) {
+        dot.style.left = e.clientX + "px";
+        dot.style.top = e.clientY + "px";
 
-            card.innerHTML = `
-                <div class="header">
-                    <div class="image">❌</div>
-                    <div class="content">
-                        <span class="title">Error</span>
-                        <p class="message">${err}</p>
-                    </div>
-                </div>
-            `;
-
-            container.appendChild(card);
+        ring.animate({
+            left: e.clientX + "px",
+            top: e.clientY + "px"
+        }, {
+            duration: 420,
+            fill: "forwards"
         });
 
-        setTimeout(() => container.innerHTML = "", 5000);
-    }
+        const trail = document.createElement("span");
+        trail.className = "cursor-trail";
+        trail.style.left = e.clientX + "px";
+        trail.style.top = e.clientY + "px";
+        document.body.appendChild(trail);
+
+        setTimeout(() => trail.remove(), 600);
+    });
+    document.querySelectorAll('a, button, .btn-icon, .usuario-card').forEach(el => {
+        el.addEventListener('mouseenter', () => { ring.style.width='48px'; ring.style.height='48px'; ring.style.borderColor='var(--cafe-claro)'; });
+        el.addEventListener('mouseleave', () => { ring.style.width='32px'; ring.style.height='32px'; ring.style.borderColor='var(--verde-menta)'; });
+    });
