@@ -2,31 +2,43 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro Meditación</title>
+    <title>Florece | Meditación</title>
     <link rel="stylesheet" th:href="@{/registroMeditacion.css(v=${#dates.createNow().time})}">
 </head>
 <body>
 
-<nav>
-    <a href="#" class="nav-logo">Evolu<span>ciona</span></a>
-    <ul class="nav-links">
-        <li><a th:href="@{/}">Inicio</a></li>
-        <li><a th:href="@{/entradaDiario}">Entrada Diario</a></li>
-        <li><a th:href="@{/registroMeditacion}" class="active">Meditación</a></li>
-        <li><a th:href="@{/registrosSuenos}">Sueño</a></li>
-    </ul>
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+
+<nav class="navbar">
+    <a th:href="@{/}" class="logo">Florece</a>
+
+    <div class="nav-links">
+        <a th:href="@{/}">Inicio</a>
+        <a th:href="@{/entradaDiario}">Diario</a>
+        <a th:href="@{/registroMeditacion}" class="active">Meditación</a>
+        <a th:href="@{/registrosSuenos}">Sueño</a>
+    </div>
 </nav>
 
-<header class="page-header">
+<header class="hero">
     <div>
-        <div class="page-tag">Bienestar · Meditación</div>
-        <h1 class="page-title">Gestión de <em>Registro Meditación</em></h1>
+        <span class="tag">Bienestar personal</span>
+        <h1 class="animated-title">Mis <em>Meditaciones</em></h1>
+        <p>Registra, edita y organiza tus sesiones de meditación.</p>
     </div>
-    <a href="#formulario" class="btn-primary">+ Nuevo registro</a>
+
+    <a href="#formulario" class="btn-new">
+        <svg viewBox="0 0 24 24">
+            <path d="M12 5v14"/>
+            <path d="M5 12h14"/>
+        </svg>
+        Nuevo registro
+    </a>
 </header>
 
-<section class="meditaciones-container">
+<main class="container">
+
     <div th:if="${exito}" class="toast">
         <span th:text="${exito}"></span>
     </div>
@@ -35,137 +47,251 @@
         <span th:text="${error}"></span>
     </div>
 
-    <div th:if="${#lists.isEmpty(registroMeditacion)}" class="empty-state">
-        <div class="empty-icon">🧘</div>
-        <div class="empty-text">No hay registros de meditación</div>
-    </div>
+    <section class="cards-grid" th:if="${not #lists.isEmpty(registroMeditacion)}">
 
-    <div th:if="${not #lists.isEmpty(registroMeditacion)}" class="meditaciones-grid">
-        <div class="meditacion-card" th:each="meditacion : ${registroMeditacion}">
-            <div class="meditacion-card-header">
-                <div class="meditacion-avatar">RM</div>
+        <article class="meditacion-card"
+                 th:each="meditacion, iter : ${registroMeditacion}"
+                 th:classappend="${iter.index % 3 == 0} ? ' card-green' : (${iter.index % 3 == 1} ? ' card-cream' : ' card-brown')">
 
-                <div class="meditacion-actions">
-                    <a th:href="@{/registroMeditacion/editar/{id}(id=${meditacion.id_registro_meditacion})}"
-                       class="btn-icon btn-edit"
-                       title="Editar">✏</a>
+            <div class="shine"></div>
 
-                    <a th:href="@{/registroMeditacion/confirmarEliminar/{id}(id=${meditacion.id_registro_meditacion})}"
-                       class="btn-icon btn-delete"
-                       title="Eliminar">🗑️</a>
+            <div class="card-top">
+                <div class="icon-box">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 3c3.5 3.2 6 6.5 6 10a6 6 0 0 1-12 0c0-3.5 2.5-6.8 6-10z"/>
+                        <path d="M12 13c-2.4 0-4.5 1.2-6 3.2"/>
+                        <path d="M12 13c2.4 0 4.5 1.2 6 3.2"/>
+                    </svg>
                 </div>
+
+                <span class="user-badge">Meditación</span>
             </div>
 
-            <h3 class="meditacion-tipo" th:text="${meditacion.tipo_meditacion}">Tipo meditación</h3>
+            <h2 th:text="${meditacion.tipo_meditacion}">Tipo meditación</h2>
 
-            <div class="meditacion-chips">
-                <span class="nivel-chip" th:text="${meditacion.nivel_dificultad}">Principiante</span>
-                <span class="nivel-chip">
-                    Duración: <span th:text="${meditacion.duracion_minutos}">15</span> min
+            <div class="meta-simple">
+                <span class="meta-icon">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="3" y="4" width="18" height="18" rx="2"/>
+                        <line x1="16" y1="2" x2="16" y2="6"/>
+                        <line x1="8" y1="2" x2="8" y2="6"/>
+                        <line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                    Fecha
                 </span>
+                <strong th:text="${#temporals.format(meditacion.fecha_registro, 'yyyy-MM-dd HH:mm')}">
+                    2026-04-21 10:30
+                </strong>
             </div>
 
-            <p class="meditacion-fecha">
-                <strong>Fecha:</strong>
-                <span th:text="${#temporals.format(meditacion.fecha_registro, 'yyyy-MM-dd HH:mm')}">2026-04-21 10:30</span>
-            </p>
-
-            <div class="meditacion-footer">
-                <span>ID</span>
-                <strong th:text="${meditacion.id_registro_meditacion}">1</strong>
+            <div class="content-box">
+                <h4>
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    Duración
+                </h4>
+                <p>
+                    <span th:text="${meditacion.duracion_minutos}">15</span> minutos
+                </p>
             </div>
-        </div>
-    </div>
-</section>
 
-<section class="form-section-wrap" id="formulario">
-    <div class="form-section">
-        <div class="form-section-header">
-            <h2 class="form-section-title">
-                <span th:if="${registroMeditacionFormu.id_registro_meditacion == null}">
-                    Nuevo <em>Registro</em>
-                </span>
-                <span th:if="${registroMeditacionFormu.id_registro_meditacion != null}">
-                    Editar <em>Registro</em>
-                </span>
+            <div class="content-box soft">
+                <h4>
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 6L9 17l-5-5"/>
+                    </svg>
+                    Nivel de dificultad
+                </h4>
+                <p th:text="${meditacion.nivel_dificultad}">Principiante</p>
+            </div>
+
+            <div class="user-actions">
+                <a th:href="@{/registroMeditacion/editar/{id}(id=${meditacion.id_registro_meditacion})}"
+                   class="btn-action edit">
+                    Editar
+                </a>
+
+                <a th:href="@{/registroMeditacion/confirmarEliminar/{id}(id=${meditacion.id_registro_meditacion})}"
+                   class="btn-action delete">
+                    Eliminar
+                </a>
+            </div>
+
+        </article>
+
+    </section>
+
+    <section class="empty" th:if="${#lists.isEmpty(registroMeditacion)}">
+        <h3>Aún no tienes meditaciones registradas</h3>
+        <p>Cuando registres una sesión de meditación, aparecerá aquí.</p>
+        <a href="#formulario" class="btn-new empty-btn">Crear mi primer registro</a>
+    </section>
+
+</main>
+
+<section class="form-wrapper" id="formulario">
+    <form class="form-card"
+          th:object="${registroMeditacionFormu}"
+          th:action="${registroMeditacionFormu.id_registro_meditacion == null}
+          ? @{/registroMeditacion/guardar}
+          : @{/registroMeditacion/actualizar/{id}(id=${registroMeditacionFormu.id_registro_meditacion})}"
+          method="post">
+
+        <div class="form-header">
+            <span>Mi meditación</span>
+            <h2 th:text="${registroMeditacionFormu.id_registro_meditacion == null} ? 'Nuevo registro' : 'Actualizar registro'">
+                Nuevo registro
             </h2>
-            <p class="form-section-sub">
-                Completa la información para registrar tu sesión de meditación y dar seguimiento a tu bienestar.
+            <p>Completa la información de tu sesión de meditación.</p>
+        </div>
+
+        <input type="hidden" th:field="*{id_registro_meditacion}">
+
+        <div class="form-group">
+            <label>Tipo de meditación</label>
+
+            <div class="tipos-picker">
+                <div class="tipo-toggle">
+                    <input type="radio" id="guiada" th:field="*{tipo_meditacion}" value="Guiada">
+                    <label for="guiada">Guiada</label>
+                </div>
+
+                <div class="tipo-toggle">
+                    <input type="radio" id="respiracion" th:field="*{tipo_meditacion}" value="Respiracion">
+                    <label for="respiracion">Respiración</label>
+                </div>
+
+                <div class="tipo-toggle">
+                    <input type="radio" id="mindfulness" th:field="*{tipo_meditacion}" value="Mindfulness">
+                    <label for="mindfulness">Mindfulness</label>
+                </div>
+
+                <div class="tipo-toggle">
+                    <input type="radio" id="bodyScan" th:field="*{tipo_meditacion}" value="BodyScan">
+                    <label for="bodyScan">Body Scan</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Duración minutos</label>
+                <input type="number" th:field="*{duracion_minutos}" min="1" required>
+            </div>
+
+            <div class="form-group">
+                <label>Nivel de dificultad</label>
+                <select th:field="*{nivel_dificultad}" required>
+                    <option value="">Selecciona una opción</option>
+                    <option value="Principiante">Principiante</option>
+                    <option value="Intermedio">Intermedio</option>
+                    <option value="Avanzado">Avanzado</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Fecha de registro</label>
+            <input type="datetime-local" th:field="*{fecha_registro}" required>
+        </div>
+
+        <div class="form-group">
+            <label>ID Usuario</label>
+            <input type="number" th:field="*{fk_id_usuario}" required>
+        </div>
+
+        <div class="form-actions">
+            <a th:href="@{/registroMeditacion}" class="btn-cancel">Cancelar</a>
+
+            <button type="submit"
+                    th:text="${registroMeditacionFormu.id_registro_meditacion == null} ? 'Guardar registro' : 'Actualizar registro'">
+                Guardar registro
+            </button>
+        </div>
+    </form>
+</section>
+
+<section class="delete-overlay" th:if="${meditacionEliminar != null}">
+    <div class="delete-card">
+
+        <div class="delete-icon">!</div>
+
+        <p class="delete-tag">Confirmación · Meditación</p>
+
+        <h2>Eliminar <em>Registro</em></h2>
+
+        <p class="delete-message">
+            Estás a punto de eliminar este registro de meditación. Esta acción no se puede deshacer.
+        </p>
+
+        <div class="delete-info">
+            <p>
+                <strong>ID:</strong>
+                <span th:text="${meditacionEliminar.id_registro_meditacion}">1</span>
+            </p>
+
+            <p>
+                <strong>Tipo:</strong>
+                <span th:text="${meditacionEliminar.tipo_meditacion}">Mindfulness</span>
+            </p>
+
+            <p>
+                <strong>Duración:</strong>
+                <span th:text="${meditacionEliminar.duracion_minutos}">20</span> minutos
+            </p>
+
+            <p>
+                <strong>Dificultad:</strong>
+                <span th:text="${meditacionEliminar.nivel_dificultad}">Intermedio</span>
+            </p>
+
+            <p>
+                <strong>Fecha:</strong>
+                <span th:text="${#temporals.format(meditacionEliminar.fecha_registro, 'yyyy-MM-dd HH:mm')}">
+                    2026-02-27 22:08
+                </span>
             </p>
         </div>
 
-        <form th:object="${registroMeditacionFormu}"
-              th:action="${registroMeditacionFormu.id_registro_meditacion == null}
-              ? @{/registroMeditacion/guardar}
-              : @{/registroMeditacion/actualizar/{id}(id=${registroMeditacionFormu.id_registro_meditacion})}"
-              method="post">
+        <div class="delete-actions">
+            <a th:href="@{/registroMeditacion}" class="btn-delete-cancel">Cancelar</a>
 
-            <input type="hidden" th:field="*{id_registro_meditacion}">
+            <form th:action="@{/registroMeditacion/eliminar/{id}(id=${meditacionEliminar.id_registro_meditacion})}"
+                  method="post">
+                <button type="submit" class="btn-delete-confirm">Sí, eliminar</button>
+            </form>
+        </div>
 
-            <div class="form-group">
-                <label class="form-label">Tipo de meditación</label>
-
-                <div class="tipos-picker">
-                    <div class="tipo-toggle">
-                        <input type="radio" id="guiada" th:field="*{tipo_meditacion}" value="Guiada">
-                        <label for="guiada">Guiada</label>
-                    </div>
-
-                    <div class="tipo-toggle">
-                        <input type="radio" id="respiracion" th:field="*{tipo_meditacion}" value="Respiracion">
-                        <label for="respiracion">Respiración</label>
-                    </div>
-
-                    <div class="tipo-toggle">
-                        <input type="radio" id="mindfulness" th:field="*{tipo_meditacion}" value="Mindfulness">
-                        <label for="mindfulness">Mindfulness</label>
-                    </div>
-
-                    <div class="tipo-toggle">
-                        <input type="radio" id="bodyScan" th:field="*{tipo_meditacion}" value="BodyScan">
-                        <label for="bodyScan">Body Scan</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="form-label">Duración (minutos)</label>
-                    <input type="number" class="form-input" th:field="*{duracion_minutos}" min="1" required>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Nivel de dificultad</label>
-                    <select class="form-select" th:field="*{nivel_dificultad}" required>
-                        <option value="">Selecciona una opción</option>
-                        <option value="Principiante">Principiante</option>
-                        <option value="Intermedio">Intermedio</option>
-                        <option value="Avanzado">Avanzado</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Fecha de registro</label>
-                <input type="datetime-local" class="form-input" th:field="*{fecha_registro}" required>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">ID Usuario</label>
-                <input type="number" class="form-input" th:field="*{fk_id_usuario}" required>
-            </div>
-
-            <div class="form-actions">
-                <a th:href="@{/registroMeditacion}" class="btn-secondary">Cancelar</a>
-                <button type="submit"
-                        class="btn-primary"
-                        th:text="${registroMeditacionFormu.id_registro_meditacion == null} ? 'Guardar' : 'Actualizar'">
-                    Guardar
-                </button>
-            </div>
-        </form>
     </div>
 </section>
+
+<script>
+    const dot = document.querySelector(".cursor-dot");
+    const ring = document.querySelector(".cursor-ring");
+
+    window.addEventListener("mousemove", function(e) {
+        dot.style.left = e.clientX + "px";
+        dot.style.top = e.clientY + "px";
+
+        ring.animate({
+            left: e.clientX + "px",
+            top: e.clientY + "px"
+        }, {
+            duration: 420,
+            fill: "forwards"
+        });
+
+        const trail = document.createElement("span");
+        trail.className = "cursor-trail";
+        trail.style.left = e.clientX + "px";
+        trail.style.top = e.clientY + "px";
+        document.body.appendChild(trail);
+
+        setTimeout(() => trail.remove(), 600);
+    });
+</script>
 
 </body>
 </html>
