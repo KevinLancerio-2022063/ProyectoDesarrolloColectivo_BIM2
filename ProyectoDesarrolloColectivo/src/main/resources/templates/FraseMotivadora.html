@@ -9,7 +9,17 @@
     <link rel='stylesheet' th:href="@{/css/Base.css}">
 </head>
 <body>
-
+  <div class="hero-bg">
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+  </div>
+  
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
   <nav>
     <a th:href="@{/}" class="nav-logo">Evoluciona</a>
     <ul class="nav-links">
@@ -57,7 +67,7 @@
 
       <p class="frase-texto" th:text="${f.texto}"></p>
 
-      <p class="frase-autor" th:text="'--' + ${f.autor}"></p>
+      <p class="frase-autor" th:text="'~' + ${f.autor}"></p>
 
       <div class="detalle-footers">
         <a th:href="@{'/editarFrase/' + ${f.idFraseMotivadora} }" class="btn-editar">
