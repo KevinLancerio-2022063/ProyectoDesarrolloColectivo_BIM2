@@ -9,15 +9,27 @@
 </head>
 <body>
 
-<div class="bg"></div>
-<div class="bg bg2"></div>
-<div class="bg bg3"></div>
+<!-- NUEVO FONDO DE CUBOS -->
+<div class="hero-bg">
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+</div>
 
-
-    <!-- LOGO FLOTANTE -->
+<!-- LOGO FLOTANTE -->
 <a th:href="@{/home}" href="/home" class="logo-flotante">
     <img th:src="@{/img/logo.png}" src="../static/img/logo.png" alt="Logo">
 </a>
+
 <main class="contenedor">
     <header class="card header-card">
         <a th:href="@{/home}" href="/home" class="btn-home">
@@ -47,12 +59,7 @@
         <form th:action="@{/rachaEjercicio}" method="get">
             <div class="form-group" style="text-align: center;">
                 <label for="usuarioIdBuscar">ID del usuario:</label>
-                <input type="number"
-                       id="usuarioIdBuscar"
-                       name="usuarioIdBuscar"
-                       min="1"
-                       placeholder="Ej. 5"
-                       required>
+                <input type="number" id="usuarioIdBuscar" name="usuarioIdBuscar" min="1" placeholder="Ej. 5" required>
             </div>
 
             <div class="acciones" style="justify-content:center; margin-top: 10px;">
@@ -62,10 +69,8 @@
             </div>
         </form>
 
-        <p th:if="${usuarioBuscado != null}"
-           style="text-align:center; color:#666; margin-top:10px;">
-            Mostrando rachas del usuario con ID
-            <strong th:text="${usuarioBuscado}"></strong>
+        <p th:if="${usuarioBuscado != null}" style="text-align:center; color:#666; margin-top:10px;">
+            Mostrando rachas del usuario con ID <strong th:text="${usuarioBuscado}"></strong>
         </p>
     </section>
 
@@ -77,99 +82,60 @@
                          (${rachas != null and !#lists.isEmpty(rachas) and rachas[0].diasConsecutivos >= 5}  ? 'racha-amarilla' : ''))">
 
         <div class="flame-scene">
-            <div class="ember e1"></div>
-            <div class="ember e2"></div>
-            <div class="ember e3"></div>
-            <div class="ember e4"></div>
-            <div class="flame f1"></div>
-            <div class="flame f2"></div>
-            <div class="flame f3"></div>
-            <div class="flame f4"></div>
-            <div class="flame f5"></div>
+            <div class="ember e1"></div><div class="ember e2"></div><div class="ember e3"></div><div class="ember e4"></div>
+            <div class="flame f1"></div><div class="flame f2"></div><div class="flame f3"></div><div class="flame f4"></div><div class="flame f5"></div>
         </div>
-
         <div class="base-llama"></div>
-
         <div class="racha-num">
             <span th:text="${rachas != null and !#lists.isEmpty(rachas)} ? ${rachas[0].diasConsecutivos} : '0'">0</span>
         </div>
-
         <div class="racha-label">días de racha</div>
-
-        <div class="racha-sub"
-             th:text="${rachas != null and !#lists.isEmpty(rachas) and rachas[0].diasConsecutivos >= 15} ? '🔥 ¡imparable!' :
-                 (${rachas != null and !#lists.isEmpty(rachas) and rachas[0].diasConsecutivos >= 10} ? '💪 ¡vas muy bien!' :
-                 (${rachas != null and !#lists.isEmpty(rachas) and rachas[0].diasConsecutivos >= 5}  ? '⭐ ¡sigue así!' :
-                 (${rachas != null and !#lists.isEmpty(rachas)} ? '¡buen comienzo!' : 'registra tu primera racha')))">
+        <div class="racha-sub" th:text="${rachas != null and !#lists.isEmpty(rachas) and rachas[0].diasConsecutivos >= 15} ? '🔥 ¡imparable!' : (${rachas != null and !#lists.isEmpty(rachas) and rachas[0].diasConsecutivos >= 10} ? '💪 ¡vas muy bien!' : (${rachas != null and !#lists.isEmpty(rachas) and rachas[0].diasConsecutivos >= 5}  ? '⭐ ¡sigue así!' : (${rachas != null and !#lists.isEmpty(rachas)} ? '¡buen comienzo!' : 'registra tu primera racha')))">
             registra tu primera racha
         </div>
     </section>
 
     <!-- FORMULARIO SOLO USER -->
     <section class="card" th:if="${session.rol == 'USER'}">
-        <h2 class="h2">
-            <i class="fas fa-plus-circle"></i> Agregar racha
-        </h2>
-
-        <p th:if="${error}"
-           style="color:red; text-align:center; margin-bottom:10px;"
-           th:text="${error}"></p>
-
+        <h2 class="h2"><i class="fas fa-plus-circle"></i> Agregar racha</h2>
+        <p th:if="${error}" style="color:red; text-align:center; margin-bottom:10px;" th:text="${error}"></p>
         <form th:action="@{/rachaEjercicio}" method="post">
             <div class="form-group">
                 <label for="fecha">Selecciona la fecha:</label>
                 <input id="fecha" name="fechaRacha" type="date" required>
             </div>
-
             <div class="acciones">
-                <button type="submit" class="btn">
-                    <i class="fas fa-save"></i> Guardar
-                </button>
-                <button type="reset" class="btn sec">
-                    <i class="fas fa-eraser"></i> Limpiar
-                </button>
+                <button type="submit" class="btn"><i class="fas fa-save"></i> Guardar</button>
+                <button type="reset" class="btn sec"><i class="fas fa-eraser"></i> Limpiar</button>
             </div>
         </form>
     </section>
 
     <!-- HISTORIAL -->
     <section class="card">
-        <h2 class="h2">
-            <i class="fas fa-history"></i> Historial
-        </h2>
-
+        <h2 class="h2"><i class="fas fa-history"></i> Historial</h2>
         <div class="tabla-container">
             <table>
                 <thead>
                 <tr>
                     <th>ID Usuario</th>
                     <th>Fecha</th>
-                    <th>
-                        <i class="fas fa-fire" style="color:#e67e22;"></i> Racha
-                    </th>
+                    <th><i class="fas fa-fire" style="color:#e67e22;"></i> Racha</th>
                 </tr>
                 </thead>
-
                 <tbody>
                 <tr th:if="${rachas == null or #lists.isEmpty(rachas)}">
-                    <td colspan="3"
-                        style="text-align:center; padding:20px; color:#888;">
-                        No hay rachas registradas todavía
-                    </td>
+                    <td colspan="3" style="text-align:center; padding:20px; color:#888;">No hay rachas registradas todavía</td>
                 </tr>
-
                 <tr th:each="r : ${rachas}">
                     <td th:text="${r.fkIdUsuario}"></td>
                     <td th:text="${#temporals.format(r.fecha, 'dd/MM/yyyy')}"></td>
-                    <td style="font-weight:bold; color:#e67e22;">
-                        <span th:text="${r.diasConsecutivos}"></span> días
-                    </td>
+                    <td style="font-weight:bold; color:#e67e22;"><span th:text="${r.diasConsecutivos}"></span> días</td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </section>
-
     <p class="foot">Proyecto Desarrollo Personal</p>
 </main>
 
