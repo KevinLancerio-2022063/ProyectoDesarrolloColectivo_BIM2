@@ -1,0 +1,265 @@
+:root { /* declaramos las variables de manera local para hacer una reutilizacion de codigo*/
+  --verde-oscuro:  #2D4A3E;
+  --verde-menta:   #7EB09B;
+  --crema:         #F5F0E8;
+  --cafe:          #8B6F47;
+  --cafe-claro:    #c4a882;
+  --blanco:        #ffffff;
+  --sombra:        rgba(45, 74, 62, 0.10);
+  --sombra-hover:  rgba(45, 74, 62, 0.20);
+  --radio:         16px;
+  --radio-lg:      24px;
+  --trans:         0.25s ease;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+/* se creo el body de las paginas*/
+body {
+  background: var(--crema);
+  color: var(--verde-oscuro);
+  font-family: system-ui, sans-serif;
+  font-weight: 300;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+/*insertamos el contenido del body antes de especificarlo en el body normal*/
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 999; opacity: 0.45;
+}
+
+/* creamos la barra de navegacion de las paginas*/
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.2rem 3rem;
+  background: rgba(245,240,232,0.88);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(45,74,62,0.08);
+}
+.nav-logo {
+  font-family: Georgia, serif;
+  font-size: 1.4rem; font-weight: 600;
+  color: var(--verde-oscuro); text-decoration: none;
+}
+.nav-logo span { color: var(--verde-menta); }
+
+.nav-links { display: flex; gap: 0.4rem; list-style: none; }
+.nav-links a {
+  text-decoration: none; color: var(--verde-oscuro);
+  font-size: 0.82rem; letter-spacing: 0.06em;
+  padding: 0.45rem 1rem; border-radius: 100px;
+  transition: background var(--trans), color var(--trans);
+}
+.nav-links a:hover  { background: rgba(45,74,62,0.07); }
+.nav-links a.active {
+  background: var(--verde-oscuro); color: var(--crema);
+}
+/* creamos la cabeza o header de la pagina*/
+.page-header {
+  padding: 8rem 4rem 3rem;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  animation: fadeUp 0.7s ease both;
+}
+
+/*configuramos y le damos formato a los tags y los titulos */
+.page-tag {
+  font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--cafe); margin-bottom: 0.6rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.page-tag::before { content:''; display:block; width:20px; height:1px; background:var(--cafe); }
+.page-title {
+  font-family: Georgia, serif;
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+  font-weight: 300; line-height: 1.1; color: var(--verde-oscuro);
+}
+.page-title em { font-style: italic; color: var(--verde-menta); }
+
+/*configuro los botones primarios dandoles el formato y diseño que quiera*/
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: var(--verde-oscuro); color: var(--crema);
+  padding: 0.75rem 1.8rem; border-radius: 100px;
+  font-family: system-ui, sans-serif; font-size: 0.88rem;
+  border: none; cursor: pointer; letter-spacing: 0.04em;
+  transition: background var(--trans), transform var(--trans);
+}
+.btn-primary:hover { background: var(--cafe); transform: translateY(-2px); }
+
+/*configuro otros botones secundarios*/
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: transparent; color: var(--verde-oscuro);
+  padding: 0.75rem 1.8rem; border-radius: 100px;
+  font-family: system-ui, sans-serif; font-size: 0.88rem;
+  border: 1.5px solid rgba(45,74,62,0.25); cursor: pointer;
+  transition: border-color var(--trans), background var(--trans);
+}
+.btn-secondary:hover { border-color: var(--verde-oscuro); background: rgba(45,74,62,0.05); }
+
+/*le damos diseño a los iconos de los botones */
+.btn-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: none; cursor: pointer; font-size: 0.95rem;
+  transition: background var(--trans), transform var(--trans);
+}
+.btn-edit  { background: rgba(126,176,155,0.15); color: var(--verde-oscuro); }
+.btn-edit:hover  { background: rgba(126,176,155,0.35); transform: scale(1.08); }
+.btn-delete { background: rgba(139,111,71,0.12); color: var(--cafe); }
+.btn-delete:hover { background: rgba(139,111,71,0.28); transform: scale(1.08); }
+
+/*de aqui en adelante creamos las ventanas modal, le damos caracteristicas como los header, titulos, overlays para superponer en la ventana, y distintas cosas */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(45,74,62,0.45);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+
+.modal {
+  background: var(--blanco); border-radius: var(--radio-lg);
+  padding: 2.5rem; width: 100%; max-width: 520px;
+  box-shadow: 0 24px 60px rgba(45,74,62,0.25);
+  transform: translateY(20px) scale(0.97);
+  transition: transform 0.3s ease;
+  max-height: 90vh; overflow-y: auto;
+}
+.modal-overlay.open .modal { transform: translateY(0) scale(1); }
+
+.modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 2rem;
+}
+.modal-title {
+  font-family: Georgia, serif;
+  font-size: 1.6rem; font-weight: 600; color: var(--verde-oscuro);
+}
+.modal-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--crema); border: none; cursor: pointer;
+  font-size: 1rem; color: var(--verde-oscuro);
+  display: flex; align-items: center; justify-content: center;
+  transition: background var(--trans);
+}
+.modal-close:hover { background: rgba(139,111,71,0.15); }
+
+/*con el form definimos la estructura y el espaciado global de esta dandole formatos y diseño al formulario*/
+.form-group { margin-bottom: 1.3rem; }
+.form-label {
+  display: block; font-size: 0.78rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--cafe);
+  margin-bottom: 0.45rem; font-weight: 500;
+}
+.form-input, .form-select {
+  width: 100%; padding: 0.75rem 1rem;
+  border: 1.5px solid rgba(45,74,62,0.15);
+  border-radius: var(--radio); background: var(--crema);
+  font-family: system-ui, sans-serif; font-size: 0.9rem;
+  color: var(--verde-oscuro); transition: border-color var(--trans);
+  outline: none;
+}
+.form-input:focus, .form-select:focus { border-color: var(--verde-menta); }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+.form-actions {
+  display: flex; gap: 0.8rem; justify-content: flex-end;
+  margin-top: 2rem; padding-top: 1.5rem;
+  border-top: 1px solid rgba(45,74,62,0.08);
+}
+
+/*creamos las notificaciones que saltan pero sin interrupir al usuario*/
+.toast {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 600;
+  background: var(--verde-oscuro); color: var(--crema);
+  padding: 1rem 1.5rem; border-radius: 12px;
+  font-size: 0.88rem; display: flex; align-items: center; gap: 0.6rem;
+  box-shadow: 0 8px 24px var(--sombra-hover);
+  transform: translateY(80px); opacity: 0;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+
+/*esto lo usamos para mostrar un estado vacio, basicamente que no hay datos que mostrar*/
+.empty-state {
+  text-align: center; padding: 5rem 2rem; color: var(--verde-oscuro);
+}
+.empty-icon { font-size: 3.5rem; margin-bottom: 1rem; opacity: 0.4; }
+.empty-text {
+  font-family: Georgia, serif;
+  font-size: 1.4rem; font-weight: 300; opacity: 0.5;
+}
+
+/* con esto hago los pasos intermedios detras de las animaciones*/
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; } to { opacity: 1; }
+}
+
+/*con el @media se hacen bloques de los estilos cuando se cumplen las condiciones que estan*/
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.2rem; }
+  .nav-links { display: none; }
+  .page-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; padding: 7rem 1.5rem 2rem; }
+  .form-row { grid-template-columns: 1fr; }
+}
+
+.form-section-wrap {
+  background: var(--verde-oscuro);
+  padding: 5rem 4rem;
+  margin-top: 2rem;
+}
+
+.form-section {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.form-section-header {
+  margin-bottom: 2.5rem;
+}
+
+.form-section-title {
+  font-family: Georgia, serif;
+  font-size: 2.2rem; font-weight: 300;
+  color: var(--crema); line-height: 1.2; margin-bottom: 0.6rem;
+}
+.form-section-title em { font-style: italic; color: var(--verde-menta); }
+
+.form-section-sub {
+  font-size: 0.88rem; color: var(--crema); opacity: 0.55; line-height: 1.6;
+}
+
+.form-section-wrap .form-label { color: var(--verde-menta); }
+.form-section-wrap .form-input,
+.form-section-wrap .form-select {
+  background: rgba(245,240,232,0.08);
+  border-color: rgba(245,240,232,0.15);
+  color: var(--crema);
+}
+.form-section-wrap .form-input::placeholder { color: rgba(245,240,232,0.3); }
+.form-section-wrap .form-input:focus,
+.form-section-wrap .form-select:focus { border-color: var(--verde-menta); }
+.form-section-wrap .form-select option { background: var(--verde-oscuro); color: var(--crema); }
+
+.form-section-wrap .btn-secondary {
+  border-color: rgba(245,240,232,0.25); color: var(--crema);
+}
+.form-section-wrap .btn-secondary:hover {
+  background: rgba(245,240,232,0.08); border-color: var(--crema);
+}
+
+@media (max-width: 768px) {
+  .form-section-wrap { padding: 3rem 1.5rem; }
+}
