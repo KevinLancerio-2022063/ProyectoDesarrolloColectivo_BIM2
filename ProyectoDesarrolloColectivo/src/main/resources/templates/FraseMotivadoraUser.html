@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang='en' xmlns:th='http://www.thymeleaf.org'>
+<head>
+    <meta charset='utf-8'>
+    <title>Frase del Día</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' th:href='@{/css/Base.css}'>
+    <link rel='stylesheet' th:href='@{/css/FraseMotivadoraUser.css}'>
+</head>
+<body>
+
+<nav>
+  <a th:href="@{/}" class="nav-logo">Evoluciona</a>
+  <ul class="nav-links">
+    <li><a th:href="@{/}">Inicio</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-left">
+    <div class="page-tag">Inspiración diaria</div>
+    <h1 class="page-title">Frase <em>Motivadora</em></h1>
+  </div>
+</div>
+
+<div class="frase-container">
+
+  <div class="frase-card" th:each="f : ${frases}">
+
+      <span class="frase-label">Frase motivadora del día</span>
+
+      <p class="frase-texto" th:text="${'“' + f.texto + '”'}"></p>
+
+      <p class="frase-autor" th:text="'— ' + ${f.autor}"></p>
+  </div>
+
+</div>
+</body>
+</html>
