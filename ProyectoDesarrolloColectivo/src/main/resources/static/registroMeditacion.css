@@ -658,3 +658,196 @@ select {
 .form-card a {
   text-decoration: none;
 }
+/* ================= CORRECCIÓN SIDEBAR ================= */
+
+.sidebar {
+  width: 256px !important;
+  height: 100vh !important;
+  min-height: 100vh !important;
+  background: #18382E !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  bottom: 0 !important;
+  z-index: 9999 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}
+
+.sidebar-logo {
+  padding: 1.4rem 1.2rem !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.8rem !important;
+  border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+}
+
+.logo-mark {
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 12px !important;
+  background: linear-gradient(135deg, #7EB09B, #A8CFC0) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+}
+
+.logo-mark svg {
+  width: 20px !important;
+  height: 20px !important;
+  fill: none !important;
+  stroke: #18382E !important;
+  stroke-width: 2.2 !important;
+}
+
+.logo-text {
+  color: white !important;
+  font-size: 1.1rem !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+}
+
+.logo-text span {
+  color: #7EB09B !important;
+}
+
+.sidebar-nav {
+  flex: 1 !important;
+  padding: 1rem 0.75rem !important;
+  overflow-y: auto !important;
+}
+
+.nav-section-label {
+  color: rgba(255,255,255,0.35) !important;
+  font-size: 0.62rem !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.14em !important;
+  padding: 0.7rem 0.8rem 0.4rem !important;
+}
+
+.nav-item {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  padding: 0.72rem 0.85rem !important;
+  border-radius: 12px !important;
+  color: rgba(255,255,255,0.68) !important;
+  text-decoration: none !important;
+  font-size: 0.84rem !important;
+  font-weight: 700 !important;
+  margin-bottom: 0.15rem !important;
+  transition: 0.25s ease !important;
+}
+
+.nav-item:hover {
+  background: rgba(255,255,255,0.08) !important;
+  color: white !important;
+  transform: translateX(4px) !important;
+}
+
+.nav-item.active {
+  background: rgba(126,176,155,0.20) !important;
+  color: white !important;
+}
+
+.nav-icon {
+  width: 20px !important;
+  height: 20px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+}
+
+.nav-icon svg {
+  width: 20px !important;
+  height: 20px !important;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 2 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+
+.sidebar-footer {
+  padding: 0.9rem !important;
+  border-top: 1px solid rgba(255,255,255,0.08) !important;
+}
+
+.user-card {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.7rem !important;
+  padding: 0.7rem !important;
+  border-radius: 12px !important;
+  background: rgba(255,255,255,0.06) !important;
+}
+
+.user-avatar {
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 10px !important;
+  background: linear-gradient(135deg, #7EB09B, #18382E) !important;
+  color: white !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 0.85rem !important;
+  font-weight: 900 !important;
+  flex-shrink: 0 !important;
+}
+
+.user-info {
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+
+.user-name {
+  color: white !important;
+  font-size: 0.78rem !important;
+  font-weight: 800 !important;
+}
+
+.user-role {
+  color: rgba(255,255,255,0.4) !important;
+  font-size: 0.68rem !important;
+}
+
+.logout-btn {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 8px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: rgba(255,255,255,0.45) !important;
+  text-decoration: none !important;
+}
+
+.logout-btn svg {
+  width: 17px !important;
+  height: 17px !important;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 2 !important;
+}
+
+/* Mueve tu contenido para que no quede debajo de la sidebar */
+
+.navbar,
+.hero,
+.container,
+.form-wrapper {
+  margin-left: 256px !important;
+  width: calc(100% - 256px) !important;
+}
+
+/* El modal de eliminar debe cubrir toda la pantalla correctamente */
+
+.delete-overlay {
+  left: 256px !important;
+  width: calc(100% - 256px) !important;
+}
