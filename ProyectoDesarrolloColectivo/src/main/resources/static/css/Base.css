@@ -23,6 +23,9 @@ body {
   font-weight: 300;
   min-height: 100vh;
   overflow-x: hidden;
+  cursor: none;
+  position: relative;
+  z-index: 1;
 }
 /*insertamos el contenido del body antes de especificarlo en el body normal*/
 body::before {
@@ -76,9 +79,44 @@ nav {
   font-family: Georgia, serif;
   font-size: clamp(2.2rem, 4vw, 3.5rem);
   font-weight: 300; line-height: 1.1; color: var(--verde-oscuro);
+
+  -webkit-animation: tracking-in-contract-bck 1s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+  	        animation: tracking-in-contract-bck 1s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
 }
 .page-title em { font-style: italic; color: var(--verde-menta); }
 
+@-webkit-keyframes tracking-in-contract-bck {
+  0% {
+    letter-spacing: 1em;
+    -webkit-transform: translateZ(400px);
+            transform: translateZ(400px);
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.6;
+  }
+  100% {
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+    opacity: 1;
+  }
+}
+@keyframes tracking-in-contract-bck {
+  0% {
+    letter-spacing: 1em;
+    -webkit-transform: translateZ(400px);
+            transform: translateZ(400px);
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.6;
+  }
+  100% {
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+    opacity: 1;
+  }
+}
 /*configuro los botones primarios dandoles el formato y diseño que quiera*/
 .btn-primary {
   display: inline-flex; align-items: center; gap: 0.5rem;
@@ -87,6 +125,7 @@ nav {
   font-family: system-ui, sans-serif; font-size: 0.88rem;
   border: none; cursor: pointer; letter-spacing: 0.04em;
   transition: background var(--trans), transform var(--trans);
+  text-decoration: none;
 }
 .btn-primary:hover { background: var(--cafe); transform: translateY(-2px); }
 
@@ -262,4 +301,76 @@ nav {
 
 @media (max-width: 768px) {
   .form-section-wrap { padding: 3rem 1.5rem; }
+}
+
+.cursor-dot,
+.cursor-ring,
+.cursor-trail {
+  position: fixed;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 999999;
+}
+
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: #18382E;
+  border-radius: 50%;
+}
+
+.cursor-ring {
+  width: 34px;
+  height: 34px;
+  border: 2px solid #7EB09B;
+  border-radius: 50%;
+  transition: transform .08s linear;
+}
+
+.cursor-trail {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(126,176,155,0.35);
+  animation: trailFade .5s ease forwards;
+}
+
+.hero-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; 
+  overflow: hidden;
+  background: #F5F0E8; 
+}
+ 
+.cube {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: solid 1px rgba(196, 168, 130, 1);
+  transform-origin: top left;
+  transform: scale(0) rotate(0deg) translate(-50%, -50%);
+  animation: cube 12s ease-in infinite;
+}
+ 
+/* posiciones */
+.cube:nth-child(1) { top: 80%; left: 45%; }
+.cube:nth-child(2) { top: 40%; left: 25%; animation-delay: 1s; }
+.cube:nth-child(3) { top: 50%; left: 75%; animation-delay: 2s; }
+.cube:nth-child(4) { top: 10%; left: 90%; animation-delay: 2s; }
+.cube:nth-child(5) { top: 85%; left: 10%; animation-delay: 4s; }
+.cube:nth-child(6) { top: 10%; left: 50%; animation-delay: 6s; }
+ 
+@keyframes cube {
+  from {
+    transform: scale(0) rotate(0deg) translate(-50%, -50%);
+    opacity: 0.8;
+  }
+  to {
+    transform: scale(20) rotate(960deg) translate(-50%, -50%);
+    opacity: 0;
+  }
 }
