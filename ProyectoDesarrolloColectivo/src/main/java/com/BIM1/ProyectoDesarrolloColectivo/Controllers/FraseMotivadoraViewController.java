@@ -29,7 +29,7 @@ public class FraseMotivadoraViewController {
         return "FraseMotivadora";
     }
 
-    @GetMapping("fraseMotivadora")
+    @GetMapping("/fraseMotivadora")
     public String fraseAlAZar(Model model){
 
         long total = repository.count();
