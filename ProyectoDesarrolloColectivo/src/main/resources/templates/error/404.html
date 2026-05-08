@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,8 +23,8 @@
             <div class="subtitle">la pagina todavía esta en proceso :)</div>
 
             <div class="actions">
-                <a href="/" class="btn btn-primary">ir a la página principal</a>
-                <a href="../" class="btn btn-outline">Regresar</a>
+                <a th:href="@{/home}" class="btn btn-primary">ir a la página principal</a>
+                <a th:href="@{/libro}" class="btn btn-outline">Regresar</a>
             </div>
 
             <div class="footer">Lost, but still stylish </div>
