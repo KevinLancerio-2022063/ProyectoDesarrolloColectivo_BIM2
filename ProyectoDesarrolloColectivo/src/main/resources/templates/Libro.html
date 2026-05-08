@@ -7,6 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/Libro.css}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <script th:src="@{/js/alertas.js}" defer></script>
+    <script th:src="@{/js/cursor.js}" defer> </script>
 </head>
 <body>
 
@@ -183,7 +184,7 @@
         <div class="page-tag">Lectura y progreso</div>
         <h1 class="page-title">Mis <em>Lecturas</em></h1>
     </div>
-    <!-- Botón directo a estadísticas -->
+
     <a th:href="@{/libro/estadisticas}" class="btn-estadisticas">
         <i class="bi bi-bar-chart-line"></i> Ver estadísticas
     </a>
@@ -233,7 +234,7 @@
 
             </div>
 
-            <!-- Barra de progreso -->
+
             <div class="libro-progreso">
                 <div class="progreso-texto">
                     <span th:text="${libro.cantidad_leido} + ' / ' + ${libro.cantidad_pag} + ' págs'"></span>
@@ -248,7 +249,7 @@
                 </div>
             </div>
 
-            <!-- Footer -->
+
             <div class="libro-footer">
                 <span class="libro-footer-stat">
                     <i class="bi bi-person-badge"></i>
@@ -272,17 +273,17 @@
                 </div>
             </div>
 
-        </div><!-- /libro-card -->
+        </div>
 
         <div class="empty-state" th:if="${libros == null or #lists.isEmpty(libros)}">
             <div class="empty-icon">📚</div>
             <p class="empty-text">No hay libros registrados todavía.</p>
         </div>
 
-    </div><!-- /libros-grid -->
-</div><!-- /libros-container -->
+    </div>
+</div>
 
-<!-- ── FORMULARIO ── -->
+
 <div class="form-section-wrap">
     <div class="form-section">
 
@@ -362,30 +363,6 @@
         </form>
     </div>
 </div>
-<script>
-    const dot = document.querySelector(".cursor-dot");
-    const ring = document.querySelector(".cursor-ring");
 
-    window.addEventListener("mousemove", function(e) {
-        dot.style.left = e.clientX + "px";
-        dot.style.top = e.clientY + "px";
-
-        ring.animate({
-            left: e.clientX + "px",
-            top: e.clientY + "px"
-        }, {
-            duration: 420,
-            fill: "forwards"
-        });
-
-        const trail = document.createElement("span");
-        trail.className = "cursor-trail";
-        trail.style.left = e.clientX + "px";
-        trail.style.top = e.clientY + "px";
-        document.body.appendChild(trail);
-
-        setTimeout(() => trail.remove(), 600);
-    });
-</script>
 </body>
 </html>
