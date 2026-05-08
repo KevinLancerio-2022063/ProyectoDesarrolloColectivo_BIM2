@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
   <script th:src="@{/js/alertas.js}" defer></script>
+  <script th:src="@{/js/cursor.js}" defer></script>
 </head>
 <body>
 
@@ -263,32 +264,6 @@
     </form>
   </div>
 </div>
-
-<script>
-    const dot = document.querySelector(".cursor-dot");
-    const ring = document.querySelector(".cursor-ring");
-
-    window.addEventListener("mousemove", function(e) {
-        dot.style.left = e.clientX + "px";
-        dot.style.top = e.clientY + "px";
-
-        ring.animate({
-            left: e.clientX + "px",
-            top: e.clientY + "px"
-        }, {
-            duration: 420,
-            fill: "forwards"
-        });
-
-        const trail = document.createElement("span");
-        trail.className = "cursor-trail";
-        trail.style.left = e.clientX + "px";
-        trail.style.top = e.clientY + "px";
-        document.body.appendChild(trail);
-
-        setTimeout(() => trail.remove(), 600);
-    });
-</script>
 
 </body>
 </html>
