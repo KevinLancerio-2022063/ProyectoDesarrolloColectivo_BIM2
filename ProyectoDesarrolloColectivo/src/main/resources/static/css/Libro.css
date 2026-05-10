@@ -9,6 +9,14 @@
     animation: fadeUp 0.6s ease both 0.1s;
 }
 
+.search-form {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex: 1;
+    max-width: 500px;
+}
+
 .search-wrap {
     flex: 1;
     position: relative;
