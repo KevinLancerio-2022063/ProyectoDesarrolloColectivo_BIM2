@@ -451,6 +451,7 @@ nav:not(.sidebar-nav) {
 .page-header,
 .rutinas-container,
 .perfil-container,
+.perfiles-container,
 .libros-container,
 .ejercicios-container,
 .form-section-wrap {
@@ -469,6 +470,7 @@ nav:not(.sidebar-nav) {
   .page-header,
   .rutinas-container,
   .perfil-container,
+  .perfiles-container,
   .libros-container,
   .ejercicios-container,
   .form-section-wrap {
