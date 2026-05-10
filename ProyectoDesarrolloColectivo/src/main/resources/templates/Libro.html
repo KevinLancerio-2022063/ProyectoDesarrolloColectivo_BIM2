@@ -172,12 +172,7 @@
     </div>
 </div>
 
-<nav>
-    <a th:href="@{/index}" class="nav-logo">Evoluciona</a>
-    <ul class="nav-links">
-        <li><a th:href="@{/index}">Inicio</a></li>
-    </ul>
-</nav>
+
 
 <div class="page-header">
     <div class="page-header-left">
@@ -193,13 +188,15 @@
 <div class="libros-container">
 
     <div class="toolbar">
-        <form th:action="@{/libro/buscarLibro}" method="get" style="display:contents;">
+        <form th:action="@{/libro/buscarLibro}" method="get" class="search-form">
             <div class="search-wrap">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
                 </svg>
                 <input type="number" name="id" class="search-input" placeholder="Buscar por ID..."/>
             </div>
+            <button type="submit" class="btn-primary">Buscar</button>
+            <button type="button" class="btn-secondary" onclick="window.location.href=window.location.pathname">Limpiar</button>
         </form>
         <span style="font-size:0.82rem;opacity:0.5;margin-left:auto;"
               th:text="${libros != null ? #lists.size(libros) : 0} + ' libro(s)'"></span>
