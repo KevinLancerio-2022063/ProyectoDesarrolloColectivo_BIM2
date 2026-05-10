@@ -194,6 +194,7 @@
                 <input type="number" name="id" class="search-input" placeholder="Buscar por ID..."/>
             </div>
             <button type="submit" class="btn-primary">Buscar</button>
+            <button type="button" class="btn-secondary" onclick="window.location.href=window.location.pathname">Limpiar</button>
         </form>
         <span class="contador"
               th:text="${ejercicios != null ? #lists.size(ejercicios) : 0} + ' ejercicio(s)'">0 ejercicio(s)</span>
