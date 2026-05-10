@@ -449,7 +449,7 @@ body {
 .cursor-dot {
   width: 8px;
   height: 8px;
-  background: var(--verde-profundo);
+  background: var(--verde-oscuro);
   border-radius: 50%;
 }
  
