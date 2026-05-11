@@ -50,7 +50,7 @@ public class LibroController {
     @GetMapping("/buscarLibro")
     public String buscarLibro(@RequestParam Integer id, Model model){
         Libro libro = libroService.getLibroById(id);
-        model.addAttribute("libros", libroService.getAListLibro());
+        model.addAttribute("libros", libroService.getLibroById(id));
         model.addAttribute("librosFormu", libro);
         return "libro";
     }
