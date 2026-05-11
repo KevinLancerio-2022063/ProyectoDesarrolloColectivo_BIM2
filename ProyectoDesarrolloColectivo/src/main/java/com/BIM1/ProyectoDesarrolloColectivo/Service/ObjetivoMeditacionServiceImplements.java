@@ -48,9 +48,13 @@ public class ObjetivoMeditacionServiceImplements implements ObjetivoMeditacionSe
         objetivoMeditacionValidator.ObjetivoMeditacionValidar(objetivoMeditacion);
         ObjetivoMeditacionExistente.setTiempo_objetivo(objetivoMeditacion.getTiempo_objetivo());
         ObjetivoMeditacionExistente.setDias_objetivo(objetivoMeditacion.getDias_objetivo());
-        ObjetivoMeditacionExistente.setFk_id_usuario(objetivoMeditacion.getFk_id_usuario());
+        ObjetivoMeditacionExistente.setFkIdUsuario(objetivoMeditacion.getFkIdUsuario());
 
         return objetivoMeditacionRepository.save(ObjetivoMeditacionExistente);
     }
 
+    @Override
+    public List<ObjetivoMeditacion> getObjetivosByUsuario(Integer usuarioId) {
+        return objetivoMeditacionRepository.findByFkIdUsuario(usuarioId);
+    }
 }
