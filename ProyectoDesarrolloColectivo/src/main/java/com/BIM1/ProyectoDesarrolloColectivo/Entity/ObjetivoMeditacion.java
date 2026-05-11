@@ -23,10 +23,8 @@ public class ObjetivoMeditacion {
     @Column(name = "dias_objetivo")
     private Integer dias_objetivo;
 
-    @NotNull(message = "El fk_id_usuario no puede estar vacío")
-    @Positive(message = "El FK no puede ser menor que 1")
     @Column(name = "fk_id_usuario")
-    private Integer fk_id_usuario;
+    private Integer fkIdUsuario;
 
     public Integer getId_objetivo_meditacion() {
         return id_objetivo_meditacion;
@@ -52,11 +50,11 @@ public class ObjetivoMeditacion {
         this.dias_objetivo = dias_objetivo;
     }
 
-    public Integer getFk_id_usuario() {
-        return fk_id_usuario;
+    public Integer getFkIdUsuario() {
+        return fkIdUsuario;
     }
 
-    public void setFk_id_usuario(Integer fk_id_usuario) {
-        this.fk_id_usuario = fk_id_usuario;
+    public void setFkIdUsuario(Integer fkIdUsuario) {
+        this.fkIdUsuario = fkIdUsuario;
     }
 }
