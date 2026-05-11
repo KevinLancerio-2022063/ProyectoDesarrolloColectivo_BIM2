@@ -13,4 +13,6 @@ public interface ObjetivoMeditacionService {
     ObjetivoMeditacion saveObjetivoMeditacion (ObjetivoMeditacion objetivoMeditacion) throws RuntimeException;
     ObjetivoMeditacion updateObjetivoMeditacion (Integer id, ObjetivoMeditacion objetivoMeditacion);
     void deleteObjetivoMeditacion (Integer id);
+
+    List<ObjetivoMeditacion> getObjetivosByUsuario(Integer usuarioId);
 }
