@@ -356,7 +356,7 @@ body::before {
 .sidebar {
     width: 256px;
     min-height: 100vh;
-    background: var(--verde-oscuro);
+    background: #18382E !important;
     position: fixed;
     top: 0;
     left: 0;
@@ -390,9 +390,13 @@ body::before {
 }
 
 .logo-mark svg {
-    width: 18px;
-    height: 18px;
-    fill: var(--verde-oscuro);
+  fill: none !important;
+  stroke: var(--verde-oscuro) !important;
+  stroke-width: 2.2 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+  width: 18px !important;
+  height: 18px !important;
 }
 
 .logo-text {
@@ -451,6 +455,14 @@ body::before {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.nav-icon svg {
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 2 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
 }
 
 /* ===== FOOTER ===== */
