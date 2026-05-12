@@ -17,7 +17,6 @@ public class RegistroSueno {
     private String fecha_sueño;
 
     @NotBlank(message = "Las horas dormidas no pueden estar vacías")
-    @Max(value = 15, message = "Las horas máximas dormidas permitidas son de 15")
     @Column(name = "horas_dormidas")
     private String horas_dormidas;
 
@@ -26,10 +25,8 @@ public class RegistroSueno {
     @Column(name = "calidad_sueño")
     private String calidad_sueño;
 
-    @NotNull(message = "El fk_id_usuario no puede estar vacío")
-    @Positive(message = "El FK no puede ser menor que 1")
     @Column(name = "fk_id_usuario")
-    private Integer fk_id_usuario;
+    private Integer fkIdUsuario;
 
     public Integer getId_registro_sueño() {
         return id_registro_sueño;
@@ -63,11 +60,11 @@ public class RegistroSueno {
         this.calidad_sueño = calidad_sueño;
     }
 
-    public Integer getFk_id_usuario() {
-        return fk_id_usuario;
+    public Integer getFkIdUsuario() {
+        return fkIdUsuario;
     }
 
-    public void setFk_id_usuario(Integer fk_id_usuario) {
-        this.fk_id_usuario = fk_id_usuario;
+    public void setFkIdUsuario(Integer fkIdUsuario) {
+        this.fkIdUsuario = fkIdUsuario;
     }
 }
