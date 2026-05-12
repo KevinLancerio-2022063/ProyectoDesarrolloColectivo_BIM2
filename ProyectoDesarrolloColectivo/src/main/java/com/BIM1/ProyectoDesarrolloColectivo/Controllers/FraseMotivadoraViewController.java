@@ -6,11 +6,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Random;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.BIM1.ProyectoDesarrolloColectivo.Entity.FraseMotivadora;
 import com.BIM1.ProyectoDesarrolloColectivo.Service.FraseMotivadoraService;
@@ -62,9 +62,15 @@ public class FraseMotivadoraViewController {
     }
 
     @PostMapping("/guardarFraseCreada")
-    public String guardarFraseCreada(@ModelAttribute FraseMotivadora frase) {
-        fraseMotivadoraService.saveFraseMotivadora(frase);
-        return "redirect:/frasesMotivadoras";
+    public String guardarFraseCreada(@ModelAttribute FraseMotivadora frase,RedirectAttributes redirectAttributes) {
+        try {
+            fraseMotivadoraService.saveFraseMotivadora(frase);
+            return "redirect:/frasesMotivadoras";
+        } catch (Exception e) {
+            System.out.println("🔥 ERROR CAPTURADO: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/agregarFrase";
+        }
     }
 
     @GetMapping("/editarFrase/{id}")
@@ -75,17 +81,42 @@ public class FraseMotivadoraViewController {
     }
 
     @PostMapping("/guardarFrase")
-    public String guardarFrase(@ModelAttribute FraseMotivadora frase) {
-        FraseMotivadora original = fraseMotivadoraService.getById(frase.getIdFraseMotivadora());
-        original.setTexto(frase.getTexto());
-        original.setAutor(frase.getAutor());
-        fraseMotivadoraService.updateFraseMotivadora(frase.getIdFraseMotivadora(), original);
-        return "redirect:/frasesMotivadoras";
+    public String guardarFrase(@ModelAttribute FraseMotivadora frase,RedirectAttributes redirectAttributes) {
+        try {
+            FraseMotivadora original = fraseMotivadoraService.getById(frase.getIdFraseMotivadora());
+            original.setTexto(frase.getTexto());
+            original.setAutor(frase.getAutor());
+            fraseMotivadoraService.updateFraseMotivadora(frase.getIdFraseMotivadora(), original);
+            return "redirect:/frasesMotivadoras";
+        } catch (Exception e) {
+            System.out.println("🔥 ERROR CAPTURADO: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/editarFrase/" + frase.getIdFraseMotivadora();
+        }
     }
 
     @GetMapping("/eliminar-frase/{id}")
     public String eliminarFraseMotivador(@PathVariable int id){
         fraseMotivadoraService.deleteFraseMotivadora(id);
         return "redirect:/frasesMotivadoras";
+    }
+
+    @GetMapping("/buscarFrase")
+    public String buscarFrase(@RequestParam(required = false) Integer id, Model model,RedirectAttributes redirectAttributes){
+        List<FraseMotivadora> listaFrases;
+        try {
+            if (id != null) {
+                FraseMotivadora frase = fraseMotivadoraService.getById(id);
+                listaFrases = List.of(frase);
+            } else {
+                listaFrases = fraseMotivadoraService.getAllFraseMotivadora();
+            }
+            model.addAttribute("frases", listaFrases);
+        }catch (Exception e) {
+            System.out.println("🔥 ERROR CAPTURADO: " + e.getMessage());
+           redirectAttributes.addFlashAttribute("error", e.getMessage());
+            model.addAttribute("frases", List.of());
+        }
+        return "FraseMotivadora";
     }
 }
