@@ -20,78 +20,278 @@
     
     <div class="cursor-dot"></div>
     <div class="cursor-ring"></div>
-    <nav>
-        <a th:href="@{/}" class="nav-logo">Evoluciona</a>
-        <ul class="nav-links">
-        <li><a th:href="@{/}">Inicio</a></li>
-        </ul>
-    </nav>
+    
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
 
-    <div class="page-header">
-        <div class="page-header-left">
-        <div class="page-tag">Metas personales</div>
-        <h1 class="page-title">Obje<em>tivos</em></h1>
-        </div>
-    </div>
-
-    <div class="detalle-container">
-        <div class="detalle-card">
-            <div class="detalle-header">
-                <h1 class="detalle-titulo">Editar Objetivo</h1>
+            <div class="logo-mark">
+                <svg viewBox="0 0 24 24">
+                    <path d="M17 8C8 10 5.9 16.17 3.82 19.23L5.71 21l1-2.3A4.49 4.49 0 008 19c8-2 9-14 9-14z"/>
+                </svg>
             </div>
-           
-            <form th:action="@{/guardarObjetivo}" th:object="${objetivo}" method="post">
-                <input type="hidden" th:field="*{idObjetivos}">
-                <div class="form-group">
-                    <label for="titulo">Título:</label>
-                    <input type="text" id="titulo" th:field="*{tituloObjetivo}" required>
+
+            <span class="logo-text">
+                Florece<span>Crece</span>
+            </span>
+
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <div class="nav-section-label">Principal</div>
+
+            <a class="nav-item" th:href="@{/dashboard}">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M3 10.5L12 3l9 7.5"/>
+                        <path d="M5 10v10h14V10"/>
+                        <path d="M9 20v-6h6v6"/>
+                    </svg>
+                </span>
+                Inicio
+            </a>
+
+            <div class="nav-section-label">Salud Física</div>
+
+            <a class="nav-item" th:href="@{/perfilNutricional}">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 22s8-4 8-12V5l-8-3-8 3v5c0 8 8 12 8 12z"/>
+                        <path d="M9 12h6"/>
+                        <path d="M12 9v6"/>
+                    </svg>
+                </span>
+                Perfil Nutricional
+            </a>
+
+            <a class="nav-item" th:href="@{/rutina}">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M6 7v10"/>
+                        <path d="M18 7v10"/>
+                        <path d="M3 10v4"/>
+                        <path d="M21 10v4"/>
+                        <path d="M6 12h12"/>
+                    </svg>
+                </span>
+                Rutinas
+            </a>
+
+            <a class="nav-item" th:href="@{/ejercicios}">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10"/>
+                    </svg>
+                </span>
+                Ejercicios
+            </a>
+
+            <a class="nav-item" th:href="@{/racha-ejercicio}">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2C9 6 6 8.5 6 13a6 6 0 0012 0c0-4.5-3-7-6-11z"/>
+                    </svg>
+                </span>
+                Racha Ejercicio
+            </a>
+
+            <div class="nav-section-label">Lectura</div>
+
+            <a class="nav-item" th:href="@{/libro}">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+                        <path d="M4 4.5A2.5 2.5 0 016.5 2H20v20H6.5A2.5 2.5 0 014 19.5z"/>
+                    </svg>
+                </span>
+                Biblioteca
+            </a>
+
+            <a class="nav-item" th:href="@{/racha-lectura}">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 6v15"/>
+                        <path d="M5 4h7a4 4 0 014 4v13a4 4 0 00-4-4H5z"/>
+                        <path d="M19 4h-7a4 4 0 00-4 4"/>
+                    </svg>
+                </span>
+                Racha Lectura
+            </a>
+
+            <div class="nav-section-label">Mente & Alma</div>
+
+            <a class="nav-item" th:href="@{/entradaDiario}">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M4 4h16v16H4z"/>
+                        <path d="M8 8h8"/>
+                        <path d="M8 12h8"/>
+                        <path d="M8 16h5"/>
+                    </svg>
+                </span>
+                Diario
+            </a>
+
+            <a class="nav-item" th:href="@{/registroMeditacion}">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="5" r="2"/>
+                        <path d="M12 7v6"/>
+                        <path d="M7 21c1-4 3-6 5-6s4 2 5 6"/>
+                        <path d="M5 13l4 2"/>
+                        <path d="M19 13l-4 2"/>
+                    </svg>
+                </span>
+                Meditación
+            </a>
+
+            <a class="nav-item" th:href="@{/registrosSuenos}">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>
+                    </svg>
+                </span>
+                Sueño
+            </a>
+
+            <a class="nav-item" th:href="@{/apoyoEmocional}">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 10-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/>
+                    </svg>
+                </span>
+                Apoyo Emocional
+            </a>
+
+            <a class="nav-item active" th:href="@{/objetivos}">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"/>
+                        <circle cx="12" cy="12" r="6"/>
+                        <circle cx="12" cy="12" r="2"/>
+                    </svg>
+                </span>
+                Objetivos
+            </a>
+
+            <a class="nav-item" th:href="@{/fraseMotivadora}">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/>
+                    </svg>
+                </span>
+                Frase Motivadora
+            </a>
+
+        </nav>
+
+        <div class="sidebar-footer">
+
+            <div class="user-card">
+
+                <div class="user-avatar"
+                    th:text="${#strings.substring(usuario?.nombre ?: 'U',0,1)}">
+                    U
                 </div>
-                <div class="form-group">
-                    <label for="descripcion">Descripción:</label>
-                    <textarea id="descripcion" th:field="*{descripcionObjetivo}" required></textarea>
+
+                <div class="user-info">
+
+                    <div class="user-name"
+                        th:text="${usuario?.nombre ?: 'Usuario'}">
+                        Usuario
+                    </div>
+
+                    <div class="user-role">
+                        Miembro activo
+                    </div>
+
                 </div>
-                <div class="form-group">
-                    <label for="estado">Estado:</label>
-                    <select id="estado" th:field="*{estadoObjetivo}" required>
-                        <option value="Pendiente" th:selected="${objetivo.estadoObjetivo == 'Pendiente'}">Pendiente</option>
-                        <option value="En progreso" th:selected="${objetivo.estadoObjetivo == 'En progreso'}">En progreso</option>
-                        <option value="Completado" th:selected="${objetivo.estadoObjetivo == 'Completado'}">Completado</option>
-                    </select>
+
+                <a class="logout-btn"
+                th:href="@{/logout}"
+                title="Cerrar sesión">
+
+                    <svg viewBox="0 0 24 24">
+                        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+                        <path d="M16 17l5-5-5-5"/>
+                        <path d="M21 12H9"/>
+                    </svg>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+    <div class="main">
+        <div class="page-header">
+            <div class="page-header-left">
+                <div class="page-tag">Metas personales</div>
+                <h1 class="page-title">Obje<em>tivos</em></h1>
+            </div>
+        </div>
+
+        <div class="detalle-container">
+            <div class="detalle-card">
+                <div class="detalle-header">
+                    <h1 class="detalle-titulo">Editar Objetivo</h1>
                 </div>
-                <div class="form-group">
-                    <label for="fecha">Fecha:</label>
-                    <input type="date" id="fecha" name="fechaObjetivo" th:value="${objetivo.fechaObjetivo}" required>
-                </div>
-                <div class="form-group">
-                    <label for="usuario">Usuario:</label>
-                    <select id="usuario" th:field="*{usuario.id_usuario}" required>
-                        <option value="">Seleccionar...</option>
-                        <option th:each="user : ${usuario}" th:value="${user.id_usuario}" th:text="${user.nombre_completo}"></option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="fraseMotivadora">Frase motivadora:</label>
-                    <select id="fraseMotivadora" th:field="*{fraseMotivadora.idFraseMotivadora}" required>
-                        <option value="">Seleccionar...</option>
-                        <option th:each="frase : ${frase}" th:value="${frase.idFraseMotivadora}" th:text="${frase.texto}" ></option>
-                    </select>
-                </div>
-                <div class="detalle-footer">
-                    <button type="submit" class="btn-guardar">
-                        <div class="btn-guardar-slider">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="20" width="20"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
-                                <path d="m19,21H5c-1.1,0-2-.9-2-2V5c0-1.1.9-2,2-2h11l5,5v11c0,1.1-.9,2-2,2Z"
-                                    data-path="box"></path>
-                                <path d="M7 3L7 8L15 8" data-path="line-top"></path>
-                                <path d="M17 20L17 13L7 13L7 20" data-path="line-bottom"></path>
-                            </svg>
-                        </div>
-                        <span class="btn-guardar-text">Guardar</span>
-                    </button>
-                    <a th:href="@{'/detalleObjetivos/' + ${objetivo.idObjetivos}}"  class="btn-secondary">Cancelar</a>
-                </div>
-            </form>
+            
+                <form th:action="@{/guardarObjetivo}" th:object="${objetivo}" method="post">
+                    <input type="hidden" th:field="*{idObjetivos}">
+                    <div class="form-group">
+                        <label for="titulo">Título:</label>
+                        <input type="text" id="titulo" th:field="*{tituloObjetivo}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcion">Descripción:</label>
+                        <textarea id="descripcion" th:field="*{descripcionObjetivo}" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="estado">Estado:</label>
+                        <select id="estado" th:field="*{estadoObjetivo}" required>
+                            <option value="Pendiente" th:selected="${objetivo.estadoObjetivo == 'Pendiente'}">Pendiente</option>
+                            <option value="En progreso" th:selected="${objetivo.estadoObjetivo == 'En progreso'}">En progreso</option>
+                            <option value="Completado" th:selected="${objetivo.estadoObjetivo == 'Completado'}">Completado</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha">Fecha:</label>
+                        <input type="date" id="fecha" name="fechaObjetivo" th:value="${objetivo.fechaObjetivo}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="usuario">Usuario:</label>
+                        <select id="usuario" th:field="*{usuario.id_usuario}" required>
+                            <option value="">Seleccionar...</option>
+                            <option th:each="user : ${listaUsuarios}" th:value="${user.id_usuario}" th:text="${user.nombre_completo}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="fraseMotivadora">Frase motivadora:</label>
+                        <select id="fraseMotivadora" th:field="*{fraseMotivadora.idFraseMotivadora}" required>
+                            <option value="">Seleccionar...</option>
+                            <option th:each="frase : ${frase}" th:value="${frase.idFraseMotivadora}" th:text="${frase.texto}" ></option>
+                        </select>
+                    </div>
+                    <div class="detalle-footer">
+                        <button type="submit" class="btn-guardar">
+                            <div class="btn-guardar-slider">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="20" width="20"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+                                    <path d="m19,21H5c-1.1,0-2-.9-2-2V5c0-1.1.9-2,2-2h11l5,5v11c0,1.1-.9,2-2,2Z"
+                                        data-path="box"></path>
+                                    <path d="M7 3L7 8L15 8" data-path="line-top"></path>
+                                    <path d="M17 20L17 13L7 13L7 20" data-path="line-bottom"></path>
+                                </svg>
+                            </div>
+                            <span class="btn-guardar-text">Guardar</span>
+                        </button>
+                        <a th:href="@{'/detalleObjetivos/' + ${objetivo.idObjetivos}}"  class="btn-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
