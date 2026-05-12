@@ -241,19 +241,22 @@ th { background: var(--menta); color: var(--verde); }
 /* Logo */
 .logo-flotante {
   position: fixed;
-  bottom: 24px;
-  left: 24px;
-  z-index: 100;
-  width: 143px;
-  height: 143px;
+  bottom: 24px; left: 24px;
+  z-index: 300;
+  width: 99px; height: 99px;
   border-radius: 50%;
   overflow: hidden;
   border: 3px solid white;
   box-shadow: 0 4px 16px rgba(45,106,79,0.35);
-  transition: transform .2s, box-shadow .2s;
+  transition: transform .25s, box-shadow .25s;
   display: block;
+  cursor: pointer;
 }
 .logo-flotante img { width: 100%; height: 100%; object-fit: cover; }
+.logo-flotante:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 22px rgba(45,106,79,0.45);
+}
 
 .btn-home {
   position: absolute;
@@ -265,3 +268,185 @@ th { background: var(--menta); color: var(--verde); }
   text-decoration: none;
   opacity: 0.85;
 }
+
+
+
+/* ============================================
+   SIDEBAR — agregar al final de rachas.css
+   ============================================ */
+
+:root {
+  --sidebar-w: 260px;
+  --sidebar-bg: #1a3d2e;
+  --sidebar-hover: rgba(116,198,157,0.12);
+  --sidebar-active: rgba(116,198,157,0.22);
+  --sidebar-text: #c8e6d4;
+  --sidebar-label: rgba(149,213,178,0.55);
+  --transition: 0.35s cubic-bezier(.4,0,.2,1);
+}
+
+/* Sidebar principal */
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 100vh;
+  width: var(--sidebar-w);
+  background: var(--sidebar-bg);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(calc(-1 * var(--sidebar-w)));
+  transition: transform var(--transition), box-shadow var(--transition);
+  overflow: hidden;
+}
+.sidebar.open {
+  transform: translateX(0);
+  box-shadow: 4px 0 32px rgba(0,0,0,0.25);
+}
+
+/* Overlay oscuro de fondo */
+.sidebar-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 199;
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+.sidebar-overlay.visible {
+  display: block;
+  opacity: 1;
+}
+
+/* Cabecera con logo */
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 22px 20px 18px;
+  border-bottom: 1px solid rgba(116,198,157,0.15);
+  flex-shrink: 0;
+}
+.logo-mark {
+  width: 36px; height: 36px;
+  background: var(--verde-menta);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.logo-mark svg { width: 22px; height: 22px; fill: var(--sidebar-bg); }
+.logo-text {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #e8f5ee;
+  letter-spacing: -.01em;
+}
+.logo-text span { color: var(--verde-menta); }
+
+/* Botón cerrar (X) */
+.sidebar-close {
+  position: absolute;
+  top: 14px; right: 14px;
+  width: 30px; height: 30px;
+  border: none;
+  background: rgba(116,198,157,0.12);
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--sidebar-text);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  transition: background .2s, transform .2s;
+}
+.sidebar-close:hover {
+  background: rgba(116,198,157,0.25);
+  transform: rotate(90deg);
+}
+
+/* Área de navegación con scroll */
+.sidebar-nav {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 12px 10px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(116,198,157,0.3) transparent;
+}
+.sidebar-nav::-webkit-scrollbar { width: 4px; }
+.sidebar-nav::-webkit-scrollbar-thumb {
+  background: rgba(116,198,157,0.3);
+  border-radius: 2px;
+}
+
+/* Etiquetas de sección */
+.nav-section-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--sidebar-label);
+  padding: 14px 10px 6px;
+}
+
+/* Items del menú */
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: var(--sidebar-text);
+  text-decoration: none;
+  font-size: .9rem;
+  font-weight: 500;
+  transition: background .18s, color .18s, transform .15s;
+  margin-bottom: 2px;
+}
+.nav-item:hover {
+  background: var(--sidebar-hover);
+  color: #e8f5ee;
+  transform: translateX(3px);
+}
+.nav-item.active {
+  background: var(--sidebar-active);
+  color: #e8f5ee;
+}
+.nav-icon {
+  width: 22px; height: 22px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  opacity: .85;
+}
+.nav-icon svg { width: 18px; height: 18px; }
+
+/* Pie del sidebar */
+.sidebar-footer {
+  padding: 14px 16px;
+  border-top: 1px solid rgba(116,198,157,0.15);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.sidebar-avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--verde-menta);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: .85rem;
+  color: var(--sidebar-bg);
+  flex-shrink: 0;
+}
+.sidebar-user-info { flex: 1; }
+.sidebar-user-name { font-size: .82rem; font-weight: 600; color: #e8f5ee; }
+.sidebar-user-role { font-size: .72rem; color: var(--sidebar-label); }
+.sidebar-logout {
+  color: var(--sidebar-label);
+  font-size: .95rem;
+  text-decoration: none;
+  transition: color .2s;
+}
+.sidebar-logout:hover { color: #ff9999; }
+
+/* Logo flotante — reemplaza el estilo anterior */
+
