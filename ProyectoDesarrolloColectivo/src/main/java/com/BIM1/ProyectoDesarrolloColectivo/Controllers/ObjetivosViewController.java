@@ -42,7 +42,7 @@ public class ObjetivosViewController {
     @GetMapping("/agregarObjetivo")
     public String agregarObjetivo(Model model) {
         model.addAttribute("objetivo", new Objetivos());
-        model.addAttribute("usuario",usuarioService.getAllUsuarios());
+        model.addAttribute("listaUsuarios",usuarioService.getAllUsuarios());
         model.addAttribute("frase",frasesMotivadorasService.getAllFraseMotivadora());
         return "agregarObjetivo";
     }
@@ -63,7 +63,7 @@ public class ObjetivosViewController {
     public String editarObjetivo(@PathVariable int id, Model model) {
         Objetivos objetivo = service.getById(id);
         model.addAttribute("objetivo", objetivo);
-        model.addAttribute("usuario",usuarioService.getAllUsuarios());
+        model.addAttribute("listaUsuarios",usuarioService.getAllUsuarios());
         model.addAttribute("frase",frasesMotivadorasService.getAllFraseMotivadora());
         return "editarObjetivo";
     }
