@@ -47,7 +47,7 @@ public class ApoyoEmocionalViewController {
     @GetMapping("/agregarApoyo")
     public String agregarApoyoEmocional(Model model){
         model.addAttribute("apoyo",new ApoyoEmocional());
-        model.addAttribute("usuario",usuarioService.getAllUsuarios());
+        model.addAttribute("listaUsuarios",usuarioService.getAllUsuarios());
         return "agregarApoyo";
     }
 
@@ -66,7 +66,7 @@ public class ApoyoEmocionalViewController {
     public String formularioEditar(@PathVariable Integer id, Model model) {
         ApoyoEmocional apoyo = service.getById(id);
         model.addAttribute("apoyo", apoyo);
-        model.addAttribute("usuario",usuarioService.getAllUsuarios());
+        model.addAttribute("listaUsuarios",usuarioService.getAllUsuarios());
         return "editarApoyo";
     }
 
