@@ -203,7 +203,7 @@
         <input type="number" name="id" class="search-input" placeholder="Buscar por ID..."/>
       </div>
       <button type="submit" class="btn-primary">Buscar</button>
-      <button type="button" class="btn-secondary" onclick="window.location.href=window.location.pathname">Limpiar</button>
+      <a th:href="@{/rutina}" class="btn-secondary">Actualizar</a>
     </form>
     <span class="contador"
           th:text="${rutina != null ? #lists.size(rutina) : 0} + ' rutina(s)'">0 rutina(s)</span>
