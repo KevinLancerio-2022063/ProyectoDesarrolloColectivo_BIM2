@@ -15,12 +15,6 @@ public class EntradaDiarioServiceImplements implements EntradaDiarioService {
     public EntradaDiarioServiceImplements(EntradaDiarioRepository entradaDiarioRepository) {
         this.entradaDiarioRepository = entradaDiarioRepository;
     }
-
-    @Override
-    public List<EntradaDiario> getEntradaByUsuario(Integer idUsuario) {
-        return List.of();
-    }
-
     @Override
     public List<com.BIM1.ProyectoDesarrolloColectivo.Entity.EntradaDiario> getAListEntradaDiario() {
         return entradaDiarioRepository.findAll();
