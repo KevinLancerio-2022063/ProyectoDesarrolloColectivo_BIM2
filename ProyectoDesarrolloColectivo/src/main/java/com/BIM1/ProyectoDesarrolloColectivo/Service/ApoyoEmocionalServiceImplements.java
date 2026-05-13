@@ -29,6 +29,11 @@ public class ApoyoEmocionalServiceImplements implements ApoyoEmocionalService{
     }
 
     @Override
+    public List<ApoyoEmocional> getByIdUsuario(Integer id) {
+        return apoyoEmocionalRepository.findByIdUsuario(id);
+    }
+
+    @Override
     public ApoyoEmocional saveApoyoEmocional(ApoyoEmocional apoyoEmocional) throws RuntimeException {
         apoyoEmocionalValidator.ApoyoEmocionalValidacion(apoyoEmocional);
         return apoyoEmocionalRepository.save(apoyoEmocional);
