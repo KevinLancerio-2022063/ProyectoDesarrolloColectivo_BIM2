@@ -7,6 +7,7 @@ import java.util.List;
 public interface ObjetivosService {
     List<Objetivos> getAllObjetivos();
     Objetivos getById(Integer id);
+    List<Objetivos> getByIdUsuario(Integer id_usuario);
     Objetivos saveObjetivos(Objetivos objetivos) throws RuntimeException;
     Objetivos updateObjetivos(Integer id, Objetivos objetivos);
     void deleteObjetivos(Integer id);
