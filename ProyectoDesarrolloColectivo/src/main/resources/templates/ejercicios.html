@@ -212,7 +212,8 @@
     <div class="ejercicios-grid">
 
         <div class="ej-card"
-             th:each="ej : ${ejercicios != null ? ejercicios : T(java.util.Collections).emptyList()}">
+             th:each="ej : ${ejercicios != null ? ejercicios : T(java.util.Collections).emptyList()}"
+             th:if="${session.usuarioLogueado.rol == 'ADMIN' or ej.fk_id_usuario == session.usuarioLogueado.id_usuario}">
 
             <input type="checkbox"
                    th:id="'flip-ej-' + ${ej.id_ejercicio}"
