@@ -1,6 +1,7 @@
 package com.BIM1.ProyectoDesarrolloColectivo.Controllers;
 
 import com.BIM1.ProyectoDesarrolloColectivo.Exceptions.CustomException;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,9 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.BIM1.ProyectoDesarrolloColectivo.Entity.Objetivos;
+import com.BIM1.ProyectoDesarrolloColectivo.Entity.Usuario;
 import com.BIM1.ProyectoDesarrolloColectivo.Service.FraseMotivadoraService;
 import com.BIM1.ProyectoDesarrolloColectivo.Service.ObjetivosService;
-import com.BIM1.ProyectoDesarrolloColectivo.Service.UsuarioService;
 
 import java.util.List;
 
@@ -19,15 +20,14 @@ public class ObjetivosViewController {
     @Autowired
     private ObjetivosService service;
 
-    @Autowired
-    private UsuarioService usuarioService;
 
     @Autowired
     private FraseMotivadoraService frasesMotivadorasService;
 
     @GetMapping("/objetivos")
-    public String mostrarObjetivos(Model model){
-        model.addAttribute("listaObjetivos",service.getAllObjetivos());
+    public String mostrarObjetivos(Model model, HttpSession session){
+        Integer id_usuario = (Integer) session.getAttribute("usuarioId");
+        model.addAttribute("listaObjetivos",service.getByIdUsuario(id_usuario));
         return "Objetivos";
     }
 
@@ -42,18 +42,21 @@ public class ObjetivosViewController {
     @GetMapping("/agregarObjetivo")
     public String agregarObjetivo(Model model) {
         model.addAttribute("objetivo", new Objetivos());
-        model.addAttribute("listaUsuarios",usuarioService.getAllUsuarios());
         model.addAttribute("frase",frasesMotivadorasService.getAllFraseMotivadora());
         return "agregarObjetivo";
     }
 
     @PostMapping("/guardarObjetivoCreado")
-    public String guardarObjetivoCreado(@ModelAttribute Objetivos objetivo, RedirectAttributes redirectAttributes) {
+    public String guardarObjetivoCreado(@ModelAttribute Objetivos objetivo, RedirectAttributes redirectAttributes, HttpSession session) {
         try {
+            Integer id_usuario = (Integer) session.getAttribute("usuarioId");
+            Usuario usuario = new Usuario();
+            usuario.setId_usuario(id_usuario);
+            objetivo.setUsuario(usuario);
             service.saveObjetivos(objetivo);
             return "redirect:/objetivos";
         } catch (CustomException e) {
-            System.out.println("🔥 ERROR CAPTURADO: " + e.getMessage());
+            System.out.println(" ERROR CAPTURADO: " + e.getMessage());
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/agregarObjetivo";
         }
@@ -63,21 +66,24 @@ public class ObjetivosViewController {
     public String editarObjetivo(@PathVariable int id, Model model) {
         Objetivos objetivo = service.getById(id);
         model.addAttribute("objetivo", objetivo);
-        model.addAttribute("listaUsuarios",usuarioService.getAllUsuarios());
         model.addAttribute("frase",frasesMotivadorasService.getAllFraseMotivadora());
         return "editarObjetivo";
     }
 
     @PostMapping("/guardarObjetivo")
-    public String guardarObjetivo(@ModelAttribute  Objetivos objetivo, RedirectAttributes redirectAttributes) {
+    public String guardarObjetivo(@ModelAttribute  Objetivos objetivo, RedirectAttributes redirectAttributes, HttpSession session) {
         try{
+            Integer id_usuario = (Integer) session.getAttribute("usuarioId");
+            Usuario usuario = new Usuario();
+            usuario.setId_usuario(id_usuario);
+
             Objetivos original = service.getById(objetivo.getIdObjetivos());
             original.setTituloObjetivo(objetivo.getTituloObjetivo());
             original.setDescripcionObjetivo(objetivo.getDescripcionObjetivo());
             original.setEstadoObjetivo(objetivo.getEstadoObjetivo());
             original.setFechaObjetivo(objetivo.getFechaObjetivo());
-            original.setUsuario(objetivo.getUsuario());
             original.setFraseMotivadora(objetivo.getFraseMotivadora());
+            original.setUsuario(usuario); // ← usuario de sesión, no del form
             service.updateObjetivos(objetivo.getIdObjetivos(), original);
             return "redirect:/detalleObjetivos/" + objetivo.getIdObjetivos();
         } catch (CustomException e) {
