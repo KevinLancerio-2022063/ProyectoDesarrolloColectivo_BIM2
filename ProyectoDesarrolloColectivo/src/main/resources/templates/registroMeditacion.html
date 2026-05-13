@@ -200,8 +200,14 @@
                     Usuario
                 </div>
 
-                <div class="user-role">
+                <div class="user-role"
+                     th:if="${session.rol == 'USER'}">
                     Miembro activo
+                </div>
+
+                <div class="user-role"
+                     th:if="${session.rol == 'ADMIN'}">
+                    Administrador
                 </div>
 
             </div>
@@ -238,12 +244,23 @@
 
 <header class="hero">
     <div>
-        <span class="tag">Bienestar personal</span>
+        <span class="tag" th:if="${session.rol == 'USER'}">Bienestar personal</span>
+        <span class="tag" th:if="${session.rol == 'ADMIN'}">Panel Administrador</span>
+
         <h1 class="animated-title">Mis <em>Meditaciones</em></h1>
-        <p>Registra, edita y organiza tus sesiones de meditación.</p>
+
+        <p th:if="${session.rol == 'USER'}">
+            Registra y organiza tus sesiones de meditación.
+        </p>
+
+        <p th:if="${session.rol == 'ADMIN'}">
+            Administra todos los registros de meditación del sistema.
+        </p>
     </div>
 
-    <a href="#formulario" class="btn-new">
+    <a href="#formulario"
+       class="btn-new"
+       th:if="${session.rol == 'ADMIN'}">
         <svg viewBox="0 0 24 24">
             <path d="M12 5v14"/>
             <path d="M5 12h14"/>
@@ -262,6 +279,17 @@
         <span th:text="${error}"></span>
     </div>
 
+    <section class="empty"
+             th:if="${session.rol == 'ADMIN'}">
+
+        <h3>Vista Administrador</h3>
+
+        <p>
+            Estás visualizando y administrando todas las meditaciones registradas.
+        </p>
+
+    </section>
+
     <section class="cards-grid" th:if="${not #lists.isEmpty(registroMeditacion)}">
 
         <article class="meditacion-card"
@@ -279,7 +307,15 @@
                     </svg>
                 </div>
 
-                <span class="user-badge">Meditación</span>
+                <span class="user-badge"
+                      th:if="${session.rol == 'USER'}">
+                    Meditación
+                </span>
+
+                <span class="user-badge"
+                      th:if="${session.rol == 'ADMIN'}">
+                    Registro global
+                </span>
             </div>
 
             <h2 th:text="${meditacion.tipo_meditacion}">Tipo meditación</h2>
@@ -297,6 +333,14 @@
                 <strong th:text="${#temporals.format(meditacion.fecha_registro, 'yyyy-MM-dd HH:mm')}">
                     2026-04-21 10:30
                 </strong>
+
+                <div th:if="${session.rol == 'ADMIN'}"
+                     style="margin-top:10px;">
+                    <span class="meta-icon">
+                        Usuario ID
+                    </span>
+                    <strong th:text="${meditacion.fk_id_usuario}"></strong>
+                </div>
             </div>
 
             <div class="content-box">
@@ -322,7 +366,8 @@
                 <p th:text="${meditacion.nivel_dificultad}">Principiante</p>
             </div>
 
-            <div class="user-actions">
+            <div class="user-actions"
+                 th:if="${session.rol == 'ADMIN'}">
                 <a th:href="@{/registroMeditacion/editar/{id}(id=${meditacion.id_registro_meditacion})}"
                    class="btn-action edit">
                     Editar
@@ -340,13 +385,27 @@
 
     <section class="empty" th:if="${#lists.isEmpty(registroMeditacion)}">
         <h3>Aún no tienes meditaciones registradas</h3>
-        <p>Cuando registres una sesión de meditación, aparecerá aquí.</p>
-        <a href="#formulario" class="btn-new empty-btn">Crear mi primer registro</a>
+
+        <p th:if="${session.rol == 'USER'}">
+            Cuando registres una sesión de meditación, aparecerá aquí.
+        </p>
+
+        <p th:if="${session.rol == 'ADMIN'}">
+            Actualmente no existen meditaciones registradas en el sistema.
+        </p>
+
+        <a href="#formulario"
+           class="btn-new empty-btn"
+           th:if="${session.rol == 'ADMIN'}">
+            Crear primer registro
+        </a>
     </section>
 
 </main>
 
-<section class="form-wrapper" id="formulario">
+<section class="form-wrapper"
+         id="formulario"
+         th:if="${session.rol == 'ADMIN'}">
     <form class="form-card"
           th:object="${registroMeditacionFormu}"
           th:action="${registroMeditacionFormu.id_registro_meditacion == null}
@@ -355,11 +414,11 @@
           method="post">
 
         <div class="form-header">
-            <span>Mi meditación</span>
+            <span>Administración de meditación</span>
             <h2 th:text="${registroMeditacionFormu.id_registro_meditacion == null} ? 'Nuevo registro' : 'Actualizar registro'">
                 Nuevo registro
             </h2>
-            <p>Completa la información de tu sesión de meditación.</p>
+            <p>Completa la información de la sesión de meditación.</p>
         </div>
 
         <input type="hidden" th:field="*{id_registro_meditacion}">
@@ -428,7 +487,8 @@
     </form>
 </section>
 
-<section class="delete-overlay" th:if="${meditacionEliminar != null}">
+<section class="delete-overlay"
+         th:if="${meditacionEliminar != null and session.rol == 'ADMIN'}">
     <div class="delete-card">
 
         <div class="delete-icon">!</div>
