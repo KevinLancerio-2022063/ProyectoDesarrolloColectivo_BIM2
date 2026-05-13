@@ -4,19 +4,17 @@ import com.BIM1.ProyectoDesarrolloColectivo.Entity.RegistroSueno;
 import com.BIM1.ProyectoDesarrolloColectivo.Repository.UsuarioRepository;
 import com.BIM1.ProyectoDesarrolloColectivo.Service.RegistroSuenoService;
 import com.BIM1.ProyectoDesarrolloColectivo.Service.UsuarioService;
-import com.BIM1.ProyectoDesarrolloColectivo.SpringSecurity.UsuarioAutenticado;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/registroSueno")
@@ -25,77 +23,95 @@ public class RegistroSuenoViewController {
     private final UsuarioService usuarioService;
     private final UsuarioRepository usuarioRepository;
 
-    @Autowired
-    private UsuarioAutenticado usuarioAutenticado;
+    public RegistroSuenoViewController(UsuarioService usuarioService, UsuarioRepository usuarioRepository) {
+        this.usuarioService = usuarioService;this.usuarioRepository = usuarioRepository;
+    }
 
     @Autowired
     private RegistroSuenoService service;
 
-    public RegistroSuenoViewController(UsuarioService usuarioService, UsuarioRepository usuarioRepository) {
-        this.usuarioService = usuarioService;
-        this.usuarioRepository = usuarioRepository;
-    }
-
     @GetMapping
-    public String listar(Model model) {
+    public String listar(HttpSession session, Model model) {
 
-        String rol = usuarioAutenticado.getRol();
-        Integer usuarioId = usuarioAutenticado.getId();
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
 
-        if ("ADMIN".equals(rol)) {
-            model.addAttribute("registros", service.getAllRegistrosSuenos());
-
-        } else {
-            model.addAttribute("registros", service.getRegistrosByUsuario(usuarioId));
-
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
         }
 
         model.addAttribute("registro", new RegistroSueno());
-        model.addAttribute("usuarios", usuarioService.getAllUsuarios());
+
+        // El ADMIN puede ver todos los registros
+        if ("ADMIN".equals(rol)) {
+
+            model.addAttribute("registros", service.getAllRegistrosSuenos());
+
+            model.addAttribute("usuarios", usuarioService.getAllUsuarios());
+
+        } else {
+
+            // El usuario solo puede ver sus propios registros
+            model.addAttribute("registros", service.getRegistrosByUsuario(usuarioId));
+        }
 
         return "registroSueno";
     }
 
     @PostMapping("/guardar")
-    public String guardar(@Valid RegistroSueno registro, BindingResult result, Model model, RedirectAttributes redirect) {
+    public String guardar(@Valid RegistroSueno registro, BindingResult result, HttpSession session, Model model, RedirectAttributes redirect) {
 
-        String rol = usuarioAutenticado.getRol();
-        Integer usuarioId = usuarioAutenticado.getId();
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
 
-        // Asignamos el rol de USER automáticamente
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
+        // El usuario solo puede guardar sus datos
         if (!"ADMIN".equals(rol)) {
-
             registro.setFkIdUsuario(usuarioId);
         }
 
         if (result.hasErrors()) {
 
-            if ("ADMIN".equals(rol)) {model.addAttribute("registros", service.getAllRegistrosSuenos());
+            if ("ADMIN".equals(rol)) {
+                model.addAttribute("registros", service.getAllRegistrosSuenos());
+
+                model.addAttribute("usuarios", usuarioService.getAllUsuarios());
 
             } else {
+
                 model.addAttribute("registros", service.getRegistrosByUsuario(usuarioId));
             }
 
-            model.addAttribute("usuarios", usuarioService.getAllUsuarios());
-            model.addAttribute("errores", result.getFieldErrors().stream().map(e -> e.getDefaultMessage()).toList());
+            model.addAttribute("errores", result.getFieldErrors().stream().map(e -> e.getDefaultMessage()).toList()
+            );
 
             return "registroSueno";
         }
 
         try {
 
-            if ("ADMIN".equals(rol)) {
-
-                if (!usuarioRepository.existsById(registro.getFkIdUsuario())) {
-                    throw new RuntimeException("Usuario no encontrado");
-                }
+            if (!usuarioRepository.existsById(registro.getFkIdUsuario())) {
+                throw new RuntimeException("Usuario no encontrado");
             }
 
-        } catch (RuntimeException ex) {
+        } catch (Exception ex) {
 
             model.addAttribute("registro", registro);
-            model.addAttribute("registros", service.getAllRegistrosSuenos());
-            model.addAttribute("usuarios", usuarioService.getAllUsuarios());
+
+            if ("ADMIN".equals(rol)) {
+
+                model.addAttribute("registros", service.getAllRegistrosSuenos());
+
+                model.addAttribute("usuarios", usuarioService.getAllUsuarios());
+
+            } else {
+
+                model.addAttribute("registros", service.getRegistrosByUsuario(usuarioId));
+            }
+
             model.addAttribute("errores", List.of(ex.getMessage()));
 
             return "registroSueno";
@@ -109,57 +125,55 @@ public class RegistroSuenoViewController {
     }
 
     @GetMapping("/editar/{id}")
-    public String editar(@PathVariable Integer id, Model model, RedirectAttributes redirect) {
+    public String editar(@PathVariable Integer id, HttpSession session, Model model, RedirectAttributes redirect) {
 
-        String rol = usuarioAutenticado.getRol();
-        Integer usuarioId = usuarioAutenticado.getId();
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
 
         RegistroSueno registro = service.getRegistrosSuenosById(id);
 
-        if (registro == null) {
-
-            redirect.addFlashAttribute("errores", List.of("Registro no encontrado"));
-
-            return "redirect:/registroSueno";
-        }
-
-        if (!"ADMIN".equals(rol) && !usuarioId.equals(registro.getFkIdUsuario())) {
+        // El usuario solo puede editar sus registros
+        if (!"ADMIN".equals(rol) && !registro.getFkIdUsuario().equals(usuarioId)) {
 
             redirect.addFlashAttribute("errores", List.of("No tienes permiso para editar este registro"));
 
             return "redirect:/registroSueno";
         }
 
+        model.addAttribute("registro", registro);
+
         if ("ADMIN".equals(rol)) {
+
+            model.addAttribute("usuarios", usuarioService.getAllUsuarios());
+
             model.addAttribute("registros", service.getAllRegistrosSuenos());
 
         } else {
+
             model.addAttribute("registros", service.getRegistrosByUsuario(usuarioId));
-
         }
-
-        model.addAttribute("registro", registro);
-        model.addAttribute("usuarios", usuarioService.getAllUsuarios());
 
         return "registroSueno";
     }
 
     @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable Integer id, RedirectAttributes redirect) {
+    public String eliminar(@PathVariable Integer id, HttpSession session, RedirectAttributes redirect) {
 
-        String rol = usuarioAutenticado.getRol();
-        Integer usuarioId = usuarioAutenticado.getId();
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
 
         RegistroSueno registro = service.getRegistrosSuenosById(id);
 
-        if (registro == null) {
-
-            redirect.addFlashAttribute("errores", List.of("Registro no encontrado"));
-
-            return "redirect:/registroSueno";
-        }
-
-        if (!"ADMIN".equals(rol) && !usuarioId.equals(registro.getFkIdUsuario())) {
+        // El usuario solo puede eliminar sus registros
+        if (!"ADMIN".equals(rol) && !registro.getFkIdUsuario().equals(usuarioId)) {
 
             redirect.addFlashAttribute("errores", List.of("No tienes permiso para eliminar este registro"));
 
