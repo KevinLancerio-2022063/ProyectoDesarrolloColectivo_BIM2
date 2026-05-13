@@ -1,5 +1,6 @@
 package com.BIM1.ProyectoDesarrolloColectivo.Controllers;
 
+import com.BIM1.ProyectoDesarrolloColectivo.Entity.ApoyoEmocional;
 import com.BIM1.ProyectoDesarrolloColectivo.Exceptions.CustomException;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,15 +101,32 @@ public class ObjetivosViewController {
     }
 
     @GetMapping("/buscar")
-    public String lisatrObjetivos(@RequestParam(required = false) Integer id, Model model) {
+    public String lisatrObjetivos(@RequestParam(required = false) Integer id, Model model,HttpSession session) {
         List<Objetivos> listaObjetivos;
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
 
         try {
             if (id != null) {
-                Objetivos buscar = service.getById(id); //  aquí ya puede lanzar excepción , dime que mas quieres que haga
-                listaObjetivos = List.of(buscar);
+                Objetivos buscar = service.getById(id); //  aquí ya puede lanzar excepción
+                // Verifica que el Objetivo pertenezca al usuario en sesión
+                // Si es ADMIN puede ver cualquiera, si es USER solo los suyos
+                if ("ADMIN".equals(rol)|| buscar.getUsuario().getId_usuario().equals(usuarioId)){
+                    listaObjetivos = List.of(buscar);
+                }else {
+                    // El objetivo no le pertenece, se muestra lista vacía con mensaje
+                    model.addAttribute("error", "No tienes permiso para ver este registro");
+                    model.addAttribute("listaObjetivos", List.of());
+                    return "Objetivos";
+                }
             } else {
-                listaObjetivos = service.getAllObjetivos();
+                // Sin id: ADMIN ve todos, USER solo los suyos
+                if ("ADMIN".equals(rol)) {
+                    listaObjetivos = service.getAllObjetivos();
+                } else {
+                    listaObjetivos = service.getByIdUsuario(usuarioId);
+                }
+
             }
 
             model.addAttribute("listaObjetivos", listaObjetivos);
