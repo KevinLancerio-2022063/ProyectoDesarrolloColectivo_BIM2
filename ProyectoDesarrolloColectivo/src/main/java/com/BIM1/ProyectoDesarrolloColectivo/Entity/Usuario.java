@@ -27,6 +27,17 @@ public class Usuario {
     @Column(name = "contraseña")
     private String contraseña;
 
+    @Column(name = "rol", nullable = false)
+    private String rol ="USER";
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
     public Integer getId_usuario() {
         return id_usuario;
     }
