@@ -200,8 +200,14 @@
                     Usuario
                 </div>
 
-                <div class="user-role">
+                <div class="user-role"
+                     th:if="${session.rol == 'USER'}">
                     Miembro activo
+                </div>
+
+                <div class="user-role"
+                     th:if="${session.rol == 'ADMIN'}">
+                    Administrador
                 </div>
 
             </div>
@@ -238,12 +244,23 @@
 
 <header class="hero">
     <div>
-        <span class="tag">Bienestar personal</span>
+        <span class="tag" th:if="${session.rol == 'USER'}">Bienestar personal</span>
+        <span class="tag" th:if="${session.rol == 'ADMIN'}">Panel Administrador</span>
+
         <h1 class="animated-title">Mis <em>Entradas Diario</em></h1>
-        <p>Registra, edita, actualiza y organiza tus reflexiones personales.</p>
+
+        <p th:if="${session.rol == 'USER'}">
+            Registra y organiza tus reflexiones personales.
+        </p>
+
+        <p th:if="${session.rol == 'ADMIN'}">
+            Administra todos los registros del sistema.
+        </p>
     </div>
 
-    <a href="#formulario" class="btn-new">
+    <a href="#formulario"
+       class="btn-new"
+       th:if="${session.rol == 'ADMIN'}">
         <svg viewBox="0 0 24 24">
             <path d="M12 5v14"/>
             <path d="M5 12h14"/>
@@ -253,6 +270,17 @@
 </header>
 
 <main class="container">
+
+    <section class="empty"
+             th:if="${session.rol == 'ADMIN'}">
+
+        <h3>Vista Administrador</h3>
+
+        <p>
+            Estás visualizando y administrando todas las entradas registradas.
+        </p>
+
+    </section>
 
     <section class="cards-grid" th:if="${not #lists.isEmpty(entradaDiario)}">
 
@@ -271,7 +299,15 @@
                     </svg>
                 </div>
 
-                <span class="user-badge">Mi registro</span>
+                <span class="user-badge"
+                      th:if="${session.rol == 'USER'}">
+                    Mi registro
+                </span>
+
+                <span class="user-badge"
+                      th:if="${session.rol == 'ADMIN'}">
+                    Registro global
+                </span>
             </div>
 
             <h2 th:text="${entrada.que_paso}">Título</h2>
@@ -287,6 +323,17 @@
                     Fecha
                 </span>
                 <strong th:text="${entrada.fecha}"></strong>
+
+                <div th:if="${session.rol == 'ADMIN'}"
+                     style="margin-top:10px;">
+
+                    <span class="meta-icon">
+                        Usuario ID
+                    </span>
+
+                    <strong th:text="${entrada.fk_id_usuario}"></strong>
+
+                </div>
             </div>
 
             <div class="content-box">
@@ -310,7 +357,8 @@
                 <p th:text="${entrada.reflexion}"></p>
             </div>
 
-            <div class="user-actions">
+            <div class="user-actions"
+                 th:if="${session.rol == 'ADMIN'}">
                 <a th:href="@{/entradaDiario/editar/{id}(id=${entrada.id_entrada_diario})}" class="btn-action edit">
                     Editar
                 </a>
@@ -326,13 +374,27 @@
 
     <section class="empty" th:if="${#lists.isEmpty(entradaDiario)}">
         <h3>Aún no tienes registros</h3>
-        <p>Cuando empieces a escribir tu diario, aparecerá aquí.</p>
-        <a href="#formulario" class="btn-new empty-btn">Crear mi primer registro</a>
+
+        <p th:if="${session.rol == 'USER'}">
+            Cuando empieces a escribir tu diario, aparecerá aquí.
+        </p>
+
+        <p th:if="${session.rol == 'ADMIN'}">
+            Actualmente no existen entradas registradas en el sistema.
+        </p>
+
+        <a href="#formulario"
+           class="btn-new empty-btn"
+           th:if="${session.rol == 'ADMIN'}">
+            Crear primer registro
+        </a>
     </section>
 
 </main>
 
-<section class="form-wrapper" id="formulario">
+<section class="form-wrapper"
+         id="formulario"
+         th:if="${session.rol == 'ADMIN'}">
     <form class="form-card"
           th:object="${entradaDiarioFormu}"
           th:action="${entradaDiarioFormu.id_entrada_diario == null}
@@ -341,11 +403,11 @@
           method="post">
 
         <div class="form-header">
-            <span>Mi diario</span>
+            <span>Administración de diario</span>
             <h2 th:text="${entradaDiarioFormu.id_entrada_diario == null} ? 'Nuevo registro' : 'Actualizar registro'">
                 Nuevo registro
             </h2>
-            <p>Completa la información de tu entrada personal.</p>
+            <p>Completa la información de la entrada personal.</p>
         </div>
 
         <input type="hidden" th:field="*{id_entrada_diario}">
