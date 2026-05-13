@@ -212,7 +212,8 @@
   <div class="rutinas-grid">
 
     <div class="rutina-card"
-         th:each="r : ${rutina != null ? rutina : T(java.util.Collections).emptyList()}">
+         th:each="r : ${rutina != null ? rutina : T(java.util.Collections).emptyList()}"
+         th:if="${session.usuarioLogueado.rol == 'ADMIN' or r.fk_id_usuario == session.usuarioLogueado.id_usuario}">
 
       <input type="checkbox"
              th:id="'flip-' + ${r.id_rutina}"
