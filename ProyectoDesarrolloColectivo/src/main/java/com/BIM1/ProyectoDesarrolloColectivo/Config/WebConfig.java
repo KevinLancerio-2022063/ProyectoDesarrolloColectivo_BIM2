@@ -14,22 +14,20 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(sessionInterceptor)
-                .addPathPatterns(
-                        "/paneladmin/**",
-                        "/publicaciones/**", "/savePublicacion/**", "/updatePublicacion/**", "/deletePublicacion/**",
-                        "/reportes/**", "/saveReporte/**", "/updateReporte/**", "/deleteReporte/**",
-                        "/favoritos/**", "/saveFavorito/**", "/updateFavorito/**", "/deleteFavorito/**",
-                        "/categorias/**", "/saveCategoria/**", "/updateCategoria/**", "/deleteCategoria/**",
-                        "/servicios/**", "/saveServicio/**", "/updateServicio/**", "/deleteServicio/**",
-                        "/perfilUsuario/**",
-                        "/favoritosUsuario/**",
-                        "/post/*/comentar",
-                        "/favorito/*"
-                )
+                // Proteger TODAS las rutas de las entidades
+                .addPathPatterns("/**")
+                // excepto las públicas: login, registro y estáticos
                 .excludePathPatterns(
-                        "/", "/index", "/acceder", "/login", "/register", "/saveUsuario",
-                        "/quienessomos", "/contacto",
-                        "/css/**", "/js/**", "/img/**"
+                        "/acceder",         // vista login/registro
+                        "/login",           // POST login
+                        "/registro",        // POST registro
+                        "/index",           // home de usuario común (pública una vez logueado)
+                        "/css/**",
+                        "/js/**",
+                        "/img/**",
+                        "/error/**",
+                        "/api/usuarios",
+                        "/api/usuarios/**"
                 );
     }
 }
