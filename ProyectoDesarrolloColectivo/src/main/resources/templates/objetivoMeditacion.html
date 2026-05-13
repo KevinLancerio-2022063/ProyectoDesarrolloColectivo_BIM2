@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      lang="es">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -26,26 +24,30 @@
     <div class="cube"></div>
 </div>
 
-<!-- ================= SIDEBAR ================= -->
+<!--Barra Lateral Izquierda -->
 <aside class="sidebar" id="sidebar">
 
     <div class="sidebar-logo">
+
         <div class="logo-mark">
             <svg viewBox="0 0 24 24">
-                <path d="M17 8C8 10 5.9 16.17 3.82 19.23L5.71 21l1-2.3A4.49 4.49 0 008 19c8-2 9-14 9-14zm-5.5 6.5c.56-.31 1.29-.58 2.26-.72-.66.57-1.37 1.07-2.26 1.45v-.73z"/>
+                <path d="M17 8C8 10 5.9 16.17 3.82 19.23L5.71 21l1-2.3A4.49 4.49 0 008 19c8-2 9-14 9-14z"/>
             </svg>
         </div>
-        <span class="logo-text">Florece<span>Crece</span></span>
+
+        <span class="logo-text">
+            Florece<span>Crece</span>
+        </span>
+
     </div>
 
     <nav class="sidebar-nav">
 
         <div class="nav-section-label">Principal</div>
 
-        <!-- CONEXIÓN: Dashboard / Inicio -->
         <a class="nav-item" th:href="@{/dashboard}">
             <span class="nav-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg viewBox="0 0 24 24">
                     <path d="M3 10.5L12 3l9 7.5"/>
                     <path d="M5 10v10h14V10"/>
                     <path d="M9 20v-6h6v6"/>
@@ -56,45 +58,43 @@
 
         <div class="nav-section-label">Salud Física</div>
 
-        <!-- CONEXIÓN: Perfil Nutricional -->
         <a class="nav-item" th:href="@{/perfilNutricional}">
             <span class="nav-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg viewBox="0 0 24 24">
                     <path d="M12 22s8-4 8-12V5l-8-3-8 3v5c0 8 8 12 8 12z"/>
-                    <path d="M9 12h6"/><path d="M12 9v6"/>
+                    <path d="M9 12h6"/>
+                    <path d="M12 9v6"/>
                 </svg>
             </span>
             Perfil Nutricional
         </a>
 
-        <!-- CONEXIÓN: Rutinas -->
         <a class="nav-item" th:href="@{/rutina}">
             <span class="nav-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M6 7v10"/><path d="M18 7v10"/>
-                    <path d="M3 10v4"/><path d="M21 10v4"/>
+                <svg viewBox="0 0 24 24">
+                    <path d="M6 7v10"/>
+                    <path d="M18 7v10"/>
+                    <path d="M3 10v4"/>
+                    <path d="M21 10v4"/>
                     <path d="M6 12h12"/>
                 </svg>
             </span>
             Rutinas
         </a>
 
-        <!-- CONEXIÓN: Ejercicios -->
         <a class="nav-item" th:href="@{/ejercicios}">
             <span class="nav-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg viewBox="0 0 24 24">
                     <polygon points="13 2 3 14 12 14 11 22 21 10 12 10"/>
                 </svg>
             </span>
             Ejercicios
         </a>
 
-        <!-- CONEXIÓN: Racha Ejercicio -->
         <a class="nav-item" th:href="@{/racha-ejercicio}">
             <span class="nav-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg viewBox="0 0 24 24">
                     <path d="M12 2C9 6 6 8.5 6 13a6 6 0 0012 0c0-4.5-3-7-6-11z"/>
-                    <path d="M12 22c2-2 3-4 1-7"/>
                 </svg>
             </span>
             Racha Ejercicio
@@ -102,22 +102,19 @@
 
         <div class="nav-section-label">Lectura</div>
 
-        <!-- CONEXIÓN: Biblioteca / Libros -->
         <a class="nav-item" th:href="@{/libro}">
             <span class="nav-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg viewBox="0 0 24 24">
                     <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
                     <path d="M4 4.5A2.5 2.5 0 016.5 2H20v20H6.5A2.5 2.5 0 014 19.5z"/>
-                    <path d="M8 6h8"/><path d="M8 10h8"/>
                 </svg>
             </span>
             Biblioteca
         </a>
 
-        <!-- CONEXIÓN: Racha Lectura -->
         <a class="nav-item" th:href="@{/racha-lectura}">
             <span class="nav-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg viewBox="0 0 24 24">
                     <path d="M12 6v15"/>
                     <path d="M5 4h7a4 4 0 014 4v13a4 4 0 00-4-4H5z"/>
                     <path d="M19 4h-7a4 4 0 00-4 4"/>
@@ -128,66 +125,63 @@
 
         <div class="nav-section-label">Mente & Alma</div>
 
-        <!-- CONEXIÓN: Meditación -->
-        <a class="nav-item" th:href="@{/registroMeditacion}">
+        <a class="nav-item active" th:href="@{/entradaDiario}">
             <span class="nav-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg viewBox="0 0 24 24">
+                    <path d="M4 4h16v16H4z"/>
+                    <path d="M8 8h8"/>
+                    <path d="M8 12h8"/>
+                    <path d="M8 16h5"/>
+                </svg>
+            </span>
+            Diario
+        </a>
+
+        <a class="nav-item" th:href="@{/objetivoMeditacion}">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24">
                     <circle cx="12" cy="5" r="2"/>
                     <path d="M12 7v6"/>
                     <path d="M7 21c1-4 3-6 5-6s4 2 5 6"/>
-                    <path d="M5 13l4 2"/><path d="M19 13l-4 2"/>
+                    <path d="M5 13l4 2"/>
+                    <path d="M19 13l-4 2"/>
                 </svg>
             </span>
             Meditación
         </a>
 
-        <!-- CONEXIÓN: Sueño -->
         <a class="nav-item" th:href="@{/registroSueno}">
             <span class="nav-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg viewBox="0 0 24 24">
                     <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>
                 </svg>
             </span>
             Sueño
         </a>
 
-        <!-- CONEXIÓN: Diario -->
-        <a class="nav-item" th:href="@{/entradaDiario}">
-            <span class="nav-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 4h16v16H4z"/>
-                    <path d="M8 8h8"/><path d="M8 12h8"/><path d="M8 16h5"/>
-                </svg>
-            </span>
-            Diario
-        </a>
-
-        <!-- CONEXIÓN: Apoyo Emocional -->
         <a class="nav-item" th:href="@{/apoyoEmocional}">
             <span class="nav-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg viewBox="0 0 24 24">
                     <path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 10-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/>
                 </svg>
             </span>
             Apoyo Emocional
         </a>
 
-        <!-- Entidad activa -->
-        <a class="nav-item active" th:href="@{/objetivoMeditacion}">
+        <a class="nav-item" th:href="@{/ObjetivosController}">
             <span class="nav-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg viewBox="0 0 24 24">
                     <circle cx="12" cy="12" r="10"/>
                     <circle cx="12" cy="12" r="6"/>
                     <circle cx="12" cy="12" r="2"/>
                 </svg>
             </span>
-            Objetivo Meditación
+            Objetivos
         </a>
 
-        <!-- CONEXIÓN: Frases Motivadoras -->
         <a class="nav-item" th:href="@{/fraseMotivadora}">
             <span class="nav-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg viewBox="0 0 24 24">
                     <path d="M12 2l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/>
                 </svg>
             </span>
@@ -196,58 +190,48 @@
 
     </nav>
 
-    <!-- Footer del sidebar -->
     <div class="sidebar-footer">
-        <div class="sidebar-user">
 
-            <div class="sidebar-user-avatar"
-                 th:text="${#strings.toUpperCase(
-                         #strings.substring(
-                           #authentication.name, 0, 1))}">
+        <div class="user-card">
+
+            <div class="user-avatar"
+                 th:text="${#strings.substring(usuario?.nombre_completo ?: 'U',0,1)}">
                 U
             </div>
 
-            <div class="sidebar-user-info">
-                <div class="sidebar-user-name"
-                     th:text="${#authentication.name ?: 'Usuario'}">
+            <div class="user-info">
+
+                <div class="user-name"
+                     th:text="${usuario?.nombre_completo ?: 'Usuario'}">
                     Usuario
                 </div>
 
-                <div class="sidebar-user-role"
-                     th:text="${#authentication.authorities != null
-                           and !#authentication.authorities.empty
-                           ? #authentication.authorities
-                               .iterator().next().authority
-                               .replace('ROLE_','')
-                           : 'USER'}">
-                    USER
+                <div class="user-role"
+                     th:if="${session.rol == 'USER'}">
+                    Miembro activo
                 </div>
+
+                <div class="user-role"
+                     th:if="${session.rol == 'ADMIN'}">
+                    Administrador
+                </div>
+
             </div>
 
-            <!-- logout de la barra lateral -->
-            <form th:action="@{/logout}"
-                  method="post"
-                  style="display:inline;">
+            <a class="logout-btn"
+               th:href="@{/logout}"
+               title="Cerrar sesión">
 
-                <!-- Agregamos el csrf -->
-                <input type="hidden"
-                       th:name="${_csrf.parameterName}"
-                       th:value="${_csrf.token}">
+                <svg viewBox="0 0 24 24">
+                    <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+                    <path d="M16 17l5-5-5-5"/>
+                    <path d="M21 12H9"/>
+                </svg>
 
-                <button type="submit"
-                        style="background:none;
-                           border:none;
-                           cursor:pointer;
-                           color:rgba(245,240,232,0.4);
-                           font-size:1.1rem;"
-                        title="Cerrar sesión">
+            </a>
 
-                    <i class="bi bi-box-arrow-right"></i>
-
-                </button>
-
-            </form>
         </div>
+
     </div>
 
 </aside>
@@ -274,7 +258,7 @@
                        onkeyup="filtrarTabla()">
             </div>
 
-            <!-- Con esto, al darle el botón te mandara a la "vista" que permitira ingresar los datos -->
+            <!-- Con esto, al darle el botón te mandara a la "vista" que permitira ingresar los datos para agregar el Objetivo -->
             <button class="btn-primary"
                     onclick="window.location.href='/objetivoMeditacion'">
                 + Nuevo objetivo
@@ -285,12 +269,6 @@
         <!-- Grid donde se muestran los objetivos -->
         <div class="usuarios-grid" id="tablaObjetivos">
 
-            <!--
-              Rotación de colores por índice:
-              índice % 3 == 0 → color-verde
-              índice % 3 == 1 → color-cafe
-              índice % 3 == 2 → color-azul
-            -->
             <div class="usuario-card"
                  th:each="o, stat : ${objetivos}"
                  th:attr="data-id=${o.id_objetivo_meditacion}"
@@ -323,38 +301,42 @@
                 </div>
 
                 <div class="card-body">
-
-                    <p class="card-name">
-                        <strong>
-                            <i class="bi bi-clock"></i>
-                            Tiempo:
-                        </strong>
+                    <p class="card-email">
+                        <!-- Ícono de Reloj -->
+                        <i class="bi bi-clock"></i>
                         <span th:text="${o.tiempo_objetivo}"></span>
                     </p>
 
                     <p class="card-email">
-                        <i class="bi bi-calendar-week"></i>
-                        <strong>Días:</strong>
-                        <span th:text="${o.dias_objetivo}"></span>
+                        <!-- Ícono de calendario -->
+                        <i class="bi bi-calendar3"></i>
+
+                        <span th:text="${o.dias_objetivo}"></span> Dias
                     </p>
 
                     <p class="card-email">
+                        <!-- Ícono de un usuario -->
                         <i class="bi bi-person-fill"></i>
-                        <strong>Usuario:</strong>
-                        <span th:text="${o.fkIdUsuario}"></span>
+                        Usuario #
+                        <span th:text="${o.FkIdUsuario}"></span>
                     </p>
-
                 </div>
+
                 <div class="card-footer">
-                    <span class="card-id"
-                          th:text="'#' + ${o.id_objetivo_meditacion}">
-                    </span>
+                    <p class="card-email">
+                        <!-- Ícono de llave -->
+                        <i class="bi bi-key"></i>
+                    </p>
+                <span class="card-id"
+                      th:text="'#' + ${o.id_objetivo_meditacion}">
+                </span>
                 </div>
 
             </div>
 
             <!-- Estado vacío -->
-            <div class="card-empty" th:if="${#lists.isEmpty(objetivos)}">
+            <div class="card-empty"
+                 th:if="${#lists.isEmpty(objetivos)}">
                 <p>No hay objetivos registrados</p>
             </div>
 
@@ -362,6 +344,7 @@
 
         <!-- Tarjetas de Errores -->
         <div th:if="${errores != null}" class="error-container">
+
             <div class="card error-card" th:each="err : ${errores}">
                 <div class="header">      <!-- Ícono de Equis -->
                     <div class="image"><i class="bi bi-x"></i></div>
@@ -371,10 +354,12 @@
                     </div>
                 </div>
             </div>
+
         </div>
 
         <!-- Tarjetas de Éxito -->
         <div th:if="${success}" class="error-container">
+
             <div class="card success-card">
                 <div class="header">       <!-- Ícono de Cheque -->
                     <div class="image"><i class="bi bi-check-lg"></i></div>
@@ -384,6 +369,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
 
         <!-- formulario para ingresar los datos de los Objetivos -->
@@ -391,22 +377,14 @@
             <div class="form-section">
 
                 <h2 class="form-title"
-                    th:text="${objetivo.id_objetivo_meditacion != null}
-                              ? 'Editar Objetivo' : 'Nuevo Objetivo'">
+                    th:text="${objetivo.id_objetivo_meditacion != null} ? 'Editar Objetivo' : 'Nuevo Objetivo'">
                 </h2>
-
-                <!-- agregamos el csrf al formulario -->
 
                 <form th:action="@{/objetivoMeditacion/guardar}"
                       th:object="${objetivo}"
                       method="post">
 
-                    <input type="hidden"
-                           th:name="${_csrf.parameterName}"
-                           th:value="${_csrf.token}">
-
-                    <input type="hidden"
-                           th:field="*{id_objetivo_meditacion}">
+                    <input type="hidden" th:field="*{id_objetivo_meditacion}">
 
                     <input class="form-input"
                            type="text"
@@ -421,36 +399,29 @@
                            min="1"
                            required>
 
-                    <!--
-                      ADMIN: ve el select para asignar a cualquier usuario
-                      USER:  campo oculto, el controller asigna su ID
-                    -->
                     <select class="form-input"
-                            th:field="*{fkIdUsuario}"
-                            sec:authorize="hasRole('ADMIN')"
+                            th:field="*{FkIdUsuario}"
+                            th:if="${session.rol == 'ADMIN'}"
                             required>
+
                         <option value="">Seleccione un usuario</option>
+
                         <option th:each="u : ${usuarios}"
                                 th:value="${u.id_usuario}"
-                                th:text="'ID: ' + ${u.id_usuario}
-                                         + ' - ' + ${u.nombre_completo}">
+                                th:text="'ID: ' + ${u.id_usuario} + ' - ' + ${u.nombre_completo}">
                         </option>
+
                     </select>
 
-                    <!--
-                      USER: campo oculto — el controller sobreescribe
-                      este valor con el ID real del token
-                    -->
+                    <!-- Solo el ADMIN puede ver esto -->
                     <input type="hidden"
-                           sec:authorize="!hasRole('ADMIN')"
-                           name="fkIdUsuario"
-                           value="0">
+                           th:if="${session.rol != 'ADMIN'}"
+                           th:field="*{FkIdUsuario}"
+                           th:value="${session.usuarioId}">
 
                     <div class="form-actions">
                         <button type="submit" class="btn-primary">
-                            <span th:text="${objetivo.id_objetivo_meditacion != null}
-                                          ? 'Actualizar' : 'Guardar'">
-                            </span>
+                            <span th:text="${objetivo.id_objetivo_meditacion != null} ? 'Actualizar' : 'Guardar'"></span>
                         </button>
                     </div>
 
@@ -464,23 +435,30 @@
 <!-- Modal del Eliminar -->
 <div id="confirmModal" class="modal hidden">
     <div class="card confirm-card">
-        <div class="header">
-            <div class="image">      <!-- Ícono de Peligro -->
-                <i class="bi bi-exclamation-triangle text-danger"></i>
-            </div>
+
+        <div class="header">        <!-- Ícono de Peligro -->
+            <div class="image"><i class="bi bi-exclamation-triangle text-danger"></i></div>
+
             <div class="content">
                 <span class="title">¿Eliminar objetivo?</span>
                 <p class="message">Esta acción no se puede deshacer</p>
             </div>
         </div>
+
         <div class="actions">
-            <button id="btnDelete" class="desactivate">Eliminar</button>
-            <button onclick="closeModal()" class="cancel">Cancelar</button>
+            <button id="btnDelete" class="desactivate">
+                Eliminar
+            </button>
+
+            <button onclick="closeModal()" class="cancel">
+                Cancelar
+            </button>
         </div>
+
     </div>
 </div>
 
-<!-- Dirección del script buscar por id del objetivoMeditacion y el modal -->
+<!-- Dirección del script buscar por id del objetivoMeditacion, el modal y los efectos der cursor del mouse -->
 <script th:src="@{/js/objetivoMeditacion.js}"></script>
 
 </body>
