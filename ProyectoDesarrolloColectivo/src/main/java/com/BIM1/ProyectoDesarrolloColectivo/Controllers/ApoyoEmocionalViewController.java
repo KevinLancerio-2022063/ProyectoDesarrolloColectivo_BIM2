@@ -1,9 +1,10 @@
 package com.BIM1.ProyectoDesarrolloColectivo.Controllers;
 
 import com.BIM1.ProyectoDesarrolloColectivo.Entity.ApoyoEmocional;
+import com.BIM1.ProyectoDesarrolloColectivo.Entity.Usuario;
 import com.BIM1.ProyectoDesarrolloColectivo.Exceptions.CustomException;
 import com.BIM1.ProyectoDesarrolloColectivo.Service.ApoyoEmocionalService;
-import com.BIM1.ProyectoDesarrolloColectivo.Service.UsuarioService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,12 +22,11 @@ public class ApoyoEmocionalViewController {
     @Autowired
     private ApoyoEmocionalService service;
 
-    @Autowired
-    private UsuarioService usuarioService;
 
     @GetMapping("/apoyoEmocional")
-    public String mostrarApoyo(Model model){
-        List<ApoyoEmocional> list = service.getAllApoyoEmovional();
+    public String mostrarApoyo(Model model, HttpSession session){
+        Integer id_usuario = (Integer) session.getAttribute("usuarioId");
+        List<ApoyoEmocional> list = service.getByIdUsuario(id_usuario);
         model.addAttribute("listaApoyos",list);
         return "ApoyoEmocional";
     }
@@ -47,13 +47,18 @@ public class ApoyoEmocionalViewController {
     @GetMapping("/agregarApoyo")
     public String agregarApoyoEmocional(Model model){
         model.addAttribute("apoyo",new ApoyoEmocional());
-        model.addAttribute("listaUsuarios",usuarioService.getAllUsuarios());
         return "agregarApoyo";
     }
 
     @PostMapping("/guardarApoyoCreado")
-    public String guardarApoyoCreado(@ModelAttribute ApoyoEmocional apoyoEmocional, RedirectAttributes redirectAttributes){
+    public String guardarApoyoCreado(@ModelAttribute ApoyoEmocional apoyoEmocional, RedirectAttributes redirectAttributes,HttpSession session){
         try {
+            Integer id_usuario = (Integer) session.getAttribute("usuarioId");
+
+            Usuario usuario = new Usuario();
+            usuario.setId_usuario(id_usuario);
+            apoyoEmocional.setUsuario(usuario);
+
             service.saveApoyoEmocional(apoyoEmocional);
             return "redirect:/apoyoEmocional";
         } catch (CustomException e) {
@@ -66,21 +71,27 @@ public class ApoyoEmocionalViewController {
     public String formularioEditar(@PathVariable Integer id, Model model) {
         ApoyoEmocional apoyo = service.getById(id);
         model.addAttribute("apoyo", apoyo);
-        model.addAttribute("listaUsuarios",usuarioService.getAllUsuarios());
         return "editarApoyo";
     }
 
     @PostMapping("/guardarApoyo")
-    public String guardarApoyo(@ModelAttribute ApoyoEmocional apoyoEmocional, RedirectAttributes redirectAttributes) {
+    public String guardarApoyo(@ModelAttribute ApoyoEmocional apoyoEmocional,
+                               RedirectAttributes redirectAttributes,
+                               HttpSession session) {
         try {
+            Integer id_usuario = (Integer) session.getAttribute("usuarioId");
+            Usuario usuario = new Usuario();
+            usuario.setId_usuario(id_usuario);
+
             ApoyoEmocional original = service.getById(apoyoEmocional.getIdApoyoEmocional());
             original.setTitulo(apoyoEmocional.getTitulo());
             original.setContenido(apoyoEmocional.getContenido());
             original.setCategoria(apoyoEmocional.getCategoria());
             original.setNivelAnimo(apoyoEmocional.getNivelAnimo());
-            original.setUsuario(apoyoEmocional.getUsuario());
-            service.updateApoyoEmocional(original.getIdApoyoEmocional(), apoyoEmocional);
-            return "redirect:/detalleApoyo/" + apoyoEmocional.getIdApoyoEmocional();
+            original.setUsuario(usuario); // ← usuario de sesión, no del form
+
+            service.updateApoyoEmocional(original.getIdApoyoEmocional(), original); // ← pasar original, no apoyoEmocional
+            return "redirect:/detalleApoyo/" + original.getIdApoyoEmocional();
         } catch (CustomException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/editarApoyo/" + apoyoEmocional.getIdApoyoEmocional();
@@ -88,23 +99,43 @@ public class ApoyoEmocionalViewController {
     }
 
     @GetMapping("/apoyos")
-    public String listarApoyos(@RequestParam(required = false) Integer id, Model model) {
+    public String listarApoyos(@RequestParam(required = false) Integer id, 
+                                Model model, 
+                                HttpSession session) {
         List<ApoyoEmocional> listaApoyos;
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
 
         try {
             if (id != null) {
-                ApoyoEmocional apoyo = service.getById(id); // 🔥 aquí ya puede lanzar excepción
-                listaApoyos = List.of(apoyo);
+                ApoyoEmocional apoyo = service.getById(id);
+
+                // Verifica que el apoyo pertenezca al usuario en sesión
+                // Si es ADMIN puede ver cualquiera, si es USER solo los suyos
+                if ("ADMIN".equals(rol) || apoyo.getUsuario().getId_usuario().equals(usuarioId)) {
+                    listaApoyos = List.of(apoyo);
+                } else {
+                    // El apoyo no le pertenece, se muestra lista vacía con mensaje
+                    model.addAttribute("error", "No tienes permiso para ver este registro");
+                    model.addAttribute("listaApoyos", List.of());
+                    return "ApoyoEmocional";
+                }
+
             } else {
-                listaApoyos = service.getAllApoyoEmovional();
+                // Sin id: ADMIN ve todos, USER solo los suyos
+                if ("ADMIN".equals(rol)) {
+                    listaApoyos = service.getAllApoyoEmovional();
+                } else {
+                    listaApoyos = service.getByIdUsuario(usuarioId);
+                }
             }
 
             model.addAttribute("listaApoyos", listaApoyos);
 
         } catch (CustomException e) {
-        System.out.println("🔥 ERROR CAPTURADO: " + e.getMessage());
-        model.addAttribute("error", e.getMessage());
-        model.addAttribute("listaApoyos", List.of()); // ← sin llamar al service
+            System.out.println("ERROR CAPTURADO: " + e.getMessage());
+            model.addAttribute("error", e.getMessage());
+            model.addAttribute("listaApoyos", List.of());
         }
 
         return "ApoyoEmocional";
