@@ -29,6 +29,11 @@ public class ObjetivosServiceImplements implements ObjetivosService{
     }
 
     @Override
+    public List<Objetivos> getByIdUsuario(Integer id_usuario) {
+        return objetivosRepository.findByUsuarioId(id_usuario);
+    }
+
+    @Override
     public Objetivos saveObjetivos(Objetivos objetivos) throws RuntimeException {
         objetivosValidator.ObjetivosValidaciones(objetivos);
         return objetivosRepository.save(objetivos);
