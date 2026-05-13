@@ -216,7 +216,8 @@
     <div class="perfiles-grid">
 
         <div class="perfil-card"
-             th:each="p : ${perfilNutricional != null ? perfilNutricional : T(java.util.Collections).emptyList()}">
+             th:each="p : ${perfilNutricional != null ? perfilNutricional : T(java.util.Collections).emptyList()}"
+             th:if="${session.usuarioLogueado.rol == 'ADMIN' or p.fk_id_usuario == session.usuarioLogueado.id_usuario}">
 
             <input type="checkbox"
                    th:id="'flip-' + ${p.id_perfil_nutricional}"
