@@ -11,16 +11,16 @@ public class HomeController {
     public String index() {
         return "index";
     }
-    @GetMapping("/login")
+    @GetMapping("/logn")
     public String login() {
         return "login";
     }
-    @PostMapping("/login")
-    public String procesarLogin() {
+    @PostMapping("/loin")
+    public String procesarLogn() {
         return "redirect:/register";
     }
-    @GetMapping("/register")
-    public String register() {
+    @GetMapping("/regiser")
+    public String regiter() {
         return "register";
     }
     @GetMapping("/rutinas")
