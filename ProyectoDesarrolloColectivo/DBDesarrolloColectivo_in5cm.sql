@@ -57,6 +57,7 @@ create table Libro(
 
 create table Objetivos(
     id_objetivos int primary key auto_increment,
+    titulo_objetivo varchar(40),
     descripcion_objetivo varchar(150),
     estado_objetivo varchar(45),
     fecha_objetivo date,
@@ -135,7 +136,8 @@ create table Racha_lectura(
     foreign key(fk_id_frase_motivadora) references Frase_motivadora(id_frase_motivadora) on delete cascade
 );
 
-
+alter table Usuario
+add column rol enum ('ADMIN', 'USER') default 'USER';
 -- ======================================================= PROCEDIMIENTOS ALMACENADOS ======================================================= --
 
 -- =================== usuario ================= --
@@ -159,7 +161,7 @@ begin
 end $$
 delimiter ;
 
-call sp_agregarUsuario('Kevin Ramirez',   'kevin@gmail.com',   '123');
+call sp_agregarUsuario('Kevin Lancerio',   'kevin@gmail.com',   '123');
 call sp_agregarUsuario('Luis Pérez',      'luis@gmail.com',    '545');
 call sp_agregarUsuario('Enrique Torres',  'enrique@gmail.com', '526');
 call sp_agregarUsuario('María López',     'maria@gmail.com',   'abc');
@@ -169,6 +171,14 @@ call sp_agregarUsuario('Sofía Castillo',  'sofia@gmail.com',   'pass3');
 call sp_agregarUsuario('Diego Herrera',   'diego@gmail.com',   'pass4');
 call sp_agregarUsuario('Valeria Ruiz',    'valeria@gmail.com', 'pass5');
 call sp_agregarUsuario('Javier Morales',  'javier@gmail.com',  'pass6');
+
+update Usuario
+set rol = 'ADMIN'
+where correo_usuario = 'kevin@gmail.com';
+
+update Usuario
+set rol = 'USER'
+where correo_usuario <> 'kevin@gmail.com';
 
 -- Editar usuario --
 delimiter $$
@@ -565,31 +575,34 @@ call sp_agregar_racha_lectura('2025-01-10', 10);
 -- ============= objetivos ================== --
 delimiter $$
 create procedure sp_agregarObjetivos(
+	in p_titulo_objetivo varchar(40),
     in p_descripcion_objetivo varchar(150),
     in p_estado_objetivo varchar(45),
     in p_fecha_objetivo date,
-    in p_fk_id_usuario int
+    in p_fk_id_usuario int,
+    in p_fk_id_frase_motivadora int
 )
 begin
-    insert into Objetivos(descripcion_objetivo,estado_objetivo,fecha_objetivo,fk_id_usuario)
-    values(p_descripcion_objetivo,p_estado_objetivo,p_fecha_objetivo,p_fk_id_usuario);
+    insert into Objetivos(titulo_objetivo,descripcion_objetivo,estado_objetivo,fecha_objetivo,fk_id_usuario,fk_id_frase_motivadora)
+    values(p_titulo_objetivo,p_descripcion_objetivo,p_estado_objetivo,p_fecha_objetivo,p_fk_id_usuario,p_fk_id_frase_motivadora);
 end $$
 delimiter ;
 
-call sp_agregarObjetivos('Meditar 10 minutos diarios',     'En progreso', '2025-03-01',  1);
-call sp_agregarObjetivos('Leer 2 libros al mes',           'Pendiente',   '2025-04-01',  2);
-call sp_agregarObjetivos('Correr 5km sin parar',           'Completado',  '2025-02-15',  3);
-call sp_agregarObjetivos('Dormir 8 horas cada noche',      'En progreso', '2025-05-01',  4);
-call sp_agregarObjetivos('Reducir el consumo de azúcar',   'Pendiente',   '2025-06-01',  5);
-call sp_agregarObjetivos('Escribir en el diario cada día', 'En progreso', '2025-03-15',  6);
-call sp_agregarObjetivos('Hacer ejercicio 4 días/semana',  'Completado',  '2025-01-31',  7);
-call sp_agregarObjetivos('Aprender a cocinar saludable',   'Pendiente',   '2025-07-01',  8);
-call sp_agregarObjetivos('Reducir el estrés laboral',      'En progreso', '2025-04-30',  9);
-call sp_agregarObjetivos('Tomar agua suficiente al día',   'Completado',  '2025-02-01',  10);
+call sp_agregarObjetivos('Meditación','Meditar 10 minutos diarios',     'En progreso', '2025-03-01',  1,1);
+call sp_agregarObjetivos('Lectura','Leer 2 libros al mes',           'Pendiente',   '2025-04-01',  2,2);
+call sp_agregarObjetivos('Maraton','Correr 5km sin parar',           'Completado',  '2025-02-15',  3,3);
+call sp_agregarObjetivos('Descansar','Dormir 8 horas cada noche',      'En progreso', '2025-05-01',  4,4);
+call sp_agregarObjetivos('Salud','Reducir el consumo de azúcar',   'Pendiente',   '2025-06-01',  5,5);
+call sp_agregarObjetivos('Escritura','Escribir en el diario cada día', 'En progreso', '2025-03-15',  6,6);
+call sp_agregarObjetivos('Ejercitarce','Hacer ejercicio 4 días/semana',  'Completado',  '2025-01-31',  7,7);
+call sp_agregarObjetivos('Cocinar','Aprender a cocinar saludable',   'Pendiente',   '2025-07-01',  8,8);
+call sp_agregarObjetivos('Desestrezar','Reducir el estrés laboral',      'En progreso', '2025-04-30',  9,9);
+call sp_agregarObjetivos('Hidratarce','Tomar agua suficiente al día',   'Completado',  '2025-02-01',  10,10);
 
 delimiter $$
 create procedure sp_actualizarObjetivos(
     in p_id_objetivos int,
+    in p_titulo_objetivo varchar(40),
     in p_descripcion_objetivo varchar(150),
     in p_estado_objetivo varchar(45),
     in p_fecha_objetivo date,
@@ -597,7 +610,7 @@ create procedure sp_actualizarObjetivos(
 )
 begin
     update Objetivos
-    set descripcion_objetivo = p_descripcion_objetivo, estado_objetivo = p_estado_objetivo, fecha_objetivo = p_fecha_objetivo, fk_id_usuario = p_fk_id_usuario
+    set titulo_objetivo = p_titulo_objetivo, descripcion_objetivo = p_descripcion_objetivo, estado_objetivo = p_estado_objetivo, fecha_objetivo = p_fecha_objetivo, fk_id_usuario = p_fk_id_usuario
     where id_objetivos=p_id_objetivos;
 end $$
 delimiter ;
@@ -703,7 +716,6 @@ begin
 end $$
 delimiter ;
 
-
 -- =========================== registro_sueno ============================ --
 
 -- Listar registro_sueno
@@ -753,8 +765,6 @@ begin
     where id_registro_sueño=p_id_registro_sueño;
 end $$
 delimiter ;
-
-
 
 -- ======================== objetivo_meditacion ======================== --
 
