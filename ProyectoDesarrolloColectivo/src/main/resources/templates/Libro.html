@@ -214,7 +214,8 @@
     <div class="libros-grid">
 
         <div class="libro-card"
-             th:each="libro : ${libros != null ? libros : T(java.util.Collections).emptyList()}">
+             th:each="libro : ${libros != null ? libros : T(java.util.Collections).emptyList()}"
+             th:if="${session.usuarioLogueado.rol == 'ADMIN' or libro.fk_id_usuario == session.usuarioLogueado.id_usuario}">
 
             <div class="libro-spine"
                  th:classappend="${libro.estado == 'leyendo'} ? 'leyendo' :
