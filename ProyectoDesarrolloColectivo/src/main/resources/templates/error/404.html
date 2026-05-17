@@ -1,0 +1,247 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+</head>
+<body>
+
+<div class="error404">
+    <div class="scene">
+        <div class="card">
+            <div class="computer">
+                <div class="shadow"></div>
+                <div class="screen">
+                    <div class="display">404</div>
+                </div>
+                <div class="stand-top"></div>
+                <div class="stand-base"></div>
+            </div>
+
+            <div class="title">Pagina no encontrada</div>
+            <div class="subtitle">la pagina todavía esta en proceso :)</div>
+
+            <div class="actions">
+                <a th:href="@{/home}" class="btn btn-primary">ir a la página principal</a>
+                <a th:href="@{/libro}" class="btn btn-outline">Regresar</a>
+            </div>
+
+            <div class="footer">perdido, pero con estilo :) </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+
+        /* From Uiverse.io by officialnitish5657 */
+:root {
+  --verde-oscuro:  #2D4A3E;
+  --verde-menta:   #7EB09B;
+  --crema:         #F5F0E8;
+  --cafe:          #8B6F47;
+  --cafe-claro:    #c4a882;
+  --blanco:        #ffffff;
+  --sombra:        rgba(45, 74, 62, 0.10);
+  --sombra-hover:  rgba(45, 74, 62, 0.20);
+  --radio:         16px;
+  --radio-lg:      24px;
+  --trans:         0.25s ease;
+}
+
+/* ================= BASE ================= */
+.error404 {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--crema);
+}
+
+/* ================= SCENE ================= */
+.error404 .scene {
+  perspective: 1600px;
+  width: 100%;
+  max-width: 520px;
+}
+
+/* ================= CARD ================= */
+@keyframes error404-float {
+  0%, 100% {
+    transform: rotateX(8deg) rotateY(-10deg) translateY(0);
+  }
+  50% {
+    transform: rotateX(10deg) rotateY(-12deg) translateY(-14px);
+  }
+}
+
+.error404 .card {
+  background: var(--blanco);
+  border-radius: var(--radio-lg);
+  padding: 40px 32px;
+  text-align: center;
+  transform-style: preserve-3d;
+  animation: error404-float 6s ease-in-out infinite;
+  box-shadow:
+    0 30px 60px var(--sombra),
+    0 100px 200px var(--sombra-hover),
+    inset 0 2px 0 rgba(255, 255, 255, 0.8);
+  transition: var(--trans);
+}
+
+.error404 .card:hover {
+  transform: rotateX(0) rotateY(0) translateY(-18px);
+  box-shadow:
+    0 40px 90px var(--sombra-hover),
+    0 140px 260px var(--sombra-hover);
+}
+
+/* ================= COMPUTER ================= */
+@keyframes error404-glow {
+  0%, 100% {
+    box-shadow: 0 0 30px rgba(126, 176, 155, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 70px rgba(45, 74, 62, 0.7);
+  }
+}
+
+.error404 .computer {
+  position: relative;
+  width: 280px;
+  margin: 0 auto 32px;
+}
+
+.error404 .shadow {
+  position: absolute;
+  left: 20%;
+  right: 20%;
+  bottom: -22px;
+  height: 22px;
+  background: rgba(45, 74, 62, 0.25);
+  filter: blur(26px);
+  border-radius: 50%;
+}
+
+.error404 .screen {
+  background: var(--verde-oscuro);
+  border-radius: var(--radio);
+  padding: 10px;
+  border: 1px solid var(--verde-menta);
+  animation: error404-glow 4s ease-in-out infinite;
+}
+
+.error404 .display {
+  height: 140px;
+  border-radius: var(--radio);
+  background: linear-gradient(135deg, var(--verde-menta), var(--verde-oscuro));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--blanco);
+  font-size: 64px;
+  font-weight: 900;
+}
+
+/* ================= STAND ================= */
+.error404 .stand-top {
+  width: 90px;
+  height: 8px;
+  background: var(--cafe);
+  margin: 8px auto 0;
+  border-radius: 0 0 12px 12px;
+}
+
+.error404 .stand-base {
+  width: 150px;
+  height: 8px;
+  background: var(--cafe-claro);
+  margin: 0 auto;
+  border-radius: 12px;
+}
+
+/* ================= TEXT ================= */
+@keyframes error404-fade {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.error404 .title,
+.error404 .subtitle,
+.error404 .actions {
+  animation: error404-fade 0.9s ease forwards;
+}
+
+.error404 .title {
+  font-size: 40px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: var(--verde-oscuro);
+}
+
+.error404 .subtitle {
+  color: var(--cafe);
+  margin-bottom: 28px;
+}
+
+/* ================= BUTTONS ================= */
+.error404 .actions {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.error404 .btn {
+  text-decoration: none;
+  padding: 14px 32px;
+  border-radius: var(--radio);
+  font-weight: 600;
+  transition: var(--trans);
+}
+
+/* BOTÓN PRINCIPAL */
+.error404 .btn-primary {
+  background: var(--verde-oscuro);
+  color: var(--blanco);
+  box-shadow:
+    0 10px 0 #1f332b,
+    0 20px 40px var(--sombra);
+}
+
+/* BOTÓN SECUNDARIO */
+.error404 .btn-outline {
+  background: var(--crema);
+  color: var(--verde-oscuro);
+  border: 2px solid var(--verde-menta);
+  box-shadow:
+    0 10px 0 var(--cafe-claro),
+    0 20px 40px var(--sombra);
+}
+
+.error404 .btn:hover {
+  transform: translateY(-4px);
+}
+
+.error404 .btn:active {
+  transform: translateY(6px);
+}
+
+/* ================= FOOTER ================= */
+.error404 .footer {
+  margin-top: 32px;
+  font-size: 12px;
+  color: var(--cafe-claro);
+}
+
+    </style>
+
+</body>
+</html>

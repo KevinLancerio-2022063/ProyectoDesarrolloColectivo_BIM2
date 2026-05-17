@@ -1,12 +1,10 @@
 package com.BIM1.ProyectoDesarrolloColectivo.Service;
 
-
 import com.BIM1.ProyectoDesarrolloColectivo.Entity.Rutina;
 import com.BIM1.ProyectoDesarrolloColectivo.Exceptions.Exception;
 import com.BIM1.ProyectoDesarrolloColectivo.Repository.RutinaRepository;
 import com.BIM1.ProyectoDesarrolloColectivo.Validator.RutinaValidator;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -22,6 +20,11 @@ public class RutinaServiceImplements implements RutinaService {
     @Override
     public List<Rutina> getAListRutina() {
         return rutinaRepository.findAll();
+    }
+
+    @Override
+    public List<Rutina> getRutinasByUsuario(Integer fk_id_usuario) {
+        return rutinaRepository.findRutinasByUsuario(fk_id_usuario);
     }
 
     @Override
@@ -48,7 +51,6 @@ public class RutinaServiceImplements implements RutinaService {
             rutina1.setNombre_rutina(rutina.getNombre_rutina());
             rutina1.setDias_semana(rutina.getDias_semana());
             rutina1.setFk_id_usuario(rutina.getFk_id_usuario());
-
         }else{
             throw new Exception("el id de la rutina no existe");
         }
@@ -62,6 +64,5 @@ public class RutinaServiceImplements implements RutinaService {
             throw new Exception("el id de la rutina no existe");
         }
         rutinaRepository.deleteById(id);
-
     }
 }

@@ -4,15 +4,14 @@ package com.BIM1.ProyectoDesarrolloColectivo.Controllers;
 import com.BIM1.ProyectoDesarrolloColectivo.Entity.PerfilNutricional;
 import com.BIM1.ProyectoDesarrolloColectivo.Service.PerfilNutricionalService;
 import jakarta.validation.Valid;
-import org.hibernate.ObjectNotFoundException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
-
-@RestController
-@RequestMapping("/api/perfilNutricional")
+@Controller
+@RequestMapping("/perfilNutricional")
 public class PerfilNutricionalController {
     private final PerfilNutricionalService perfilNutricionalService;
 
@@ -21,31 +20,54 @@ public class PerfilNutricionalController {
     }
 
     @GetMapping
-    public List<PerfilNutricional> getAlistPerfilNutricional(){
-        return perfilNutricionalService.getAListPerfilNuticional();
+    public String listarPerfil(Model model){
+        model.addAttribute("perfilNutricional", perfilNutricionalService.getAListPerfilNuticional());
+        model.addAttribute("perfilNutricionalFormu", new PerfilNutricional());
+        return "perfilNutricional";
     }
 
-    @PostMapping
-    public ResponseEntity<Object> savePerfilNutricional(@Valid @RequestBody PerfilNutricional perfilNutricional){
-            PerfilNutricional perfilNutricional1 = perfilNutricionalService.savePerfilNutrcional(perfilNutricional);
-            return new ResponseEntity<>(perfilNutricional1, HttpStatus.CREATED);
+    @GetMapping("/editarPerfilNutricional/{id}")
+    public String editarPerfil(@PathVariable Integer id, Model model){
+        model.addAttribute("perfilNutricional", perfilNutricionalService.getAListPerfilNuticional());
+        model.addAttribute("perfilNutricionalFormu", perfilNutricionalService.getPerfilNutricionalById(id));
+        return "perfilNutricional";
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> updatePerfilNutricional(@PathVariable Integer id, @Valid @RequestBody PerfilNutricional perfilNutricional){
-            PerfilNutricional perfilNutricional1 = perfilNutricionalService.updatePerfilNutricional(id, perfilNutricional);
-            return new ResponseEntity<>(perfilNutricional1, HttpStatus.OK);
+    @GetMapping("/buscarPerfilNutricional")
+    public String buscarPerfil(@RequestParam Integer id, Model model){
+        PerfilNutricional perfilNutricional = perfilNutricionalService.getPerfilNutricionalById(id);
+        model.addAttribute("perfilNutricional", perfilNutricionalService.getPerfilNutricionalById(id));
+        model.addAttribute("perfilNutricionalFormu", perfilNutricional);
+        return "perfilNutricional";
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deletePerfilNutricional(@PathVariable Integer id){
-            perfilNutricionalService.deletePerfilNutricional(id);
-            return ResponseEntity.noContent().build();
+    @PostMapping("/guardarPerfilNutricional")
+    public String guardarPerfil(@Valid @ModelAttribute("perfilNutricionalFormu") PerfilNutricional perfilNutricional, BindingResult result, RedirectAttributes redirectAttributes, Model model){
+        if(result.hasErrors()){
+            model.addAttribute("perfilNutricional", perfilNutricionalService.getAListPerfilNuticional());
+            return "perfilNutricional";
+        }
+        perfilNutricionalService.savePerfilNutrcional(perfilNutricional);
+        redirectAttributes.addFlashAttribute("exito", "el perfil nutricional ha sido guardado");
+        return "redirect:/perfilNutricional";
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> getPerfilNutricionalById(@PathVariable Integer id){
-            PerfilNutricional perfilNutricional = perfilNutricionalService.getPerfilNutricionalById(id);
-            return ResponseEntity.ok(perfilNutricional);
+    @PostMapping("/eliminarPerfilNutricional/{id}")
+    public String eliminarPerfil(@PathVariable Integer id, RedirectAttributes redirectAttributes){
+        perfilNutricionalService.deletePerfilNutricional(id);
+        redirectAttributes.addFlashAttribute("exito", "el perfil se ha eliminado");
+        return "redirect:/perfilNutricional";
     }
+
+    @PostMapping("/actualizarPerfilNutricional/{id}")
+    public String actualizarPerfil(@PathVariable Integer id, @Valid @ModelAttribute("perfilNutricionalFormu") PerfilNutricional perfilNutricional, Model model, RedirectAttributes redirectAttributes, BindingResult result){
+        if(result.hasErrors()){
+            model.addAttribute("perfilNutricional", perfilNutricionalService.getAListPerfilNuticional());
+            return "perfilNutricional";
+        }
+        perfilNutricionalService.updatePerfilNutricional(id, perfilNutricional);
+        redirectAttributes.addFlashAttribute("exito", "se ha actualizado el perfilNutricional");
+        return "redirect:/perfilNutricional";
+    }
+
 }

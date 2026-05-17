@@ -31,12 +31,12 @@ public class Libro {
     @NotNull(message = "la cantidad de las paginas no pueden ser nulas")
     @Positive(message = "la cantidad de paginas debe ser mayor a 0")
     @Max(value = 4000, message = "la cantidad de paginas no puede superar los 4000 mil ")
-    private int cantidad_pag;
+    private Integer cantidad_pag;
 
     @Column(name = "cantidad_leido")
     @NotNull(message = "la cantidad de las pag leidas no pueden ser nulas")
     @PositiveOrZero(message = "las paginas leidas no pueden ser negativas")
-    private int cantidad_leido;
+    private Integer cantidad_leido;
 
     @Column(name = "fk_id_usuario")
     @NotNull(message = "el id del usuario no puede estar vacio o nulo")
@@ -75,19 +75,19 @@ public class Libro {
         this.estado = estado;
     }
 
-    public int getCantidad_pag() {
+    public Integer getCantidad_pag() {
         return cantidad_pag;
     }
 
-    public void setCantidad_pag(int cantidad_pag) {
+    public void setCantidad_pag(Integer cantidad_pag) {
         this.cantidad_pag = cantidad_pag;
     }
 
-    public int getCantidad_leido() {
+    public Integer getCantidad_leido() {
         return cantidad_leido;
     }
 
-    public void setCantidad_leido(int cantidad_leido) {
+    public void setCantidad_leido(Integer cantidad_leido) {
         this.cantidad_leido = cantidad_leido;
     }
 

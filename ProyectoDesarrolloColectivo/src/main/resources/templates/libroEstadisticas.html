@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Estadísticas de Lectura</title>
+    <link rel="stylesheet" th:href="@{/css/Base.css}">
+    <link rel="stylesheet" th:href="@{/css/LibroEstadisticas.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script th:src="@{/js/cursor.js}" defer></script>
+</head>
+<body>
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+    <div class="hero-bg">
+        <div class="cube"></div>
+        <div class="cube"></div>
+        <div class="cube"></div>
+        <div class="cube"></div>
+        <div class="cube"></div>
+        <div class="cube"></div>
+    </div>
+
+<nav>
+    <a th:href="@{/index}" class="nav-logo">Evoluciona</a>
+    <ul class="nav-links">
+        <li><a th:href="@{/index}">Inicio</a></li>
+        <li><a th:href="@{/libro}">Mis Lecturas</a></li>
+    </ul>
+</nav>
+
+<div class="page-header">
+    <div class="page-header-left">
+        <div class="page-tag">Análisis de lectura</div>
+        <h1 class="page-title">Estadísticas de <em>Libros</em></h1>
+    </div>
+    <a th:href="@{/libro}" class="btn-secondary">
+        <i class="bi bi-arrow-left"></i> Volver a Mis Lecturas
+    </a>
+</div>
+
+<div class="stats-wrap">
+
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-icon kpi-icon--cafe"><i class="bi bi-book"></i></div>
+            <div class="kpi-info">
+                <span class="kpi-num" th:text="${totalLibros}">0</span>
+                <span class="kpi-label">Total de libros</span>
+            </div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-icon kpi-icon--menta"><i class="bi bi-bookmark-check-fill"></i></div>
+            <div class="kpi-info">
+                <span class="kpi-num" th:text="${cntTerminado}">0</span>
+                <span class="kpi-label">Terminados</span>
+            </div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-icon kpi-icon--oscuro"><i class="bi bi-file-text"></i></div>
+            <div class="kpi-info">
+                <span class="kpi-num" th:text="${totalLeidas}">0</span>
+                <span class="kpi-label">Páginas leídas</span>
+            </div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-icon kpi-icon--menta"><i class="bi bi-graph-up"></i></div>
+            <div class="kpi-info">
+                <span class="kpi-num"
+                      th:text="${totalPaginas > 0} ? ${#numbers.formatDecimal((totalLeidas * 100.0) / totalPaginas, 1, 1)} + '%' : '0%'">
+                    0%
+                </span>
+                <span class="kpi-label">Progreso global</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="charts-row">
+
+        <div class="chart-card chart-card--sm">
+            <div class="chart-card-header">
+                <h3 class="chart-title">Distribución por estado</h3>
+                <p class="chart-sub">¿En qué fase están tus libros?</p>
+            </div>
+            <div class="doughnut-wrap">
+                <canvas id="chartEstados"></canvas>
+                <div class="doughnut-center">
+                    <span class="doughnut-total" th:text="${totalLibros}">0</span>
+                    <span class="doughnut-total-label">libros</span>
+                </div>
+            </div>
+            <div class="legend">
+                <div class="legend-item">
+                    <span class="legend-dot" style="background:#8B6F47;"></span>
+                    <span th:text="'Pendiente (' + ${cntPendiente} + ')'">Pendiente</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot" style="background:#7EB09B;"></span>
+                    <span th:text="'Leyendo (' + ${cntLeyendo} + ')'">Leyendo</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot" style="background:#2D4A3E;"></span>
+                    <span th:text="'Terminado (' + ${cntTerminado} + ')'">Terminado</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bar: progreso de lectura (%) por libro -->
+        <div class="chart-card chart-card--lg">
+            <div class="chart-card-header">
+                <h3 class="chart-title">Progreso de lectura</h3>
+                <p class="chart-sub">% completado por libro (excluyendo pendientes)</p>
+            </div>
+            <div class="canvas-wrap">
+                <canvas id="chartProgreso"></canvas>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ── ROW 2: Top páginas (bar horizontal) ── -->
+    <div class="charts-row charts-row--single">
+        <div class="chart-card chart-card--full">
+            <div class="chart-card-header">
+                <h3 class="chart-title">Top libros por extensión</h3>
+                <p class="chart-sub">Los libros con mayor cantidad de páginas en tu biblioteca</p>
+            </div>
+            <div class="canvas-wrap canvas-wrap--tall">
+                <canvas id="chartPaginas"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- de thymeleaf a js -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    /* ── 1. Doughnut: estados ── */
+    const cntPendiente = /*[[${cntPendiente}]]*/ 0;
+    const cntLeyendo   = /*[[${cntLeyendo}]]*/   0;
+    const cntTerminado = /*[[${cntTerminado}]]*/ 0;
+
+    /* ── 2. Bar: progreso por libro ── */
+    const progresoTitulos = /*[[${librosConProgreso.![titulo_libro]}]]*/ [];
+    const progresoValores = /*[[${librosConProgreso.![cantidad_pag > 0 ? (cantidad_leido * 100) / cantidad_pag : 0]}]]*/ [];
+    const progresoEstados = /*[[${librosConProgreso.![estado]}]]*/ [];
+
+    /* ── 3. Bar horizontal: top páginas ── */
+    const topTitulos  = /*[[${topPaginas.![titulo_libro]}]]*/ [];
+    const topPaginas  = /*[[${topPaginas.![cantidad_pag]}]]*/ [];
+    const topLeidas   = /*[[${topPaginas.![cantidad_leido]}]]*/ [];
+
+    /*]]>*/
+</script>
+
+<script>
+    const VERDE_OSCURO  = '#2D4A3E';
+    const VERDE_MENTA   = '#7EB09B';
+    const CAFE          = '#8B6F47';
+    const CAFE_CLARO    = '#c4a882';
+    const CREMA         = '#F5F0E8';
+
+    /* shared Chart.js defaults */
+    Chart.defaults.font.family = 'system-ui, sans-serif';
+    Chart.defaults.color       = VERDE_OSCURO;
+
+    new Chart(document.getElementById('chartEstados'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Pendiente', 'Leyendo', 'Terminado'],
+            datasets: [{
+                data: [cntPendiente, cntLeyendo, cntTerminado],
+                backgroundColor: [CAFE, VERDE_MENTA, VERDE_OSCURO],
+                borderColor: CREMA,
+                borderWidth: 3,
+                hoverOffset: 8
+            }]
+        },
+        options: {
+            cutout: '68%',
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: ctx => ` ${ctx.label}: ${ctx.raw} libro(s)`
+                    }
+                }
+            },
+            animation: { animateRotate: true, duration: 900 }
+        }
+    });
+
+    const progresoColores = progresoEstados.map(e =>
+        e === 'terminado' ? VERDE_OSCURO : VERDE_MENTA
+    );
+    const progresoBorder = progresoEstados.map(e =>
+        e === 'terminado' ? '#4a7a66' : '#5a9a84'
+    );
+
+    new Chart(document.getElementById('chartProgreso'), {
+        type: 'bar',
+        data: {
+            labels: progresoTitulos,
+            datasets: [{
+                label: '% leído',
+                data: progresoValores,
+                backgroundColor: progresoColores,
+                borderColor: progresoBorder,
+                borderWidth: 1.5,
+                borderRadius: 8,
+                borderSkipped: false
+            }]
+        },
+        options: {
+            indexAxis: 'x',
+            scales: {
+                y: {
+                    min: 0, max: 100,
+                    ticks: {
+                        callback: v => v + '%',
+                        color: CAFE,
+                        font: { size: 11 }
+                    },
+                    grid: { color: 'rgba(45,74,62,0.07)' }
+                },
+                x: {
+                    ticks: {
+                        color: VERDE_OSCURO,
+                        font: { size: 11 },
+                        maxRotation: 30
+                    },
+                    grid: { display: false }
+                }
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: ctx => ` ${ctx.raw}% completado`
+                    }
+                }
+            },
+            animation: { duration: 800 }
+        }
+    });
+
+    new Chart(document.getElementById('chartPaginas'), {
+        type: 'bar',
+        data: {
+            labels: topTitulos,
+            datasets: [
+                {
+                    label: 'Páginas totales',
+                    data: topPaginas,
+                    backgroundColor: CAFE_CLARO,
+                    borderColor: CAFE,
+                    borderWidth: 1.5,
+                    borderRadius: 6,
+                    borderSkipped: false
+                },
+                {
+                    label: 'Páginas leídas',
+                    data: topLeidas,
+                    backgroundColor: VERDE_MENTA,
+                    borderColor: VERDE_OSCURO,
+                    borderWidth: 1.5,
+                    borderRadius: 6,
+                    borderSkipped: false
+                }
+            ]
+        },
+        options: {
+            indexAxis: 'y',
+            scales: {
+                x: {
+                    ticks: {
+                        color: CAFE,
+                        font: { size: 11 }
+                    },
+                    grid: { color: 'rgba(45,74,62,0.07)' }
+                },
+                y: {
+                    ticks: {
+                        color: VERDE_OSCURO,
+                        font: { size: 11 }
+                    },
+                    grid: { display: false }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        color: VERDE_OSCURO,
+                        boxWidth: 12,
+                        padding: 20,
+                        font: { size: 12 }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: ctx => ` ${ctx.dataset.label}: ${ctx.raw} págs`
+                    }
+                }
+            },
+            animation: { duration: 900 }
+        }
+    });
+</script>
+
+</body>
+</html>

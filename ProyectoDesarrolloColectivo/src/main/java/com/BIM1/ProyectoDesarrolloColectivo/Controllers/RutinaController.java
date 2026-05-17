@@ -1,51 +1,82 @@
 package com.BIM1.ProyectoDesarrolloColectivo.Controllers;
 
 import com.BIM1.ProyectoDesarrolloColectivo.Entity.Rutina;
+import com.BIM1.ProyectoDesarrolloColectivo.Service.EjercicioService;
 import com.BIM1.ProyectoDesarrolloColectivo.Service.RutinaService;
 import jakarta.validation.Valid;
-import org.hibernate.ObjectNotFoundException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
 
-@RestController
-@RequestMapping("/api/rutina")
+@Controller
+@RequestMapping("/rutina")
 public class RutinaController {
     private final RutinaService rutinaService;
+    private final EjercicioService ejercicioService;
 
-    public RutinaController(RutinaService rutinaService) {
+    public RutinaController(RutinaService rutinaService, EjercicioService ejercicioService) {
         this.rutinaService = rutinaService;
+        this.ejercicioService = ejercicioService;
     }
 
     @GetMapping
-    public List<Rutina> getAListRutina(){
-        return rutinaService.getAListRutina();
+    public String listar(Model model){
+        model.addAttribute("rutina", rutinaService.getAListRutina());
+        model.addAttribute("rutinaFormu", new Rutina());
+        model.addAttribute("ejercicios", ejercicioService.getAListEjercicio());
+        return "rutina";
     }
 
-    @PostMapping
-    public ResponseEntity<Object> saveRutina(@Valid @RequestBody Rutina rutina){
-            Rutina rutina1 = rutinaService.saveRutina(rutina);
-            return new ResponseEntity<>(rutina1, HttpStatus.CREATED);
+    @GetMapping("/editarRutina/{id}")
+    public String editarRutina(@PathVariable Integer id, Model model){
+        model.addAttribute("rutina", rutinaService.getAListRutina());
+        model.addAttribute("ejercicios", ejercicioService.getAListEjercicio());
+        model.addAttribute("rutinaFormu", rutinaService.getRutinaById(id));
+        return "rutina";
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> updateRutina(@PathVariable Integer id, @Valid @RequestBody Rutina rutina){
-            Rutina rutina1 = rutinaService.updateRutina(id, rutina);
-            return new ResponseEntity<>(rutina1, HttpStatus.OK);
+    @GetMapping("/buscarRutina")
+    public String buscarRutina(@RequestParam Integer id, Model model){
+        Rutina rutina = rutinaService.getRutinaById(id);
+        model.addAttribute("rutina", rutinaService.getRutinaById(id));
+        model.addAttribute("ejercicios", ejercicioService.getAListEjercicio());
+        model.addAttribute("rutinaFormu", rutina);
+        return "rutina";
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteRutina(@PathVariable Integer id){
-            rutinaService.deleteRutina(id);
-            return ResponseEntity.noContent().build();
-    }
+     @PostMapping("/actualizarRutina/{id}")
+    public String actualizarRutina(@PathVariable Integer id, @Valid @ModelAttribute("rutinaFormu")Rutina rutina,BindingResult result, Model model, RedirectAttributes redirectAttributes){
+        if(result.hasErrors()){
+            model.addAttribute("rutina", rutinaService.getAListRutina());
+            model.addAttribute("ejercicios", ejercicioService.getAListEjercicio());
+            return "rutina";
+        }
+        rutinaService.updateRutina(id, rutina);
+        redirectAttributes.addFlashAttribute("exito", "la rutina se ha actualizado");
+        return "redirect:/rutina";
+     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> getRutinaById(@PathVariable Integer id){
-            Rutina rutina = rutinaService.getRutinaById(id);
-            return ResponseEntity.ok(rutina);
-    }
+     @PostMapping("/guardarRutina")
+    public String guardarRutina(@Valid @ModelAttribute("rutinaFormu")Rutina rutina, BindingResult result, Model model, RedirectAttributes redirectAttributes){
+        if (result.hasErrors()){
+            model.addAttribute("rutina", rutinaService.getAListRutina());
+            model.addAttribute("ejercicios", ejercicioService.getAListEjercicio());
+            return "rutina";
+        }
+        rutinaService.saveRutina(rutina);
+        redirectAttributes.addFlashAttribute("exito", "la rutina se ha guardado");
+        return "redirect:/rutina";
+     }
+
+     @PostMapping("/eliminarRutina/{id}")
+    public String eliminarRutina(@PathVariable Integer id, RedirectAttributes redirectAttributes){
+        rutinaService.deleteRutina(id);
+        redirectAttributes.addFlashAttribute("exito", "la rutina se ha eliminado");
+        return "redirect:/rutina";
+     }
+
 
 }

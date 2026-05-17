@@ -10,14 +10,17 @@ import java.util.List;
 @Component
 public class RutinaValidator {
 
-    public void validarRutina(Rutina rutina){
+    public void validarRutina(Rutina rutina) {
 
-        List<String> diasValidos = Arrays.asList("lunes", "martes", "miércoles", "jueves","viernes", "sábado", "sabado", "sabados", "sábados", "domingo", "todos los días", "todos los dias");
+        if (rutina.getDias_semana() == null || rutina.getDias_semana().isBlank()) {
+            return;
+        }
+
+        List<String> diasValidos = Arrays.asList("lunes", "martes", "miércoles", "miercoles", "jueves", "viernes", "sábado", "sabado", "domingo", "todos los días", "todos los dias");
         String[] diasIngresados = rutina.getDias_semana().split(",");
 
         for(String dia : diasIngresados){
             String diaVacio = dia.trim().toLowerCase();
-
             if(!diasValidos.contains(diaVacio)){
                 throw new Exception("el dia no es valido, por favor use lunes, martes, miércoles, jueves, viernes, sábado, domingo o Todos los dias");
             }
