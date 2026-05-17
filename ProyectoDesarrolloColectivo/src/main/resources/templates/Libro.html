@@ -353,9 +353,17 @@
             </div>
 
             <div class="form-group">
-                <label class="form-label">ID de usuario</label>
-                <input type="number" th:field="*{fk_id_usuario}" class="form-input"
-                       placeholder="ID del usuario"/>
+                <!-- va a mostrar todos los registros de los usuarios -->
+                <label th:if="${session.usuarioLogueado.rol == 'ADMIN'}" class="form-label">ID de usuario</label>
+                <input th:if="${session.usuarioLogueado.rol == 'ADMIN'}"
+                       type="number" th:field="*{fk_id_usuario}"
+                       class="form-input" placeholder="ID del usuario"/>
+
+                <!-- solo va a mostrar los registros del user logueado -->
+                <input th:if="${session.usuarioLogueado.rol != 'ADMIN'}"
+                       type="hidden" name="fk_id_usuario"
+                       th:value="${session.usuarioLogueado.id_usuario}"/>
+
                 <span th:errors="*{fk_id_usuario}" class="error"></span>
             </div>
 
