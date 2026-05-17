@@ -77,11 +77,38 @@ public class RachaEjercicioServiceImplements implements RachaEjercicioService {
     // Crea una racha con idUsuario + fecha (POST corto) y recarga por ID
     @Override
     public RachaEjercicio addRacha(Integer idUsuario, LocalDate fecha) throws RuntimeException {
-        RachaEjercicio r = new RachaEjercicio();
-        r.setFkIdUsuario(idUsuario);
-        r.setFecha(fecha);
 
-        RachaEjercicio saved = repository.save(r);
-        return repository.findById(saved.getIdRachaEjercicio()).orElse(saved);
+
+        List<RachaEjercicio> rachasUsuario = getRachasByUsuario(idUsuario);
+
+        int dias = 1;
+
+        if (!rachasUsuario.isEmpty()) {
+            RachaEjercicio ultima = rachasUsuario.get(0);
+
+            if (ultima.getFecha() != null &&
+                    ultima.getFecha().plusDays(1).equals(fecha)) {
+                dias = ultima.getDiasConsecutivos() + 1;
+            }
+        }
+
+        RachaEjercicio racha = new RachaEjercicio();
+        racha.setFkIdUsuario(idUsuario);
+        racha.setFecha(fecha);
+        racha.setDiasConsecutivos(dias);
+
+        return repository.save(racha);
     }
-}
+    @Override
+    public List<RachaEjercicio> getAllRachas() {
+
+        List<RachaEjercicio> todas = repository.findAll();
+
+        if (todas == null || todas.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        Collections.sort(todas, POR_FECHA_DESC);
+        return todas;
+    }
+    }

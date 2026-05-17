@@ -1,6 +1,7 @@
 package com.BIM1.ProyectoDesarrolloColectivo.Service;
 
 import com.BIM1.ProyectoDesarrolloColectivo.Entity.RachaLectura;
+import org.jspecify.annotations.Nullable;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,4 +15,6 @@ public interface RachaLecturaService {
     RachaLectura saveRacha(RachaLectura racha) throws RuntimeException;
 
     RachaLectura addRacha(Integer idUsuario, LocalDate fecha) throws RuntimeException;
+
+    List<RachaLectura> getAllRachas();
 }
