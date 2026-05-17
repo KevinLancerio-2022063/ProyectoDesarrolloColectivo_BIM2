@@ -183,10 +183,6 @@
     </div>
 </div>
 
-
-
-<div th:if="${exito}" class="alerta" th:text="${exito}"></div>
-
 <div class="page-header">
     <div class="page-header-left">
         <div class="page-tag">Salud y bienestar</div>
@@ -425,9 +421,9 @@
                 <label class="form-label">Nivel de actividad</label>
                 <select th:field="*{nivel_actividad}" class="form-select">
                     <option value="">Seleccionar nivel</option>
-                    <option value="bajo">Bajo ( 1 a 2 días)</option>
-                    <option value="medio">Medio( 3 a 4 días)</option>
-                    <option value="alto">Alto( 5 a 7 días)</option>
+                    <option value="bajo">Bajo (1 a 2 días)</option>
+                    <option value="medio">Medio (3 a 4 días)</option>
+                    <option value="alto">Alto (5 a 7 días)</option>
                 </select>
                 <span th:errors="*{nivel_actividad}" class="error"></span>
             </div>
@@ -440,10 +436,31 @@
             </div>
 
             <div class="form-group">
-                <label class="form-label">Id de usuario</label>
-                <input type="number" th:field="*{fk_id_usuario}" class="form-input"
-                       placeholder="ID del usuario"/>
+
+                <!-- ADMIN -->
+                <div th:if="${session.usuarioLogueado != null and session.usuarioLogueado.rol == 'ADMIN'}">
+                    <label class="form-label">ID de usuario</label>
+
+                    <input type="number"
+                           th:field="*{fk_id_usuario}"
+                           class="form-input"
+                           placeholder="ID del usuario"/>
+                </div>
+
+                <!-- USER NORMAL -->
+                <div th:if="${session.usuarioLogueado != null and session.usuarioLogueado.rol != 'ADMIN'}">
+
+                    <label class="form-label">Tu ID de usuario</label>
+
+                    <!-- ESTE es el que se manda -->
+                    <input type="hidden"
+                           name="fk_id_usuario"
+                           th:value="${session.usuarioLogueado.id_usuario}"/>
+
+                </div>
+
                 <span th:errors="*{fk_id_usuario}" class="error"></span>
+
             </div>
 
             <div class="form-actions">
