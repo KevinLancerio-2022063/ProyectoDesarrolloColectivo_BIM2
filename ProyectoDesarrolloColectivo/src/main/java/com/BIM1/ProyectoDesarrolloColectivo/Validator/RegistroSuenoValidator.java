@@ -16,8 +16,8 @@ public class RegistroSuenoValidator {
 
     public void RegistroSuenoValidar(RegistroSueno registroSueno) {
 
-        if (!usuarioRepository.existsById(registroSueno.getFk_id_usuario())) {
-            throw new Exception("No se ha encontrado una registro sueño con id: " + registroSueno.getFk_id_usuario());
+        if (!usuarioRepository.existsById(registroSueno.getFkIdUsuario())) {
+            throw new Exception("No se ha encontrado una registro sueño con id: " + registroSueno.getFkIdUsuario());
         }
     }
 }

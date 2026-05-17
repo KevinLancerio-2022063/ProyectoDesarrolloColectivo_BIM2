@@ -49,10 +49,15 @@ public class RegistroSuenoServiceImplements implements RegistroSuenoService {
         registroSuenoExistente.setFecha_sueño(registroSueno.getFecha_sueño());
         registroSuenoExistente.setHoras_dormidas(registroSueno.getHoras_dormidas());
         registroSuenoExistente.setCalidad_sueño(registroSueno.getCalidad_sueño());
-        registroSuenoExistente.setFk_id_usuario(registroSueno.getFk_id_usuario());
+        registroSuenoExistente.setFkIdUsuario(registroSueno.getFkIdUsuario());
 
 
         return registroSuenoRepository.save(registroSuenoExistente);
+    }
+
+    @Override
+    public List<RegistroSueno> getRegistrosByUsuario(Integer usuarioId) {
+        return registroSuenoRepository.findByFkIdUsuario(usuarioId);
     }
 
 }

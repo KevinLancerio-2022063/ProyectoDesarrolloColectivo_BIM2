@@ -34,26 +34,8 @@ public class UsuarioServiceImplements implements UsuarioService {
 
     @Override
     public Usuario saveUsuario(Usuario usuario) {
-
-        String correo = usuario.getCorreoUsuario().trim().toLowerCase();
-        String contraseña = usuario.getContraseña();
-
-        Usuario usuarioExistente = usuarioRepository.findByCorreoUsuario(correo);
-
-        if (usuarioExistente != null) {
-
-            if (usuarioExistente.getContraseña().equals(contraseña)) {
-                throw new Exception("Bienvenido de nuevo " + usuarioExistente.getNombre_completo());
-            }
-            throw new IllegalArgumentException("El correo ya está registrado pero la contraseña es incorrecta intente de nuevo por favor"
-            );
-        }
-
         usuarioValidator.UsuarioValidar(usuario);
-
-        Usuario nuevoUsuario = usuarioRepository.save(usuario);
-
-        throw new Exception("Bienvenido " + nuevoUsuario.getNombre_completo() + ", tu cuenta fue creada correctamente");
+        return usuarioRepository.save(usuario);
     }
 
     @Override

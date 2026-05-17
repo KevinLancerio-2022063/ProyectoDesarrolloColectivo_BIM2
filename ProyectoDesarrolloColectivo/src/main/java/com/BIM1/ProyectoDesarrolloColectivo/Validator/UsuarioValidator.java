@@ -29,8 +29,17 @@ public class UsuarioValidator {
         }
 
         for (Usuario correoUsua : usuarios) {
-            if (correoUsu.equals(correoUsua.getCorreoUsuario())){
-                throw new IllegalArgumentException("El correo del usuario ya existe");
+
+            if (correoUsu.equals(correoUsua.getCorreoUsuario())) {
+
+                // Si el correo es del mismo usuario pasará de este
+                if (usuario.getId_usuario() != null &&
+                        usuario.getId_usuario().equals(correoUsua.getId_usuario())) {
+                    // El continue es para saltarse la iteración actual
+                    continue;
+                }
+
+                throw new Exception("El correo del usuario ya existe");
             }
         }
     }

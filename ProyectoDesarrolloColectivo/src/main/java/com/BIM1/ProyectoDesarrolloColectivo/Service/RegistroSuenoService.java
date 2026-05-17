@@ -13,4 +13,6 @@ public interface RegistroSuenoService {
     RegistroSueno saveRegistroSueno (RegistroSueno registroSueno) throws RuntimeException;
     RegistroSueno updateRegistroSueno (Integer id, RegistroSueno registroSueno);
     void deleteRegistroSueno (Integer id);
+
+    List<RegistroSueno> getRegistrosByUsuario(Integer usuarioId);
 }

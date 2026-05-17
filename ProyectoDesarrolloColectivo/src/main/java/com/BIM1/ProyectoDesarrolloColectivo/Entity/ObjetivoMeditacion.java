@@ -15,19 +15,16 @@ public class ObjetivoMeditacion {
     private Integer id_objetivo_meditacion;
 
     @NotBlank(message = "El tiempo objetivo no puede estar vacío")
-    @Positive(message = "El tiempo objetivo no puede ser menor que 1")
     @Column(name = "tiempo_objetivo")
     private String tiempo_objetivo;
 
-    @NotBlank(message = "Los días objetivo no pueden estar vacíos")
+    @NotNull(message = "Los días objetivo no pueden estar vacíos")
     @Positive(message = "Los días objetivo no puede ser menor que 1")
     @Column(name = "dias_objetivo")
-    private String dias_objetivo;
+    private Integer dias_objetivo;
 
-    @NotNull(message = "El fk_id_usuario no puede estar vacío")
-    @Positive(message = "El FK no puede ser menor que 1")
     @Column(name = "fk_id_usuario")
-    private Integer fk_id_usuario;
+    private Integer fkIdUsuario;
 
     public Integer getId_objetivo_meditacion() {
         return id_objetivo_meditacion;
@@ -45,19 +42,19 @@ public class ObjetivoMeditacion {
         this.tiempo_objetivo = tiempo_objetivo;
     }
 
-    public String getDias_objetivo() {
+    public Integer getDias_objetivo() {
         return dias_objetivo;
     }
 
-    public void setDias_objetivo(String dias_objetivo) {
+    public void setDias_objetivo(Integer dias_objetivo) {
         this.dias_objetivo = dias_objetivo;
     }
 
-    public Integer getFk_id_usuario() {
-        return fk_id_usuario;
+    public Integer getFkIdUsuario() {
+        return fkIdUsuario;
     }
 
-    public void setFk_id_usuario(Integer fk_id_usuario) {
-        this.fk_id_usuario = fk_id_usuario;
+    public void setFkIdUsuario(Integer fkIdUsuario) {
+        this.fkIdUsuario = fkIdUsuario;
     }
 }

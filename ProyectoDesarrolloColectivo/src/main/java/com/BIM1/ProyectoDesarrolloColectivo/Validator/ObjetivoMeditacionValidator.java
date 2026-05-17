@@ -16,8 +16,8 @@ public class ObjetivoMeditacionValidator {
 
     public void ObjetivoMeditacionValidar(ObjetivoMeditacion objetivoMeditacion) {
 
-        if (!usuarioRepository.existsById(objetivoMeditacion.getFk_id_usuario())){
-            throw new Exception("No se ha encontrado un objetivo meditación con el id: "+ objetivoMeditacion.getFk_id_usuario());
+        if (!usuarioRepository.existsById(objetivoMeditacion.getFkIdUsuario())){
+            throw new Exception("No se ha encontrado un objetivo meditación con el id: "+ objetivoMeditacion.getFkIdUsuario());
         }
     }
 }
