@@ -35,9 +35,9 @@ public class EjercicioController {
 
 
     private List<Rutina> rutinasDelUsuario(HttpSession session) {
-        Usuario u = (Usuario) session.getAttribute("usuarioLogueado");
-        if (u == null) return List.of();
-        return rutinaService.getRutinasByUsuario(u.getId_usuario());
+        Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
+        if (usuario == null) return List.of();
+        return rutinaService.getRutinasByUsuario(usuario.getId_usuario());
     }
 
     private void addCommonAttributes(Model model, HttpSession session) {
