@@ -24,7 +24,13 @@ public class ObjetivosServiceImplements implements ObjetivosService{
 
     @Override
     public Objetivos getById(Integer id) {
+        objetivosValidator.ObjetivosValidacionesId(id);
         return objetivosRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Objetivos> getByIdUsuario(Integer id_usuario) {
+        return objetivosRepository.findByUsuarioId(id_usuario);
     }
 
     @Override

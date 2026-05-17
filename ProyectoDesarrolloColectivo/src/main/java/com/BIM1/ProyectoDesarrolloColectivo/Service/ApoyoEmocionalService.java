@@ -5,9 +5,10 @@ import com.BIM1.ProyectoDesarrolloColectivo.Entity.ApoyoEmocional;
 import java.util.List;
 
 public interface ApoyoEmocionalService {
-    List<ApoyoEmocional> getAllFraseMotivadora();
+    List<ApoyoEmocional> getAllApoyoEmovional();
     ApoyoEmocional getById(Integer id);
-    ApoyoEmocional saveFraseMotivadora(ApoyoEmocional apoyoEmocional) throws RuntimeException;
-    ApoyoEmocional updateFraseMotivadora(Integer id,ApoyoEmocional apoyoEmocional);
-    void deleteFraseMotivadora(Integer id);
+    List<ApoyoEmocional> getByIdUsuario(Integer id);
+    ApoyoEmocional saveApoyoEmocional(ApoyoEmocional apoyoEmocional) throws RuntimeException;
+    ApoyoEmocional updateApoyoEmocional(Integer id, ApoyoEmocional apoyoEmocional);
+    void deleteApoyoEmocional(Integer id);
 }

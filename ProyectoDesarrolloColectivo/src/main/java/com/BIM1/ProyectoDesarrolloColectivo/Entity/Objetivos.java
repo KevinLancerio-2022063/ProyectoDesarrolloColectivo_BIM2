@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-import java.util.Date;
+import java.time.LocalDate;
+
 
 @Entity
 @Table(name = "Objetivos")
@@ -13,6 +14,10 @@ public class Objetivos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_objetivos")
     private Integer idObjetivos;
+
+    @NotBlank(message = "Todos los campos son Obligatorios")
+    @Column(name = "titulo_objetivo")
+    private String tituloObjetivo;
 
     @NotBlank(message = "Todos los campos son Obligatorios")
     @Column(name = "descripcion_objetivo")
@@ -24,7 +29,7 @@ public class Objetivos {
 
     @NotNull(message = "Todos los campos son Obligatorios")
     @Column(name = "fecha_objetivo")
-    private Date fechaObjetivo;
+    private LocalDate fechaObjetivo;
 
     @NotNull(message = "Todos los campos son Obligatorios")
     @ManyToOne
@@ -47,6 +52,14 @@ public class Objetivos {
         this.idObjetivos = idObjetivos;
     }
 
+    public String getTituloObjetivo() {
+        return tituloObjetivo;
+    }
+
+    public void setTituloObjetivo(String tituloObjetivo) {
+        this.tituloObjetivo = tituloObjetivo;
+    }
+
     public String getDescripcionObjetivo() {
         return descripcionObjetivo;
     }
@@ -63,11 +76,11 @@ public class Objetivos {
         this.estadoObjetivo = estadoObjetivo;
     }
 
-    public Date getFechaObjetivo() {
+    public LocalDate getFechaObjetivo() {
         return fechaObjetivo;
     }
 
-    public void setFechaObjetivo(Date fechaObjetivo) {
+    public void setFechaObjetivo(LocalDate fechaObjetivo) {
         this.fechaObjetivo = fechaObjetivo;
     }
 
@@ -85,5 +98,14 @@ public class Objetivos {
 
     public void setFraseMotivadora(FraseMotivadora fraseMotivadora) {
         this.fraseMotivadora = fraseMotivadora;
+    }
+
+    public int getProgresoObjetivo() {
+        if (estadoObjetivo == null) return 0;
+        return switch (estadoObjetivo.toLowerCase()) {
+            case "completado"  -> 100;
+            case "en progreso" -> 50;
+            default            -> 0;
+        };
     }
 }

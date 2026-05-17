@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang='es' xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset='utf-8'>
+    <title>Frases Motivadoras</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-regular-straight/css/uicons-regular-straight.css">
+    <link rel='stylesheet' th:href="@{/css/FraseMotivadora.css}">
+    <link rel='stylesheet' th:href="@{/css/BaseJuarez.css}">
+</head>
+<body>
+  <div class="hero-bg">
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+  </div>
+  
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+
+  <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+          <div class="logo-mark">
+              <svg viewBox="0 0 24 24">
+                  <path d="M17 8C8 10 5.9 16.17 3.82 19.23L5.71 21l1-2.3A4.49 4.49 0 008 19c8-2 9-14 9-14z"/>
+              </svg>
+          </div>
+
+          <span class="logo-text">
+              Florece<span>Crece</span>
+          </span>
+
+      </div>
+
+      <nav class="sidebar-nav">
+
+          <div class="nav-section-label">Principal</div>
+
+          <a class="nav-item" th:href="@{/dashboard}">
+              <span class="nav-icon">
+                  <svg viewBox="0 0 24 24">
+                      <path d="M3 10.5L12 3l9 7.5"/>
+                      <path d="M5 10v10h14V10"/>
+                      <path d="M9 20v-6h6v6"/>
+                  </svg>
+              </span>
+              Inicio
+          </a>
+
+          <div class="nav-section-label">Salud Física</div>
+
+          <a class="nav-item" th:href="@{/perfilNutricional}">
+              <span class="nav-icon">
+                  <svg viewBox="0 0 24 24">
+                      <path d="M12 22s8-4 8-12V5l-8-3-8 3v5c0 8 8 12 8 12z"/>
+                      <path d="M9 12h6"/>
+                      <path d="M12 9v6"/>
+                  </svg>
+              </span>
+              Perfil Nutricional
+          </a>
+
+          <a class="nav-item" th:href="@{/rutina}">
+              <span class="nav-icon">
+                  <svg viewBox="0 0 24 24">
+                      <path d="M6 7v10"/>
+                      <path d="M18 7v10"/>
+                      <path d="M3 10v4"/>
+                      <path d="M21 10v4"/>
+                      <path d="M6 12h12"/>
+                  </svg>
+              </span>
+              Rutinas
+          </a>
+
+          <a class="nav-item" th:href="@{/ejercicios}">
+              <span class="nav-icon">
+                  <svg viewBox="0 0 24 24">
+                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10"/>
+                  </svg>
+              </span>
+              Ejercicios
+          </a>
+
+          <a class="nav-item" th:href="@{/racha-ejercicio}">
+              <span class="nav-icon">
+                  <svg viewBox="0 0 24 24">
+                      <path d="M12 2C9 6 6 8.5 6 13a6 6 0 0012 0c0-4.5-3-7-6-11z"/>
+                  </svg>
+              </span>
+              Racha Ejercicio
+          </a>
+
+          <div class="nav-section-label">Lectura</div>
+
+          <a class="nav-item" th:href="@{/libro}">
+              <span class="nav-icon">
+                  <svg viewBox="0 0 24 24">
+                      <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+                      <path d="M4 4.5A2.5 2.5 0 016.5 2H20v20H6.5A2.5 2.5 0 014 19.5z"/>
+                  </svg>
+              </span>
+              Biblioteca
+          </a>
+
+          <a class="nav-item" th:href="@{/racha-lectura}">
+              <span class="nav-icon">
+                  <svg viewBox="0 0 24 24">
+                      <path d="M12 6v15"/>
+                      <path d="M5 4h7a4 4 0 014 4v13a4 4 0 00-4-4H5z"/>
+                      <path d="M19 4h-7a4 4 0 00-4 4"/>
+                  </svg>
+              </span>
+              Racha Lectura
+          </a>
+
+          <div class="nav-section-label">Mente & Alma</div>
+
+          <a class="nav-item" th:href="@{/entradaDiario}">
+              <span class="nav-icon">
+                  <svg viewBox="0 0 24 24">
+                      <path d="M4 4h16v16H4z"/>
+                      <path d="M8 8h8"/>
+                      <path d="M8 12h8"/>
+                      <path d="M8 16h5"/>
+                  </svg>
+              </span>
+              Diario
+          </a>
+
+          <a class="nav-item" th:href="@{/registroMeditacion}">
+              <span class="nav-icon">
+                  <svg viewBox="0 0 24 24">
+                      <circle cx="12" cy="5" r="2"/>
+                      <path d="M12 7v6"/>
+                      <path d="M7 21c1-4 3-6 5-6s4 2 5 6"/>
+                      <path d="M5 13l4 2"/>
+                      <path d="M19 13l-4 2"/>
+                  </svg>
+              </span>
+              Meditación
+          </a>
+
+          <a class="nav-item" th:href="@{/registrosSuenos}">
+              <span class="nav-icon">
+                  <svg viewBox="0 0 24 24">
+                      <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>
+                  </svg>
+              </span>
+              Sueño
+          </a>
+
+          <a class="nav-item" th:href="@{/apoyoEmocional-Admin}">
+              <span class="nav-icon">
+                  <svg viewBox="0 0 24 24">
+                      <path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 10-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/>
+                  </svg>
+              </span>
+              Apoyo Emocional
+          </a>
+
+          <a class="nav-item" th:href="@{/objetivosAdmin}">
+              <span class="nav-icon">
+                  <svg viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="10"/>
+                      <circle cx="12" cy="12" r="6"/>
+                      <circle cx="12" cy="12" r="2"/>
+                  </svg>
+              </span>
+              Objetivos
+          </a>
+
+          <a class="nav-item active" th:href="@{/frasesMotivadoras}">
+              <span class="nav-icon">
+                  <svg viewBox="0 0 24 24">
+                      <path d="M12 2l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/>
+                  </svg>
+              </span>
+              Frase Motivadora
+          </a>
+
+      </nav>
+
+      <div class="sidebar-footer">
+
+          <div class="user-card">
+
+              <div class="user-avatar"
+                  th:text="${#strings.substring(usuario?.nombre ?: 'U',0,1)}">
+                  U
+              </div>
+
+              <div class="user-info">
+
+                  <div class="user-name"
+                      th:text="${usuario?.nombre ?: 'Usuario'}">
+                      Usuario
+                  </div>
+
+                  <div class="user-role">
+                      Miembro activo
+                  </div>
+
+              </div>
+
+              <a class="logout-btn"
+                th:href="@{/logout}"
+                title="Cerrar sesión">
+
+                  <svg viewBox="0 0 24 24">
+                      <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+                      <path d="M16 17l5-5-5-5"/>
+                      <path d="M21 12H9"/>
+                  </svg>
+
+              </a>
+
+          </div>
+
+      </div>
+
+  </aside>
+
+  <div id="overlay" class="overlay" onclick="cerrarModal()"></div>
+        <div id="modal-confirmar" class="card" style="display:none;" th:each="f : ${frases}">
+            <div class="header">
+                    <div class="image">
+                        <svg aria-hidden="true" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
+                            stroke-linejoin="round" stroke-linecap="round"></path>
+                        </svg>
+                    </div>
+                    <div class="content">
+                        <span class="title">Eliminar apoyo emocional</span>
+                        <p class="message">
+                            ¿Estás seguro de que deseas eliminar este registro? 
+                            Esta acción no se puede deshacer.
+                        </p>
+                    </div>
+                    <div class="actions">
+                        <a id="btn-confirmar-eliminar" th:href="@{'/eliminar-frase/' + ${f.idFraseMotivadora}}" 
+                            class="desactivate">Eliminar</a>
+                        <button onclick="cerrarModal()" class="cancel" type="button">Cancelar</button>
+                    </div>
+            </div>
+    </div>
+
+  <div class="main">
+    <div class="page-header">
+      <div class="page-header-left">
+        <div class="page-tag">Inspiración diaria</div>
+        <h1 class="page-title">Frase <em>Motivadora</em></h1>
+      </div>
+      <a th:href="@{/agregarFrase}" class="btn-primary">＋ Nueva Frase</a>
+    </div>
+
+    <div class="toolbar">
+        <form th:action="@{/buscarFrase}" method="get" class="search-box">
+          
+          <div class="input-group">
+            <input type="number" name="id" class="search-input" placeholder="Buscar por ID...">
+            <button type="submit" class="btn-primary">Buscar</button>
+          </div>
+
+        </form>
+    </div>
+
+
+    <div class="frase-container">
+
+      <div class="frase-card" th:each="f, stat : ${frases}">
+
+        <span class="frase-label" th:text="'Frase No.' + ${stat.count}"></span>
+
+        <p class="frase-texto" th:text="${f.texto}"></p>
+
+        <p class="frase-autor" th:text="'~' + ${f.autor}"></p>
+
+        <div class="detalle-footers">
+          <a th:href="@{'/editarFrase/' + ${f.idFraseMotivadora} }" class="btn-editar">
+            <svg height="1em" viewBox="0 0 512 512">
+              <path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"></path>
+            </svg>
+          </a>
+          <button onclick="abrirModal()" class="bin-button">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 39 7"
+              class="bin-top">
+              <line stroke-width="4" stroke="white" y2="5" x2="39" y1="5"></line>
+              <line
+                stroke-width="3"
+                stroke="white"
+                y2="1.5"
+                x2="26.0357"
+                y1="1.5"
+                x1="12"
+              ></line>
+            </svg>
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 33 39"
+              class="bin-bottom">
+              <mask fill="white" id="path-1-inside-1_8_19">
+                <path
+                  d="M0 0H33V35C33 37.2091 31.2091 39 29 39H4C1.79086 39 0 37.2091 0 35V0Z"
+                ></path>
+              </mask>
+              <path
+                mask="url(#path-1-inside-1_8_19)"
+                fill="white"
+                d="M0 0H33H0ZM37 35C37 39.4183 33.4183 43 29 43H4C-0.418278 43 -4 39.4183 -4 35H4H29H37ZM4 43C-0.418278 43 -4 39.4183 -4 35V0H4V35V43ZM37 0V35C37 39.4183 33.4183 43 29 43V35V0H37Z"
+              ></path>
+              <path stroke-width="4" stroke="white" d="M12 6L12 29"></path>
+              <path stroke-width="4" stroke="white" d="M21 6V29"></path>
+            </svg>
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 89 80"
+              class="garbage">
+              <path
+                  fill="white"
+                  d="M20.5 10.5L37.5 15.5L42.5 11.5L51.5 12.5L68.75 0L72 11.5L79.5 12.5H88.5L87 22L68.75 31.5L75.5066 25L86 26L87 35.5L77.5 48L70.5 49.5L80 50L77.5 71.5L63.5 58.5L53.5 68.5L65.5 70.5L45.5 73L35.5 79.5L28 67L16 63L12 51.5L0 48L16 25L22.5 17L20.5 10.5Z"
+              ></path>
+            </svg>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal de Error -->
+  <div th:if="${error}" class="modal-overlay modal-error">
+    <div class="modal-container">
+
+      <div class="modal-body">
+        <div class="modal-content">
+
+          <div class="modal-icon">
+            ⚠
+          </div>
+
+          <div class="modal-text">
+            <h3>Error</h3>
+            <p th:text="${error}"></p>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <a th:href="@{/frasesMotivadoras}" class="btn-danger">aceptar</a>
+      </div>
+
+    </div>
+
+  </div>
+  <script th:src="@{/js/Base.js}"></script>
+</body>
+</html>

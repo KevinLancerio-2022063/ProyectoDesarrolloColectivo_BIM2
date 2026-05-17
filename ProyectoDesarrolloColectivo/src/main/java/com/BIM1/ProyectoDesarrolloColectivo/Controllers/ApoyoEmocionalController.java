@@ -19,12 +19,12 @@ public class ApoyoEmocionalController {
     }
 
     @GetMapping
-    public List<ApoyoEmocional> getAllApoyoEmocional(){return apoyoEmocionalService.getAllFraseMotivadora();}
+    public List<ApoyoEmocional> getAllApoyoEmocional(){return apoyoEmocionalService.getAllApoyoEmovional();}
 
     @PostMapping
     public ResponseEntity<Object> createApoyoEmocional(@Valid @RequestBody ApoyoEmocional apoyoEmocional){
         try {
-            ApoyoEmocional createApoyo = apoyoEmocionalService.saveFraseMotivadora(apoyoEmocional);
+            ApoyoEmocional createApoyo = apoyoEmocionalService.saveApoyoEmocional(apoyoEmocional);
             return new ResponseEntity<>(createApoyo, HttpStatus.CREATED);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -34,7 +34,7 @@ public class ApoyoEmocionalController {
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateApoyoEmocional(@PathVariable Integer id,@Valid @RequestBody ApoyoEmocional apoyoEmocional){
         try {
-            ApoyoEmocional updateApoyo = apoyoEmocionalService.updateFraseMotivadora(id, apoyoEmocional);
+            ApoyoEmocional updateApoyo = apoyoEmocionalService.updateApoyoEmocional(id, apoyoEmocional);
             return new ResponseEntity<>(updateApoyo,HttpStatus.OK);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -44,7 +44,7 @@ public class ApoyoEmocionalController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteApoyoEmocional(@PathVariable Integer id,ApoyoEmocional apoyoEmocional){
         try {
-            apoyoEmocionalService.deleteFraseMotivadora(id);
+            apoyoEmocionalService.deleteApoyoEmocional(id);
             return ResponseEntity.ok("Datos eliminados correctamente");
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
