@@ -15,7 +15,6 @@ public class EntradaDiarioServiceImplements implements EntradaDiarioService {
     public EntradaDiarioServiceImplements(EntradaDiarioRepository entradaDiarioRepository) {
         this.entradaDiarioRepository = entradaDiarioRepository;
     }
-
     @Override
     public List<com.BIM1.ProyectoDesarrolloColectivo.Entity.EntradaDiario> getAListEntradaDiario() {
         return entradaDiarioRepository.findAll();
@@ -34,11 +33,15 @@ public class EntradaDiarioServiceImplements implements EntradaDiarioService {
 
     @Override
     public EntradaDiario updateEntradaDiario(Integer id, EntradaDiario entradaDiario) {
-        EntradaDiario existing = entradaDiarioRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(id, "EntradaDiario"));
+        EntradaDiario existing = entradaDiarioRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException(id, "EntradaDiario"));
+
         existing.setFecha(entradaDiario.getFecha());
+        existing.setQue_paso(entradaDiario.getQue_paso());
         existing.setPlan_mañana(entradaDiario.getPlan_mañana());
         existing.setReflexion(entradaDiario.getReflexion());
         existing.setFk_id_usuario(entradaDiario.getFk_id_usuario());
+
         return entradaDiarioRepository.save(existing);
     }
     @Override
@@ -47,3 +50,4 @@ public class EntradaDiarioServiceImplements implements EntradaDiarioService {
         entradaDiarioRepository.deleteById(id);
     }
 }
+

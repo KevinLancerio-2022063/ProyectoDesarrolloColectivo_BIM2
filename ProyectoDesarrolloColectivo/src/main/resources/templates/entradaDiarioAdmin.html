@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin | Entrada Diario</title>
+    <link rel="stylesheet" th:href="@{/entradaDiarioAdmin.css}">
+</head>
+<body>
+
+<div class="hero-bg">
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+</div>
+
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+
+<nav class="navbar">
+    <a th:href="@{/}" class="logo">Florece<span>Admin</span></a>
+
+    <div class="nav-links">
+        <a th:href="@{/}">Inicio</a>
+        <a th:href="@{/entradaDiario}" class="active">Diario</a>
+        <a th:href="@{/registroMeditacion}">Meditación</a>
+        <a th:href="@{/registrosSuenos}">Sueño</a>
+    </div>
+</nav>
+
+<header class="hero">
+    <div class="hero-content">
+        <span class="tag">Panel administrativo</span>
+        <h1 class="animated-title">Gestión de <em>Entradas Diario</em></h1>
+        <p>Administra registros, edita contenido y elimina entradas cuando sea necesario.</p>
+    </div>
+
+    <div class="hero-actions">
+        <a href="#formulario" class="btn-main">Nuevo registro</a>
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="admin-tools">
+        <div class="tool-card">
+            <span>Registros totales</span>
+            <strong th:text="${#lists.size(entradaDiario)}">0</strong>
+            <small>Entradas almacenadas</small>
+        </div>
+
+        <div class="tool-card">
+            <span>Acceso</span>
+            <strong>Administrador</strong>
+            <small>Control total del sistema</small>
+        </div>
+
+        <div class="tool-card">
+            <span>Permisos</span>
+            <strong>Editar / Eliminar</strong>
+            <small>Funciones restringidas</small>
+        </div>
+    </section>
+
+    <section class="cards-grid" th:if="${not #lists.isEmpty(entradaDiario)}">
+
+        <article class="diario-card" th:each="entrada : ${entradaDiario}">
+
+            <div class="shine"></div>
+
+            <div class="card-top">
+                <div class="icon-box">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <path d="M14 2v6h6"/>
+                        <path d="M8 13h8"/>
+                        <path d="M8 17h6"/>
+                    </svg>
+                </div>
+
+                <span class="access-badge">Registro</span>
+            </div>
+
+            <h2 th:text="${entrada.que_paso}">Título</h2>
+
+            <div class="meta-grid">
+                <div>
+                    <span>Fecha</span>
+                    <strong th:text="${entrada.fecha}"></strong>
+                </div>
+
+                <div>
+                    <span>ID Usuario</span>
+                    <strong th:text="${entrada.fk_id_usuario}"></strong>
+                </div>
+
+                <div>
+                    <span>ID Entrada</span>
+                    <strong th:text="${entrada.id_entrada_diario}"></strong>
+                </div>
+
+                <div>
+                    <span>Estado</span>
+                    <strong>Activo</strong>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h4>Plan para mañana</h4>
+                <p th:text="${entrada.plan_mañana}"></p>
+            </div>
+
+            <div class="content-box soft">
+                <h4>Reflexión</h4>
+                <p th:text="${entrada.reflexion}"></p>
+            </div>
+
+            <div class="admin-actions two-actions">
+                <a th:href="@{/entradaDiario/editar/{id}(id=${entrada.id_entrada_diario})}" class="btn-action edit">
+                    Editar
+                </a>
+
+                <a th:href="@{/entradaDiario/confirmarEliminar/{id}(id=${entrada.id_entrada_diario})}" class="btn-action delete">
+                    Eliminar
+                </a>
+            </div>
+
+        </article>
+
+    </section>
+
+</main>
+
+<section class="form-wrapper" id="formulario">
+    <form class="form-card"
+          th:object="${entradaDiarioFormu}"
+          th:action="${entradaDiarioFormu.id_entrada_diario == null}
+          ? @{/entradaDiario/guardar}
+          : @{/entradaDiario/actualizar/{id}(id=${entradaDiarioFormu.id_entrada_diario})}"
+          method="post">
+
+        <div class="form-header">
+            <span>Acción administrativa</span>
+            <h2>Registrar o actualizar entrada</h2>
+        </div>
+
+        <input type="hidden" th:field="*{id_entrada_diario}">
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Fecha</label>
+                <input type="date" th:field="*{fecha}" required>
+            </div>
+
+            <div class="form-group">
+                <label>ID Usuario</label>
+                <input type="number" th:field="*{fk_id_usuario}" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>¿Qué pasó?</label>
+            <textarea th:field="*{que_paso}" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Plan para mañana</label>
+            <input type="text" th:field="*{plan_mañana}">
+        </div>
+
+        <div class="form-group">
+            <label>Reflexión</label>
+            <textarea th:field="*{reflexion}"></textarea>
+        </div>
+
+        <div class="form-actions">
+            <a th:href="@{/entradaDiario}" class="btn-cancel">Cancelar</a>
+            <button type="submit">Guardar</button>
+        </div>
+    </form>
+</section>
+
+<script>
+    const dot = document.querySelector(".cursor-dot");
+    const ring = document.querySelector(".cursor-ring");
+
+    window.addEventListener("mousemove", function(e) {
+        dot.style.left = e.clientX + "px";
+        dot.style.top = e.clientY + "px";
+
+        ring.animate({
+            left: e.clientX + "px",
+            top: e.clientY + "px"
+        }, {
+            duration: 420,
+            fill: "forwards"
+        });
+
+        const trail = document.createElement("span");
+        trail.className = "cursor-trail";
+        trail.style.left = e.clientX + "px";
+        trail.style.top = e.clientY + "px";
+        document.body.appendChild(trail);
+
+        setTimeout(() => trail.remove(), 600);
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Eliminar Registro Meditación</title>
+    <link rel="stylesheet" th:href="@{/registroMeditacion.css(v=${#dates.createNow().time})}">
+</head>
+<body class="delete-page">
+
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+
+<nav class="navbar">
+    <a th:href="@{/}" class="logo">Florece</a>
+
+    <div class="nav-links">
+        <a th:href="@{/}">Inicio</a>
+        <a th:href="@{/entradaDiario}">Entrada Diario</a>
+        <a th:href="@{/registroMeditacion}" class="active">Meditación</a>
+        <a th:href="@{/registrosSuenos}">Sueño</a>
+    </div>
+</nav>
+
+<main class="delete-main">
+    <div class="delete-box">
+
+        <div class="delete-icon">!</div>
+
+        <p class="delete-tag">Confirmación · Registro Meditación</p>
+
+        <h1>Eliminar <em>Registro</em></h1>
+
+        <p class="delete-message">
+            Estás a punto de eliminar este registro de meditación. Esta acción no se puede deshacer.
+        </p>
+
+        <div class="delete-info">
+            <p>
+                <strong>ID:</strong>
+                <span th:text="${meditacion.id_registro_meditacion}">3</span>
+            </p>
+
+            <p>
+                <strong>Tipo:</strong>
+                <span th:text="${meditacion.tipo_meditacion}">Mindfulness</span>
+            </p>
+
+            <p>
+                <strong>Duración:</strong>
+                <span th:text="${meditacion.duracion_minutos}">20</span> minutos
+            </p>
+
+            <p>
+                <strong>Dificultad:</strong>
+                <span th:text="${meditacion.nivel_dificultad}">Intermedio</span>
+            </p>
+
+            <p>
+                <strong>Fecha:</strong>
+                <span th:text="${#temporals.format(meditacion.fecha_registro, 'yyyy-MM-dd HH:mm')}">
+                    2026-02-27 22:08
+                </span>
+            </p>
+        </div>
+
+        <div class="delete-buttons">
+            <a th:href="@{/registroMeditacion}" class="delete-cancel">
+                Cancelar
+            </a>
+
+            <form th:action="@{/registroMeditacion/eliminar/{id}(id=${meditacion.id_registro_meditacion})}"
+                  method="post"
+                  class="delete-form">
+                <button type="submit" class="delete-confirm">
+                    Sí, eliminar
+                </button>
+            </form>
+        </div>
+
+    </div>
+</main>
+
+<script>
+    const dot = document.querySelector(".cursor-dot");
+    const ring = document.querySelector(".cursor-ring");
+
+    window.addEventListener("mousemove", function(e) {
+        dot.style.left = e.clientX + "px";
+        dot.style.top = e.clientY + "px";
+
+        ring.animate({
+            left: e.clientX + "px",
+            top: e.clientY + "px"
+        }, {
+            duration: 420,
+            fill: "forwards"
+        });
+
+        const trail = document.createElement("span");
+        trail.className = "cursor-trail";
+        trail.style.left = e.clientX + "px";
+        trail.style.top = e.clientY + "px";
+        document.body.appendChild(trail);
+
+        setTimeout(() => trail.remove(), 600);
+    });
+</script>
+
+</body>
+</html>

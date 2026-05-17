@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Florece | Diario</title>
+    <link rel="stylesheet" th:href="@{/entradaDiario.css}">
+</head>
+<body>
+<div class="hero-bg">
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+</div>
+
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-logo">
+
+        <div class="logo-mark">
+            <svg viewBox="0 0 24 24">
+                <path d="M17 8C8 10 5.9 16.17 3.82 19.23L5.71 21l1-2.3A4.49 4.49 0 008 19c8-2 9-14 9-14z"/>
+            </svg>
+        </div>
+
+        <span class="logo-text">
+            Florece<span>Crece</span>
+        </span>
+
+    </div>
+
+    <nav class="sidebar-nav">
+
+        <div class="nav-section-label">Principal</div>
+
+        <a class="nav-item" th:href="@{/dashboard}">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M3 10.5L12 3l9 7.5"/>
+                    <path d="M5 10v10h14V10"/>
+                    <path d="M9 20v-6h6v6"/>
+                </svg>
+            </span>
+            Inicio
+        </a>
+
+        <div class="nav-section-label">Salud Física</div>
+
+        <a class="nav-item" th:href="@{/perfilNutricional}">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 22s8-4 8-12V5l-8-3-8 3v5c0 8 8 12 8 12z"/>
+                    <path d="M9 12h6"/>
+                    <path d="M12 9v6"/>
+                </svg>
+            </span>
+            Perfil Nutricional
+        </a>
+
+        <a class="nav-item" th:href="@{/rutina}">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M6 7v10"/>
+                    <path d="M18 7v10"/>
+                    <path d="M3 10v4"/>
+                    <path d="M21 10v4"/>
+                    <path d="M6 12h12"/>
+                </svg>
+            </span>
+            Rutinas
+        </a>
+
+        <a class="nav-item" th:href="@{/ejercicios}">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10"/>
+                </svg>
+            </span>
+            Ejercicios
+        </a>
+
+        <a class="nav-item" th:href="@{/racha-ejercicio}">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2C9 6 6 8.5 6 13a6 6 0 0012 0c0-4.5-3-7-6-11z"/>
+                </svg>
+            </span>
+            Racha Ejercicio
+        </a>
+
+        <div class="nav-section-label">Lectura</div>
+
+        <a class="nav-item" th:href="@{/libro}">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+                    <path d="M4 4.5A2.5 2.5 0 016.5 2H20v20H6.5A2.5 2.5 0 014 19.5z"/>
+                </svg>
+            </span>
+            Biblioteca
+        </a>
+
+        <a class="nav-item" th:href="@{/racha-lectura}">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 6v15"/>
+                    <path d="M5 4h7a4 4 0 014 4v13a4 4 0 00-4-4H5z"/>
+                    <path d="M19 4h-7a4 4 0 00-4 4"/>
+                </svg>
+            </span>
+            Racha Lectura
+        </a>
+
+        <div class="nav-section-label">Mente & Alma</div>
+
+        <a class="nav-item active" th:href="@{/entradaDiario}">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M4 4h16v16H4z"/>
+                    <path d="M8 8h8"/>
+                    <path d="M8 12h8"/>
+                    <path d="M8 16h5"/>
+                </svg>
+            </span>
+            Diario
+        </a>
+
+        <a class="nav-item" th:href="@{/registroMeditacion}">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="5" r="2"/>
+                    <path d="M12 7v6"/>
+                    <path d="M7 21c1-4 3-6 5-6s4 2 5 6"/>
+                    <path d="M5 13l4 2"/>
+                    <path d="M19 13l-4 2"/>
+                </svg>
+            </span>
+            Meditación
+        </a>
+
+        <a class="nav-item" th:href="@{/registrosSuenos}">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>
+                </svg>
+            </span>
+            Sueño
+        </a>
+
+        <a class="nav-item" th:href="@{/apoyoEmocional}">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 10-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/>
+                </svg>
+            </span>
+            Apoyo Emocional
+        </a>
+
+        <a class="nav-item" th:href="@{/ObjetivosController}">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"/>
+                    <circle cx="12" cy="12" r="6"/>
+                    <circle cx="12" cy="12" r="2"/>
+                </svg>
+            </span>
+            Objetivos
+        </a>
+
+        <a class="nav-item" th:href="@{/fraseMotivadora}">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/>
+                </svg>
+            </span>
+            Frases Motivadoras
+        </a>
+
+    </nav>
+
+    <div class="sidebar-footer">
+
+        <div class="user-card">
+
+            <div class="user-avatar"
+                 th:text="${#strings.substring(usuario?.nombre ?: 'U',0,1)}">
+                U
+            </div>
+
+            <div class="user-info">
+
+                <div class="user-name"
+                     th:text="${usuario?.nombre ?: 'Usuario'}">
+                    Usuario
+                </div>
+
+                <div class="user-role"
+                     th:if="${session.rol == 'USER'}">
+                    Miembro activo
+                </div>
+
+                <div class="user-role"
+                     th:if="${session.rol == 'ADMIN'}">
+                    Administrador
+                </div>
+
+            </div>
+
+            <a class="logout-btn"
+               th:href="@{/logout}"
+               title="Cerrar sesión">
+
+                <svg viewBox="0 0 24 24">
+                    <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+                    <path d="M16 17l5-5-5-5"/>
+                    <path d="M21 12H9"/>
+                </svg>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</aside>
+<!-- ================= FIN SIDEBAR ================= -->
+
+<nav class="navbar">
+    <a th:href="@{/}" class="logo">Florece</a>
+
+    <div class="nav-links">
+        <a th:href="@{/}">Inicio</a>
+        <a th:href="@{/entradaDiario}" class="active">Mi Diario</a>
+        <a th:href="@{/registroMeditacion}">Meditación</a>
+        <a th:href="@{/registrosSuenos}">Sueño</a>
+    </div>
+</nav>
+
+<header class="hero">
+    <div>
+        <span class="tag" th:if="${session.rol == 'USER'}">Bienestar personal</span>
+        <span class="tag" th:if="${session.rol == 'ADMIN'}">Panel Administrador</span>
+
+        <h1 class="animated-title">Mis <em>Entradas Diario</em></h1>
+
+        <p th:if="${session.rol == 'USER'}">
+            Registra y organiza tus reflexiones personales.
+        </p>
+
+        <p th:if="${session.rol == 'ADMIN'}">
+            Administra todos los registros del sistema.
+        </p>
+    </div>
+
+    <a href="#formulario"
+       class="btn-new"
+       th:if="${session.rol == 'ADMIN'}">
+        <svg viewBox="0 0 24 24">
+            <path d="M12 5v14"/>
+            <path d="M5 12h14"/>
+        </svg>
+        Nuevo registro
+    </a>
+</header>
+
+<main class="container">
+
+    <section class="empty"
+             th:if="${session.rol == 'ADMIN'}">
+
+        <h3>Vista Administrador</h3>
+
+        <p>
+            Estás visualizando y administrando todas las entradas registradas.
+        </p>
+
+    </section>
+
+    <section class="cards-grid" th:if="${not #lists.isEmpty(entradaDiario)}">
+
+        <article class="diario-card" th:each="entrada, iter : ${entradaDiario}"
+                 th:classappend="${iter.index % 3 == 0} ? ' card-green' : (${iter.index % 3 == 1} ? ' card-cream' : ' card-brown')">
+
+            <div class="shine"></div>
+
+            <div class="card-top">
+                <div class="icon-box">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <path d="M14 2v6h6"/>
+                        <path d="M8 13h8"/>
+                        <path d="M8 17h6"/>
+                    </svg>
+                </div>
+
+                <span class="user-badge"
+                      th:if="${session.rol == 'USER'}">
+                    Mi registro
+                </span>
+
+                <span class="user-badge"
+                      th:if="${session.rol == 'ADMIN'}">
+                    Registro global
+                </span>
+            </div>
+
+            <h2 th:text="${entrada.que_paso}">Título</h2>
+
+            <div class="meta-simple">
+                <span class="meta-icon">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="3" y="4" width="18" height="18" rx="2"/>
+                        <line x1="16" y1="2" x2="16" y2="6"/>
+                        <line x1="8" y1="2" x2="8" y2="6"/>
+                        <line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                    Fecha
+                </span>
+                <strong th:text="${entrada.fecha}"></strong>
+
+                <div th:if="${session.rol == 'ADMIN'}"
+                     style="margin-top:10px;">
+
+                    <span class="meta-icon">
+                        Usuario ID
+                    </span>
+
+                    <strong th:text="${entrada.fk_id_usuario}"></strong>
+
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h4>
+                    <svg viewBox="0 0 24 24">
+                        <polyline points="9 11 12 14 22 4"/>
+                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                    </svg>
+                    Plan para mañana
+                </h4>
+                <p th:text="${entrada.plan_mañana}"></p>
+            </div>
+
+            <div class="content-box soft">
+                <h4>
+                    <svg viewBox="0 0 24 24">
+                        <path d="M21 15a4 4 0 0 1-4 4H8l-4 4V5a4 4 0 0 1 4-4h9a4 4 0 0 1 4 4z"/>
+                    </svg>
+                    Reflexión
+                </h4>
+                <p th:text="${entrada.reflexion}"></p>
+            </div>
+
+            <div class="user-actions"
+                 th:if="${session.rol == 'ADMIN'}">
+                <a th:href="@{/entradaDiario/editar/{id}(id=${entrada.id_entrada_diario})}" class="btn-action edit">
+                    Editar
+                </a>
+
+                <a th:href="@{/entradaDiario/confirmarEliminar/{id}(id=${entrada.id_entrada_diario})}" class="btn-action delete">
+                    Eliminar
+                </a>
+            </div>
+
+        </article>
+
+    </section>
+
+    <section class="empty" th:if="${#lists.isEmpty(entradaDiario)}">
+        <h3>Aún no tienes registros</h3>
+
+        <p th:if="${session.rol == 'USER'}">
+            Cuando empieces a escribir tu diario, aparecerá aquí.
+        </p>
+
+        <p th:if="${session.rol == 'ADMIN'}">
+            Actualmente no existen entradas registradas en el sistema.
+        </p>
+
+        <a href="#formulario"
+           class="btn-new empty-btn"
+           th:if="${session.rol == 'ADMIN'}">
+            Crear primer registro
+        </a>
+    </section>
+
+</main>
+
+<section class="form-wrapper"
+         id="formulario"
+         th:if="${session.rol == 'ADMIN'}">
+    <form class="form-card"
+          th:object="${entradaDiarioFormu}"
+          th:action="${entradaDiarioFormu.id_entrada_diario == null}
+          ? @{/entradaDiario/guardar}
+          : @{/entradaDiario/actualizar/{id}(id=${entradaDiarioFormu.id_entrada_diario})}"
+          method="post">
+
+        <div class="form-header">
+            <span>Administración de diario</span>
+            <h2 th:text="${entradaDiarioFormu.id_entrada_diario == null} ? 'Nuevo registro' : 'Actualizar registro'">
+                Nuevo registro
+            </h2>
+            <p>Completa la información de la entrada personal.</p>
+        </div>
+
+        <input type="hidden" th:field="*{id_entrada_diario}">
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Fecha</label>
+                <input type="date" th:field="*{fecha}" required>
+            </div>
+
+            <div class="form-group">
+                <label>ID Usuario</label>
+                <input type="number" th:field="*{fk_id_usuario}" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>¿Qué pasó?</label>
+            <textarea th:field="*{que_paso}" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Plan para mañana</label>
+            <input type="text" th:field="*{plan_mañana}">
+        </div>
+
+        <div class="form-group">
+            <label>Reflexión</label>
+            <textarea th:field="*{reflexion}"></textarea>
+        </div>
+
+        <div class="form-actions">
+            <a th:href="@{/entradaDiario}" class="btn-cancel">Cancelar</a>
+            <button type="submit"
+                    th:text="${entradaDiarioFormu.id_entrada_diario == null} ? 'Guardar registro' : 'Actualizar registro'">
+                Guardar registro
+            </button>
+        </div>
+    </form>
+</section>
+
+<script>
+    const dot = document.querySelector(".cursor-dot");
+    const ring = document.querySelector(".cursor-ring");
+
+    window.addEventListener("mousemove", function(e) {
+        dot.style.left = e.clientX + "px";
+        dot.style.top = e.clientY + "px";
+
+        ring.animate({
+            left: e.clientX + "px",
+            top: e.clientY + "px"
+        }, {
+            duration: 420,
+            fill: "forwards"
+        });
+
+        const trail = document.createElement("span");
+        trail.className = "cursor-trail";
+        trail.style.left = e.clientX + "px";
+        trail.style.top = e.clientY + "px";
+        document.body.appendChild(trail);
+
+        setTimeout(() => trail.remove(), 600);
+    });
+</script>
+</body>
+</html>
