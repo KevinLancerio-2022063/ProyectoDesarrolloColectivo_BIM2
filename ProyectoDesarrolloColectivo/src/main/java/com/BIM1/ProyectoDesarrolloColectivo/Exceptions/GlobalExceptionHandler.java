@@ -35,23 +35,29 @@ public class GlobalExceptionHandler {
     private final LibroService libroService;
     private final PerfilNutricionalService perfilNutricionalService;
 
-    public GlobalExceptionHandler(RutinaService rutinaService, EjercicioService ejercicioService, LibroService libroService, PerfilNutricionalService perfilNutricionalService) {
-        this.rutinaService = rutinaService;
-        this.ejercicioService = ejercicioService;
-        this.libroService = libroService;
-        this.perfilNutricionalService = perfilNutricionalService;
-    }
-
-    // Inyectamos el servicio para volver a cargar los datos
     private final UsuarioService service;
     private final RegistroSuenoService registroSuenoService;
     private final ObjetivoMeditacionService objetivoMeditacionService;
 
-    public GlobalExceptionHandler(UsuarioService service, RegistroSuenoService registroSuenoService, ObjetivoMeditacionService objetivoMeditacionService) {
+    public GlobalExceptionHandler(
+            RutinaService rutinaService,
+            EjercicioService ejercicioService,
+            LibroService libroService,
+            PerfilNutricionalService perfilNutricionalService,
+            UsuarioService service,
+            RegistroSuenoService registroSuenoService,
+            ObjetivoMeditacionService objetivoMeditacionService
+    ) {
+        this.rutinaService = rutinaService;
+        this.ejercicioService = ejercicioService;
+        this.libroService = libroService;
+        this.perfilNutricionalService = perfilNutricionalService;
+
         this.service = service;
         this.registroSuenoService = registroSuenoService;
         this.objetivoMeditacionService = objetivoMeditacionService;
     }
+
 
     // Con esto capturamos cualquier excepción no controlada
     @ExceptionHandler(Exception.class)
@@ -93,6 +99,7 @@ public class GlobalExceptionHandler {
         model.addAttribute("ejercicios", ejercicioService.getAListEjercicio());
         model.addAttribute("errores", List.of(mensaje));
         return "rutina";
+    }
     public String validarErrorUsuario(Exception ex, Model model){
 
         //Cargamos los datos necesarios para que la vista funcione
