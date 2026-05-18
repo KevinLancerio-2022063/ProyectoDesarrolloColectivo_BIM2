@@ -6,8 +6,8 @@
     <title>Inicio · Florece</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
-    <link rel="stylesheet" href="principal.css">
     <link rel="stylesheet" th:href="@{/Home.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
@@ -26,16 +26,12 @@
     <nav class="sidebar-nav">
 
         <div class="nav-section-label">Principal</div>
-
-        <!-- CONEXIÓN: Dashboard / Inicio -->
-        <a class="nav-item active" th:href="@{/dashboard}">
-            <span class="nav-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M3 10.5L12 3l9 7.5"/>
-                    <path d="M5 10v10h14V10"/>
-                    <path d="M9 20v-6h6v6"/>
-                </svg>
-            </span>
+        <a class="nav-item" th:href="@{/home}" href="/home">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 10.5L12 3l9 7.5"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/>
+        </svg>
+      </span>
             Inicio
         </a>
 
@@ -78,7 +74,7 @@
         </a>
 
         <!-- CONEXIÓN: Racha Ejercicio -->
-        <a class="nav-item" th:href="@{/racha-ejercicio}">
+        <a class="nav-item" th:href="@{/rachaEjercicio}">
             <span class="nav-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M12 2C9 6 6 8.5 6 13a6 6 0 0012 0c0-4.5-3-7-6-11z"/>
@@ -104,7 +100,7 @@
         </a>
 
         <!-- CONEXIÓN: Racha Lectura -->
-        <a class="nav-item" th:href="@{/racha-lectura}">
+        <a class="nav-item" th:href="@{/rachaLectura}">
             <span class="nav-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M12 6v15"/>
@@ -132,7 +128,7 @@
         </a>
 
         <!-- CONEXIÓN: Sueño -->
-        <a class="nav-item" th:href="@{/registrosSuenos}">
+        <a class="nav-item" th:href="@{/registroSueno}">
             <span class="nav-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>
@@ -165,7 +161,7 @@
         </a>
 
         <!-- CONEXIÓN: Objetivos -->
-        <a class="nav-item" th:href="@{/ObjetivosController}">
+        <a class="nav-item" th:href="@{/objetivos}">
             <span class="nav-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="10"/>
@@ -187,23 +183,13 @@
         </a>
     </nav>
 
-    <div class="sidebar-footer">
-        <div class="user-card">
-            <div class="user-avatar" th:text="${#strings.substring(usuario?.nombre ?: 'U', 0, 1)}">U</div>
-            <div class="user-info">
-                <div class="user-name" th:text="${usuario?.nombre ?: 'Usuario'}">Usuario</div>
-                <div class="user-role">Miembro activo</div>
-            </div>
-            <a class="logout-btn" th:href="@{/logout}" title="Cerrar sesión">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
-                    <path d="M16 17l5-5-5-5"/>
-                    <path d="M21 12H9"/>
-                </svg>
-            </a>
-        </div>
-    </div>
 </aside>
+
+<!-- Logo Flotante -->
+<a id="logoToggle" th:href="@{/home}" href="/home" class="logo-flotante"
+   onclick="toggleSidebar(event)" title="Abrir menú">
+    <img th:src="@{/img/logo.png}" src="../static/img/logo.png" alt="Logo">
+</a>
 
 <div class="main">
 
@@ -211,7 +197,7 @@
         <div class="topbar-left">
             <div class="topbar-greeting">Buenos días,</div>
             <div class="topbar-title">
-                <span th:text="${usuario?.nombre ?: 'Usuario'}">Usuario</span>
+                <span th:text="${usuario?.nombre_completo ?: 'Usuario'}">Usuario</span>
                 <span> — Tu bienestar hoy</span>
             </div>
         </div>
@@ -244,7 +230,7 @@
 
             <div class="welcome-actions">
                 <!-- CONEXIÓN: nuevo registro nutricional -->
-                <a th:href="@{/perfilNutricional/nuevo}" class="btn-banner btn-banner-primary">
+                <a th:href="@{/perfilNutricional}" class="btn-banner btn-banner-primary">
                     + Nuevo registro
                 </a>
 
@@ -410,7 +396,7 @@
                             <div class="qa-name">Registro de Sueño</div>
                             <div class="qa-sub">Calidad del descanso</div>
                         </div>
-                        <a class="qa-action" th:href="@{/registrosSuenos}">
+                        <a class="qa-action" th:href="@{/registroSueno}">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M5 12h14"/>
                                 <path d="M12 5l7 7-7 7"/>
@@ -746,7 +732,7 @@
                 </a>
 
                 <!-- CONEXIÓN: Sueño -->
-                <a class="mod-nav-card" th:href="@{/registrosSuenos}">
+                <a class="mod-nav-card" th:href="@{/registroSueno}">
                     <div class="mod-nav-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>
@@ -782,7 +768,7 @@
                 </a>
 
                 <!-- CONEXIÓN: Objetivos -->
-                <a class="mod-nav-card" th:href="@{/ObjetivosController}">
+                <a class="mod-nav-card" th:href="@{/objetivos}">
                     <div class="mod-nav-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="10"/>
@@ -846,6 +832,9 @@
         else greeting.textContent = 'Buenas noches,';
     }
 </script>
+
+<!-- Dirección de la funcionalidad de abrir y ocultar la barra lateral (sidebar) -->
+<script th:src="@{/js/sidebar.js}"></script>
 
 </body>
 </html>

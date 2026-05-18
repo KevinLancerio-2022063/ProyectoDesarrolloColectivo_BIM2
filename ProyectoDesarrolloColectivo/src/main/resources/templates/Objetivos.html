@@ -6,6 +6,7 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' th:href="@{/css/BaseJuarez.css}">
     <link rel='stylesheet' th:href="@{/css/Objetivos.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
@@ -18,36 +19,33 @@
     <div class="cube"></div>
   </div>
 
+  <!-- overlay al abrir el sidebar -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <!-- sidebar -->
   <aside class="sidebar" id="sidebar">
 
-    <div class="sidebar-logo">
+      <button class="sidebar-close" id="sidebarClose" title="Cerrar menú">
+          <i class="fas fa-times"></i>
+      </button>
 
-        <div class="logo-mark">
-            <svg viewBox="0 0 24 24">
-                <path d="M17 8C8 10 5.9 16.17 3.82 19.23L5.71 21l1-2.3A4.49 4.49 0 008 19c8-2 9-14 9-14z"/>
-            </svg>
-        </div>
+      <div class="sidebar-logo">
+          <div class="logo-mark">
+              <svg viewBox=" 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 19.23L5.71 21l1-2.3A4.49 4.49 0 008 19c8-2 9-14 9-14zm-5.5 6.5c.56-.31 1.29-.58 2.26-.72-.66.57-1.37 1.07-2.26 1.45v-.73z"/></svg>
+          </div>
+          <span class="logo-text">Florece<span>Crece</span></span>
+      </div>
 
-        <span class="logo-text">
-            Florece<span>Crece</span>
-        </span>
+      <nav class="sidebar-nav">
 
-    </div>
-
-    <nav class="sidebar-nav">
-
-        <div class="nav-section-label">Principal</div>
-
-        <a class="nav-item" th:href="@{/dashboard}">
-            <span class="nav-icon">
-                <svg viewBox="0 0 24 24">
-                    <path d="M3 10.5L12 3l9 7.5"/>
-                    <path d="M5 10v10h14V10"/>
-                    <path d="M9 20v-6h6v6"/>
-                </svg>
-            </span>
-            Inicio
-        </a>
+          <div class="nav-section-label">Principal</div>
+          <a class="nav-item" th:href="@{/home}" href="/home">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 10.5L12 3l9 7.5"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/>
+        </svg>
+      </span>
+              Inicio
+          </a>
 
         <div class="nav-section-label">Salud Física</div>
 
@@ -84,7 +82,7 @@
             Ejercicios
         </a>
 
-        <a class="nav-item" th:href="@{/racha-ejercicio}">
+        <a class="nav-item" th:href="@{/rachaEjercicio}">
             <span class="nav-icon">
                 <svg viewBox="0 0 24 24">
                     <path d="M12 2C9 6 6 8.5 6 13a6 6 0 0012 0c0-4.5-3-7-6-11z"/>
@@ -105,7 +103,7 @@
             Biblioteca
         </a>
 
-        <a class="nav-item" th:href="@{/racha-lectura}">
+        <a class="nav-item" th:href="@{/rachaLectura}">
             <span class="nav-icon">
                 <svg viewBox="0 0 24 24">
                     <path d="M12 6v15"/>
@@ -143,7 +141,7 @@
             Meditación
         </a>
 
-        <a class="nav-item" th:href="@{/registrosSuenos}">
+        <a class="nav-item" th:href="@{/registroSueno}">
             <span class="nav-icon">
                 <svg viewBox="0 0 24 24">
                     <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>
@@ -183,45 +181,13 @@
 
     </nav>
 
-    <div class="sidebar-footer">
+  </aside>
 
-        <div class="user-card">
-
-            <div class="user-avatar"
-                 th:text="${#strings.substring(usuario?.nombre ?: 'U',0,1)}">
-                U
-            </div>
-
-            <div class="user-info">
-
-                <div class="user-name"
-                     th:text="${usuario?.nombre ?: 'Usuario'}">
-                    Usuario
-                </div>
-
-                <div class="user-role">
-                    Miembro activo
-                </div>
-
-            </div>
-
-            <a class="logout-btn"
-               th:href="@{/logout}"
-               title="Cerrar sesión">
-
-                <svg viewBox="0 0 24 24">
-                    <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
-                    <path d="M16 17l5-5-5-5"/>
-                    <path d="M21 12H9"/>
-                </svg>
-
-            </a>
-
-        </div>
-
-    </div>
-
-</aside>
+  <!-- Logo Flotante -->
+  <a id="logoToggle" th:href="@{/home}" href="/home" class="logo-flotante"
+     onclick="toggleSidebar(event)" title="Abrir menú">
+      <img th:src="@{/img/logo.png}" src="../static/img/logo.png" alt="Logo">
+  </a>
   
   <div class="cursor-dot"></div>
   <div class="cursor-ring"></div>
@@ -295,5 +261,9 @@
 
   </div>
   <script th:src="@{/js/Base.js}"></script>
+
+  <!-- Dirección de la funcionalidad de abrir y ocultar la barra lateral (sidebar) -->
+  <script th:src="@{/js/sidebar.js}"></script>
+
 </body>
 </html>

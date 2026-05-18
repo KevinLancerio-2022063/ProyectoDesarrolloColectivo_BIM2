@@ -24,138 +24,163 @@
     <div class="cube"></div>
 </div>
 
+<!-- overlay al abrir el sidebar -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<!-- sidebar -->
 <aside class="sidebar" id="sidebar">
+
+    <button class="sidebar-close" id="sidebarClose" title="Cerrar menú">
+        <i class="fas fa-times"></i>
+    </button>
 
     <div class="sidebar-logo">
         <div class="logo-mark">
-            <svg viewBox="0 0 24 24">
-                <path d="M17 8C8 10 5.9 16.17 3.82 19.23L5.71 21l1-2.3A4.49 4.49 0 008 19c8-2 9-14 9-14z"/>
-            </svg>
+            <svg viewBox=" 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 19.23L5.71 21l1-2.3A4.49 4.49 0 008 19c8-2 9-14 9-14zm-5.5 6.5c.56-.31 1.29-.58 2.26-.72-.66.57-1.37 1.07-2.26 1.45v-.73z"/></svg>
         </div>
-        <span class="logo-text">Evolu<span>ciona</span></span>
+        <span class="logo-text">Florece<span>Crece</span></span>
     </div>
 
     <nav class="sidebar-nav">
 
         <div class="nav-section-label">Principal</div>
-
-        <a class="nav-item" th:href="@{/dashboard}">
-            <span class="nav-icon">
-                <svg viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>
-            </span>
+        <a class="nav-item" th:href="@{/home}" href="/home">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 10.5L12 3l9 7.5"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/>
+        </svg>
+      </span>
             Inicio
         </a>
 
         <div class="nav-section-label">Salud Física</div>
-
-        <a class="nav-item" th:href="@{/perfilNutricional}">
-            <span class="nav-icon">
-                <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-12V5l-8-3-8 3v5c0 8 8 12 8 12z"/><path d="M9 12h6"/><path d="M12 9v6"/></svg>
-            </span>
+        <a class="nav-item" th:href="@{/perfilNutricional}" href="/perfilNutricional">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 22s8-4 8-12V5l-8-3-8 3v5c0 8 8 12 8 12z"/>
+          <path d="M9 12h6"/><path d="M12 9v6"/>
+        </svg>
+      </span>
             Perfil Nutricional
         </a>
 
-        <a class="nav-item" th:href="@{/rutina}">
-            <span class="nav-icon">
-                <svg viewBox="0 0 24 24"><path d="M6 7v10"/><path d="M18 7v10"/><path d="M3 10v4"/><path d="M21 10v4"/><path d="M6 12h12"/></svg>
-            </span>
+        <a class="nav-item" th:href="@{/rutina}" href="/rutina">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 7v10"/><path d="M18 7v10"/><path d="M3 10v4"/>
+          <path d="M21 10v4"/><path d="M6 12h12"/>
+        </svg>
+      </span>
             Rutinas
         </a>
 
-        <a class="nav-item active" th:href="@{/ejercicios}">
-            <span class="nav-icon">
-                <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10"/></svg>
-            </span>
+        <a class="nav-item" th:href="@{/ejercicios}" href="/ejercicios">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10"/>
+        </svg>
+      </span>
             Ejercicios
         </a>
 
-        <a class="nav-item" th:href="@{/racha-ejercicio}">
-            <span class="nav-icon">
-                <svg viewBox="0 0 24 24"><path d="M12 2C9 6 6 8.5 6 13a6 6 0 0012 0c0-4.5-3-7-6-11z"/></svg>
-            </span>
+        <a class="nav-item active" th:href="@{/rachaEjercicio}" href="/rachaEjercicio">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2C9 6 6 8.5 6 13a6 6 0 0012 0c0-4.5-3-7-6-11z"/>
+          <path d="M12 22c2-2 3-4 1-7"/>
+        </svg>
+      </span>
             Racha Ejercicio
         </a>
 
         <div class="nav-section-label">Lectura</div>
-
-        <a class="nav-item" th:href="@{/libro}">
-            <span class="nav-icon">
-                <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M4 4.5A2.5 2.5 0 016.5 2H20v20H6.5A2.5 2.5 0 014 19.5z"/></svg>
-            </span>
+        <a class="nav-item" th:href="@{/libro}" href="/libro">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+          <path d="M4 4.5A2.5 2.5 0 016.5 2H20v20H6.5A2.5 2.5 0 014 19.5z"/>
+          <path d="M8 6h8"/><path d="M8 10h8"/>
+        </svg>
+      </span>
             Biblioteca
         </a>
 
-        <a class="nav-item" th:href="@{/racha-lectura}">
-            <span class="nav-icon">
-                <svg viewBox="0 0 24 24"><path d="M12 6v15"/><path d="M5 4h7a4 4 0 014 4v13a4 4 0 00-4-4H5z"/><path d="M19 4h-7a4 4 0 00-4 4"/></svg>
-            </span>
+        <a class="nav-item" th:href="@{/rachaLectura}" href="/rachaLectura">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 6v15"/>
+          <path d="M5 4h7a4 4 0 014 4v13a4 4 0 00-4-4H5z"/>
+          <path d="M19 4h-7a4 4 0 00-4 4"/>
+        </svg>
+      </span>
             Racha Lectura
         </a>
 
         <div class="nav-section-label">Mente & Alma</div>
-
-        <a class="nav-item" th:href="@{/entradaDiario}">
-            <span class="nav-icon">
-                <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 8h8"/><path d="M8 12h8"/><path d="M8 16h5"/></svg>
-            </span>
-            Diario
-        </a>
-
-        <a class="nav-item" th:href="@{/registroMeditacion}">
-            <span class="nav-icon">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="M12 7v6"/><path d="M7 21c1-4 3-6 5-6s4 2 5 6"/><path d="M5 13l4 2"/><path d="M19 13l-4 2"/></svg>
-            </span>
+        <a class="nav-item" th:href="@{/registroMeditacion}" href="/registroMeditacion">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="5" r="2"/><path d="M12 7v6"/>
+          <path d="M7 21c1-4 3-6 5-6s4 2 5 6"/>
+          <path d="M5 13l4 2"/><path d="M19 13l-4 2"/>
+        </svg>
+      </span>
             Meditación
         </a>
 
-        <a class="nav-item" th:href="@{/registrosSuenos}">
-            <span class="nav-icon">
-                <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg>
-            </span>
+        <a class="nav-item" th:href="@{/registroSueno}" href="/registroSueno">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>
+        </svg>
+      </span>
             Sueño
         </a>
 
-        <a class="nav-item" th:href="@{/apoyoEmocional}">
-            <span class="nav-icon">
-                <svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 10-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg>
-            </span>
+        <a class="nav-item" th:href="@{/entradaDiario}" href="/entradaDiario">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 4h16v16H4z"/><path d="M8 8h8"/><path d="M8 12h8"/><path d="M8 16h5"/>
+        </svg>
+      </span>
+            Diario
+        </a>
+
+        <a class="nav-item" th:href="@{/apoyoEmocional}" href="/apoyoEmocional">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 10-7.8 7.8l1 1L12 22l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/>
+        </svg>
+      </span>
             Apoyo Emocional
         </a>
 
-        <a class="nav-item" th:href="@{/ObjetivosController}">
-            <span class="nav-icon">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-            </span>
+        <a class="nav-item" th:href="@{/objetivos}" href="/objetivos">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+        </svg>
+      </span>
             Objetivos
         </a>
 
-        <a class="nav-item" th:href="@{/fraseMotivadora}">
-            <span class="nav-icon">
-                <svg viewBox="0 0 24 24"><path d="M12 2l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/></svg>
-            </span>
+        <a class="nav-item" th:href="@{/frasesMotivadoras}" href="/frasesMotivadoras">
+      <span class="nav-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/>
+        </svg>
+      </span>
             Frases Motivadoras
         </a>
 
     </nav>
 
-    <div class="sidebar-footer">
-
-        <div class="user-card">
-
-            <div class="user-avatar" th:text="${#strings.substring(usuario?.nombre ?: 'U',0,1)}">U</div>
-
-            <div class="user-info">
-                <div class="user-name" th:text="${usuario?.nombre ?: 'Usuario'}">Usuario</div>
-                <div class="user-role">Miembro activo</div>
-            </div>
-
-            <a class="logout-btn" th:href="@{/logout}" title="Cerrar sesión">
-                <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
-            </a>
-        </div>
-    </div>
-
 </aside>
+
+<!-- Logo Flotante -->
+<a id="logoToggle" th:href="@{/home}" href="/home" class="logo-flotante"
+   onclick="toggleSidebar(event)" title="Abrir menú">
+    <img th:src="@{/img/logo.png}" src="../static/img/logo.png" alt="Logo">
+</a>
 
 <span id="toast-msg" th:if="${exito}" th:text="${exito}" style="display:none;"></span>
 
@@ -213,7 +238,7 @@
 
         <div class="ej-card"
              th:each="ej : ${ejercicios != null ? ejercicios : T(java.util.Collections).emptyList()}"
-             th:if="${session.usuarioLogueado.rol == 'ADMIN' or rutinaIdsUsuario.contains(ej.fk_id_rutina)}">
+             th:if="${session.rol == 'ADMIN' or rutinaIdsUsuario.contains(ej.fk_id_rutina)}">
 
             <input type="checkbox"
                    th:id="'flip-ej-' + ${ej.id_ejercicio}"
@@ -393,12 +418,12 @@
                 <label class="form-label">Rutina</label>
 
                 <!-- va a mostrar todos los registros de los usuarios -->
-                <input th:if="${session.usuarioLogueado.rol == 'ADMIN'}"
+                <input th:if="${session.rol == 'ADMIN'}"
                        type="number" th:field="*{fk_id_rutina}"
                        class="form-input" placeholder="ID de la rutina"/>
 
                 <!-- solo va a mostrar los registros del user logueado -->
-                <select th:if="${session.usuarioLogueado.rol != 'ADMIN'}"
+                <select th:if="${session.rol != 'ADMIN'}"
                         th:field="*{fk_id_rutina}" class="form-input">
                     <option value="">— Seleccioná una rutina —</option>
                     <option th:each="r : ${rutinaUsuario}"
@@ -421,6 +446,9 @@
         </form>
     </div>
 </div>
+
+<!-- Dirección de la funcionalidad de abrir y ocultar la barra lateral (sidebar) -->
+<script th:src="@{/js/sidebar.js}"></script>
 
 </body>
 </html>

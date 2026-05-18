@@ -19,7 +19,6 @@
 
 <!-- overlay al abrir el sidebar -->
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
 <!-- sidebar -->
 <aside class="sidebar" id="sidebar">
 
@@ -57,7 +56,7 @@
             Perfil Nutricional
         </a>
 
-        <a class="nav-item" th:href="@{/Rutina}" href="/Rutina">
+        <a class="nav-item" th:href="@{/rutina}" href="/rutina">
       <span class="nav-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M6 7v10"/><path d="M18 7v10"/><path d="M3 10v4"/>
@@ -87,7 +86,7 @@
         </a>
 
         <div class="nav-section-label">Lectura</div>
-        <a class="nav-item" th:href="@{/Libro}" href="/Libro">
+        <a class="nav-item" th:href="@{/libro}" href="/libro">
       <span class="nav-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
@@ -121,7 +120,7 @@
             Meditación
         </a>
 
-        <a class="nav-item" th:href="@{/registrosSuenos}" href="/registrosSuenos">
+        <a class="nav-item" th:href="@{/registroSueno}" href="/registroSueno">
       <span class="nav-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>
@@ -148,7 +147,7 @@
             Apoyo Emocional
         </a>
 
-        <a class="nav-item" th:href="@{/ObjetivosController}" href="/ObjetivosController">
+        <a class="nav-item" th:href="@{/objetivos}" href="/objetivos">
       <span class="nav-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
@@ -157,7 +156,7 @@
             Objetivos
         </a>
 
-        <a class="nav-item" th:href="@{/fraseMotivadora}" href="/fraseMotivadora">
+        <a class="nav-item" th:href="@{/frasesMotivadoras}" href="/frasesMotivadoras">
       <span class="nav-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M12 2l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/>
@@ -280,37 +279,8 @@
     <p class="foot">Proyecto Desarrollo Personal</p>
 </main>
 
-<script>
-    const sidebar  = document.getElementById('sidebar');
-    const overlay  = document.getElementById('sidebarOverlay');
-    const closeBtn = document.getElementById('sidebarClose');
-    let isOpen = false;
-
-    function openSidebar() {
-      isOpen = true;
-      sidebar.classList.add('open');
-      overlay.classList.add('visible');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeSidebar() {
-      isOpen = false;
-      sidebar.classList.remove('open');
-      overlay.classList.remove('visible');
-      document.body.style.overflow = '';
-    }
-
-    function toggleSidebar(e) {
-      e.preventDefault();
-      isOpen ? closeSidebar() : openSidebar();
-    }
-
-    closeBtn.addEventListener('click', closeSidebar);
-    overlay.addEventListener('click', closeSidebar);
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && isOpen) closeSidebar();
-    });
-</script>
+<!-- Dirección de la funcionalidad de abrir y ocultar la barra lateral (sidebar) -->
+<script th:src="@{/js/sidebar.js}"></script>
 
 </body>
 </html>
