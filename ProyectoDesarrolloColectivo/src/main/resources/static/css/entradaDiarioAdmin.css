@@ -633,3 +633,38 @@ textarea:focus {
 .two-actions .btn-action {
     padding: 0.8rem 1rem;
 }
+
+.alert{
+    width: min(1100px, 92%);
+    margin: 20px auto;
+    padding: 16px 20px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+    animation: fadeIn .4s ease;
+}
+
+.alert.success{
+    background: rgba(46, 125, 50, 0.15);
+    border: 1px solid rgba(46,125,50,.35);
+    color: #1b5e20;
+}
+
+.alert.error{
+    background: rgba(198, 40, 40, 0.15);
+    border: 1px solid rgba(198,40,40,.35);
+    color: #b71c1c;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform: translateY(-10px);
+    }
+    to{
+        opacity:1;
+        transform: translateY(0);
+    }
+}
