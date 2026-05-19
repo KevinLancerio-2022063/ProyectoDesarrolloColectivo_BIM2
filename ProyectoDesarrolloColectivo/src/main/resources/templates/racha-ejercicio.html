@@ -9,6 +9,10 @@
 </head>
 <body>
 
+<!-- Cursor personalizado -->
+<div class="cursor-dot"  id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
 <!-- fondo cubos -->
 <div class="hero-bg">
     <div class="cube"></div><div class="cube"></div><div class="cube"></div>
@@ -156,6 +160,26 @@
             Objetivos
         </a>
 
+        <a class="nav-item" th:href="@{/usuarios}" href="/usuarios">
+    <span class="nav-icon">
+       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+    </span>
+            <span>Usuarios</span>
+        </a>
+
+        <a class="nav-item" th:href="@{/objetivoMeditacion}" href="/objetivoMeditacion">
+    <span class="nav-icon">
+         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+             <circle cx="12" cy="12" r="3"/>
+            <path d="M12 2v20"/><path d="M2 12h20"/>
+        </svg>
+    </span>
+            <span>Objetivo Meditación</span>
+        </a>
+
         <a class="nav-item" th:href="@{/frasesMotivadoras}" href="/frasesMotivadoras">
       <span class="nav-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -281,6 +305,9 @@
 
 <!-- Dirección de la funcionalidad de abrir y ocultar la barra lateral (sidebar) -->
 <script th:src="@{/js/sidebar.js}"></script>
+
+<!-- Dirección del script para los efectos del cursor -->
+<script th:src="@{/js/cursorEfectos.js}"></script>
 
 </body>
 </html>
