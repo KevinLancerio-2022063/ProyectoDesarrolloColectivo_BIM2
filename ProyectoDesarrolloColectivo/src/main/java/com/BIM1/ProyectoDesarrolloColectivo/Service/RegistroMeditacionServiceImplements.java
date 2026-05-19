@@ -39,7 +39,7 @@ public class RegistroMeditacionServiceImplements implements RegistroMeditacionSe
         existing.setDuracion_minutos(registroMeditacion.getDuracion_minutos());
         existing.setNivel_dificultad(registroMeditacion.getNivel_dificultad());
         existing.setFecha_registro(registroMeditacion.getFecha_registro());
-        existing.setFk_id_usuario(registroMeditacion.getFk_id_usuario());
+        existing.setFkIdUsuario(registroMeditacion.getFkIdUsuario());
         return registroMeditacionRepository.save(existing);
     }
 
@@ -48,5 +48,10 @@ public class RegistroMeditacionServiceImplements implements RegistroMeditacionSe
         registroMeditacionRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException(id, "RegistroMeditacion"));
         registroMeditacionRepository.deleteById(id);
+    }
+
+    @Override
+    public List<RegistroMeditacion> getRegistroMeditacionByUsuario(Integer usuarioId) {
+        return registroMeditacionRepository.findByFkIdUsuario(usuarioId);
     }
 }

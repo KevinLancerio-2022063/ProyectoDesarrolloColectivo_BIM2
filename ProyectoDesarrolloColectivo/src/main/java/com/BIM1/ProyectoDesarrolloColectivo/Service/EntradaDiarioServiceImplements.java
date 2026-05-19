@@ -40,7 +40,7 @@ public class EntradaDiarioServiceImplements implements EntradaDiarioService {
         existing.setQue_paso(entradaDiario.getQue_paso());
         existing.setPlan_mañana(entradaDiario.getPlan_mañana());
         existing.setReflexion(entradaDiario.getReflexion());
-        existing.setFk_id_usuario(entradaDiario.getFk_id_usuario());
+        existing.setFkIdUsuario(entradaDiario.getFkIdUsuario());
 
         return entradaDiarioRepository.save(existing);
     }
@@ -49,5 +49,11 @@ public class EntradaDiarioServiceImplements implements EntradaDiarioService {
         entradaDiarioRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(id, "EntradaDiario"));
         entradaDiarioRepository.deleteById(id);
     }
+
+    @Override
+    public List<EntradaDiario> getEntradasByUsuario(Integer usuarioId) {
+        return entradaDiarioRepository.findByFkIdUsuario(usuarioId);
+    }
+
 }
 

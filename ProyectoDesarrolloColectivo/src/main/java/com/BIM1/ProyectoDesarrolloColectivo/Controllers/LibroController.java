@@ -3,6 +3,7 @@ package com.BIM1.ProyectoDesarrolloColectivo.Controllers;
 
 import com.BIM1.ProyectoDesarrolloColectivo.Entity.Libro;
 import com.BIM1.ProyectoDesarrolloColectivo.Service.LibroService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,21 +24,51 @@ public class LibroController {
     }
 
     @GetMapping
-    public String listarLibro(Model model){
+    public String listarLibro(Model model, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         model.addAttribute("libros", libroService.getAListLibro());
         model.addAttribute("librosFormu", new Libro());
         return "libro";
     }
 
     @GetMapping("/editarLibro/{id}")
-    public String editarLibro(@PathVariable Integer id, Model model){
+    public String editarLibro(@PathVariable Integer id, Model model, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         model.addAttribute("libros", libroService.getAListLibro());
         model.addAttribute("librosFormu",libroService.getLibroById(id));
         return "libro";
     }
 
     @PostMapping("/guardarLibro")
-    public String guardarLibro(@Valid @ModelAttribute("librosFormu") Libro libro, BindingResult result, RedirectAttributes redirectAttributes, Model model){
+    public String guardarLibro(@Valid @ModelAttribute("librosFormu") Libro libro, BindingResult result, RedirectAttributes redirectAttributes, Model model, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         if(result.hasErrors()){
             model.addAttribute("libros", libroService.getAListLibro());
             return "libro";
@@ -48,7 +79,17 @@ public class LibroController {
     }
 
     @GetMapping("/buscarLibro")
-    public String buscarLibro(@RequestParam Integer id, Model model){
+    public String buscarLibro(@RequestParam Integer id, Model model, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         Libro libro = libroService.getLibroById(id);
         model.addAttribute("libros", libroService.getLibroById(id));
         model.addAttribute("librosFormu", libro);
@@ -56,7 +97,17 @@ public class LibroController {
     }
 
     @PostMapping("/actualizarLibro/{id}")
-    public String actualizarLibro(@PathVariable Integer id, @Valid @ModelAttribute("librosFormu") Libro libro, Model model, RedirectAttributes redirectAttributes, BindingResult result ){
+    public String actualizarLibro(@PathVariable Integer id, @Valid @ModelAttribute("librosFormu") Libro libro, Model model, RedirectAttributes redirectAttributes, BindingResult result, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         if(result.hasErrors()){
             model.addAttribute("libros", libroService.getAListLibro());
             return "libro";
@@ -67,14 +118,34 @@ public class LibroController {
     }
 
     @PostMapping("/eliminarLibro/{id}")
-    public String eliminarLibro(@PathVariable Integer id, RedirectAttributes redirectAttributes){
+    public String eliminarLibro(@PathVariable Integer id, RedirectAttributes redirectAttributes, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         libroService.deleteLibro(id);
         redirectAttributes.addFlashAttribute("exito", "el libro se a eliminado");
         return "redirect:/libro";
 
     }
     @GetMapping("/estadisticas")
-    public String estadisticasLibros(Model model) {
+    public String estadisticasLibros(Model model, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         List<Libro> libros = libroService.getAListLibro();
 
         // Conteo por estado (Doughnut en chart.js)

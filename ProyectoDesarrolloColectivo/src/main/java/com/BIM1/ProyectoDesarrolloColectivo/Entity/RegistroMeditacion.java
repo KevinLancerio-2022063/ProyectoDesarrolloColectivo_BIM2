@@ -32,8 +32,7 @@ public class RegistroMeditacion {
     private LocalDateTime fecha_registro;
 
     @Column(name = "fk_id_Usuario")
-    @NotNull(message = "la llave foranea no puede estar vacia")
-    private Integer fk_id_usuario;
+    private Integer fkIdUsuario;
 
     public enum TipoMeditacion {
         Guiada, Respiracion, Mindfulness, BodyScan
@@ -83,11 +82,11 @@ public class RegistroMeditacion {
         this.fecha_registro = fecha_registro;
     }
 
-    public Integer getFk_id_usuario() {
-        return fk_id_usuario;
+    public Integer getFkIdUsuario() {
+        return fkIdUsuario;
     }
 
-    public void setFk_id_usuario(Integer fk_id_usuario) {
-        this.fk_id_usuario = fk_id_usuario;
+    public void setFkIdUsuario(Integer fkIdUsuario) {
+        this.fkIdUsuario = fkIdUsuario;
     }
 }

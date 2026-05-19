@@ -26,7 +26,6 @@ public class EjercicioController {
         this.rutinaService = rutinaService;
     }
 
-
     private List<Integer> rutinaIdsDelUsuario(HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
         if (usuario == null) return List.of();
@@ -49,6 +48,16 @@ public class EjercicioController {
 
     @GetMapping
     public String Listar(Model model, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         addCommonAttributes(model, session);
         model.addAttribute("ejerciciosFormu", new Ejercicio());
         return "ejercicios";
@@ -56,6 +65,16 @@ public class EjercicioController {
 
     @PostMapping("/guardarEjercicio")
     public String guardarEjercicio(@Valid @ModelAttribute("ejerciciosFormu") Ejercicio ejercicio, BindingResult result, RedirectAttributes redirectAttributes, Model model, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         if (result.hasErrors()) {
             addCommonAttributes(model, session);
             return "ejercicios";
@@ -67,13 +86,33 @@ public class EjercicioController {
 
     @GetMapping("/editarEjercicio/{id}")
     public String editarEjercicio(@PathVariable Integer id, Model model, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         addCommonAttributes(model, session);
         model.addAttribute("ejerciciosFormu", ejercicioService.getEjercicioById(id));
         return "ejercicios";
     }
 
     @PostMapping("/eliminarEjercicio/{id}")
-    public String eliminarEjercicio(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
+    public String eliminarEjercicio(@PathVariable Integer id, RedirectAttributes redirectAttributes, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         ejercicioService.deleteEjercicio(id);
         redirectAttributes.addFlashAttribute("exito", "el ejercicio fue eliminado");
         return "redirect:/ejercicios";
@@ -81,6 +120,16 @@ public class EjercicioController {
 
     @GetMapping("/buscarEjercicio")
     public String buscarEjercicio(@RequestParam Integer id, Model model, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         Ejercicio ejercicio = ejercicioService.getEjercicioById(id);
         model.addAttribute("ejercicios", ejercicio);
         model.addAttribute("ejerciciosFormu", ejercicio);
@@ -92,6 +141,16 @@ public class EjercicioController {
 
     @PostMapping("/actualizarEjercicio/{id}")
     public String actualizarEjercicio(@PathVariable Integer id, @Valid @ModelAttribute("ejerciciosFormu") Ejercicio ejercicio, Model model, BindingResult result, RedirectAttributes redirectAttributes, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         if (result.hasErrors()) {
             addCommonAttributes(model, session);
             return "ejercicios";

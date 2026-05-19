@@ -19,17 +19,16 @@ public class LoginViewController {
 
     // Mostrar vista login
     @GetMapping
-    public String mostrarLogin() {
+    public String mostrarLogin(HttpSession session) {
+        if (session.getAttribute("usuarioId") != null) {
+            return "redirect:/fraseMotivadora";
+        }
         return "login";
     }
 
     // Procesar login
     @PostMapping
-    public String procesarLogin(
-            @RequestParam String usuario,   // correo
-            @RequestParam String password,
-            HttpSession session,
-            Model model) {
+    public String procesarLogin(@RequestParam String usuario, @RequestParam String password, HttpSession session, Model model) {
 
         Usuario encontrado = usuarioRepository.findByCorreoUsuario(
                 usuario.trim().toLowerCase()
@@ -45,7 +44,15 @@ public class LoginViewController {
         session.setAttribute("usuarioNombre", encontrado.getNombre_completo());
         session.setAttribute("rol", encontrado.getRol());
 
+        session.setAttribute("usuarioLogueado", encontrado);
 
         return "redirect:/fraseMotivadora";
+    }
+
+    // Cerrar sesión
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/login";
     }
 }

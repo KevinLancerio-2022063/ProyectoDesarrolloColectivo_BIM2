@@ -41,11 +41,11 @@ public class EntradaDiarioValidator {
         }
 
         // Validación: fk_id_usuario no puede ser nulo ni negativo
-        if (entradaDiario.getFk_id_usuario() == null) {
+        if (entradaDiario.getFkIdUsuario() == null) {
             throw new IllegalArgumentException("El campo 'fk_id_usuario' no puede ser nulo.");
         }
 
-        if (entradaDiario.getFk_id_usuario() <= 0) {
+        if (entradaDiario.getFkIdUsuario() <= 0) {
             throw new IllegalArgumentException("El campo 'fk_id_usuario' debe ser un número positivo.");
         }
     }

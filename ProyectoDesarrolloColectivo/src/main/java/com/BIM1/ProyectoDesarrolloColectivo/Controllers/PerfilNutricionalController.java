@@ -3,6 +3,7 @@ package com.BIM1.ProyectoDesarrolloColectivo.Controllers;
 
 import com.BIM1.ProyectoDesarrolloColectivo.Entity.PerfilNutricional;
 import com.BIM1.ProyectoDesarrolloColectivo.Service.PerfilNutricionalService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,21 +21,51 @@ public class PerfilNutricionalController {
     }
 
     @GetMapping
-    public String listarPerfil(Model model){
+    public String listarPerfil(Model model, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         model.addAttribute("perfilNutricional", perfilNutricionalService.getAListPerfilNuticional());
         model.addAttribute("perfilNutricionalFormu", new PerfilNutricional());
         return "perfilNutricional";
     }
 
     @GetMapping("/editarPerfilNutricional/{id}")
-    public String editarPerfil(@PathVariable Integer id, Model model){
+    public String editarPerfil(@PathVariable Integer id, Model model, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         model.addAttribute("perfilNutricional", perfilNutricionalService.getAListPerfilNuticional());
         model.addAttribute("perfilNutricionalFormu", perfilNutricionalService.getPerfilNutricionalById(id));
         return "perfilNutricional";
     }
 
     @GetMapping("/buscarPerfilNutricional")
-    public String buscarPerfil(@RequestParam Integer id, Model model){
+    public String buscarPerfil(@RequestParam Integer id, Model model, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         PerfilNutricional perfilNutricional = perfilNutricionalService.getPerfilNutricionalById(id);
         model.addAttribute("perfilNutricional", perfilNutricionalService.getPerfilNutricionalById(id));
         model.addAttribute("perfilNutricionalFormu", perfilNutricional);
@@ -42,7 +73,17 @@ public class PerfilNutricionalController {
     }
 
     @PostMapping("/guardarPerfilNutricional")
-    public String guardarPerfil(@Valid @ModelAttribute("perfilNutricionalFormu") PerfilNutricional perfilNutricional, BindingResult result, RedirectAttributes redirectAttributes, Model model){
+    public String guardarPerfil(@Valid @ModelAttribute("perfilNutricionalFormu") PerfilNutricional perfilNutricional, BindingResult result, RedirectAttributes redirectAttributes, Model model, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         if(result.hasErrors()){
             model.addAttribute("perfilNutricional", perfilNutricionalService.getAListPerfilNuticional());
             return "perfilNutricional";
@@ -53,14 +94,34 @@ public class PerfilNutricionalController {
     }
 
     @PostMapping("/eliminarPerfilNutricional/{id}")
-    public String eliminarPerfil(@PathVariable Integer id, RedirectAttributes redirectAttributes){
+    public String eliminarPerfil(@PathVariable Integer id, RedirectAttributes redirectAttributes, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         perfilNutricionalService.deletePerfilNutricional(id);
         redirectAttributes.addFlashAttribute("exito", "el perfil se ha eliminado");
         return "redirect:/perfilNutricional";
     }
 
     @PostMapping("/actualizarPerfilNutricional/{id}")
-    public String actualizarPerfil(@PathVariable Integer id, @Valid @ModelAttribute("perfilNutricionalFormu") PerfilNutricional perfilNutricional, Model model, RedirectAttributes redirectAttributes, BindingResult result){
+    public String actualizarPerfil(@PathVariable Integer id, @Valid @ModelAttribute("perfilNutricionalFormu") PerfilNutricional perfilNutricional, Model model, RedirectAttributes redirectAttributes, BindingResult result, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         if(result.hasErrors()){
             model.addAttribute("perfilNutricional", perfilNutricionalService.getAListPerfilNuticional());
             return "perfilNutricional";

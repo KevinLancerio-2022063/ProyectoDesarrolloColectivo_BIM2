@@ -27,13 +27,71 @@ public class ObjetivosViewController {
 
     @GetMapping("/objetivos")
     public String mostrarObjetivos(Model model, HttpSession session){
-        Integer id_usuario = (Integer) session.getAttribute("usuarioId");
-        model.addAttribute("listaObjetivos",service.getByIdUsuario(id_usuario));
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
+        // ===== ADMIN =====
+        if (rol.equals("ADMIN")) {
+
+            List<Objetivos> lista = service.getAllObjetivos();
+
+            int completados = 0;
+            int pendientes = 0;
+            int enProgreso = 0;
+
+            for (Objetivos obj : lista) {
+
+                String estado = obj.getEstadoObjetivo();
+
+                if (estado.equalsIgnoreCase("completado")) {
+                    completados++;
+                } else if (estado.equalsIgnoreCase("pendiente")) {
+                    pendientes++;
+                } else if (estado.equalsIgnoreCase("en progreso")) {
+                    enProgreso++;
+                }
+            }
+
+            int total = completados + pendientes + enProgreso;
+
+            int pCompletados = total > 0 ? (completados * 100) / total : 0;
+            int pPendientes = total > 0 ? (pendientes * 100) / total : 0;
+            int pEnProgreso = total > 0 ? (enProgreso * 100) / total : 0;
+
+            model.addAttribute("listaObjetivos", lista);
+            model.addAttribute("labels", List.of("Completados", "Pendientes", "En Progreso"));
+            model.addAttribute("data", List.of(completados, pendientes, enProgreso));
+            model.addAttribute("porcentajes", List.of(pCompletados, pPendientes, pEnProgreso));
+
+            return "ObjetivosAdmin";
+        }
+
+        // ===== USER =====
+        model.addAttribute("listaObjetivos", service.getByIdUsuario(usuarioId));
+
         return "Objetivos";
     }
 
+
     @GetMapping("/detalleObjetivos/{id}")
-    public String detalle(@PathVariable("id") Integer id, Model model) {
+    public String detalle(@PathVariable("id") Integer id, Model model, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         Objetivos objetivo = service.getById(id);
         model.addAttribute("objetivo", objetivo);
         System.out.println("ENTRÓ AL CONTROLLER DETALLE OBJETIVO");
@@ -41,7 +99,17 @@ public class ObjetivosViewController {
     }
 
     @GetMapping("/agregarObjetivo")
-    public String agregarObjetivo(Model model) {
+    public String agregarObjetivo(Model model, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         model.addAttribute("objetivo", new Objetivos());
         model.addAttribute("frase",frasesMotivadorasService.getAllFraseMotivadora());
         return "agregarObjetivo";
@@ -49,6 +117,16 @@ public class ObjetivosViewController {
 
     @PostMapping("/guardarObjetivoCreado")
     public String guardarObjetivoCreado(@ModelAttribute Objetivos objetivo, RedirectAttributes redirectAttributes, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         try {
             Integer id_usuario = (Integer) session.getAttribute("usuarioId");
             Usuario usuario = new Usuario();
@@ -64,7 +142,17 @@ public class ObjetivosViewController {
     }
 
     @GetMapping("/editarObjetivo/{id}")
-    public String editarObjetivo(@PathVariable int id, Model model) {
+    public String editarObjetivo(@PathVariable int id, Model model, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         Objetivos objetivo = service.getById(id);
         model.addAttribute("objetivo", objetivo);
         model.addAttribute("frase",frasesMotivadorasService.getAllFraseMotivadora());
@@ -73,6 +161,16 @@ public class ObjetivosViewController {
 
     @PostMapping("/guardarObjetivo")
     public String guardarObjetivo(@ModelAttribute  Objetivos objetivo, RedirectAttributes redirectAttributes, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         try{
             Integer id_usuario = (Integer) session.getAttribute("usuarioId");
             Usuario usuario = new Usuario();
@@ -95,16 +193,33 @@ public class ObjetivosViewController {
     }
 
     @GetMapping("/eliminar-objetivo/{id}")
-    public String eliminarObjetivo(@PathVariable int id){
+    public String eliminarObjetivo(@PathVariable int id, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         service.deleteObjetivos(id);
         return "redirect:/objetivos";
     }
 
     @GetMapping("/buscar")
-    public String lisatrObjetivos(@RequestParam(required = false) Integer id, Model model,HttpSession session) {
+    public String lisatrObjetivos(@RequestParam(required = false) Integer id, Model model, HttpSession session) {
+
         List<Objetivos> listaObjetivos;
         Integer usuarioId = (Integer) session.getAttribute("usuarioId");
         String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
 
         try {
             if (id != null) {
@@ -141,7 +256,16 @@ public class ObjetivosViewController {
     }
 
    @GetMapping("/objetivosAdmin")
-    public String mostrarObjetivosAdmin(Model model) {
+    public String mostrarObjetivosAdmin(Model model, HttpSession session) {
+
+       Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+       String rol = (String) session.getAttribute("rol");
+
+       // Validación de sesión
+       // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+       if (usuarioId == null || rol == null) {
+           return "redirect:/login";
+       }
 
         List<Objetivos> lista = service.getAllObjetivos();
 

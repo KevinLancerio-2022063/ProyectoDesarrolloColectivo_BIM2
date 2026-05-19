@@ -1,6 +1,7 @@
 package com.BIM1.ProyectoDesarrolloColectivo.Controllers;
 
 import com.BIM1.ProyectoDesarrolloColectivo.Repository.FraseMotivadoraRepository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,13 +25,42 @@ public class FraseMotivadoraViewController {
     private FraseMotivadoraRepository repository;
 
     @GetMapping("/frasesMotivadoras")
-    public String mostrarFraseMotivadora(Model model) {
+    public String mostrarFraseMotivadora(Model model, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
+        if (!rol.equals("ADMIN")) {
+            return "redirect:/fraseMotivadora";
+        }
+
         model.addAttribute("frases", fraseMotivadoraService.getAllFraseMotivadora());
         return "FraseMotivadora";
     }
 
     @GetMapping("/fraseMotivadora")
-    public String fraseAlAZar(Model model){
+    public String fraseAlAZar(Model model, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
+        if (rol.equals("ADMIN")) {
+
+            model.addAttribute("frases", fraseMotivadoraService.getAllFraseMotivadora());
+            return "FraseMotivadora";
+        }
 
         long total = repository.count();
 
@@ -56,13 +86,37 @@ public class FraseMotivadoraViewController {
     }
 
     @GetMapping("/agregarFrase")
-    public String agregarFraseMotivadora(Model model) {
+    public String agregarFraseMotivadora(Model model, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
+        if (!rol.equals("ADMIN")) {
+            return "redirect:/fraseMotivadora";
+        }
+
         model.addAttribute("frase", new FraseMotivadora());
         return "agregarFrase";
     }
 
     @PostMapping("/guardarFraseCreada")
-    public String guardarFraseCreada(@ModelAttribute FraseMotivadora frase,RedirectAttributes redirectAttributes) {
+    public String guardarFraseCreada(@ModelAttribute FraseMotivadora frase, RedirectAttributes redirectAttributes, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         try {
             fraseMotivadoraService.saveFraseMotivadora(frase);
             return "redirect:/frasesMotivadoras";
@@ -74,14 +128,34 @@ public class FraseMotivadoraViewController {
     }
 
     @GetMapping("/editarFrase/{id}")
-    public String editarFraseMotivadora(@PathVariable int id, Model model) {
+    public String editarFraseMotivadora(@PathVariable int id, Model model, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         FraseMotivadora frase = fraseMotivadoraService.getById(id);
         model.addAttribute("frase", frase);
         return "editarFrase";
     }
 
     @PostMapping("/guardarFrase")
-    public String guardarFrase(@ModelAttribute FraseMotivadora frase,RedirectAttributes redirectAttributes) {
+    public String guardarFrase(@ModelAttribute FraseMotivadora frase, RedirectAttributes redirectAttributes, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         try {
             FraseMotivadora original = fraseMotivadoraService.getById(frase.getIdFraseMotivadora());
             original.setTexto(frase.getTexto());
@@ -96,13 +170,33 @@ public class FraseMotivadoraViewController {
     }
 
     @GetMapping("/eliminar-frase/{id}")
-    public String eliminarFraseMotivador(@PathVariable int id){
+    public String eliminarFraseMotivador(@PathVariable int id, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         fraseMotivadoraService.deleteFraseMotivadora(id);
         return "redirect:/frasesMotivadoras";
     }
 
     @GetMapping("/buscarFrase")
-    public String buscarFrase(@RequestParam(required = false) Integer id, Model model,RedirectAttributes redirectAttributes){
+    public String buscarFrase(@RequestParam(required = false) Integer id, Model model, RedirectAttributes redirectAttributes, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         List<FraseMotivadora> listaFrases;
         try {
             if (id != null) {

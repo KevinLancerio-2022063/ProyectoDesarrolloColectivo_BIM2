@@ -22,36 +22,145 @@ public class ApoyoEmocionalViewController {
     @Autowired
     private ApoyoEmocionalService service;
 
-
     @GetMapping("/apoyoEmocional")
     public String mostrarApoyo(Model model, HttpSession session){
-        Integer id_usuario = (Integer) session.getAttribute("usuarioId");
-        List<ApoyoEmocional> list = service.getByIdUsuario(id_usuario);
-        model.addAttribute("listaApoyos",list);
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
+        // ===== ADMIN =====
+        if (rol.equals("ADMIN")) {
+
+            List<ApoyoEmocional> list = service.getAllApoyoEmovional();
+
+            int mal = 0;
+            int maso = 0;
+            int bien = 0;
+
+            Map<String, Integer> conteoCategorias = new HashMap<>();
+
+            for (ApoyoEmocional ap : list) {
+
+                String cat = ap.getCategoria();
+
+                if (cat != null) {
+                    conteoCategorias.put(cat, conteoCategorias.getOrDefault(cat, 0) + 1);
+                }
+            }
+
+            List<String> categorias = new ArrayList<>(conteoCategorias.keySet());
+
+            List<Integer> countCat = categorias.stream()
+                    .map(conteoCategorias::get)
+                    .toList();
+
+            int maxCat = countCat.stream().max(Integer::compare).orElse(1);
+
+            for (ApoyoEmocional ap : list){
+
+                String nivelAnimo = ap.getNivelAnimo();
+
+                if (nivelAnimo.equalsIgnoreCase("mal")){
+                    mal++;
+                } else if (nivelAnimo.equalsIgnoreCase("mas o menos")){
+                    maso++;
+                } else if (nivelAnimo.equalsIgnoreCase("bien")){
+                    bien++;
+                }
+            }
+
+            int total = bien + maso + mal;
+
+            int pBien = total > 0 ? (bien * 100) / total : 0;
+            int pMaso = total > 0 ? (maso * 100) / total : 0;
+            int pMal = total > 0 ? (mal * 100) / total : 0;
+
+            model.addAttribute("listaApoyos", list);
+            model.addAttribute("data", List.of(bien, maso, mal));
+            model.addAttribute("labels", List.of("Bien", "Mas o menos", "Mal"));
+            model.addAttribute("porcentajes", List.of(pBien, pMaso, pMal));
+            model.addAttribute("categorias", categorias);
+            model.addAttribute("countCat", countCat);
+            model.addAttribute("maxCat", maxCat);
+
+            return "ApoyoEmocionalAdmin";
+        }
+
+        // ===== USER =====
+        List<ApoyoEmocional> list = service.getByIdUsuario(usuarioId);
+
+        model.addAttribute("listaApoyos", list);
+
         return "ApoyoEmocional";
     }
 
     @GetMapping("/detalleApoyo/{id}")
-    public String detalle(@PathVariable("id") Integer id, Model model) {
+    public String detalle(@PathVariable("id") Integer id, Model model, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         ApoyoEmocional apoyo = service.getById(id);
         model.addAttribute("apoyo", apoyo);
         return "detalleApoyo";
     }
 
     @GetMapping("/eliminar-apoyo/{id}")
-    public String eliminarApoyo(@PathVariable int id){
+    public String eliminarApoyo(@PathVariable int id, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         service.deleteApoyoEmocional(id);
         return "redirect:/apoyoEmocional";
     }
 
     @GetMapping("/agregarApoyo")
-    public String agregarApoyoEmocional(Model model){
+    public String agregarApoyoEmocional(Model model, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         model.addAttribute("apoyo",new ApoyoEmocional());
         return "agregarApoyo";
     }
 
     @PostMapping("/guardarApoyoCreado")
-    public String guardarApoyoCreado(@ModelAttribute ApoyoEmocional apoyoEmocional, RedirectAttributes redirectAttributes,HttpSession session){
+    public String guardarApoyoCreado(@ModelAttribute ApoyoEmocional apoyoEmocional, RedirectAttributes redirectAttributes, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         try {
             Integer id_usuario = (Integer) session.getAttribute("usuarioId");
 
@@ -68,16 +177,34 @@ public class ApoyoEmocionalViewController {
     }
 
     @GetMapping("/editarApoyo/{id}")
-    public String formularioEditar(@PathVariable Integer id, Model model) {
+    public String formularioEditar(@PathVariable Integer id, Model model, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         ApoyoEmocional apoyo = service.getById(id);
         model.addAttribute("apoyo", apoyo);
         return "editarApoyo";
     }
 
     @PostMapping("/guardarApoyo")
-    public String guardarApoyo(@ModelAttribute ApoyoEmocional apoyoEmocional,
-                               RedirectAttributes redirectAttributes,
-                               HttpSession session) {
+    public String guardarApoyo(@ModelAttribute ApoyoEmocional apoyoEmocional, RedirectAttributes redirectAttributes, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         try {
             Integer id_usuario = (Integer) session.getAttribute("usuarioId");
             Usuario usuario = new Usuario();
@@ -99,12 +226,17 @@ public class ApoyoEmocionalViewController {
     }
 
     @GetMapping("/apoyos")
-    public String listarApoyos(@RequestParam(required = false) Integer id, 
-                                Model model, 
-                                HttpSession session) {
+    public String listarApoyos(@RequestParam(required = false) Integer id, Model model, HttpSession session) {
+
         List<ApoyoEmocional> listaApoyos;
         Integer usuarioId = (Integer) session.getAttribute("usuarioId");
         String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
 
         try {
             if (id != null) {
@@ -142,7 +274,17 @@ public class ApoyoEmocionalViewController {
     }
 
     @GetMapping("/apoyoEmocional-Admin")
-    public String mostrarApoyoAdmin(Model model){
+    public String mostrarApoyoAdmin(Model model, HttpSession session) {
+
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        String rol = (String) session.getAttribute("rol");
+
+        // Validación de sesión
+        // Si el id del usuario o el rol están vacios, lo mandará a la vista del login
+        if (usuarioId == null || rol == null) {
+            return "redirect:/login";
+        }
+
         List<ApoyoEmocional> list = service.getAllApoyoEmovional();
 
         int mal = 0;
@@ -175,7 +317,7 @@ public class ApoyoEmocionalViewController {
             } else if (nivelAnimo.equalsIgnoreCase("bien")){
                 bien++;
             }
-            
+
         }
 
         int total = bien + maso + mal;
