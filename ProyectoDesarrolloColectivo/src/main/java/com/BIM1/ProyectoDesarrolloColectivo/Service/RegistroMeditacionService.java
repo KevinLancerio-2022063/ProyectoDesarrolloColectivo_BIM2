@@ -10,4 +10,6 @@ public interface RegistroMeditacionService {
     RegistroMeditacion saveRegistroMeditacion(RegistroMeditacion registroMeditacion) throws RuntimeException;
     RegistroMeditacion updateRegistroMeditacion(Integer id, RegistroMeditacion registroMeditacion);
     void deleteRegistroMeditacion(Integer id);
+
+    List<RegistroMeditacion> getRegistroMeditacionByUsuario(Integer usuarioId);
 }
