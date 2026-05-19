@@ -28,7 +28,7 @@ public class Usuario {
     private String contraseña;
 
     @Column(name = "rol")
-    private String rol;
+    private String rol = "USER";
 
     public Integer getId_usuario() {
         return id_usuario;
