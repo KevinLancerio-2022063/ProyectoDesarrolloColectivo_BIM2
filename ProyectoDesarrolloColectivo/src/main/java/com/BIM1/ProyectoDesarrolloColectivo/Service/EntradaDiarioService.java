@@ -10,4 +10,6 @@ public interface EntradaDiarioService {
     EntradaDiario saveEntradaDiario(EntradaDiario entradaDiario) throws RuntimeException;
     EntradaDiario updateEntradaDiario(Integer id, EntradaDiario entradaDiario);
     void deleteEntradaDiario(Integer id);
+
+    List<EntradaDiario> getEntradasByUsuario(Integer usuarioId);
 }
