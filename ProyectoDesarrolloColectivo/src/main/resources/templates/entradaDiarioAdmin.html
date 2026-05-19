@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin | Entrada Diario</title>
-    <link rel="stylesheet" th:href="@{/entradaDiarioAdmin.css}">
+    <link rel="stylesheet" th:href="@{/css/entradaDiarioAdmin.css}">
 </head>
 <body>
 
@@ -82,7 +82,7 @@
 
                 <div>
                     <span>ID Usuario</span>
-                    <strong th:text="${entrada.fk_id_usuario}"></strong>
+                    <strong th:text="${entrada.fkIdUsuario}"></strong>
                 </div>
 
                 <div>
@@ -145,7 +145,7 @@
 
             <div class="form-group">
                 <label>ID Usuario</label>
-                <input type="number" th:field="*{fk_id_usuario}" required>
+                <input type="number" th:field="*{fkIdUsuario}" required>
             </div>
         </div>
 

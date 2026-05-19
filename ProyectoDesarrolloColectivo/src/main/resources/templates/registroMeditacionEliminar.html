@@ -3,23 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Eliminar Registro Meditación</title>
-    <link rel="stylesheet" th:href="@{/registroMeditacion.css(v=${#dates.createNow().time})}">
+    <link rel="stylesheet" th:href="@{/css/registroMeditacion.css(v=${#dates.createNow().time})}">
 </head>
 <body class="delete-page">
 
 <div class="cursor-dot"></div>
 <div class="cursor-ring"></div>
-
-<nav class="navbar">
-    <a th:href="@{/}" class="logo">Florece</a>
-
-    <div class="nav-links">
-        <a th:href="@{/}">Inicio</a>
-        <a th:href="@{/entradaDiario}">Entrada Diario</a>
-        <a th:href="@{/registroMeditacion}" class="active">Meditación</a>
-        <a th:href="@{/registroSueno}">Sueño</a>
-    </div>
-</nav>
 
 <main class="delete-main">
     <div class="delete-box">
