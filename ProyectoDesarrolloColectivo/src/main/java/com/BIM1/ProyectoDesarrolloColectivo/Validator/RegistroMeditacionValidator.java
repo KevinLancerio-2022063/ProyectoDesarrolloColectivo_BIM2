@@ -41,11 +41,11 @@ public class RegistroMeditacionValidator {
         }
 
         // Validación: fk_id_usuario no puede ser nulo ni negativo
-        if (registroMeditacion.getFk_id_usuario() == null) {
+        if (registroMeditacion.getFkIdUsuario() == null) {
             throw new IllegalArgumentException("El campo 'fk_id_usuario' no puede ser nulo.");
         }
 
-        if (registroMeditacion.getFk_id_usuario() <= 0) {
+        if (registroMeditacion.getFkIdUsuario() <= 0) {
             throw new IllegalArgumentException("El campo 'fk_id_usuario' debe ser un número positivo.");
         }
     }
